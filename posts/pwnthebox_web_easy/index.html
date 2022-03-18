@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/pwnthebox_web_easy/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-18T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-03-18T16:42:32+00:00" />
+<meta property="article:modified_time" content="2022-03-18T22:00:29+00:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -76,6 +76,12 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li>
+          <a class="icon" href=" /posts/social_engineering/" aria-label="Previous">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
         
         
         <li>
@@ -163,7 +169,6 @@
   <ol>
     <li><a href="#exec1">exec1</a></li>
     <li><a href="#hackergame2019-签到题">hackergame2019-签到题</a></li>
-    <li><a href="#daf">daf</a></li>
     <li><a href="#pwnthebox">PwnTheBox</a></li>
     <li><a href="#百度网盘分享链接">百度网盘分享链接</a></li>
     <li><a href="#get">Get</a></li>
@@ -188,7 +193,7 @@
           
           <time datetime="2022-03-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-18</time>
           
-            (Updated: <time datetime="2022-03-18 16:42:32 &#43;0000 UTC" itemprop="dateModified">2022-03-18</time>)
+            (Updated: <time datetime="2022-03-18 22:00:29 &#43;0000 UTC" itemprop="dateModified">2022-03-18</time>)
           
         </div>
         
@@ -214,180 +219,94 @@
 通过%0A换行实现新的命令执行
 ?ip=1%0Als
 得到</p>
-<!-- raw HTML omitted -->
-<figure><img src="/ox-hugo/2022-03-18_11-20-29_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_11-19-50_screenshot.png" width="700px"/>
 </figure>
 
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?</span>php
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Get input
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">$target</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_REQUEST</span>[ <span style="color:#f1fa8c">&#39;ip&#39;</span> ];
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// var_dump($target);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$target</span><span style="color:#ff79c6">=</span>trim(<span style="color:#8be9fd;font-style:italic">$target</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// var_dump($target);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// Set blacklist
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$substitutions</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">array</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;&amp;&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;;&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;|&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;-&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;$&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;(&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;)&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;`&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#39;||&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
-</span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Remove any of the charactars in the array (blacklist).
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$target</span> <span style="color:#ff79c6">=</span> str_replace( array_keys( <span style="color:#8be9fd;font-style:italic">$substitutions</span> ), <span style="color:#8be9fd;font-style:italic">$substitutions</span>, <span style="color:#8be9fd;font-style:italic">$target</span> );
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// var_dump($target);
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Determine OS and execute the ping command.
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span>( stristr( php_uname( <span style="color:#f1fa8c">&#39;s&#39;</span> ), <span style="color:#f1fa8c">&#39;Windows NT&#39;</span> ) ) {
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Windows
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">$cmd</span> <span style="color:#ff79c6">=</span> shell_exec( <span style="color:#f1fa8c">&#39;ping  &#39;</span> <span style="color:#ff79c6">.</span> <span style="color:#8be9fd;font-style:italic">$target</span> );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// *nix
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">$cmd</span> <span style="color:#ff79c6">=</span> shell_exec( <span style="color:#f1fa8c">&#39;ping  -c 1 &#39;</span> <span style="color:#ff79c6">.</span> <span style="color:#8be9fd;font-style:italic">$target</span> );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Feedback for the end user
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">echo</span>  <span style="color:#f1fa8c">&#34;&lt;pre&gt;</span><span style="color:#f1fa8c">{</span><span style="color:#8be9fd;font-style:italic">$cmd</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&lt;/pre&gt;&#34;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">?&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>虽然这里不能使用，但是这里复习一下Windows和*nix的管道符号</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Windows系例支持的管道符如下所示。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“|”：直接执行后面的语句。例如：ping 127.0.0.1|whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“||”：如果前面执行的语句执行出错，则执行后面的语句，前面的语句只能为假。例如：ping 2||whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“&amp;”：如果前面的语句为假则直接执行后面的语句，前面的语句可真可假。例如：ping 127.0.0.1&amp;whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“&amp;&amp;”：如果前面的语句为假则直接出错，也不执行后面的语句，前面的语句只能为真。例如：ping 127.0.0.1&amp;&amp;whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Linux系统支持的管道符如下所示。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“;”：执行完前面的语句再执行后面的。例如：ping 127.0.0.1;whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“|”：显示后面语句的执行结果。例如：ping 127.0.0.1|whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“||”：当前面的语句执行出错时，执行后面的语句。例如：ping 1||whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“&amp;”：如果前面的语句为假则直接执行后面的语句，前面的语句可真可假。例如：ping 127.0.0.1&amp;whoami。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>“&amp;&amp;”：如果前面的语句为假则直接出错，也不执行后面的，前面的语句只能为真。例如：ping 127.0.0.1&amp;&amp;whoami。
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="hackergame2019-签到题">hackergame2019-签到题</h2>
-<figure><img src="/ox-hugo/2022-03-18_11-43-43_screenshot.png" width="400px"/>
+<p>进而获取文件内容</p>
+<figure><img src="/ox-hugo/2022-03-18_11-20-29_screenshot.png" width="700px"/>
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#ff79c6">&lt;?</span>php
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#6272a4">// Get input
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    <span style="color:#8be9fd;font-style:italic">$target</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_REQUEST</span>[ <span style="color:#f1fa8c">&#39;ip&#39;</span> ];
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#6272a4">// var_dump($target);
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$target</span><span style="color:#ff79c6">=</span>trim(<span style="color:#8be9fd;font-style:italic">$target</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#6272a4">// var_dump($target);
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// Set blacklist
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$substitutions</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">array</span>(
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>        <span style="color:#f1fa8c">&#39;&amp;&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        <span style="color:#f1fa8c">&#39;;&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        <span style="color:#f1fa8c">&#39;|&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        <span style="color:#f1fa8c">&#39;-&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        <span style="color:#f1fa8c">&#39;$&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>        <span style="color:#f1fa8c">&#39;(&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>        <span style="color:#f1fa8c">&#39;)&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>        <span style="color:#f1fa8c">&#39;`&#39;</span>  <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>        <span style="color:#f1fa8c">&#39;||&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>    );
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    <span style="color:#6272a4">// Remove any of the charactars in the array (blacklist).
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$target</span> <span style="color:#ff79c6">=</span> str_replace( array_keys( <span style="color:#8be9fd;font-style:italic">$substitutions</span> ), <span style="color:#8be9fd;font-style:italic">$substitutions</span>, <span style="color:#8be9fd;font-style:italic">$target</span> );
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>    <span style="color:#6272a4">// var_dump($target);
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    <span style="color:#6272a4">// Determine OS and execute the ping command.
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span>( stristr( php_uname( <span style="color:#f1fa8c">&#39;s&#39;</span> ), <span style="color:#f1fa8c">&#39;Windows NT&#39;</span> ) ) {
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        <span style="color:#6272a4">// Windows
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>        <span style="color:#8be9fd;font-style:italic">$cmd</span> <span style="color:#ff79c6">=</span> shell_exec( <span style="color:#f1fa8c">&#39;ping  &#39;</span> <span style="color:#ff79c6">.</span> <span style="color:#8be9fd;font-style:italic">$target</span> );
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>    <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>        <span style="color:#6272a4">// *nix
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">$cmd</span> <span style="color:#ff79c6">=</span> shell_exec( <span style="color:#f1fa8c">&#39;ping  -c 1 &#39;</span> <span style="color:#ff79c6">.</span> <span style="color:#8be9fd;font-style:italic">$target</span> );
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>    <span style="color:#6272a4">// Feedback for the end user
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">echo</span>  <span style="color:#f1fa8c">&#34;&lt;pre&gt;</span><span style="color:#f1fa8c">{</span><span style="color:#8be9fd;font-style:italic">$cmd</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&lt;/pre&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span><span style="color:#ff79c6">?&gt;</span>
+</span></span></code></pre></div><p>虽然这里不能使用，但是这里复习一下Windows和*nix的管道符号</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>Windows系例支持的管道符如下所示。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>“|”：直接执行后面的语句。例如：ping 127.0.0.1|whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>“||”：如果前面执行的语句执行出错，则执行后面的语句，前面的语句只能为假。例如：ping 2||whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>“&amp;”：如果前面的语句为假则直接执行后面的语句，前面的语句可真可假。例如：ping 127.0.0.1&amp;whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>“&amp;&amp;”：如果前面的语句为假则直接出错，也不执行后面的语句，前面的语句只能为真。例如：ping 127.0.0.1&amp;&amp;whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>Linux系统支持的管道符如下所示。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>“;”：执行完前面的语句再执行后面的。例如：ping 127.0.0.1;whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>“|”：显示后面语句的执行结果。例如：ping 127.0.0.1|whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>“||”：当前面的语句执行出错时，执行后面的语句。例如：ping 1||whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>“&amp;”：如果前面的语句为假则直接执行后面的语句，前面的语句可真可假。例如：ping 127.0.0.1&amp;whoami。
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>“&amp;&amp;”：如果前面的语句为假则直接出错，也不执行后面的，前面的语句只能为真。例如：ping 127.0.0.1&amp;&amp;whoami。
+</span></span></code></pre></div><h2 id="hackergame2019-签到题">hackergame2019-签到题</h2>
+<figure><img src="/ox-hugo/2022-03-18_11-43-43_screenshot.png" width="700px"/>
 </figure>
 
 <p>根据提示查看前一年的签到题的<a href="https://github.com/ustclug/hackergame2018-writeups/blob/master/official/qiandao/README.md#%E8%A7%A3%E6%B3%95%E4%BA%8C%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0">writeup</a>，猜测token应该是hackergame2019，接下来就是如何提交token了</p>
 <!-- raw HTML omitted -->
-<figure><img src="/ox-hugo/2022-03-18_11-47-03_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_11-47-03_screenshot.png" width="700px"/>
 </figure>
 
-<h2 id="daf">daf</h2>
-<p>var json1 = &lsquo;{}&rsquo;;
-var json2 = &lsquo;{&ldquo;myCount&rdquo;: null}&rsquo;;
-var json3 = &lsquo;{&ldquo;myCount&rdquo;: 0}&rsquo;;
-var json4 = &lsquo;{&ldquo;myString&rdquo;: &ldquo;&rdquo;}&rsquo;;
-var json5 = &lsquo;{&ldquo;myString&rdquo;: &ldquo;null&rdquo;}&rsquo;;
-var json6 = &lsquo;{&ldquo;myArray&rdquo;: []}&rsquo;;</p>
-<p>console.log(JSON.parse(json1)); <em>/ {}
-console.log(JSON.parse(json2)); /</em> {myCount: null}
-console.log(JSON.parse(json3)); <em>/ {myCount: 0}
-console.log(JSON.parse(json4)); /</em> {myString: &ldquo;&rdquo;}
-console.log(JSON.parse(json5)); <em>/ {myString: &ldquo;null&rdquo;}
-console.log(JSON.parse(json6)); /</em> {myArray: []}</p>
 <h2 id="pwnthebox">PwnTheBox</h2>
 <p>查看源代码，获得提示flag在header里面</p>
-<figure><img src="/ox-hugo/2022-03-18_11-58-54_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_11-58-54_screenshot.png" width="700px"/>
 </figure>
 
 <p>放进Burp里看一下response，获得Flag</p>
-<figure><img src="/ox-hugo/2022-03-18_12-02-54_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_12-02-54_screenshot.png" width="700px"/>
 </figure>
 
 <h2 id="百度网盘分享链接">百度网盘分享链接</h2>
@@ -399,11 +318,11 @@ console.log(JSON.parse(json6)); /</em> {myArray: []}</p>
 <!-- raw HTML omitted -->
 <h2 id="get">Get</h2>
 <p>阅读给出的源码，只要给一个GET参数，并且值为“flag”即可</p>
-<figure><img src="/ox-hugo/2022-03-18_12-20-54_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_12-20-54_screenshot.png" width="700px"/>
 </figure>
 
 <p>?what=flag</p>
-<figure><img src="/ox-hugo/2022-03-18_12-21-56_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_12-21-56_screenshot.png" width="700px"/>
 </figure>
 
 <h2 id="post">Post</h2>
@@ -416,55 +335,29 @@ console.log(JSON.parse(json6)); /</em> {myArray: []}</p>
 
 <h2 id="php是世界上最好的语言">php是世界上最好的语言</h2>
 <p>阅读源码，需要满足几个条件，参数$a,$b的sha1加密后密文相等，key为json格式的值，并且该json数据中的一个键叫做“key”，值和参数$key相等</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?</span>php
-</span></span><span style="display:flex;"><span>show_source(__FILE__);
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">@</span><span style="color:#ff79c6">include_once</span> <span style="color:#f1fa8c">&#39;flag.php&#39;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">//前端攻城狮跑路了，不过PHP是最好的语言
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$a</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;a&#39;</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">$b</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;b&#39;</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (sha1(<span style="color:#8be9fd;font-style:italic">$a</span>)<span style="color:#ff79c6">===</span>sha1(<span style="color:#8be9fd;font-style:italic">$b</span>)) {
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">die</span>(<span style="color:#f1fa8c">&#39;bypass&#39;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">&amp;&amp;</span> isset(<span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;key&#39;</span>])){
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">$message</span> <span style="color:#ff79c6">=</span> json_decode(<span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;key&#39;</span>]);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">$message</span><span style="color:#ff79c6">-&gt;</span><span style="color:#50fa7b">key</span><span style="color:#ff79c6">==</span><span style="color:#8be9fd;font-style:italic">$key</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">echo</span> <span style="color:#8be9fd;font-style:italic">$flag</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">die</span>(<span style="color:#f1fa8c">&#39;还差一点就拿到flag了&#39;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">?&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>第一个条件很容易满足，直接让a=b即可
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#ff79c6">&lt;?</span>php
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>show_source(__FILE__);
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#ff79c6">@</span><span style="color:#ff79c6">include_once</span> <span style="color:#f1fa8c">&#39;flag.php&#39;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#6272a4">//前端攻城狮跑路了，不过PHP是最好的语言
+</span></span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">$a</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;a&#39;</span>];
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#8be9fd;font-style:italic">$b</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;b&#39;</span>];
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    <span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#ff79c6">if</span> (sha1(<span style="color:#8be9fd;font-style:italic">$a</span>)<span style="color:#ff79c6">===</span>sha1(<span style="color:#8be9fd;font-style:italic">$b</span>)) {
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        <span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">die</span>(<span style="color:#f1fa8c">&#39;bypass&#39;</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    <span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">$good</span> <span style="color:#ff79c6">&amp;&amp;</span> isset(<span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;key&#39;</span>])){
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        <span style="color:#8be9fd;font-style:italic">$message</span> <span style="color:#ff79c6">=</span> json_decode(<span style="color:#8be9fd;font-style:italic">$_GET</span>[<span style="color:#f1fa8c">&#39;key&#39;</span>]);
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        <span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">$message</span><span style="color:#ff79c6">-&gt;</span><span style="color:#50fa7b">key</span><span style="color:#ff79c6">==</span><span style="color:#8be9fd;font-style:italic">$key</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>            <span style="color:#ff79c6">echo</span> <span style="color:#8be9fd;font-style:italic">$flag</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>        }
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>        <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">die</span>(<span style="color:#f1fa8c">&#39;还差一点就拿到flag了&#39;</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span><span style="color:#ff79c6">?&gt;</span>
+</span></span></code></pre></div><p>第一个条件很容易满足，直接让a=b即可
 第二个条件，我们首先让这个值满足json格式{key:value},并且这个value等于$key,利用php的弱类型语言的性质，当数字与字符串进行比较时，字符串会转换成数字来进行比较，同时第一位不为数字时，会转换为0，因此我们将value设置为0，皆可得到flag</p>
-<figure><img src="/ox-hugo/2022-03-18_12-30-28_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-18_12-30-28_screenshot.png" width="600px"/>
 </figure>
     </div>
   </article>
@@ -500,7 +393,6 @@ console.log(JSON.parse(json6)); /</em> {myArray: []}</p>
   <ol>
     <li><a href="#exec1">exec1</a></li>
     <li><a href="#hackergame2019-签到题">hackergame2019-签到题</a></li>
-    <li><a href="#daf">daf</a></li>
     <li><a href="#pwnthebox">PwnTheBox</a></li>
     <li><a href="#百度网盘分享链接">百度网盘分享链接</a></li>
     <li><a href="#get">Get</a></li>

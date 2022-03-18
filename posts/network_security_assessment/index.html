@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/network_security_assessment/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-18T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-03-18T16:42:44+00:00" />
+<meta property="article:modified_time" content="2022-03-18T21:57:01+00:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -190,7 +190,7 @@
           
           <time datetime="2022-03-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-18</time>
           
-            (Updated: <time datetime="2022-03-18 16:42:44 &#43;0000 UTC" itemprop="dateModified">2022-03-18</time>)
+            (Updated: <time datetime="2022-03-18 21:57:01 &#43;0000 UTC" itemprop="dateModified">2022-03-18</time>)
           
         </div>
         
@@ -245,7 +245,7 @@ There are some typical data you can gather by querying search engines and wbsite
 </ol>
 <p>The <a href="https://searchdns.netcraft.com/?restriction=site+contains&amp;host=nist.gov&amp;position=limited">Netcraft Web Application</a> contains historical server fingerprints, which you can use to check the OS versions or map network blocks of a company</p>
 <p>The link above shows the result of all recorded NIST government sites with their site, netblock, OS.</p>
-<figure><img src="/ox-hugo/2022-03-01_10-47-07_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-01_10-47-07_screenshot.png" width="700px"/>
 </figure>
 
 </li>
@@ -258,7 +258,7 @@ There are some typical data you can gather by querying search engines and wbsite
 </ol>
 <p><a href="https://help.shodan.io/the-basics/what-is-shodan">Shodan</a> is a powerful search engine for gathering infomration on all devices connected to Internet.
 Use search query syntax(city, country, http.title net, org, port, etc.) to search for the devices information wihthin the whole Internet. Some entries even may list corresponding known vulnerabilities.</p>
-<figure><img src="/ox-hugo/2022-03-01_14-50-38_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-01_14-50-38_screenshot.png" width="700px"/>
 </figure>
 
 <!-- raw HTML omitted -->
@@ -305,15 +305,8 @@ Use search query syntax(city, country, http.title net, org, port, etc.) to searc
 <p>The <code>TheHarvester</code> tool is used for gathering information of emails. sub-domains, hosts, employee names, open ports, and banners from different public sources like search engines, PGP key servers, and SHODAN computer database.</p>
 <p>example 1
 Search email addresses from domain kali.org with results of 200 and using Bing as data source.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>theharvester -d kali.org -l <span style="color:#bd93f9">200</span> -b bing
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>example 2</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>theharvester -d kali.org -l <span style="color:#bd93f9">200</span> -b bing
+</span></span></code></pre></div><p>example 2</p>
 <p>Search email addresses from domain nist.gov with results of 50 and using google as data source, finally  saved the resources in myresults.html</p>
 </li>
 </ul>
@@ -604,15 +597,8 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 <p>Aim
 : To determine the operating system of a host: Which OS? Which Version?</p>
 <!-- raw HTML omitted -->
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo nmap -O localhost
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>sudo nmap -O localhost
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
@@ -627,7 +613,7 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 <p>Nmap Scripting Engine</p>
 <p>Nmap provide a series of scripts for checking the vulnerabilities based on open services of victim host</p>
 <p>Scripts can be found in <em>usr/share/nmap/scripts</em></p>
-<figure><img src="/ox-hugo/2022-03-06_11-32-26_screenshot.png" width="400px"/>
+<figure><img src="/ox-hugo/2022-03-06_11-32-26_screenshot.png" width="700px"/>
 </figure>
 
 </li>
