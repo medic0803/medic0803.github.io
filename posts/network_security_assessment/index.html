@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Network Security Assessment | Under The Ginkgo</title>
+  <link rel = 'canonical' href = 'http://ginkgo.org.cn/posts/network_security_assessment/'>
+  <meta name="description" content="Cogito, ergo sum">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Network Security Assessment" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ginkgo.org.cn/posts/network_security_assessment/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-18T16:42:44+00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Network Security Assessment"/>
+<meta name="twitter:description" content=""/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="http://ginkgo.org.cn/css/styles.c05d68261bf086a9d7713c4f8a6215a3601608e267a816a7ee58f139b3d1aae51222aae2081c8e0c6bd35e1334773b7a16283022f31f92afd93bb37e5e822e66.css" integrity="sha512-wF1oJhvwhqnXcTxPimIVo2AWCOJnqBan7ljxObPRquUSIqriCByODGvTXhM0dzt6FigwIvMfkq/ZO7N&#43;XoIuZg=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="http://ginkgo.org.cn/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;" aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#" aria-label="Share">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f" aria-label="Facebook">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&text=Network%20Security%20Assessment" aria-label="Twitter">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="Linkedin">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&is_video=false&description=Network%20Security%20Assessment" aria-label="Pinterest">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Network%20Security%20Assessment&body=Check out this article: http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f" aria-label="Email">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="Pocket">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="reddit">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&name=Network%20Security%20Assessment&description=" aria-label="Tumblr">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&t=Network%20Security%20Assessment" aria-label="Hacker News">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ol>
+    <li><a href="#network-security-assessment">Network Security Assessment</a>
+      <ol>
+        <li><a href="#phase-1-reconnaissance">Phase 1: Reconnaissance</a>
+          <ol>
+            <li><a href="#passive-reconnaissance">Passive reconnaissance</a></li>
+            <li><a href="#active-reconnaissance">Active reconnaissance</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+    
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Network Security Assessment
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2022-03-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-18</time>
+          
+            (Updated: <time datetime="2022-03-18 16:42:44 &#43;0000 UTC" itemprop="dateModified">2022-03-18</time>)
+          
+        </div>
+        
+        
+        <div class="article-read-time">
+          <i class="far fa-clock"></i>
+          
+          10 minute read
+        </div>
+        
+        
+        
+      </div>
+    </header>
+
+  
+    
+    <div class="content" itemprop="articleBody">
+      <h2 id="network-security-assessment">Network Security Assessment</h2>
+<h3 id="phase-1-reconnaissance">Phase 1: Reconnaissance</h3>
+<p>The initial phase of network security assessment is reconnaissance, in my understanding, this phase is used to gather the information of the target, including hosts, networks, users, services, etc. It is an essential preparation mission before you can really do something to the target.</p>
+<p>And the recoonaissance could be separated to passive or active.</p>
+<h4 id="passive-reconnaissance">Passive reconnaissance</h4>
+<p>In this case, &ldquo;passive&rdquo; means you do not directly interact or engage with target system. More specifically, you do not send any type of request to the target, thus the targets have no way of acknowledgement what you are doing.</p>
+<p>You should use all the tools to gather more information as possible</p>
+<p>Querying Search Engines and Websites
+There are some typical data you can gather by querying search engines and wbsites</p>
+<ul>
+<li>Physical address of office locations</li>
+<li>Contact details, including email addresses and telephone numbers</li>
+<li>Details of internal email systems and routing</li>
+<li>DNS layout and naming conventions</li>
+<li>Files residing on publicly accessible servers</li>
+</ul>
+<p>Here are some powerful tools we can use</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol>
+<li>Google Advanced Search</li>
+</ol>
+<p>It is very common for us to complain that Google returns some irrelevant results, but actually Google provides some powerful tools to enhance the search, it is the &ldquo;Goolge Advanced search&rdquo;, we can use its syntax to refine our search rules.</p>
+<p>For example, &ldquo;inurl:program&rdquo; results in all the websites or resources whose url or cotent contains the keyword &ldquo;program&rdquo;, you can even use &ldquo;allinurl:program&rdquo; to query all the url which contains &ldquo;program&rdquo;.</p>
+<p>Another common example is, when you search &ldquo;program moon&rdquo;, the result will probabaly give you a lot of results with &ldquo;program&rdquo; while excluding the keyword &ldquo;moon&rdquo; because obviously there is less result contains moon. However, if you want to search the whole word which contains both &ldquo;program moon&rdquo;, you can surround the keywords with double quotes &ldquo;&ldquo;program moon&rdquo;&rdquo;, powerful isn&rsquo;t it?</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="2">
+<li>Querying Netcraft</li>
+</ol>
+<p>The <a href="https://searchdns.netcraft.com/?restriction=site+contains&amp;host=nist.gov&amp;position=limited">Netcraft Web Application</a> contains historical server fingerprints, which you can use to check the OS versions or map network blocks of a company</p>
+<p>The link above shows the result of all recorded NIST government sites with their site, netblock, OS.</p>
+<figure><img src="/ox-hugo/2022-03-01_10-47-07_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="3">
+<li>Shodan</li>
+</ol>
+<p><a href="https://help.shodan.io/the-basics/what-is-shodan">Shodan</a> is a powerful search engine for gathering infomration on all devices connected to Internet.
+Use search query syntax(city, country, http.title net, org, port, etc.) to search for the devices information wihthin the whole Internet. Some entries even may list corresponding known vulnerabilities.</p>
+<figure><img src="/ox-hugo/2022-03-01_14-50-38_screenshot.png" width="400px"/>
+</figure>
+
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Differences with Google?</p>
+<ol>
+<li>Google queries the resources on World Wide Web, but it is only a tiny fraction of Internet, Shodan&rsquo;s goal is to provide a complete picture of the Internet.</li>
+<li>Shodan explicityly requires search query syntax.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="4">
+<li>LinkedIn</li>
+</ol>
+<p>LinkedIn has a lot of personal profile, it is always a good begining for attack like social engineering to dig deeper into an employee and an organisation. The LinkedIn Premium would help to look for people and roles without notifying them.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="5">
+<li>Domain WHOIS</li>
+</ol>
+<p><a href="https://who.is/">WHOIS</a> allows you to uncover the details information behind a domain. Typically, it contains:</p>
+<ul>
+<li>Administrative contact details</li>
+<li>Mailing addresses for office locations</li>
+<li>Details of authoritative name servers for each domain</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="6">
+<li>Automated Email Enumeration</li>
+</ol>
+<p>The <code>TheHarvester</code> tool is used for gathering information of emails. sub-domains, hosts, employee names, open ports, and banners from different public sources like search engines, PGP key servers, and SHODAN computer database.</p>
+<p>example 1
+Search email addresses from domain kali.org with results of 200 and using Bing as data source.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>theharvester -d kali.org -l <span style="color:#bd93f9">200</span> -b bing
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>example 2</p>
+<p>Search email addresses from domain nist.gov with results of 50 and using google as data source, finally  saved the resources in myresults.html</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<ol start="7">
+<li>DNS Querying</li>
+</ol>
+<p><a href="http://etutorials.org/Networking/network+security+assessment/Chapter+3.+Internet+Host+and+Network+Enumeration/3.3+DNS+Querying/">http://etutorials.org/Networking/network+security+assessment/Chapter+3.+Internet+Host+and+Network+Enumeration/3.3+DNS+Querying/</a></p>
+<p>What information we could retrieve from DNS Querying?
+: Including:</p>
+<pre><code> -   Ahutoritative DNS server information from name server (NS) records
+ -   Domain and subdomain information
+ -   Hostname information from A, PTR, and CNAME records
+ -   Public points of presence taht list mail exchanger (MX) records
+
+ In some cases, poorly configured DNS servers also allow you to enumerate:
+
+ -   Operating-system and platform information of hosts from the host information (HINFO) record
+ -   Names and IP addresses of internal or nonpublic hosts and networks
+</code></pre>
+<!-- raw HTML omitted -->
+<p>Why it is a passive recon?
+: There is no active scanning or probing of the target networkds, you just probe and query the information with authroitative DNS servers (for those doamins or network blocks taht are often run by ISPs). Meanwhile, most name servers are not aware of these potential sweeps, because they looks like normal DNS traffic.</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Forward DNS Querying</p>
+<p>Legitimate forward query:</p>
+<ol>
+<li>An end user accesses web site</li>
+<li>During the recipt of email when SMTP mail exchanger ifnormation is requested about the relevant domain</li>
+</ol>
+<p>Attacker:
+Issue forward DNS queries to identify mail servers and other obvious Internet-based systems</p>
+<p>Tools:</p>
+<ul>
+<li>The Sam Spade Windows client (available from <a href="http://www.samspade.org">http://www.samspade.org</a>)</li>
+<li>The nslookup client found within most operating systems</li>
+<li>The host client found within Unix environments</li>
+<li>The dig client found within Unix environments</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>DNS Zone transfer Techniques</p>
+<p>DNS zone
+: A DNS zone file contains all the naming infomration that the name server stores regarding a specific DNS domain, often including details of nonpublic internal networks and other userful information you can use to build an accurate map of the target infrastructure.</p>
+<p>Why we need DNS Zone transfer?
+: In most organisations, they use multiple name server to implement laod balancing and fault tolerance.
+The main name server is known as the primary name server and all subsequent name servers are secondary name servers.
+Either a primary or secondary name server can be queried for name resolution, THUS it is important that each name server have current DNS zone information.
+To ensure this, a secondary name server will regularly requests a complete listing of the computers it is responsible for from the primary.</p>
+<p>Tools used to request DNS zone transfer information include:</p>
+<ul>
+<li>The Sam Spade Windows client (available from <a href="http://www.samspade.org">http://www.samspade.org</a>)</li>
+<li>The nslookup client found within most operating systems</li>
+<li>The host client found within Unix-based environments</li>
+<li>The dig client found within Unix-based environments</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Reverse DNS Sweeping</p>
+<p>You may notice in previous techniques, they require domain name as parameter, but in this case, we do the opposite thing agains name resolution, we called reverse DNS, it can gather details of hosts that may be protected or filtered but still have DNS hostnames assigned to them. It is also able to identify hosts and potential weaknesses within Internet-based points of presence because it reveals hosts and networks that may not be revealed during DNS zone transfer queries.</p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Countermeasures</p>
+<ul>
+<li>Disable directory indexing on Web servers</li>
+<li>Use “robots.txt” to prevent indexing of certain content by search engines
+but do NOT rely on it to protect sensitive data</li>
+<li>Use generic details in WHOIS data (or privacy-protect it)</li>
+<li>Disable DNS zone transfers to untrusted hosts</li>
+<li>Prune DNS zone files from unnecessary information</li>
+<li>Preventing TypoSquatting: you may check if a similar domain is available, if you are Nintendo you may check for alternative domains with small variants (that people may mistype by accident while trying to visit your website).</li>
+</ul>
+</li>
+</ul>
+<h4 id="active-reconnaissance">Active reconnaissance</h4>
+<p>Compare to the passive recoonaissance, ACTIVE means actively interact with target services, network and hosts.</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Active Reconnaissance Tools</p>
+<p><a href="https://nmap.org/">Nmap</a> (&ldquo;Network mapper&rdquo;) is the most used tools to perform Internet network scans, is a free and open source utility for network discovery and security auditing.</p>
+<p>Other commonly used tools include:</p>
+<ul>
+<li>Nessus</li>
+<li>Rapid7 Nexpose</li>
+<li>QualysGuard</li>
+</ul>
+<p>You always need to use both free and commerical tools to assess the network because the attackers will do the same!</p>
+<p>Some types of nmap scans</p>
+<ul>
+<li>TCP scanning with connection (-sT, the default)</li>
+<li>TCP scanning with SYN packets (-sS)</li>
+<li>TCP scanning through FIN packets (-sF)</li>
+<li>TCP scanning empty (-sN)</li>
+<li>TCP scanning Xmas Tree (FIN + PUSH + URG, -sX)</li>
+<li>TCP scanning through ACK packets (-sA)</li>
+<li>TCP canning with Window Size (-sW)</li>
+<li>TCP scanning through R</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Host Scanning</p>
+<p>Aim
+: To confirm if a target IP is reachable/active through Internet</p>
+<p>Automated execution of a series of ping commands to determine which systems are active</p>
+<p>Known Techniques</p>
+<ul>
+<li>
+<p>Ping sweep</p>
+</li>
+<li>
+<p>ICMP sweep</p>
+</li>
+<li>
+<p>Normally, the &ldquo;ping&rdquo; command is used to send ICMP ECHO_REQUEST packet to expect ICMP ECHO_REPLY
+However, it takes too much time in a large-scale networkds because of waiting for the replay sequencly</p>
+</li>
+</ul>
+<p>Thus, wecould use fping to sends &ldquo;blocks of ping&rdquo;   at the same time to fix this problem</p>
+<p>Defense against ping and fping scans
+: Block all ICMP traffic</p>
+<p>Counter-dfense
+: -   scan ports at the transfer layer (TCP/UDP), e.g., through nmap or hping3 to send TCP ACK, you can see an example in Idle scanning later.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Port Scanning</p>
+<p>Aim
+: Try to connect to TCP and UDP ports of the target system to determine which network services are active (or LISTENING)</p>
+<p>It is important to know the active ports which can by exploited to attack</p>
+<p>UDP Portscan
+: Send a zero-length UDP packet to each port to determine which UDP services are available, if an ICMP error message &ldquo;port unreachable&rdquo; is received, it assumed that this service is unavailable</p>
+<p>TCP Portscan
+: Try to establish a TCP handshake to all the 65535 ports of the victim host to determine TCP services are available or not
+-   Advantage: no need to be root
+-   Disadvantage: very noisy</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP FIN Scan</p>
+<p>The attacker sends a FIN-makred (to close TCP connection) packet to victim host</p>
+<ul>
+<li>If the port is closed a RST pakcet is sent back</li>
+<li>If the port is open the FIN pakcet is ignored (timeout)</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Idle Scanning</p>
+<p><a href="https://www.icterra.com/what-is-idle-scan/">https://www.icterra.com/what-is-idle-scan/</a></p>
+<p>How to understand the word &ldquo;idle&rdquo;?
+: &ldquo;Idle&rdquo; is the requirement of the zombie computer, it requires the zombie computer have low network traffic (or better it has almost no traffic). Thus it usually happens overnight.</p>
+<p>So why we need the zombie computers do not have any other traffic? The reason is directly point to the mechanism of idle scanning. Basically, idle scanning is aim to use zombie computers to &ldquo;relay&rdquo; the scan without exposing attackers, and get the status of service ports.</p>
+<p>Before we elborate the mechnisms of idle scanning, let&rsquo;s briefly recap the knowledge about the response of SYN segments
+TCP SYN Scanning:
+AKA &ldquo;half-open&rdquo; scanning</p>
+<ul>
+<li>If a SYN/ACK segment is sent to a host it responds with RST segment (because there is no correspoonding session which started with a SYN earlier to SYN/ACK)</li>
+<li>If a SYN segment is sent to a host it responds with a RST if the port closed</li>
+</ul>
+<figure><img src="/ox-hugo/2022-03-05_16-13-15_screenshot.png" width="400px"/>
+</figure>
+
+<ul>
+<li>
+<p>If a SYN segment is sent to a host it responds with a RST if the port closed,</p>
+<figure><img src="/ox-hugo/2022-03-05_16-13-25_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+<li>
+<p>If a SYN segment is sent to a host it doesn&rsquo;t give a response if the port filtered.</p>
+</li>
+</ul>
+<figure><img src="/ox-hugo/2022-03-05_16-13-30_screenshot.png" width="400px"/>
+</figure>
+
+<p>Now let&rsquo;s understand the mechanism details with three scanning examples:</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Idle Scan (Victim Port Open)</p>
+<ol>
+<li>
+<p>The attacker sends a SYN/ACK segment to the Zombie computer</p>
+</li>
+<li>
+<p>Zombie computer responses with RST segment and its IP ID is incremented by &ldquo;one&rdquo;</p>
+<!-- raw HTML omitted -->
+</li>
+<li>
+<p>Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed SYN segment with Zombie computer&rsquo;s IP address to the Victim&rsquo;s computer</p>
+<figure><img src="/ox-hugo/2022-03-05_16-16-48_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+<li>
+<p>Since the target port is open, the victim computer will response a SYN/ACK segment to Zombie computer.</p>
+<figure><img src="/ox-hugo/2022-03-05_16-19-04_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+<li>
+<p>However, the zombie computer did not establish a session with Victim computer, so when it receive the SYN/ACK segment, it will respond with a RST segment to it, and meanwhile, increases its IP ID by &ldquo;one&rdquo; to 6,163</p>
+<figure><img src="/ox-hugo/2022-03-05_16-21-12_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+<li>
+<p>The attackers want to check the current IP ID, thus they send another SYN/ACK segment to The Zombie computer</p>
+<figure><img src="/ox-hugo/2022-03-05_16-22-07_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+<li>
+<p>The Zombie computer responds with a RST segment and increases its IP ID by &ldquo;one&rdquo; to 6,164. The attackers check the IP ID is increased by &ldquo;two&rdquo; which could confirm that the victim computer is OPEN.</p>
+</li>
+</ol>
+<p>Based on this, we can also get the reason why we require the victim computer to be &ldquo;idle&rdquo;, otherwise, the increment could be uncertain.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Idle Scan (Victim Port Closed)</p>
+<p>So, what if the port is closed?
+This time, the spoofed SYN segment will get the response of RST, which avoid the Zombie computer to interact with Victim computer, and the IP ID did not increase, thus finally we will get the IP ID only increase by &ldquo;one&rdquo;, which indicate the port is closed.</p>
+<figure><img src="/ox-hugo/2022-03-05_16-28-35_screenshot.png" width="400px"/>
+</figure>
+
+<figure><img src="/ox-hugo/2022-03-05_16-28-39_screenshot.png" width="400px"/>
+</figure>
+
+<figure><img src="/ox-hugo/2022-03-05_16-28-43_screenshot.png" width="400px"/>
+</figure>
+
+<figure><img src="/ox-hugo/2022-03-05_16-28-47_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Idle Scan (Victim Port Fillterd)</p>
+<p>If there is a firewall filter the spoofed SYN segment, the Victim computer will not send anything to Zombie computer, which result in the same IP ID as Port closed case.</p>
+<figure><img src="/ox-hugo/2022-03-05_16-31-04_screenshot.png" width="400px"/>
+</figure>
+
+<figure><img src="/ox-hugo/2022-03-05_16-30-15_screenshot.png" width="400px"/>
+</figure>
+
+<figure><img src="/ox-hugo/2022-03-05_16-30-40_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>OS Fingerprinting</p>
+<p>Aim
+: To determine the operating system of a host: Which OS? Which Version?</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo nmap -O localhost
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Service Enumeration/Banner Grabbing</p>
+<p>By grabbing the headers of exposed services, nmap (option -sV) can try to infer the exact service version</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Nmap Scripting Engine</p>
+<p>Nmap provide a series of scripts for checking the vulnerabilities based on open services of victim host</p>
+<p>Scripts can be found in <em>usr/share/nmap/scripts</em></p>
+<figure><img src="/ox-hugo/2022-03-06_11-32-26_screenshot.png" width="400px"/>
+</figure>
+
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Mitnick-Shimomura attack</p>
+<p>IP spoofing attack</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Countermeasure:</p>
+<ul>
+<li>Block scanning (e.g., ICMP)</li>
+<li>Check open ports and configuration, to make sure that only appropriate services are exposed.</li>
+<li>Monitor network activity (e.g., Intrusion Detection System, SIEM)</li>
+</ul>
+</li>
+</ul>
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ol>
+    <li><a href="#network-security-assessment">Network Security Assessment</a>
+      <ol>
+        <li><a href="#phase-1-reconnaissance">Phase 1: Reconnaissance</a>
+          <ol>
+            <li><a href="#passive-reconnaissance">Passive reconnaissance</a></li>
+            <li><a href="#active-reconnaissance">Active reconnaissance</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+    
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f" aria-label="Facebook">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&text=Network%20Security%20Assessment" aria-label="Twitter">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="Linkedin">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&is_video=false&description=Network%20Security%20Assessment" aria-label="Pinterest">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Network%20Security%20Assessment&body=Check out this article: http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f" aria-label="Email">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="Pocket">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&title=Network%20Security%20Assessment" aria-label="reddit">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&name=Network%20Security%20Assessment&description=" aria-label="Tumblr">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2fginkgo.org.cn%2fposts%2fnetwork_security_assessment%2f&t=Network%20Security%20Assessment" aria-label="Hacker News">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu-toggle" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;" aria-label="Menu">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="toc-toggle" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;" aria-label="TOC">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share-toggle" class="icon" href="#" onclick="$('#share-footer').toggle();return false;" aria-label="Share">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2022  medicwrf 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+<script src=/js/code-copy.js></script>
+
+
+
+
+</html>
