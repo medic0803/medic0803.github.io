@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Password Cracking | Under The Ginkgo</title>
+  <link rel = 'canonical' href = '/posts/password_cracking/'>
+  <meta name="description" content="Cogito, ergo sum">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Password Cracking" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/password_cracking/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-19T17:17:46+00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Password Cracking"/>
+<meta name="twitter:description" content=""/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.c05d68261bf086a9d7713c4f8a6215a3601608e267a816a7ee58f139b3d1aae51222aae2081c8e0c6bd35e1334773b7a16283022f31f92afd93bb37e5e822e66.css" integrity="sha512-wF1oJhvwhqnXcTxPimIVo2AWCOJnqBan7ljxObPRquUSIqriCByODGvTXhM0dzt6FigwIvMfkq/ZO7N&#43;XoIuZg=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;" aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" /posts/pwnthebox_web_easy/" aria-label="Previous">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#" aria-label="Share">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2fpassword_cracking%2f" aria-label="Facebook">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2fpassword_cracking%2f&text=Password%20Cracking" aria-label="Twitter">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="Linkedin">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2fpassword_cracking%2f&is_video=false&description=Password%20Cracking" aria-label="Pinterest">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Password%20Cracking&body=Check out this article: %2fposts%2fpassword_cracking%2f" aria-label="Email">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="Pocket">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="reddit">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2fpassword_cracking%2f&name=Password%20Cracking&description=" aria-label="Tumblr">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2fpassword_cracking%2f&t=Password%20Cracking" aria-label="Hacker News">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#password-cracking">Password Cracking</a>
+      <ul>
+        <li><a href="#case-study-adobe-password-leak">Case Study: Adobe Password Leak</a></li>
+        <li><a href="#cryptanalysis-basics">Cryptanalysis basics</a>
+          <ul>
+            <li><a href="#brute-force-attacks">Brute-force attacks</a></li>
+            <li><a href="#dictionary-attacks">Dictionary attacks</a></li>
+            <li><a href="#password-robustness">Password robustness</a></li>
+          </ul>
+        </li>
+        <li><a href="#cryptographic-hash-functions">Cryptographic hash functions</a>
+          <ul>
+            <li><a href="#the-birthday-problem--or-the-birthday-paradox">The birthday problem (or the birthday paradox)</a></li>
+            <li><a href="#collision-attack">Collision attack</a></li>
+            <li><a href="#preimage-attack">Preimage attack</a></li>
+          </ul>
+        </li>
+        <li><a href="#md5-collision-exercise">MD5 collision exercise</a></li>
+        <li><a href="#rainbow-table-attacks">Rainbow table attacks</a>
+          <ul>
+            <li><a href="#how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text">How we utilise the rainbow table the plaintext of a given hashed text?</a></li>
+            <li><a href="#salt">Salt</a></li>
+          </ul>
+        </li>
+        <li><a href="#countermeasures-and-best-practices">Countermeasures and best practices</a>
+          <ul>
+            <li><a href="#weak-passwords">Weak passwords</a></li>
+            <li><a href="#side-channel-attacks">Side-channel attacks</a></li>
+            <li><a href="#good-practice-around-passwords">Good practice around passwords</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Password Cracking
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2022-03-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-18</time>
+          
+            (Updated: <time datetime="2022-03-19 17:17:46 &#43;0000 UTC" itemprop="dateModified">2022-03-19</time>)
+          
+        </div>
+        
+        
+        <div class="article-read-time">
+          <i class="far fa-clock"></i>
+          
+          10 minute read
+        </div>
+        
+        
+        <div class="article-category">
+            <i class="fas fa-archive"></i>
+            
+            
+            <a class="category-link" href="/categories/coruse_notes">coruse_notes</a>
+            
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/cryptanalysis" rel="tag">cryptanalysis</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/password_cracking" rel="tag">password_cracking</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/rainbow_table_attacks" rel="tag">rainbow_table_attacks</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/network_security" rel="tag">network_security</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    
+    <div class="content" itemprop="articleBody">
+      <h2 id="password-cracking">Password Cracking</h2>
+<h3 id="case-study-adobe-password-leak">Case Study: Adobe Password Leak</h3>
+<p>If you are familiar with how online service store users&rsquo;s password, let me ask you:</p>
+<p>How Should You Do?</p>
+<figure><img src="/ox-hugo/2022-03-19_09-43-18_screenshot.png" width="700px"/>
+</figure>
+
+<p>Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.</p>
+<p>But how Adobe Did It?</p>
+<figure><img src="/ox-hugo/2022-03-19_09-46-25_screenshot.png" width="700px"/>
+</figure>
+
+<p>What are the consequences?</p>
+<ol>
+<li>If you get the master key, literally you own all &ldquo;encrypted passwords&rdquo;</li>
+<li>If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.</li>
+</ol>
+<p>For more details, please refer to this article: <a href="https://nakedsecurity.sophos.com/2013/11/04/anatomy-of-a-password-disaster-adobes-giant-sized-cryptographic-blunder/">Anatomy of a password disaster – Adobe’s giant-sized cryptographic blunder</a></p>
+<h3 id="cryptanalysis-basics">Cryptanalysis basics</h3>
+<dl>
+<dt>Cryptanalysis</dt>
+<dd>The study of techniques to reveal what cryptography is attempting to hide or protect.</dd>
+</dl>
+<p>In other words, break the cryptographyic algorithms without knowing the key.</p>
+<p>Cryptanalysis are based on:</p>
+<ul>
+<li>The nature of the cryptographyic aglorithm</li>
+<li>the key</li>
+<li>some knowledge on the text, such as language(common words), format or encoding (script, image alway begin with some same pattern),</li>
+<li>a section with both plaintext and encrypted text</li>
+</ul>
+<h4 id="brute-force-attacks">Brute-force attacks</h4>
+<dl>
+<dt>Brute-force attack</dt>
+<dd>Aim to decrypt an encrypted text by exhaustively traing all possible secret keys until you obtain a meaningful plaintext</dd>
+</dl>
+<p>On average, you need to try at least half of all the posssbile keys to be successful</p>
+<p>For example, to brute force a 4-digit password, the number of possibilities is 10^4 = 10000, therefore, on average, a brute-force attack in this scenario will succeed after 5000 attempts. If 1 attempt cost 1s, it needs at least 1h24min to finish this work.</p>
+<h4 id="dictionary-attacks">Dictionary attacks</h4>
+<p>4-digit password needs one hour and half? Forget about it, let&rsquo;s to try something not so naive.</p>
+<p>Let&rsquo;s first define the term &ldquo;password&rdquo; as a user-defined encrypted secret key.</p>
+<dl>
+<dt>Passowrd dictionary attacks</dt>
+<dd>Use a &ldquo;dictionary&rdquo; of possbile words (based on an attacker-defined alphabet) to make exploitation attempts, including English words, user&rsquo;s private information and common passwords.</dd>
+</dl>
+<p>Common dictionaries for attacks include:</p>
+<ul>
+<li>Words and meaningful fragments of words combination for a certain language</li>
+<li>Personal information (eg, obtained from OSINT or social engineering)</li>
+<li>Lists of names, locations, dates, companies, etc.</li>
+</ul>
+<p>Therefore, if the attackers use dictionary attack, the password length does not provide too much help on password robustness.</p>
+<h4 id="password-robustness">Password robustness</h4>
+<p>There are four main elements to determine the security of a password</p>
+<dl>
+<dt>Number of symbols in the password</dt>
+<dd>As we mentioned before, 4-digit locker would require on average 10^4/2 seconds, or almost 1.5 hours to bruite force, the longer password, the longer time to brute force.</dd>
+<dt>Number of possibilities for each position</dt>
+<dd>We continue use previous example, if we expand the types of symbols to alphabet and number, the possibilities expand to 36*36*36 for brute force, which requires much more time than 1.5 horus</dd>
+<dt>Time required for each attempt</dt>
+<dd>Based on my experience, some online service will delay the login attempt to expand the time of brute force, which may also help to defend the attack like DDoS.</dd>
+<dt>Are there easier alternatives</dt>
+<dd>Remember we metioned in <em>Social Engineering</em>: &ldquo;The easiest way to get the information you want is always by asking the victims themselves&rdquo;? There are always more than one way to get the anser of a question, so does cryptanalysis, you can even physically break the lock:)
+Some other common alternatives:
+<ul>
+<li>finding write-down notes in officers</li>
+<li>shoulder-surfing, ie looking over someone&rsquo;s should when they&rsquo;re typing their passwords</li>
+<li>physical break-in</li>
+<li>physically stealing passwords lists or logbooks</li>
+</ul>
+</dd>
+</dl>
+<h3 id="cryptographic-hash-functions">Cryptographic hash functions</h3>
+<dl>
+<dt>Hash function</dt>
+<dd>A function that maps input data of <code>arbitrary size</code> to <code>fixed-size</code> outoput values called hashes.</dd>
+<dt>Crytographic hash functions (CHF)</dt>
+<dd>are hash functions more suitable for information security applications which contains ideal following properties:
+<ol>
+<li>deterministic: given message M, its hash H(M) is always the same</li>
+<li>quick to compute</li>
+<li>unfeasible to generate message M that has a specific hash value H (hard to find alternative message M')</li>
+<li>unfeasible to find messages M1 and M2 such that H(M1) = H(M2) (hard to find a collision)</li>
+<li>avalanche effect: a small change in message M leads to siginificant change to the hash value.</li>
+</ol>
+</dd>
+</dl>
+<p>Usage of CHF includes MACs (Message Authentication Codes), digital signatures and authentications.</p>
+<p>Let&rsquo;s use an example of CHF</p>
+<p>Left hand column is the input, after crypotographic hash function, we get the output, we called <code>Digest</code> here.</p>
+<p>We can observe that, a single character change of input text, the digest would be very different from previous one.</p>
+<figure><img src="/ox-hugo/2022-03-19_14-44-36_screenshot.png" width="700px"/>
+</figure>
+
+<p>As you can easily to guess, there are many problems and attacks which threat the CHF:</p>
+<h4 id="the-birthday-problem--or-the-birthday-paradox">The birthday problem (or the birthday paradox)</h4>
+<p>Let me ask you a classic question, how many people you need in a single room, which makes the probability that at least two person share a birthday to be 50%?</p>
+<p>You need only 23 people to raise probability to 50 per cent.</p>
+<p>Prove:
+The goal is to compute P(A), the probability that at least two people in the room have same birthday.
+However, it is simpler to caculate the reverse one, P(A&rsquo;), the probability that no two people in the room have the same birthday.
+To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have the same birthday as <code>person 1</code>, and that persona 3 doest not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 thurough 22. Let&rsquo;s number this event as Event1 to Event 23</p>
+<p>Let&rsquo;s calculate the product of the probability of these events:</p>
+<figure><img src="/ox-hugo/2022-03-19_15-31-52_screenshot.png" width="400px"/>
+</figure>
+
+<p>Evaluating equation (2) gives P(A&rsquo;) ≈ 0.492703</p>
+<p>Therefore, P(A) ≈ 1 − 0.492703 = 0.507297 (50.7297%).</p>
+<p>Also, according to the <a href="https://en.wikipedia.org/wiki/Pigeonhole%5Fprinciple">pigenhole principle</a>, the probability reaches 100 per cent when at least 367 people are present since there are only 366 possible birthdays.</p>
+<p>Based on above knowledge, we can understand that birthday attack is based on higher likelihood of collisions found between <strong>random attack</strong> and <strong>fixed degree of permutations</strong>.</p>
+<h4 id="collision-attack">Collision attack</h4>
+<p>The collision attack aims to identify two inputs that generate the same hash.</p>
+<p>More formally, we assume user has password <strong>P</strong> with hash <strong>H(P)</strong>, an attacker may find another string Q, such that H(P) = H(Q)</p>
+<p>This is why we need CHF to have the property to make it feasible to find the collision.</p>
+<h4 id="preimage-attack">Preimage attack</h4>
+<p>The preimage attack aims to find a message that has a specific hash value</p>
+<p>More formally, an adversary &rsquo;tweaks&rsquo; an input message M&rsquo; until H(M&rsquo;)=H(M)</p>
+<p>This attack will put huge harm to the security property: Integrity, because if this kind of tweak success, we can not trust anything, if even it has been hashed.</p>
+<p>Let&rsquo;s see an example:</p>
+<ul>
+<li>Message M: Give Mr John Smith a salary increase of £1,000.</li>
+</ul>
+<p>This message will be digitally signed as a contract by CHF H.</p>
+<p>But the attacker finds some alternatives of messages which change their meaning of the input message, but get the same output digest as H(M)</p>
+<ul>
+<li>Message M’: Award Mr Smith a raise of £2,000</li>
+<li>Message M&rsquo;&rsquo;: Present John Smith a bonus of £3,000</li>
+</ul>
+<p>Same signed hash value, different meaning, how powerful it is&hellip;</p>
+<h3 id="md5-collision-exercise">MD5 collision exercise</h3>
+<p>When we download some files/software, many of them will provide md5 authentication, to authenticate that the integrity of the software, however, here is a <a href="https://www.mscs.dal.ca/~selinger/md5collision/">exercise</a> that shows MD5 can not be trusted anymore.</p>
+<p>Please review the details, I will just post something interesting here:</p>
+<p>Let&rsquo;s see two programs like this:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Program 1: if (data1 == data1) then { good_program } else { evil_program }
+</span></span><span style="display:flex;"><span>Program 2: if (data2 == data1) then { good_program } else { evil_program }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.</p>
+<h3 id="rainbow-table-attacks">Rainbow table attacks</h3>
+<p>In this section, we will see a smarter variant of dctionary attack to do the brute froce, it called <strong>precomputed dictionary attack</strong>.</p>
+<p>In this attack, we will precompute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>
+<p>Let&rsquo;s use an example to introduce the terms and processes in a Rainbow Table usage.</p>
+<p>The letter H denotes a hash function.</p>
+<p>The letters R_i denote different reduction fucntions, which are aim to store more plaintext-hashed_text chains in the table. The number and sequences of reduction functions are same in each row.</p>
+<p>We only store only two columns of data in a system: 1. The first column (in green) and the last (in yellow).</p>
+<figure><img src="/ox-hugo/2022-03-19_16-33-39_screenshot.png" width="700px"/>
+</figure>
+
+<h4 id="how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text">How we utilise the rainbow table the plaintext of a given hashed text?</h4>
+<ul>
+<li>Step 0
+We find the hashed text &ldquo;re3xes&rdquo; in /etc/shadow directory of the victim, we want the plaintext of the password, and have a rainbow table which contains two columns (green and yellow).</li>
+</ul>
+<figure><img src="/ox-hugo/2022-03-19_16-36-34_screenshot.png" width="700px"/>
+</figure>
+
+<ul>
+<li>
+<p>Step 1
+We use the reduction function R3 on &ldquo;re3xes&rdquo; (start from last reduction function) and see if the result &ldquo;rambo&rdquo; is in the last column of the rainbow table. In this example it is not.</p>
+<figure><img src="/ox-hugo/2022-03-19_16-39-37_screenshot.png" width="700px"/>
+</figure>
+
+</li>
+<li>
+<p>Step 2
+Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &ldquo;linux23&rdquo; as the result.</p>
+<figure><img src="/ox-hugo/2022-03-19_16-50-07_screenshot.png" width="700px"/>
+</figure>
+
+</li>
+<li>
+<p>Step 3
+Find the match</p>
+<figure><img src="/ox-hugo/2022-03-19_16-50-29_screenshot.png" width="700px"/>
+</figure>
+
+</li>
+<li>
+<p>Step 4
+Start with matched plaintext column &ldquo;passwd&rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &ldquo;re3xes&rdquo;.</p>
+<figure><img src="/ox-hugo/2022-03-19_16-51-59_screenshot.png" width="700px"/>
+</figure>
+
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<dl>
+<dt>Summary</dt>
+<dd>We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column. If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.
+<figure><img src="/ox-hugo/2022-03-19_16-43-11_screenshot.png" width="700px"/>
+</figure>
+
+</dd>
+</dl>
+<h4 id="salt">Salt</h4>
+<p>Remeber me metioned a term in first section: Salt? Rainbow table attacks and precomputed dictionary attacks can be thwarted via the use of salt. The reason is very simple, even if you can use precomputed table based on some common use dictionaries, but you can predict what&rsquo;s the result used.</p>
+<p>Here are the most common mistakes in applying salt:</p>
+<ol>
+<li>Using short salts:
+if the salt is too short, the attacker may predict or brute-force pre-computed dictionaries with known salts.</li>
+<li>Reusing salts:
+if you reuse the salt for multiple accounts, the attacker will easil find out that the plaintxt passwords were the same, and use side-channel information (eg, password hints) to corrupt multiple accounts at once.
+Moreover, if the attacker randomly predicted the correct salt while computing a precomputed dicionary, then all the passwords would be compromised at once.</li>
+</ol>
+<p>Finally it is important to note that using a ‘salt’ is not robust enough to thwart dictionary attacks, but only the pre-computation.</p>
+<h3 id="countermeasures-and-best-practices">Countermeasures and best practices</h3>
+<h4 id="weak-passwords">Weak passwords</h4>
+<dl>
+<dt>Default passwords</dt>
+<dd>Default provided by system vendor which should be changed at installation time
+<ul>
+<li>password</li>
+<li>default</li>
+<li>admin</li>
+<li>guest</li>
+</ul>
+</dd>
+<dt>Dictionary words</dt>
+<dd>Including non-English dictionaries:
+<ul>
+<li>chameleon</li>
+<li>RedSox</li>
+<li>sandbags</li>
+<li>bunnyhop</li>
+<li>IntenseCrabtree</li>
+</ul>
+</dd>
+<dt>Words with numbers appended</dt>
+<dd>These can be easily tested automatically by attackers with little lost time.
+<ul>
+<li>password1</li>
+<li>deer2000</li>
+<li>john1234</li>
+</ul>
+</dd>
+<dt>Words with simple obfuscations</dt>
+<dd>Still, it can be tested automatically with little additional effort
+<ul>
+<li>p@ssw0rd</li>
+<li>l33th4x0r</li>
+<li>g0ldf1sh</li>
+</ul>
+</dd>
+<dt>Doubled words</dt>
+<dd><ul>
+<li>crabcrab</li>
+<li>stopstop</li>
+<li>treetree</li>
+<li>passpass.</li>
+</ul>
+</dd>
+<dt>Common sequences from a keyboard row</dt>
+<dd><ul>
+<li>qwerty</li>
+<li>123456</li>
+<li>asdfgh</li>
+<li>fred.</li>
+</ul>
+</dd>
+<dt>Numeric sequences based on well known numbers such as</dt>
+<dd><ul>
+<li>911 (9-1-1, 9/11)</li>
+<li>314159&hellip; (pi)</li>
+<li>27182&hellip; (e)</li>
+<li>112 (1-1-2).</li>
+</ul>
+</dd>
+<dt>Identifiers</dt>
+<dd><ul>
+<li>jsmith123</li>
+<li>1/1/1970</li>
+<li>555–1234</li>
+<li>one&rsquo;s username.</li>
+</ul>
+</dd>
+<dt>Weak passwords in non-English languages</dt>
+<dd><ul>
+<li>contraseña (Spanish)</li>
+<li>ji32k7au4a83 (encoding from Chinese).</li>
+</ul>
+</dd>
+<dt>Anything personally related to an individual</dt>
+<dd>All these can be easily tested automatically after a simple investigation of a person&rsquo;s details, eg through social engineering.
+<ul>
+<li>license plate number</li>
+<li>social security number</li>
+<li>current or past telephone numbers</li>
+<li>student ID number</li>
+<li>current address</li>
+<li>previous addresses</li>
+<li>birthday</li>
+<li>sports team</li>
+<li>relative&rsquo;s or pet&rsquo;s names, nicknames, birthdays, initials, etc.</li>
+</ul>
+</dd>
+<dt>Dates</dt>
+<dd>Dates follow a pattern and make passwords weak.</dd>
+<dt>Common passwords from previous leaks</dt>
+<dd>For example, the top 10 most common passwords in a <a href="https://edition.cnn.com/2019/04/22/uk/most-common-passwords-scli-gbr-intl/index.html">CNN article</a>:
+<ul>
+<li>123456</li>
+<li>123456789</li>
+<li>qwerty</li>
+<li>password</li>
+<li>111111</li>
+<li>12345678</li>
+<li>abc123</li>
+<li>1234567</li>
+<li>password1</li>
+<li>
+<ol start="12345">
+<li></li>
+</ol>
+</li>
+</ul>
+</dd>
+</dl>
+<h4 id="side-channel-attacks">Side-channel attacks</h4>
+<p>As the name suggest, rather than exploit the weakness of the algorithm itself (eg. cryptanalysis and software bugs), a side-channel attack relies on information gained from the implementation of a computer system.</p>
+<p>For example:</p>
+<ul>
+<li>timing information (eg, implement the encryption, hashing)</li>
+<li>power comsuption</li>
+<li>electromagnetic leaks</li>
+<li>sound</li>
+</ul>
+<p>If you are familar with SQL injection, the blind injection is also a side-channel attacks.</p>
+<p>Let&rsquo;s look at the details of a <code>timeing attack</code>:
+By analyse time taken by the cryptographic algorithm implemenetation operation, the attacker is able to reverse enginner the input.</p>
+<p>In 2003, <a href="https://id.elsevier.com/as/authorization.oauth2?platSite=SD%2Fscience&amp;scope=openid%20email%20profile%20els%5Fauth%5Finfo%20els%5Fidp%5Finfo%20els%5Fidp%5Fanalytics%5Fattrs%20els%5Fsa%5Fdiscover%20urn%3Acom%3Aelsevier%3Aidp%3Apolicy%3Aproduct%3Ainst%5Fassoc&amp;response%5Ftype=code&amp;redirect%5Furi=https%3A%2F%2Fwww.sciencedirect.com%2Fuser%2Fidentity%2Flanding&amp;authType=SINGLE%5FSIGN%5FIN&amp;prompt=login&amp;client%5Fid=SDFE-v3&amp;state=retryCounter%3D0%26csrfToken%3D8db72d04-1503-4c61-852a-86ec787771b8%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst%5Fassoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS1389128605000125%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-7f672742-0676-47c6-9ce3-f01d2dc6f238">Boneh and Brumley</a> publsihed a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.</p>
+<h4 id="good-practice-around-passwords">Good practice around passwords</h4>
+<ul>
+<li>Do not reuse passwords
+<ul>
+<li>Browser</li>
+<li>KeePassX</li>
+<li>Local</li>
+</ul>
+</li>
+<li>Use password managers</li>
+<li>Use Two-Factor Authentication (2FA)</li>
+</ul>
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#password-cracking">Password Cracking</a>
+      <ul>
+        <li><a href="#case-study-adobe-password-leak">Case Study: Adobe Password Leak</a></li>
+        <li><a href="#cryptanalysis-basics">Cryptanalysis basics</a>
+          <ul>
+            <li><a href="#brute-force-attacks">Brute-force attacks</a></li>
+            <li><a href="#dictionary-attacks">Dictionary attacks</a></li>
+            <li><a href="#password-robustness">Password robustness</a></li>
+          </ul>
+        </li>
+        <li><a href="#cryptographic-hash-functions">Cryptographic hash functions</a>
+          <ul>
+            <li><a href="#the-birthday-problem--or-the-birthday-paradox">The birthday problem (or the birthday paradox)</a></li>
+            <li><a href="#collision-attack">Collision attack</a></li>
+            <li><a href="#preimage-attack">Preimage attack</a></li>
+          </ul>
+        </li>
+        <li><a href="#md5-collision-exercise">MD5 collision exercise</a></li>
+        <li><a href="#rainbow-table-attacks">Rainbow table attacks</a>
+          <ul>
+            <li><a href="#how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text">How we utilise the rainbow table the plaintext of a given hashed text?</a></li>
+            <li><a href="#salt">Salt</a></li>
+          </ul>
+        </li>
+        <li><a href="#countermeasures-and-best-practices">Countermeasures and best practices</a>
+          <ul>
+            <li><a href="#weak-passwords">Weak passwords</a></li>
+            <li><a href="#side-channel-attacks">Side-channel attacks</a></li>
+            <li><a href="#good-practice-around-passwords">Good practice around passwords</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2fpassword_cracking%2f" aria-label="Facebook">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2fpassword_cracking%2f&text=Password%20Cracking" aria-label="Twitter">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="Linkedin">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2fpassword_cracking%2f&is_video=false&description=Password%20Cracking" aria-label="Pinterest">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Password%20Cracking&body=Check out this article: %2fposts%2fpassword_cracking%2f" aria-label="Email">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="Pocket">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2fpassword_cracking%2f&title=Password%20Cracking" aria-label="reddit">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2fpassword_cracking%2f&name=Password%20Cracking&description=" aria-label="Tumblr">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2fpassword_cracking%2f&t=Password%20Cracking" aria-label="Hacker News">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu-toggle" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;" aria-label="Menu">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="toc-toggle" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;" aria-label="TOC">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share-toggle" class="icon" href="#" onclick="$('#share-footer').toggle();return false;" aria-label="Share">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2022  medicwrf 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+<script src=/js/code-copy.js></script>
+
+
+
+
+</html>
