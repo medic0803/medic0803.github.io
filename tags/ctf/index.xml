@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ctf on Under The Ginkgo</title>
+    <link>/tags/ctf/</link>
+    <description>Recent content in ctf on Under The Ginkgo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>medicwrf</copyright>
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pwn The Box WEB-Easy</title>
+      <link>/posts/pwnthebox_web_easy/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/pwnthebox_web_easy/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
