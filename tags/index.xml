@@ -1,102 +1,99 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Tags on Under The Ginkgo</title>
-    <link>/tags/</link>
-    <description>Recent content in Tags on Under The Ginkgo</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>medicwrf</copyright>
-    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>cryptanalysis</title>
-      <link>/tags/cryptanalysis/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/cryptanalysis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ctf</title>
-      <link>/tags/ctf/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/ctf/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>network_security</title>
-      <link>/tags/network_security/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/network_security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>password_cracking</title>
-      <link>/tags/password_cracking/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/password_cracking/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>rainbow_table_attacks</title>
-      <link>/tags/rainbow_table_attacks/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/rainbow_table_attacks/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>security</title>
-      <link>/tags/security/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>web</title>
-      <link>/tags/web/</link>
-      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/web/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hacker</title>
-      <link>/tags/hacker/</link>
-      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/hacker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OSINT</title>
-      <link>/tags/osint/</link>
-      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/osint/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>reconnaissance</title>
-      <link>/tags/reconnaissance/</link>
-      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/reconnaissance/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+    <channel>
+        <title>Tags on Under The Ginkgo</title>
+        <link>https://example.com/tags/</link>
+        <description>Recent content in Tags on Under The Ginkgo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>cryptanalysis</title>
+        <link>https://example.com/tags/cryptanalysis/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/cryptanalysis/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ctf</title>
+        <link>https://example.com/tags/ctf/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/ctf/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>network_security</title>
+        <link>https://example.com/tags/network_security/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/network_security/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>password_cracking</title>
+        <link>https://example.com/tags/password_cracking/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/password_cracking/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>rainbow_table_attacks</title>
+        <link>https://example.com/tags/rainbow_table_attacks/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/rainbow_table_attacks/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>security</title>
+        <link>https://example.com/tags/security/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/security/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>web</title>
+        <link>https://example.com/tags/web/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/web/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>hacker</title>
+        <link>https://example.com/tags/hacker/</link>
+        <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/hacker/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>social_engineer</title>
+        <link>https://example.com/tags/social_engineer/</link>
+        <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/social_engineer/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>OSINT</title>
+        <link>https://example.com/tags/osint/</link>
+        <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/osint/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>reconnaissance</title>
+        <link>https://example.com/tags/reconnaissance/</link>
+        <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/tags/reconnaissance/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
 </rss>

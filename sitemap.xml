@@ -2,64 +2,75 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2022-03-19T20:31:02+00:00</lastmod>
+    <loc>https://example.com/categories/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>/categories/course_notes/</loc>
-    <lastmod>2022-03-19T17:25:38+00:00</lastmod>
+    <loc>https://example.com/categories/course_notes/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>/tags/cryptanalysis/</loc>
+    <loc>https://example.com/tags/cryptanalysis/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>/tags/ctf/</loc>
+    <loc>https://example.com/tags/ctf/</loc>
     <lastmod>2022-03-19T20:31:02+00:00</lastmod>
   </url><url>
-    <loc>/tags/network_security/</loc>
+    <loc>https://example.com/tags/network_security/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>/posts/password_cracking/</loc>
+    <loc>https://example.com/posts/password_cracking/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>/tags/password_cracking/</loc>
+    <loc>https://example.com/tags/password_cracking/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
+    <loc>https://example.com/posts/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/posts/pwnthebox_web_easy/</loc>
     <lastmod>2022-03-19T20:31:02+00:00</lastmod>
   </url><url>
-    <loc>/posts/pwnthebox_web_easy/</loc>
-    <lastmod>2022-03-19T20:31:02+00:00</lastmod>
-  </url><url>
-    <loc>/tags/rainbow_table_attacks/</loc>
+    <loc>https://example.com/tags/rainbow_table_attacks/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>/tags/security/</loc>
+    <loc>https://example.com/tags/security/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/tags/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/tags/web/</loc>
     <lastmod>2022-03-19T20:31:02+00:00</lastmod>
   </url><url>
-    <loc>/tags/</loc>
+    <loc>https://example.com/categories/writeups/</loc>
     <lastmod>2022-03-19T20:31:02+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2022-03-19T20:31:02+00:00</lastmod>
+    <loc>https://example.com/tags/hacker/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>/tags/web/</loc>
-    <lastmod>2022-03-19T20:31:02+00:00</lastmod>
+    <loc>https://example.com/posts/social_engineering/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>/categories/writeups/</loc>
-    <lastmod>2022-03-19T20:31:02+00:00</lastmod>
+    <loc>https://example.com/tags/social_engineer/</loc>
+    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>/posts/social_engineering/</loc>
-    <lastmod>2022-03-18T22:40:31+00:00</lastmod>
-  </url><url>
-    <loc>/tags/hacker/</loc>
+    <loc>https://example.com/posts/network_security_assessment/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>/posts/network_security_assessment/</loc>
+    <loc>https://example.com/tags/osint/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>/tags/osint/</loc>
+    <loc>https://example.com/tags/reconnaissance/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>/tags/reconnaissance/</loc>
-    <lastmod>2022-03-19T17:25:38+00:00</lastmod>
+    <loc>https://example.com/archives/</loc>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/page/</loc>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.com/search/</loc>
   </url>
 </urlset>
