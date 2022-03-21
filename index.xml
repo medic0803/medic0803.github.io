@@ -688,7 +688,15 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;post_result&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;pwnthebox&#34;&gt;PwnTheBox&lt;/h2&gt;
+&lt;/div&gt;&lt;h2 id=&#34;该网站已经被黑&#34;&gt;该网站已经被黑&lt;/h2&gt;
+&lt;p&gt;在主页没有发现有用的信息
+那么直接用dirmap直接扫目录&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-20_21-13-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;pwnthebox&#34;&gt;PwnTheBox&lt;/h2&gt;
 &lt;p&gt;查看源代码，获得提示flag在header里面&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-58-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
