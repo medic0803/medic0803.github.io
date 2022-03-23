@@ -559,6 +559,203 @@
 &lt;p&gt;看到对应的txt文件，访问即可获得flag&lt;/p&gt;</description>
         </item>
         <item>
+        <title>Mr. Robot writeup</title>
+        <link>https://example.com/posts/mr_robot/</link>
+        <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://example.com/posts/mr_robot/</guid>
+        <description>&lt;h2 id=&#34;writeup&#34;&gt;Writeup&lt;/h2&gt;
+&lt;h3 id=&#34;我的尝试&#34;&gt;我的尝试&lt;/h3&gt;
+&lt;p&gt;拿到题目，看到OVA格式，直接在virtualbox中打开&lt;/p&gt;
+&lt;p&gt;看到关键词wordpress，貌似是一个写blog的工具？&lt;/p&gt;
+&lt;p&gt;启动后发现需要登陆，根据师傅的提示没有过多纠缠，应该是要通过一个网页来入手&lt;/p&gt;
+&lt;p&gt;这时候想到以前用ssh连接虚拟机的时候，往往用vmware启动虚拟机后不用管登陆，直接用ssh就可以，说明后台服务其实已经启动，加上需要网页的线索，想到通过分配到的局域网IP地址找到网页&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ifconfig &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s2&#34;&gt;&amp;#34;inet&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-32-22_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;再次启动后，查看网络配置，观察到出现了一个新的局域网&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-33-41_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;然后通过nmap进行扫描，确认目标网络地址&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-36-02_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;尝试两个ip地址，确认登陆到目标网站为192.168.56.118。
+在开场动画中观察到一组用户名:密码,root:â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢
+但是似乎没有办法直接输入特殊字符，应该也不重要，暂时放弃&lt;/p&gt;
+&lt;p&gt;在终端界面尝试linux命令，均是同样的报错：Error: Command not recognized. Type help for a list of commands.&lt;/p&gt;
+&lt;p&gt;此时我打开Burp Suite开始拦截http请求，
+接下来尝试提供的几个命令，发现都是未修改过的影片以及图片内容，感觉是来自某部电影或者电视剧，同时都没有拦截到与后台的交互，暂时感觉没有有价值的内容&lt;/p&gt;
+&lt;p&gt;但join命令却要求输入邮箱，有用户输入感觉就可以操作，Brupsuite用intruder进行扫描，全都返回了统一的404，&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-54-08_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;但同时返回了一个错误页面&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_22-01-34_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;至此我已经没有什么其他想法了，其他的一些尝试包括访问&lt;a class=&#34;link&#34; href=&#34;https://www.whoismrrobot.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.whoismrrobot.com/&lt;/a&gt; ，尝试阅读html源码以及目录下的一些js代码，也没有收获 拿到了里面的一些user:pwd，但也没没有什么作用，然后就搜到了同样题目的write-up，一开始打算看点提示，但浏览一下发现已经超出能力范围，只能拿来学习一下了&lt;/p&gt;
+&lt;h3 id=&#34;根据write-up的复现&#34;&gt;根据write-up的复现&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;以下内容是根据找到的write-up的复现，同时带有一些思考
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;第一个key&#34;&gt;第一个key&lt;/h4&gt;
+&lt;p&gt;首先使用目录扫描工具来对ip地址进行扫描，用到了diremap工具&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 dirmap.py -i 192.168.56.118 -lcf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;发现一个熟悉的文件robots.txt，以前也遇到过在这个文件中包含信息的情况&lt;/p&gt;
+&lt;p&gt;得到两个文件，分别打开&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;User-agent: *
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;fsocity.dic
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;key-1-of-3.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;得到第一个key：key-1-of-3.txt, 以及一个字典文件fsocity.dic，此时判断可能是需要通过Burp进行爆破使用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;073403c8a58a1f80d943455fb30724b9
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;第二个key&#34;&gt;第二个key&lt;/h4&gt;
+&lt;p&gt;利用字典进行爆破用户名，得到两个有用的用户名Elliot和elliot，似曾相识，之前在搜索 &lt;a class=&#34;link&#34; href=&#34;https://www.whoismrrobot.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.whoismrrobot.com/&lt;/a&gt; 网站信息的时候有人提到过这个名字&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_22-20-58_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;再次爆破密码，得到密码ER28-0652&lt;/p&gt;
+&lt;p&gt;登陆wordpress&lt;/p&gt;
+&lt;p&gt;接下来需要获取一个shell，浏览wordpress，找到可以放入webshell的地方，将kali自带的php-reverse-shell.php导入，然后用nc反弹shell，&lt;/p&gt;
+&lt;p&gt;我这边将php-reverse-shell.php导入404.php中，update file之后访问，但是我首先得到的是network unreachable(101)的结果，kali也没有监听到来自8888端口的任何信息，同样测试主机的nc，也无效。这时候我才意识到靶机可能不允许向不同网段的地址发送我们想要的信息。&lt;/p&gt;
+&lt;p&gt;因此接下来需要将靶机和kali设置到同一网段下，重新在vmware fusion中打开靶机，设置为桥接&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-31-11_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;此时在kali上搜索自己的网段，得到了新的ip地址，172.16.249.10，之后重复上述操作&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-32-15_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;kali打开nc进行监听，拿到shell&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-33-12_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;输入whoami查看用户，发现是daemon不是root，接着查看靶机的密码
+cat /etc/passwd&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-52-06_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;尝试用密码登陆robot用户：su robot&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-54-20_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;提示需要终端才能执行，利用python生成一个终端&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;import pty; pty.spawn(&amp;#34;/bin/bash&amp;#34;)&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;使用密码进行登录后，查看文件，得到第二个key的值&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-55-54_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&#34;第三个key&#34;&gt;第三个key&lt;/h4&gt;
+&lt;p&gt;接着进行提权
+学习参考文章：&lt;a class=&#34;link&#34; href=&#34;https://www.anquanke.com/post/id/86979&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.anquanke.com/post/id/86979&lt;/a&gt;
+利用一下命令，可以将从 / 目录中查找具有SUID权限位且属主为root的文件并输出它们，然后将所有错误重定向到/dev/null，从而仅列出该用户具有访问权限的那些二进制文件。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find / -user root -perm -100 -print 2&amp;gt;/dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find / -perm -u&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;s -type f 2&amp;gt;/dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find / -user root -perm -100 -exec ls -ldb &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;搜索常见的具有提权功能的Linux可执行文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nmap
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Vim
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;More
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Less
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nano
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行后发现nmap，确认权限中包含&amp;rsquo;s&amp;rsquo;，为root所有&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_15-14-35_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;接下来利用旧版本的nmap提供交互模式可以得到一个具有相同权限也就是root权限的shell，进行提权后，再/root目录下面得到第三个key&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_15-19-37_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;发现了很多的不足，学到了很多思路和工具的使用，感觉之后还是应该多做题，先把重点放在了解前人的思路以及各种工具的使用上，而不是过度纠结一些题目：
+文件目录扫描，dirbuster，dirmap,gobuster
+有用的用户名会有不一样的返回，可以先扫用户名再扫密码
+webshell与反弹shell，netcat的使用
+生成终端
+linux特定用户登录
+md5解密
+搜索具有root权限的可执行文件
+利用nmap的交互模式进行提权
+等等&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Social Engineering</title>
         <link>https://example.com/posts/social_engineering/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
