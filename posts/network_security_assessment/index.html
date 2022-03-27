@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" dir="ltr">
+<html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>Network Security Assessment</title>
 
@@ -363,15 +363,8 @@ Use search query syntax(city, country, http.title net, org, port, etc.) to searc
 <p>The <code>TheHarvester</code> tool is used for gathering information of emails. sub-domains, hosts, employee names, open ports, and banners from different public sources like search engines, PGP key servers, and SHODAN computer database.</p>
 <p>example 1
 Search email addresses from domain kali.org with results of 200 and using Bing as data source.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">theharvester -d kali.org -l <span class="m">200</span> -b bing
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>example 2</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">theharvester -d kali.org -l <span class="m">200</span> -b bing
+</span></span></code></pre></div><p>example 2</p>
 <p>Search email addresses from domain nist.gov with results of 50 and using google as data source, finally  saved the resources in myresults.html</p>
 </li>
 </ul>
@@ -667,15 +660,8 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 <p>Aim
 : To determine the operating system of a host: Which OS? Which Version?</p>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nmap -O localhost
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nmap -O localhost
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
@@ -838,7 +824,7 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
             return;
         }
         var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

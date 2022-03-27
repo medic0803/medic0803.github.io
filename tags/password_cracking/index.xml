@@ -5,7 +5,7 @@
         <link>https://example.com/tags/password_cracking/</link>
         <description>Recent content in password_cracking on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
+        <language>en-uk</language>
         <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/password_cracking/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Password Cracking</title>
         <link>https://example.com/posts/password_cracking/</link>
@@ -148,17 +148,9 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
     &gt;exercise&lt;/a&gt; that shows MD5 can not be trusted anymore.&lt;/p&gt;
 &lt;p&gt;Please review the details, I will just post something interesting here:&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s see two programs like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Program 1: if (data1 == data1) then { good_program } else { evil_program }
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Program 1: if (data1 == data1) then { good_program } else { evil_program }
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Program 2: if (data2 == data1) then { good_program } else { evil_program }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.&lt;/p&gt;
 &lt;h3 id=&#34;rainbow-table-attacks&#34;&gt;Rainbow table attacks&lt;/h3&gt;
 &lt;p&gt;In this section, we will see a smarter variant of dctionary attack to do the brute froce, it called &lt;strong&gt;precomputed dictionary attack&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;In this attack, we will precompute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &amp;ldquo;hash-chain&amp;rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a &lt;code&gt;rainbow table&lt;/code&gt;.&lt;/p&gt;

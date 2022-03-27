@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" dir="ltr">
+<html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>Pwn The Box WEB-Easy</title>
 
@@ -9,7 +9,7 @@
 <meta property='og:description' content=''>
 <meta property='og:url' content='https://example.com/posts/pwnthebox_web_easy/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:tag' content='security' /><meta property='article:tag' content='ctf' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-22T17:24:18&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:tag' content='security' /><meta property='article:tag' content='ctf' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-24T21:14:34&#43;00:00'/>
 <meta name="twitter:title" content="Pwn The Box WEB-Easy">
 <meta name="twitter:description" content="">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -250,7 +250,7 @@
 
 
                 <time class="article-time--reading">
-                    6 minute read
+                    7 minute read
                 </time>
             </div>
         
@@ -278,54 +278,7 @@
 <figure><img src="/ox-hugo/2022-03-18_11-20-29_screenshot.png" width="700px"/>
 </figure>
 
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// Get input
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
@@ -368,35 +321,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>虽然这里不能使用，但是这里复习一下Windows和*nix的管道符号</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Windows系例支持的管道符如下所示。
+</span></span></span></code></pre></div><p>虽然这里不能使用，但是这里复习一下Windows和*nix的管道符号</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Windows系例支持的管道符如下所示。
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">“|”：直接执行后面的语句。例如：ping 127.0.0.1|whoami。
 </span></span><span class="line"><span class="cl">
@@ -417,9 +343,7 @@
 </span></span><span class="line"><span class="cl">“&amp;”：如果前面的语句为假则直接执行后面的语句，前面的语句可真可假。例如：ping 127.0.0.1&amp;whoami。
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">“&amp;&amp;”：如果前面的语句为假则直接出错，也不执行后面的，前面的语句只能为真。例如：ping 127.0.0.1&amp;&amp;whoami。
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="hackergame2019-签到题">hackergame2019-签到题</h2>
+</span></span></code></pre></div><h2 id="hackergame2019-签到题">hackergame2019-签到题</h2>
 <figure><img src="/ox-hugo/2022-03-18_11-43-43_screenshot.png" width="700px"/>
 </figure>
 
@@ -449,58 +373,7 @@
 <p>根据源代码提示，查询flag.php文件
 ?file=flag.php</p>
 <p>得到解密方法，放在本地服务器运行后得到flag</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Content-Type: text/html; charset=utf-8&#39;</span><span class="p">);</span> <span class="c1">//网页编码
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">function</span> <span class="nf">encrypt</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$key</span> <span class="o">=</span> <span class="nx">md5</span> <span class="p">(</span> <span class="nv">$key</span> <span class="p">);</span>
@@ -547,28 +420,12 @@
 </span></span><span class="line"><span class="cl"><span class="nv">$flag</span><span class="o">=</span><span class="s2">&#34;g9yk1pqdmqHa3qTJlqTFZbmShKmjaMHKzpJprg==&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">decrypt</span><span class="p">(</span><span class="nv">$flag</span><span class="p">,</span><span class="nv">$key</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="快速计算">快速计算</h2>
+</span></span></span></code></pre></div><h2 id="快速计算">快速计算</h2>
 <figure><img src="/ox-hugo/2022-03-19_20-20-21_screenshot.png" width="500px"/>
 </figure>
 
 <p>尝试计算后输入结果，是真的需要短时间内得到结果，使用python来实现一个脚本，首先GET获取公示，继而计算后POST返回，最后得到返回的flag</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">re</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">re</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://1239-e39bb701-ed06-4211-90bc-cabd6f666121.do-not-trust.hacking.run&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
@@ -578,9 +435,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">((</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;\S*(?=&lt;/p&gt;)&#34;</span><span class="p">,</span> <span class="n">get_result</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl"><span class="n">post_result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;result&#34;</span> <span class="p">:</span> <span class="n">result</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">post_result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="该网站已经被黑">该网站已经被黑</h2>
+</span></span></code></pre></div><h2 id="该网站已经被黑">该网站已经被黑</h2>
 <p>在主页没有发现有用的信息
 那么直接用dirmap直接扫目录</p>
 <!-- raw HTML omitted -->
@@ -652,27 +507,14 @@
 <h2 id="xss"><!-- raw HTML omitted -->TODO<!-- raw HTML omitted --> XSS</h2>
 <h2 id="达啦崩吧大冒险">达啦崩吧大冒险</h2>
 <p>观察源代码的JS代码中，与服务器交互的代码如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#send&#34;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#send&#34;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#input option:selected&#34;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">addMsg</span><span class="p">(</span><span class="s2">&#34;我&#34;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">[</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">v</span><span class="p">)]);</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>其中v得赋值直接使用选项编号，存在注入的可能
+</span></span></code></pre></div><p>其中v得赋值直接使用选项编号，存在注入的可能
 在“料理大市场”可以买鸡提升攻击力，设置v = -1900000000000000000会发生大整数溢出，攻击力溢出出后调整魔王得到flag</p>
 <figure><img src="/ox-hugo/2022-03-22_17-02-15_screenshot.png" width="700px"/>
 </figure>
@@ -693,31 +535,7 @@
 
 <h2 id="php是世界上最好的语言">php是世界上最好的语言</h2>
 <p>阅读源码，需要满足几个条件，参数$a,$b的sha1加密后密文相等，key为json格式的值，并且该json数据中的一个键叫做“key”，值和参数$key相等</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">show_source</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">@</span><span class="k">include_once</span> <span class="s1">&#39;flag.php&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//前端攻城狮跑路了，不过PHP是最好的语言
@@ -737,46 +555,14 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>第一个条件很容易满足，直接让a=b即可
+</span></span></span></code></pre></div><p>第一个条件很容易满足，直接让a=b即可
 第二个条件，我们首先让这个值满足json格式{key:value},并且这个value等于$key,利用php的弱类型语言的性质，当数字与字符串进行比较时，字符串会转换成数字来进行比较，同时第一位不为数字时，会转换为0，因此我们将value设置为0，皆可得到flag</p>
 <figure><img src="/ox-hugo/2022-03-18_12-30-28_screenshot.png" width="600px"/>
 </figure>
 
 <h2 id="exec2">exec2</h2>
 <p>先读PHP源代码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">])</span><span class="o">?</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span><span class="o">:</span><span class="k">die</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
@@ -802,13 +588,48 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// Feedback for the end user
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span>  <span class="s2">&#34;&lt;pre&gt;</span><span class="si">{</span><span class="nv">$cmd</span><span class="si">}</span><span class="s2">&lt;/pre&gt;&#34;</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>本题利用preg_match进行过滤，要求输入的 <code>开头</code> 为ipv4地址的格式，但是没有管后面添加的内容，同时要求长度的范围(7,21),因此我们将post的值设为 <strong>1.1.1.1;ls</strong></p>
+</span></span></code></pre></div><p>本题利用preg_match进行过滤，要求输入的 <code>开头</code> 为ipv4地址的格式，但是没有管后面添加的内容，同时要求长度的范围(7,21),因此我们将post的值设为 <strong>1.1.1.1;ls</strong></p>
 <figure><img src="/ox-hugo/2022-03-22_17-22-47_screenshot.png" width="550px"/>
 </figure>
 
 <p>看到对应的txt文件，访问即可获得flag</p>
+<h2 id="黑曜石浏览器">黑曜石浏览器</h2>
+<p>题目本身的意图比较好猜，通过在http的User-Agent头上加HEICORE浏览器，但是最新版本我一致没找到，还是看了其他的write-up才找到的</p>
+<figure><img src="/ox-hugo/2022-03-23_19-46-59_screenshot.png" width="400px"/>
+</figure>
+
+<h2 id="信息安全-2077">信息安全 2077</h2>
+<p>时间点击按钮，提示412 - Precondition Failed，推测是请求的问题，用burp发送请求看response，注意到Last modified的时间被设置到了2077年。因此我们可以利用=If-Unmodified-Since= ： 指定的请求资源只有在字段值内定的日期时间之后，未发生更新的情况下，才能处理请求，同时将日期设到Last-Modifed之后，即可保证正常响应，否则以状态码 412 Precondition Failed 作为响应返回。
+<a class="link" href="https://www.kancloud.cn/spirit-ling/http-study/851904"  target="_blank" rel="noopener"
+    >参考</a></p>
+<figure><img src="/ox-hugo/2022-03-23_20-10-54_screenshot.png" width="700px"/>
+</figure>
+
+<h2 id="成绩查询">成绩查询</h2>
+<p>确认有sql注入，成功闭合有回显+注入语句执行</p>
+<figure><img src="/ox-hugo/2022-03-24_21-09-27_screenshot.png" width="400px"/>
+</figure>
+
+<p>爆数据库</p>
+<figure><img src="/ox-hugo/2022-03-24_21-08-42_screenshot.png" width="400px"/>
+</figure>
+
+<p>爆表名</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<figure><img src="/ox-hugo/2022-03-24_21-08-10_screenshot.png" width="400px"/>
+</figure>
+
+<h2 id="矛盾">矛盾</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$num</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;num&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nv">$num</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;flag{**********}&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>读源码，很容易发现这里存在一个弱类型比较
+?num=1a 即可绕过得到flag</p>
 </section>
 
 
@@ -847,7 +668,7 @@
 
 
         <span>
-            Last updated on Mar 22, 2022 17:24 UTC
+            Last updated on Mar 24, 2022 21:14 UTC
         </span>
     </section></footer>
 
@@ -920,7 +741,7 @@
             return;
         }
         var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -1087,6 +908,10 @@
     <li><a href="#atchap">atchap</a></li>
     <li><a href="#php是世界上最好的语言">php是世界上最好的语言</a></li>
     <li><a href="#exec2">exec2</a></li>
+    <li><a href="#黑曜石浏览器">黑曜石浏览器</a></li>
+    <li><a href="#信息安全-2077">信息安全 2077</a></li>
+    <li><a href="#成绩查询">成绩查询</a></li>
+    <li><a href="#矛盾">矛盾</a></li>
   </ol>
 </nav>
         </div>

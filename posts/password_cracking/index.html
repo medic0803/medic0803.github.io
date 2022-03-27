@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" dir="ltr">
+<html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>Password Cracking</title>
 
@@ -400,17 +400,9 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
     >exercise</a> that shows MD5 can not be trusted anymore.</p>
 <p>Please review the details, I will just post something interesting here:</p>
 <p>Let&rsquo;s see two programs like this:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Program 1: if (data1 == data1) then { good_program } else { evil_program }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Program 1: if (data1 == data1) then { good_program } else { evil_program }
 </span></span><span class="line"><span class="cl">Program 2: if (data2 == data1) then { good_program } else { evil_program }
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.</p>
+</span></span></code></pre></div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.</p>
 <h3 id="rainbow-table-attacks">Rainbow table attacks</h3>
 <p>In this section, we will see a smarter variant of dctionary attack to do the brute froce, it called <strong>precomputed dictionary attack</strong>.</p>
 <p>In this attack, we will precompute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>
@@ -743,7 +735,7 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
             return;
         }
         var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

