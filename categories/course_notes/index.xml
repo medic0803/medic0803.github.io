@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>course_notes on Under The Ginkgo</title>
-        <link>https://example.com/categories/course_notes/</link>
+        <link>https://ginkgo.org.cn/categories/course_notes/</link>
         <description>Recent content in course_notes on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Password Cracking</title>
-        <link>https://example.com/posts/password_cracking/</link>
+        <link>https://ginkgo.org.cn/posts/password_cracking/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/password_cracking/</guid>
+        <guid>https://ginkgo.org.cn/posts/password_cracking/</guid>
         <description>&lt;h2 id=&#34;password-cracking&#34;&gt;Password Cracking&lt;/h2&gt;
 &lt;h3 id=&#34;case-study-adobe-password-leak&#34;&gt;Case Study: Adobe Password Leak&lt;/h3&gt;
 &lt;p&gt;If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:&lt;/p&gt;
 &lt;p&gt;How Should You Do?&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_09-43-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-43-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.&lt;/p&gt;
 &lt;p&gt;But how Adobe Did It?&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_09-46-25_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-46-25_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;What are the consequences?&lt;/p&gt;
@@ -104,7 +104,7 @@ Some other common alternatives:
 &lt;p&gt;Let&amp;rsquo;s use an example of CHF&lt;/p&gt;
 &lt;p&gt;Left hand column is the input, after crypotographic hash function, we get the output, we called &lt;code&gt;Digest&lt;/code&gt; here.&lt;/p&gt;
 &lt;p&gt;We can observe that, a single character change of input text, the digest would be very different from previous one.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_14-44-36_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_14-44-36_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;As you can easily to guess, there are many problems and attacks which threat the CHF:&lt;/p&gt;
@@ -116,7 +116,7 @@ The goal is to compute P(A), the probability that at least two people in the roo
 However, it is simpler to caculate the reverse one, P(A&amp;rsquo;), the probability that no two people in the room have the same birthday.
 To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt; does not have the same birthday as &lt;code&gt;person 1&lt;/code&gt;, and that persona 3 doest not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 thurough 22. Let&amp;rsquo;s number this event as Event1 to Event 23&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s calculate the product of the probability of these events:&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_15-31-52_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_15-31-52_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Evaluating equation (2) gives P(A&amp;rsquo;) ≈ 0.492703&lt;/p&gt;
@@ -158,7 +158,7 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;p&gt;The letter H denotes a hash function.&lt;/p&gt;
 &lt;p&gt;The letters R_i denote different reduction fucntions, which are aim to store more plaintext-hashed_text chains in the table. The number and sequences of reduction functions are same in each row.&lt;/p&gt;
 &lt;p&gt;We only store only two columns of data in a system: 1. The first column (in green) and the last (in yellow).&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-33-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-33-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h4 id=&#34;how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text&#34;&gt;How we utilise the rainbow table the plaintext of a given hashed text?&lt;/h4&gt;
@@ -166,35 +166,35 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;li&gt;Step 0
 We find the hashed text &amp;ldquo;re3xes&amp;rdquo; in /etc/shadow directory of the victim, we want the plaintext of the password, and have a rainbow table which contains two columns (green and yellow).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-36-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-36-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Step 1
 We use the reduction function R3 on &amp;ldquo;re3xes&amp;rdquo; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 2
 Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &amp;ldquo;linux23&amp;rdquo; as the result.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 3
 Find the match&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 4
 Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &amp;ldquo;re3xes&amp;rdquo;.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -203,7 +203,7 @@ Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the redu
 &lt;dl&gt;
 &lt;dt&gt;Summary&lt;/dt&gt;
 &lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column. If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/dd&gt;
@@ -361,10 +361,10 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
         </item>
         <item>
         <title>Social Engineering</title>
-        <link>https://example.com/posts/social_engineering/</link>
+        <link>https://ginkgo.org.cn/posts/social_engineering/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/social_engineering/</guid>
+        <guid>https://ginkgo.org.cn/posts/social_engineering/</guid>
         <description>&lt;h2 id=&#34;social-engineering&#34;&gt;Social Engineering&lt;/h2&gt;
 &lt;h3 id=&#34;strategies-and-principles&#34;&gt;Strategies and Principles&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;&amp;ldquo;The easiest way to get the information you want is always by asking the victims themselves:)&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
@@ -479,10 +479,10 @@ The attacker could impersonate a manager/senior meember of the organisation, or 
         </item>
         <item>
         <title>Network Security Assessment</title>
-        <link>https://example.com/posts/network_security_assessment/</link>
+        <link>https://ginkgo.org.cn/posts/network_security_assessment/</link>
         <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/network_security_assessment/</guid>
+        <guid>https://ginkgo.org.cn/posts/network_security_assessment/</guid>
         <description>&lt;h2 id=&#34;network-security-assessment&#34;&gt;Network Security Assessment&lt;/h2&gt;
 &lt;h3 id=&#34;phase-1-reconnaissance&#34;&gt;Phase 1: Reconnaissance&lt;/h3&gt;
 &lt;p&gt;The initial phase of network security assessment is reconnaissance, in my understanding, this phase is used to gather the information of the target, including hosts, networks, users, services, etc. It is an essential preparation mission before you can really do something to the target.&lt;/p&gt;
@@ -520,7 +520,7 @@ There are some typical data you can gather by querying search engines and wbsite
 &lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://searchdns.netcraft.com/?restriction=site&amp;#43;contains&amp;amp;host=nist.gov&amp;amp;position=limited&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Netcraft Web Application&lt;/a&gt; contains historical server fingerprints, which you can use to check the OS versions or map network blocks of a company&lt;/p&gt;
 &lt;p&gt;The link above shows the result of all recorded NIST government sites with their site, netblock, OS.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-01_10-47-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-01_10-47-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -534,7 +534,7 @@ There are some typical data you can gather by querying search engines and wbsite
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://help.shodan.io/the-basics/what-is-shodan&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Shodan&lt;/a&gt; is a powerful search engine for gathering infomration on all devices connected to Internet.
 Use search query syntax(city, country, http.title net, org, port, etc.) to search for the devices information wihthin the whole Internet. Some entries even may list corresponding known vulnerabilities.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-01_14-50-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-01_14-50-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;!-- raw HTML omitted --&gt;
@@ -771,13 +771,13 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;li&gt;If a SYN/ACK segment is sent to a host it responds with RST segment (because there is no correspoonding session which started with a SYN earlier to SYN/ACK)&lt;/li&gt;
 &lt;li&gt;If a SYN segment is sent to a host it responds with a RST if the port closed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-13-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;If a SYN segment is sent to a host it responds with a RST if the port closed,&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-13-25_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-25_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -785,7 +785,7 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;If a SYN segment is sent to a host it doesn&amp;rsquo;t give a response if the port filtered.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-13-30_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-30_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s understand the mechanism details with three scanning examples:&lt;/p&gt;
@@ -803,25 +803,25 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed SYN segment with Zombie computer&amp;rsquo;s IP address to the Victim&amp;rsquo;s computer&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-16-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-16-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Since the target port is open, the victim computer will response a SYN/ACK segment to Zombie computer.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-19-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-19-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;However, the zombie computer did not establish a session with Victim computer, so when it receive the SYN/ACK segment, it will respond with a RST segment to it, and meanwhile, increases its IP ID by &amp;ldquo;one&amp;rdquo; to 6,163&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-21-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-21-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;The attackers want to check the current IP ID, thus they send another SYN/ACK segment to The Zombie computer&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-22-07_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-22-07_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -838,16 +838,16 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;Idle Scan (Victim Port Closed)&lt;/p&gt;
 &lt;p&gt;So, what if the port is closed?
 This time, the spoofed SYN segment will get the response of RST, which avoid the Zombie computer to interact with Victim computer, and the IP ID did not increase, thus finally we will get the IP ID only increase by &amp;ldquo;one&amp;rdquo;, which indicate the port is closed.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-28-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-28-39_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-39_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-28-43_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-43_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-28-47_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-47_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -857,13 +857,13 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 &lt;li&gt;
 &lt;p&gt;Idle Scan (Victim Port Fillterd)&lt;/p&gt;
 &lt;p&gt;If there is a firewall filter the spoofed SYN segment, the Victim computer will not send anything to Zombie computer, which result in the same IP ID as Port closed case.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-31-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-31-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-30-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-05_16-30-40_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-40_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -895,7 +895,7 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 &lt;p&gt;Nmap Scripting Engine&lt;/p&gt;
 &lt;p&gt;Nmap provide a series of scripts for checking the vulnerabilities based on open services of victim host&lt;/p&gt;
 &lt;p&gt;Scripts can be found in &lt;em&gt;usr/share/nmap/scripts&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-06_11-32-26_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-06_11-32-26_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;

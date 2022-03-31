@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>writeups on Under The Ginkgo</title>
-        <link>https://example.com/categories/writeups/</link>
+        <link>https://ginkgo.org.cn/categories/writeups/</link>
         <description>Recent content in writeups on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/categories/writeups/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/writeups/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Pwn The Box WEB-Easy</title>
-        <link>https://example.com/posts/pwnthebox_web_easy/</link>
+        <link>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/pwnthebox_web_easy/</guid>
+        <guid>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</guid>
         <description>&lt;h2 id=&#34;exec1&#34;&gt;exec1&lt;/h2&gt;
 &lt;p&gt;命令行执行
 先读源码，&lt;/p&gt;
@@ -19,11 +19,11 @@
 通过%0A换行实现新的命令执行
 ?ip=1%0Als
 得到&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-19-50_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_11-19-50_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;进而获取文件内容&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-20-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_11-20-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
@@ -92,30 +92,30 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;“&amp;amp;&amp;amp;”：如果前面的语句为假则直接出错，也不执行后面的，前面的语句只能为真。例如：ping 127.0.0.1&amp;amp;&amp;amp;whoami。
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;hackergame2019-签到题&#34;&gt;hackergame2019-签到题&lt;/h2&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-43-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_11-43-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;根据提示查看前一年的签到题的&lt;a class=&#34;link&#34; href=&#34;https://github.com/ustclug/hackergame2018-writeups/blob/master/official/qiandao/README.md#%E8%A7%A3%E6%B3%95%E4%BA%8C%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;writeup&lt;/a&gt;，猜测token应该是hackergame2019，接下来就是如何提交token了&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-47-03_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_11-47-03_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;网页读取器&#34;&gt;&lt;!-- raw HTML omitted --&gt;TODO&lt;!-- raw HTML omitted --&gt; 网页读取器&lt;/h2&gt;
 &lt;h2 id=&#34;管理员本地访问&#34;&gt;管理员本地访问&lt;/h2&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_17-28-42_screenshot.png&#34; width=&#34;500px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_17-28-42_screenshot.png&#34; width=&#34;500px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_17-30-28_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_17-30-28_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;本题考查Burp使用以及http header的理解，加上client-ip: 127.0.0.1即可在“本地”访问得到flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_17-36-12_screenshot.png&#34; width=&#34;1000px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_17-36-12_screenshot.png&#34; width=&#34;1000px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;下载下载&#34;&gt;下载下载&lt;/h2&gt;
 &lt;p&gt;先尝试下载flag.txt文件是空的&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_17-42-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_17-42-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;根据源代码提示，查询flag.php文件
@@ -169,7 +169,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;decrypt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;快速计算&#34;&gt;快速计算&lt;/h2&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_20-20-21_screenshot.png&#34; width=&#34;500px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_20-20-21_screenshot.png&#34; width=&#34;500px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;尝试计算后输入结果，是真的需要短时间内得到结果，使用python来实现一个脚本，首先GET获取公示，继而计算后POST返回，最后得到返回的flag&lt;/p&gt;
@@ -188,68 +188,68 @@
 那么直接用dirmap直接扫目录&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-20_21-13-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-20_21-13-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;pwnthebox&#34;&gt;PwnTheBox&lt;/h2&gt;
 &lt;p&gt;查看源代码，获得提示flag在header里面&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_11-58-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_11-58-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;放进Burp里看一下response，获得Flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-02-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-02-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;百度网盘分享链接&#34;&gt;百度网盘分享链接&lt;/h2&gt;
 &lt;p&gt;题目提示类型为口令爆破，猜测应该是4位数字（不然也太多了）&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-05-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-05-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;放到Burp里用Intruder扫描一下&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;get&#34;&gt;Get&lt;/h2&gt;
 &lt;p&gt;阅读给出的源码，只要给一个GET参数，并且值为“flag”即可&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-20-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-20-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;?what=flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-21-56_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-21-56_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;post&#34;&gt;Post&lt;/h2&gt;
 &lt;p&gt;和上一题Get，类似，我们用hackbar，curl，burp，postman加上post参数的值就可以了&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-23-37_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-23-37_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-24-08_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-24-08_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;睿智题目&#34;&gt;睿智题目&lt;/h2&gt;
 &lt;p&gt;利用burp的repeater反复获取，即可得到flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-21_14-48-57_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_14-48-57_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;一道很奇怪的题目&#34;&gt;一道很奇怪的题目&lt;/h2&gt;
 &lt;p&gt;一进去alert弹框，没有后端交互，也没法显示源码，推测flag在本地，查看本地js，发现js的最后是html encoded的flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-21_15-01-45_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-01-45_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;解码之后可得
 &lt;a class=&#34;link&#34; href=&#34;https://codebeautify.org/html-decode-string&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://codebeautify.org/html-decode-string&lt;/a&gt;&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-21_15-02-28_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-02-28_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;奇葩的题目&#34;&gt;奇葩的题目&lt;/h2&gt;
 &lt;p&gt;根据提示查看源码&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-21_15-08-58_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-08-58_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;验证码&#34;&gt;验证码&lt;/h2&gt;
 &lt;p&gt;修改输入框长度限制，计算答案提交得到flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-21_15-10-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-10-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;xss&#34;&gt;&lt;!-- raw HTML omitted --&gt;TODO&lt;!-- raw HTML omitted --&gt; XSS&lt;/h2&gt;
@@ -264,10 +264,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中v得赋值直接使用选项编号，存在注入的可能
 在“料理大市场”可以买鸡提升攻击力，设置v = -1900000000000000000会发生大整数溢出，攻击力溢出出后调整魔王得到flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-22_17-02-15_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-22_17-02-15_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-22_17-02-49_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-22_17-02-49_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;atchap&#34;&gt;atchap&lt;/h2&gt;
@@ -275,10 +275,10 @@
 阅读题目同年的这篇文章&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@fs0c131y/tchap-the-super-not-secure-app-of-the-french-government-84b31517d144&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Tchap: The super (not) secure app of the French government&lt;/a&gt;，可知这个app有漏洞，在于没有过滤用户的数据。后台通过识别列表中的邮件后缀名来选择服务器，我们只需要通过google找到一个已经注册的邮箱，就可以做到逃逸，并且在前面加上自己的邮箱就可以收到注册邮件&lt;/p&gt;
 &lt;p&gt;那么在这道题中，founder信息以及底部的联系人信息告诉了我们绕过的格式，然后在前面添加任意的邮件地址即可返回flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-22_16-00-39_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-22_16-00-39_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-22_16-00-57_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-22_16-00-57_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;php是世界上最好的语言&#34;&gt;php是世界上最好的语言&lt;/h2&gt;
@@ -305,7 +305,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一个条件很容易满足，直接让a=b即可
 第二个条件，我们首先让这个值满足json格式{key:value},并且这个value等于$key,利用php的弱类型语言的性质，当数字与字符串进行比较时，字符串会转换成数字来进行比较，同时第一位不为数字时，会转换为0，因此我们将value设置为0，皆可得到flag&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-18_12-30-28_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-18_12-30-28_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;exec2&#34;&gt;exec2&lt;/h2&gt;
@@ -337,35 +337,35 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// Feedback for the end user
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;pre&amp;gt;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$cmd&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;/pre&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;本题利用preg_match进行过滤，要求输入的 &lt;code&gt;开头&lt;/code&gt; 为ipv4地址的格式，但是没有管后面添加的内容，同时要求长度的范围(7,21),因此我们将post的值设为 &lt;strong&gt;1.1.1.1;ls&lt;/strong&gt;&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-22_17-22-47_screenshot.png&#34; width=&#34;550px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-22_17-22-47_screenshot.png&#34; width=&#34;550px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;看到对应的txt文件，访问即可获得flag&lt;/p&gt;
 &lt;h2 id=&#34;黑曜石浏览器&#34;&gt;黑曜石浏览器&lt;/h2&gt;
 &lt;p&gt;题目本身的意图比较好猜，通过在http的User-Agent头上加HEICORE浏览器，但是最新版本我一致没找到，还是看了其他的write-up才找到的&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-23_19-46-59_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-23_19-46-59_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;信息安全-2077&#34;&gt;信息安全 2077&lt;/h2&gt;
 &lt;p&gt;时间点击按钮，提示412 - Precondition Failed，推测是请求的问题，用burp发送请求看response，注意到Last modified的时间被设置到了2077年。因此我们可以利用=If-Unmodified-Since= ： 指定的请求资源只有在字段值内定的日期时间之后，未发生更新的情况下，才能处理请求，同时将日期设到Last-Modifed之后，即可保证正常响应，否则以状态码 412 Precondition Failed 作为响应返回。
 &lt;a class=&#34;link&#34; href=&#34;https://www.kancloud.cn/spirit-ling/http-study/851904&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;参考&lt;/a&gt;&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-23_20-10-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-23_20-10-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;成绩查询&#34;&gt;成绩查询&lt;/h2&gt;
 &lt;p&gt;确认有sql注入，成功闭合有回显+注入语句执行&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-24_21-09-27_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-24_21-09-27_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;爆数据库&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-24_21-08-42_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-24_21-08-42_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;爆表名&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-24_21-08-10_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-24_21-08-10_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h2 id=&#34;矛盾&#34;&gt;矛盾&lt;/h2&gt;
@@ -381,10 +381,10 @@
         </item>
         <item>
         <title>Mr. Robot writeup</title>
-        <link>https://example.com/posts/mr_robot/</link>
+        <link>https://ginkgo.org.cn/posts/mr_robot/</link>
         <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/mr_robot/</guid>
+        <guid>https://ginkgo.org.cn/posts/mr_robot/</guid>
         <description>&lt;h2 id=&#34;writeup&#34;&gt;Writeup&lt;/h2&gt;
 &lt;h3 id=&#34;我的尝试&#34;&gt;我的尝试&lt;/h3&gt;
 &lt;p&gt;拿到题目，看到OVA格式，直接在virtualbox中打开&lt;/p&gt;
@@ -393,15 +393,15 @@
 &lt;p&gt;这时候想到以前用ssh连接虚拟机的时候，往往用vmware启动虚拟机后不用管登陆，直接用ssh就可以，说明后台服务其实已经启动，加上需要网页的线索，想到通过分配到的局域网IP地址找到网页&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ifconfig &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s2&#34;&gt;&amp;#34;inet&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-32-22_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_21-32-22_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;再次启动后，查看网络配置，观察到出现了一个新的局域网&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-33-41_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_21-33-41_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;然后通过nmap进行扫描，确认目标网络地址&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-36-02_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_21-36-02_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;尝试两个ip地址，确认登陆到目标网站为192.168.56.118。
@@ -411,12 +411,12 @@
 &lt;p&gt;此时我打开Burp Suite开始拦截http请求，
 接下来尝试提供的几个命令，发现都是未修改过的影片以及图片内容，感觉是来自某部电影或者电视剧，同时都没有拦截到与后台的交互，暂时感觉没有有价值的内容&lt;/p&gt;
 &lt;p&gt;但join命令却要求输入邮箱，有用户输入感觉就可以操作，Burpsuite用intruder进行扫描，全都返回了统一的404，&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_21-54-08_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_21-54-08_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;但同时返回了一个错误页面&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_22-01-34_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_22-01-34_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;至此我已经没有什么其他想法了，其他的一些尝试包括访问&lt;a class=&#34;link&#34; href=&#34;https://www.whoismrrobot.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -436,7 +436,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;第二个key&#34;&gt;第二个key&lt;/h4&gt;
 &lt;p&gt;利用字典进行爆破用户名，得到两个有用的用户名Elliot和elliot，似曾相识，之前在搜索 &lt;a class=&#34;link&#34; href=&#34;https://www.whoismrrobot.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.whoismrrobot.com/&lt;/a&gt; 网站信息的时候有人提到过这个名字&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-13_22-20-58_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-13_22-20-58_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;再次爆破密码，得到密码ER28-0652&lt;/p&gt;
@@ -444,32 +444,32 @@
 &lt;p&gt;接下来需要获取一个shell，浏览wordpress，找到可以放入webshell的地方，将kali自带的php-reverse-shell.php导入，然后用nc反弹shell，&lt;/p&gt;
 &lt;p&gt;我这边将php-reverse-shell.php导入404.php中，update file之后访问，但是我首先得到的是network unreachable(101)的结果，kali也没有监听到来自8888端口的任何信息，同样测试主机的nc，也无效。这时候我才意识到靶机可能不允许向不同网段的地址发送我们想要的信息。&lt;/p&gt;
 &lt;p&gt;因此接下来需要将靶机和kali设置到同一网段下，重新在vmware fusion中打开靶机，设置为桥接&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-31-11_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-31-11_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;此时在kali上搜索自己的网段，得到了新的ip地址，172.16.249.10，之后重复上述操作&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-32-15_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-32-15_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;kali打开nc进行监听，拿到shell&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-33-12_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-33-12_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;输入whoami查看用户，发现是daemon不是root，接着查看靶机的密码
 cat /etc/passwd&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-52-06_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-52-06_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;尝试用密码登陆robot用户：su robot&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-54-20_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-54-20_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;提示需要终端才能执行，利用python生成一个终端&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;import pty; pty.spawn(&amp;#34;/bin/bash&amp;#34;)&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用密码进行登录后，查看文件，得到第二个key的值&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_14-55-54_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_14-55-54_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h4 id=&#34;第三个key&#34;&gt;第三个key&lt;/h4&gt;
@@ -490,11 +490,11 @@ cat /etc/passwd&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nano
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行后发现nmap，确认权限中包含&amp;rsquo;s&amp;rsquo;，为root所有&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_15-14-35_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_15-14-35_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;接下来利用旧版本的nmap提供交互模式可以得到一个具有相同权限也就是root权限的shell，进行提权后，再/root目录下面得到第三个key&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-14_15-19-37_screenshot.png&#34; width=&#34;600px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-14_15-19-37_screenshot.png&#34; width=&#34;600px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;

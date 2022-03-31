@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>cryptanalysis on Under The Ginkgo</title>
-        <link>https://example.com/tags/cryptanalysis/</link>
+        <link>https://ginkgo.org.cn/tags/cryptanalysis/</link>
         <description>Recent content in cryptanalysis on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/cryptanalysis/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/cryptanalysis/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Password Cracking</title>
-        <link>https://example.com/posts/password_cracking/</link>
+        <link>https://ginkgo.org.cn/posts/password_cracking/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/posts/password_cracking/</guid>
+        <guid>https://ginkgo.org.cn/posts/password_cracking/</guid>
         <description>&lt;h2 id=&#34;password-cracking&#34;&gt;Password Cracking&lt;/h2&gt;
 &lt;h3 id=&#34;case-study-adobe-password-leak&#34;&gt;Case Study: Adobe Password Leak&lt;/h3&gt;
 &lt;p&gt;If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:&lt;/p&gt;
 &lt;p&gt;How Should You Do?&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_09-43-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-43-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.&lt;/p&gt;
 &lt;p&gt;But how Adobe Did It?&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_09-46-25_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-46-25_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;What are the consequences?&lt;/p&gt;
@@ -104,7 +104,7 @@ Some other common alternatives:
 &lt;p&gt;Let&amp;rsquo;s use an example of CHF&lt;/p&gt;
 &lt;p&gt;Left hand column is the input, after crypotographic hash function, we get the output, we called &lt;code&gt;Digest&lt;/code&gt; here.&lt;/p&gt;
 &lt;p&gt;We can observe that, a single character change of input text, the digest would be very different from previous one.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_14-44-36_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_14-44-36_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;As you can easily to guess, there are many problems and attacks which threat the CHF:&lt;/p&gt;
@@ -116,7 +116,7 @@ The goal is to compute P(A), the probability that at least two people in the roo
 However, it is simpler to caculate the reverse one, P(A&amp;rsquo;), the probability that no two people in the room have the same birthday.
 To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt; does not have the same birthday as &lt;code&gt;person 1&lt;/code&gt;, and that persona 3 doest not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 thurough 22. Let&amp;rsquo;s number this event as Event1 to Event 23&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s calculate the product of the probability of these events:&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_15-31-52_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_15-31-52_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Evaluating equation (2) gives P(A&amp;rsquo;) ≈ 0.492703&lt;/p&gt;
@@ -158,7 +158,7 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;p&gt;The letter H denotes a hash function.&lt;/p&gt;
 &lt;p&gt;The letters R_i denote different reduction fucntions, which are aim to store more plaintext-hashed_text chains in the table. The number and sequences of reduction functions are same in each row.&lt;/p&gt;
 &lt;p&gt;We only store only two columns of data in a system: 1. The first column (in green) and the last (in yellow).&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-33-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-33-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;h4 id=&#34;how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text&#34;&gt;How we utilise the rainbow table the plaintext of a given hashed text?&lt;/h4&gt;
@@ -166,35 +166,35 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;li&gt;Step 0
 We find the hashed text &amp;ldquo;re3xes&amp;rdquo; in /etc/shadow directory of the victim, we want the plaintext of the password, and have a rainbow table which contains two columns (green and yellow).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-36-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-36-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Step 1
 We use the reduction function R3 on &amp;ldquo;re3xes&amp;rdquo; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 2
 Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &amp;ldquo;linux23&amp;rdquo; as the result.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 3
 Find the match&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 4
 Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &amp;ldquo;re3xes&amp;rdquo;.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
@@ -203,7 +203,7 @@ Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the redu
 &lt;dl&gt;
 &lt;dt&gt;Summary&lt;/dt&gt;
 &lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column. If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.
-&lt;figure&gt;&lt;img src=&#34;https://example.com/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/dd&gt;

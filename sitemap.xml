@@ -2,99 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/categories/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/categories/ctf/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/tags/ctf/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/posts/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/tags/sqli/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/posts/sqli_blind_injection/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/tags/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/</loc>
-    <lastmod>2022-03-27T15:48:21+01:00</lastmod>
-  </url><url>
-    <loc>https://example.com/posts/leetbook_basic_algorithm/</loc>
+    <loc>https://ginkgo.org.cn/categories/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/leetcode/</loc>
+    <loc>https://ginkgo.org.cn/posts/leetbook_basic_algorithm/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/programming/</loc>
+    <loc>https://ginkgo.org.cn/tags/leetcode/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/python/</loc>
+    <loc>https://ginkgo.org.cn/posts/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/course_notes/</loc>
+    <loc>https://ginkgo.org.cn/categories/programming/</loc>
+    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/python/</loc>
+    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/</loc>
+    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
     <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/cryptanalysis/</loc>
+    <loc>https://ginkgo.org.cn/tags/cryptanalysis/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/network_security/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
-  </url><url>
-    <loc>https://example.com/posts/password_cracking/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
-  </url><url>
-    <loc>https://example.com/tags/password_cracking/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
-  </url><url>
-    <loc>https://example.com/posts/pwnthebox_web_easy/</loc>
+    <loc>https://ginkgo.org.cn/tags/ctf/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/rainbow_table_attacks/</loc>
+    <loc>https://ginkgo.org.cn/tags/network_security/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/security/</loc>
+    <loc>https://ginkgo.org.cn/posts/password_cracking/</loc>
+    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/password_cracking/</loc>
+    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/web/</loc>
+    <loc>https://ginkgo.org.cn/tags/rainbow_table_attacks/</loc>
+    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/security/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/writeups/</loc>
+    <loc>https://ginkgo.org.cn/tags/web/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/mr_robot/</loc>
+    <loc>https://ginkgo.org.cn/categories/writeups/</loc>
+    <lastmod>2022-03-24T21:14:34+00:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/mr_robot/</loc>
     <lastmod>2022-03-23T08:55:53+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/hacker/</loc>
+    <loc>https://ginkgo.org.cn/tags/hacker/</loc>
     <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/social_engineering/</loc>
+    <loc>https://ginkgo.org.cn/posts/social_engineering/</loc>
     <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/social_engineer/</loc>
+    <loc>https://ginkgo.org.cn/tags/social_engineer/</loc>
     <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/network_security_assessment/</loc>
+    <loc>https://ginkgo.org.cn/posts/network_security_assessment/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/osint/</loc>
+    <loc>https://ginkgo.org.cn/tags/osint/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/reconnaissance/</loc>
+    <loc>https://ginkgo.org.cn/tags/reconnaissance/</loc>
     <lastmod>2022-03-19T17:25:38+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/archives/</loc>
+    <loc>https://ginkgo.org.cn/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/page/</loc>
+    <loc>https://ginkgo.org.cn/page/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/search/</loc>
+    <loc>https://ginkgo.org.cn/search/</loc>
   </url>
 </urlset>

@@ -2,120 +2,112 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tags on Under The Ginkgo</title>
-        <link>https://example.com/tags/</link>
+        <link>https://ginkgo.org.cn/tags/</link>
         <description>Recent content in Tags on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Sun, 27 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>ctf</title>
-        <link>https://example.com/tags/ctf/</link>
-        <pubDate>Sun, 27 Mar 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://example.com/tags/ctf/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>SQLi</title>
-        <link>https://example.com/tags/sqli/</link>
-        <pubDate>Sun, 27 Mar 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://example.com/tags/sqli/</guid>
-        <description></description>
-        </item>
-        <item>
+        <lastBuildDate>Wed, 23 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>leetcode</title>
-        <link>https://example.com/tags/leetcode/</link>
+        <link>https://ginkgo.org.cn/tags/leetcode/</link>
         <pubDate>Wed, 23 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/leetcode/</guid>
+        <guid>https://ginkgo.org.cn/tags/leetcode/</guid>
         <description></description>
         </item>
         <item>
         <title>python</title>
-        <link>https://example.com/tags/python/</link>
+        <link>https://ginkgo.org.cn/tags/python/</link>
         <pubDate>Wed, 23 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/python/</guid>
+        <guid>https://ginkgo.org.cn/tags/python/</guid>
         <description></description>
         </item>
         <item>
         <title>cryptanalysis</title>
-        <link>https://example.com/tags/cryptanalysis/</link>
+        <link>https://ginkgo.org.cn/tags/cryptanalysis/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/cryptanalysis/</guid>
+        <guid>https://ginkgo.org.cn/tags/cryptanalysis/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ctf</title>
+        <link>https://ginkgo.org.cn/tags/ctf/</link>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/ctf/</guid>
         <description></description>
         </item>
         <item>
         <title>network_security</title>
-        <link>https://example.com/tags/network_security/</link>
+        <link>https://ginkgo.org.cn/tags/network_security/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/network_security/</guid>
+        <guid>https://ginkgo.org.cn/tags/network_security/</guid>
         <description></description>
         </item>
         <item>
         <title>password_cracking</title>
-        <link>https://example.com/tags/password_cracking/</link>
+        <link>https://ginkgo.org.cn/tags/password_cracking/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/password_cracking/</guid>
+        <guid>https://ginkgo.org.cn/tags/password_cracking/</guid>
         <description></description>
         </item>
         <item>
         <title>rainbow_table_attacks</title>
-        <link>https://example.com/tags/rainbow_table_attacks/</link>
+        <link>https://ginkgo.org.cn/tags/rainbow_table_attacks/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/rainbow_table_attacks/</guid>
+        <guid>https://ginkgo.org.cn/tags/rainbow_table_attacks/</guid>
         <description></description>
         </item>
         <item>
         <title>security</title>
-        <link>https://example.com/tags/security/</link>
+        <link>https://ginkgo.org.cn/tags/security/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/security/</guid>
+        <guid>https://ginkgo.org.cn/tags/security/</guid>
         <description></description>
         </item>
         <item>
         <title>web</title>
-        <link>https://example.com/tags/web/</link>
+        <link>https://ginkgo.org.cn/tags/web/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/web/</guid>
+        <guid>https://ginkgo.org.cn/tags/web/</guid>
         <description></description>
         </item>
         <item>
         <title>hacker</title>
-        <link>https://example.com/tags/hacker/</link>
+        <link>https://ginkgo.org.cn/tags/hacker/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/hacker/</guid>
+        <guid>https://ginkgo.org.cn/tags/hacker/</guid>
         <description></description>
         </item>
         <item>
         <title>social_engineer</title>
-        <link>https://example.com/tags/social_engineer/</link>
+        <link>https://ginkgo.org.cn/tags/social_engineer/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/social_engineer/</guid>
+        <guid>https://ginkgo.org.cn/tags/social_engineer/</guid>
         <description></description>
         </item>
         <item>
         <title>OSINT</title>
-        <link>https://example.com/tags/osint/</link>
+        <link>https://ginkgo.org.cn/tags/osint/</link>
         <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/osint/</guid>
+        <guid>https://ginkgo.org.cn/tags/osint/</guid>
         <description></description>
         </item>
         <item>
         <title>reconnaissance</title>
-        <link>https://example.com/tags/reconnaissance/</link>
+        <link>https://ginkgo.org.cn/tags/reconnaissance/</link>
         <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://example.com/tags/reconnaissance/</guid>
+        <guid>https://ginkgo.org.cn/tags/reconnaissance/</guid>
         <description></description>
         </item>
         
