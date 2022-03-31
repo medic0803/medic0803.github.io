@@ -3,15 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/categories/ctf/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/ctf/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/sqli/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/sqli_blind_injection/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-03-31T22:00:35+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/leetbook_basic_algorithm/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/leetcode/</loc>
-    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/posts/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/programming/</loc>
@@ -20,20 +38,11 @@
     <loc>https://ginkgo.org.cn/tags/python/</loc>
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-03-27T15:44:46+01:00</lastmod>
-  </url><url>
     <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
     <lastmod>2022-03-19T22:35:22+00:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/cryptanalysis/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/tags/ctf/</loc>
-    <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/network_security/</loc>
     <lastmod>2022-03-19T17:24:05+00:00</lastmod>
