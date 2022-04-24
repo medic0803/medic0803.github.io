@@ -6,7 +6,137 @@
         <description>Recent content in sqli on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Sat, 02 Apr 2022 00:00:00 +0100</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/sqli/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/sqli/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>SQL注入：基础</title>
+        <link>https://ginkgo.org.cn/posts/sql_injection_basic/</link>
+        <pubDate>Sun, 24 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/sql_injection_basic/</guid>
+        <description>&lt;h2 id=&#34;sql注入-基础&#34;&gt;SQL注入：基础&lt;/h2&gt;
+&lt;p&gt;简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;（本篇用于基础概念的归纳总结，可能不太适合新手学习） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-dot-sql注入产生的原因&#34;&gt;1. SQL注入产生的原因&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Missing or improper input validation (用户输入检查的缺乏或者不够完善) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Application-generated queries containing user-fed input (应用查询到的结果能够反馈用户之前的不恰当输入) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-dot-sql注入的注入点--sinks--和目标--targets&#34;&gt;2. SQL注入的注入点(Sinks)和目标(targets)&lt;/h3&gt;
+&lt;h4 id=&#34;2-dot-1-sinks&#34;&gt;2.1 Sinks&lt;/h4&gt;
+&lt;p&gt;SQLi sinks 表示可能存在的注入点 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GET/POST parameters&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Every HTTP header&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Cookies&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Database itself&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上所有的这些内容，都可以轻松的被用户所修改，他们也都有可能被用于服务端的数据库查询操作中，因此都需要严肃对待 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2-dot-2-targets&#34;&gt;2.2 Targets&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Target&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;识别可注入的变量&lt;/td&gt;
+&lt;td&gt;查找注入点（以上全是）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数据库信息&lt;/td&gt;
+&lt;td&gt;什么数据库？什么版本的数据库&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数据库结构&lt;/td&gt;
+&lt;td&gt;库名，表名，列名，列类型，读写权限等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;获取数据&lt;/td&gt;
+&lt;td&gt;爆库&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数据修改&lt;/td&gt;
+&lt;td&gt;insert, update, delete操作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DOS&lt;/td&gt;
+&lt;td&gt;LOCK，DELETE 操作来破坏数据库的Availability阻止用户正常访问应用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;绕过验证&lt;/td&gt;
+&lt;td&gt;绕过登陆注册等一系列检查&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;远程指令注入&lt;/td&gt;
+&lt;td&gt;远程控制数据库&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;3-dot-注入的技巧&#34;&gt;3. 注入的技巧&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;判断注入点
+: 输入的内容，能否让页面产生异常的行为 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL报错信息 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;页面内容的非正常显示 (e.g. 没有内容显示) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;页面相应时间变化 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;闭合异常
+: 如果说第一步的目的是为了让服务端的SQL查询语句出错，那么第二步就是为了在此基础上让SQL语句可以再次被正常解析 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;判断注入的类型
+: 尝试不同类型的注入payload，观察存在哪种注入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改SQL语句语义
+: 修改语义，让数据库执行我们想要的操作 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;获取数据
+: 爆库获得数据 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这些操作也就对应了SQL注入的三要素: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;所有HTTP请求的内容是否进行了严格的校验 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;是否可以重新闭合注入点的语句错误，使其可以被重新正常解析 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;语句是否可以被恶意修改 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;4-dot-sql注入对于安全的影响--cia&#34;&gt;4. SQL注入对于安全的影响(CIA)&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Confidentiality&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;查看其他人的隐私信息 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;无授权地访问他人的账号 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Integrity&lt;/dt&gt;
+&lt;dd&gt;修改数据库的数据：工资，成绩等 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Availabity&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;删库跑路 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;修改账户信息：密码 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;删除日志 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;5-dot-如何防御sql注入&#34;&gt;5. 如何防御SQL注入&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;i. 使用预编译语句&lt;/dt&gt;
+&lt;dd&gt;顾名思义，就是将SQL语句提前编译，即其最终要执行的操作已经定了，唯一缺少的就是参数，其语义不会再受影响，这也是防御SQL注入的最佳手段 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;ii. 检查数据类型&lt;/dt&gt;
+&lt;dd&gt;对于所需要的参数进行严格的类型/格式检查，可以从很大程度上防御SQL注入 (数据类型，邮箱格式，日期格式等) &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;iii. 使用安全函数&lt;/dt&gt;
+&lt;dd&gt;随着安全得到越来越多的重视，编程语言也在不断更新更为安全的函数和机制用于抵御一些常见的攻击 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+</description>
+        </item>
+        <item>
         <title>SQL注入：文件读写</title>
         <link>https://ginkgo.org.cn/posts/sql_injection_file_rw/</link>
         <pubDate>Sat, 02 Apr 2022 00:00:00 +0100</pubDate>

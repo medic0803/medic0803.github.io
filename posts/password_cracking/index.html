@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>Password Cracking</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
+Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+How Should You Do?
+ Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+But how Adobe Did It?
+ What are the consequences?
+ If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'><title>Password Cracking</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/password_cracking/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Password Cracking'>
-<meta property='og:description' content=''>
+<meta property='og:description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
+Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+How Should You Do?
+ Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+But how Adobe Did It?
+ What are the consequences?
+ If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/password_cracking/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='cryptanalysis' /><meta property='article:tag' content='password_cracking' /><meta property='article:tag' content='rainbow_table_attacks' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-19T17:24:05&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='cryptanalysis' /><meta property='article:tag' content='password_cracking' /><meta property='article:tag' content='rainbow_table_attacks' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-24T11:14:46&#43;01:00'/>
 <meta name="twitter:title" content="Password Cracking">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
+Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+How Should You Do?
+ Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+But how Adobe Did It?
+ What are the consequences?
+ If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -275,7 +293,8 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="password-cracking">Password Cracking</h2>
+    <p>&lt;!&ndash;more&ndash;&gt;</p>
+<h2 id="password-cracking">Password Cracking</h2>
 <h3 id="case-study-adobe-password-leak">Case Study: Adobe Password Leak</h3>
 <p>If you are familiar with how online service store users&rsquo;s password, let me ask you:</p>
 <p>How Should You Do?</p>
@@ -302,7 +321,7 @@ if (!doNotTrack) {
 <p>In other words, break the cryptographyic algorithms without knowing the key.</p>
 <p>Cryptanalysis are based on:</p>
 <ul>
-<li>The nature of the cryptographyic aglorithm</li>
+<li>The nature of the cryptographyic algorithm</li>
 <li>the key</li>
 <li>some knowledge on the text, such as language(common words), format or encoding (script, image alway begin with some same pattern),</li>
 <li>a section with both plaintext and encrypted text</li>
@@ -384,7 +403,7 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
 
 <p>Evaluating equation (2) gives P(A&rsquo;) ≈ 0.492703</p>
 <p>Therefore, P(A) ≈ 1 − 0.492703 = 0.507297 (50.7297%).</p>
-<p>Also, according to the <a class="link" href="https://en.wikipedia.org/wiki/Pigeonhole%5Fprinciple"  target="_blank" rel="noopener"
+<p>Also, according to the <a class="link" href="https://en.wikipedia.org/wiki/Pigeonhole_principle"  target="_blank" rel="noopener"
     >pigenhole principle</a>, the probability reaches 100 per cent when at least 367 people are present since there are only 366 possible birthdays.</p>
 <p>Based on above knowledge, we can understand that birthday attack is based on higher likelihood of collisions found between <strong>random attack</strong> and <strong>fixed degree of permutations</strong>.</p>
 <h4 id="collision-attack">Collision attack</h4>
@@ -415,12 +434,12 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
 </span></span><span class="line"><span class="cl">Program 2: if (data2 == data1) then { good_program } else { evil_program }
 </span></span></code></pre></div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.</p>
 <h3 id="rainbow-table-attacks">Rainbow table attacks</h3>
-<p>In this section, we will see a smarter variant of dctionary attack to do the brute froce, it called <strong>precomputed dictionary attack</strong>.</p>
-<p>In this attack, we will precompute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>
+<p>In this section, we will see a smarter variant of dictionary attack to do the brute froce, it called <strong>precomputed dictionary attack</strong>.</p>
+<p>In this attack, we will pre-compute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>
 <p>Let&rsquo;s use an example to introduce the terms and processes in a Rainbow Table usage.</p>
-<p>The letter H denotes a hash function.</p>
-<p>The letters R_i denote different reduction fucntions, which are aim to store more plaintext-hashed_text chains in the table. The number and sequences of reduction functions are same in each row.</p>
-<p>We only store only two columns of data in a system: 1. The first column (in green) and the last (in yellow).</p>
+<p>The letter <code>H</code> denotes a hash function.</p>
+<p>The letters <code>R_i</code> denote different reduction functions, which are aim to store more plaintext-hashed_text chains in the table (The number and sequences of reduction functions are same in each row).</p>
+<p>We only store two columns of data in a system: 1. The <code>first column</code> (in green) and the <code>last</code> (in yellow).</p>
 <figure><img src="/ox-hugo/2022-03-19_16-33-39_screenshot.png" width="700px"/>
 </figure>
 
@@ -472,7 +491,7 @@ Start with matched plaintext column &ldquo;passwd&rdquo; and do the reductions t
 </dd>
 </dl>
 <h4 id="salt">Salt</h4>
-<p>Remeber me metioned a term in first section: Salt? Rainbow table attacks and precomputed dictionary attacks can be thwarted via the use of salt. The reason is very simple, even if you can use precomputed table based on some common use dictionaries, but you can predict what&rsquo;s the result used.</p>
+<p>Remember that I mentioned a term in first section: Salt? Rainbow table attacks and pre-computed dictionary attacks can be thwarted via the use of salt. The reason is very simple, even if you can use pre-computed table based on some common use dictionaries, but you can predict what&rsquo;s the result used.</p>
 <p>Here are the most common mistakes in applying salt:</p>
 <ol>
 <li>Using short salts:
@@ -530,9 +549,9 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 </dd>
 <dt>Common sequences from a keyboard row</dt>
 <dd><ul>
-<li>qwerty</li>
+<li>qwerty (keyboard)</li>
 <li>123456</li>
-<li>asdfgh</li>
+<li>asdfgh (keyboard)</li>
 <li>fred.</li>
 </ul>
 </dd>
@@ -607,7 +626,7 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 <p>If you are familar with SQL injection, the blind injection is also a side-channel attacks.</p>
 <p>Let&rsquo;s look at the details of a <code>timeing attack</code>:
 By analyse time taken by the cryptographic algorithm implemenetation operation, the attacker is able to reverse enginner the input.</p>
-<p>In 2003, <a class="link" href="https://id.elsevier.com/as/authorization.oauth2?platSite=SD%2Fscience&amp;scope=openid%20email%20profile%20els%5Fauth%5Finfo%20els%5Fidp%5Finfo%20els%5Fidp%5Fanalytics%5Fattrs%20els%5Fsa%5Fdiscover%20urn%3Acom%3Aelsevier%3Aidp%3Apolicy%3Aproduct%3Ainst%5Fassoc&amp;response%5Ftype=code&amp;redirect%5Furi=https%3A%2F%2Fwww.sciencedirect.com%2Fuser%2Fidentity%2Flanding&amp;authType=SINGLE%5FSIGN%5FIN&amp;prompt=login&amp;client%5Fid=SDFE-v3&amp;state=retryCounter%3D0%26csrfToken%3D8db72d04-1503-4c61-852a-86ec787771b8%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst%5Fassoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS1389128605000125%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-7f672742-0676-47c6-9ce3-f01d2dc6f238"  target="_blank" rel="noopener"
+<p>In 2003, <a class="link" href="https://id.elsevier.com/as/authorization.oauth2?platSite=SD%2Fscience&amp;scope=openid%20email%20profile%20els_auth_info%20els_idp_info%20els_idp_analytics_attrs%20els_sa_discover%20urn%3Acom%3Aelsevier%3Aidp%3Apolicy%3Aproduct%3Ainst_assoc&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fwww.sciencedirect.com%2Fuser%2Fidentity%2Flanding&amp;authType=SINGLE_SIGN_IN&amp;prompt=login&amp;client_id=SDFE-v3&amp;state=retryCounter%3D0%26csrfToken%3D8db72d04-1503-4c61-852a-86ec787771b8%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst_assoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS1389128605000125%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-7f672742-0676-47c6-9ce3-f01d2dc6f238"  target="_blank" rel="noopener"
     >Boneh and Brumley</a> publsihed a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.</p>
 <h4 id="good-practice-around-passwords">Good practice around passwords</h4>
 <ul>
@@ -621,6 +640,7 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
 <li>Use password managers</li>
 <li>Use Two-Factor Authentication (2FA)</li>
 </ul>
+
 </section>
 
 
@@ -661,7 +681,7 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
 
 
         <span>
-            Last updated on Mar 19, 2022 17:24 UTC
+            Last updated on Apr 24, 2022 11:14 BST
         </span>
     </section></footer>
 

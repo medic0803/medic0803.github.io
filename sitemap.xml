@@ -3,34 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/ctf/</loc>
-    <lastmod>2022-04-20T22:13:17+01:00</lastmod>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/</loc>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/sqli/</loc>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/sql_injection_basic/</loc>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/</loc>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-04-24T22:59:23+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/php/</loc>
     <lastmod>2022-04-11T22:24:25+01:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
-  </url><url>
     <loc>https://ginkgo.org.cn/tags/security/</loc>
     <lastmod>2022-04-11T22:24:25+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/tags/sqli/</loc>
-    <lastmod>2022-04-20T22:13:17+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sql_injection_file_rw/</loc>
     <lastmod>2022-04-11T22:24:25+01:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
-  </url><url>
     <loc>https://ginkgo.org.cn/tags/ctf/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <lastmod>2022-04-22T16:01:44+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sqli_blind_injection/</loc>
     <lastmod>2022-04-20T22:13:17+01:00</lastmod>
@@ -48,42 +51,39 @@
     <lastmod>2022-03-27T15:44:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sqli_labs_study/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <lastmod>2022-04-22T16:01:44+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/sqli_injection/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <lastmod>2022-04-22T16:01:44+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/writeup/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <lastmod>2022-04-22T16:01:44+01:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/categories/writeup/</loc>
-    <lastmod>2022-04-22T15:58:22+01:00</lastmod>
+    <loc>https://ginkgo.org.cn/categories/writeups/</loc>
+    <lastmod>2022-04-22T16:01:44+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
-    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/cryptanalysis/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/network_security/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/password_cracking/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/password_cracking/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/rainbow_table_attacks/</loc>
-    <lastmod>2022-03-19T17:24:05+00:00</lastmod>
+    <lastmod>2022-04-24T11:14:46+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/web/</loc>
-    <lastmod>2022-03-24T21:14:34+00:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/categories/writeups/</loc>
     <lastmod>2022-03-24T21:14:34+00:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/mr_robot/</loc>
