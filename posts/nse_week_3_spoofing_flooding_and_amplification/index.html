@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在'><title>NSE Week 3: Spoofing, flooding and amplification</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 3: Spoofing, flooding and amplification'>
+<meta property='og:description' content='Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-27T10:53:05&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 3: Spoofing, flooding and amplification">
+<meta name="twitter:description" content="Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">NSE Week 3: Spoofing, flooding and amplification</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 24, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="spoofing-flooding-and-amplification">Spoofing, flooding and amplification</h2>
+<h3 id="spoofing">Spoofing</h3>
+<h4 id="arp-spoofing">ARP spoofing</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Layer identifiers</p>
+<p>Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在与谁联系，要通过什么路径去联系 <!-- raw HTML omitted --></p>
+<p>那么layer identifier 就代表着每一个computer node <!-- raw HTML omitted --></p>
+<ul>
+<li>Internet Layer identifier: <code>IP address</code> (assigned by users or by software, such as DHCP) <!-- raw HTML omitted --></li>
+<li>Link Layer Identifier: <code>MAC Address</code> (hardware address, physical address) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP (Address Resolution Protocol)</p>
+<p>aims to translate from IP address to MAC address <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-25_11-05-46_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP request message generation</p>
+<ol>
+<li>当有IP packet需要发出的时候，ARP就会被hardware driver 所调用 <!-- raw HTML omitted --></li>
+<li>首先获取IP destination address <!-- raw HTML omitted --></li>
+<li>然后在ARP本地的translation table 中查找是否有对应得IP address : MAC address entry <!-- raw HTML omitted -->
+<ul>
+<li>有的话，就把48-bits的MAC address发送给 hardware driver <!-- raw HTML omitted --></li>
+<li>没有的话，就准备发送ARP请求，填充相关信息 <!-- raw HTML omitted -->
+<ul>
+<li>sender MAC address <!-- raw HTML omitted --></li>
+<li>sender IP address <!-- raw HTML omitted --></li>
+<li>target IP address <!-- raw HTML omitted --></li>
+<li>target MAC address (broadcast address: 00:00:00:00:00:00) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ARP request message在link layer被封装成frame 然后发送出去 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP request message reception</p>
+<ol>
+<li>目标节点将会回复其所包含的MAC address, （如果通信的是其他网络的节点，那么此处寻找的就是网关的MAC address) <!-- raw HTML omitted --></li>
+<li>其他收到请求的节点会更新他们的translation table (IP address : MAC address entry) 然后丢弃这个包 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP rely message reception</p>
+<ol>
+<li>收到回复的节点也会更新他们的ARP cache <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP translation table (ARP table, ARP cache)</p>
+<ul>
+<li>通过ARP cache 来保存IP address : MAC address entry 来节省空间 <!-- raw HTML omitted --></li>
+<li>表内的entry会 ageing <!-- raw HTML omitted --></li>
+<li>ARP 是无状态协议，因此只要收到了request/reply 他们就会自动更新 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>RARP (Reverse ARP)</p>
+<p>aims to translate from MAC address to IP address <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-25_11-06-13_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ARP spoofing attack</p>
+<p>ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attack的，这样A在给B发frame的时候，就会发给attacker <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-25_10-49-32_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>countermeasure</p>
+<ul>
+<li>设置Arp cache 的过期时间expire <!-- raw HTML omitted --></li>
+<li>一些系统通过unicast 来更新cache 表，而不是像之前那样无状态的更新 <!-- raw HTML omitted --></li>
+<li>Against countermeasure <!-- raw HTML omitted -->
+<ul>
+<li>Attacker可以通过定期发送 ARP spoof packet (every ~40s) 来避免以上方法 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Statick ARP table 静态ARP表 <!-- raw HTML omitted -->
+<ul>
+<li>每次启动加载到RAM中 <!-- raw HTML omitted --></li>
+<li>没有ARP request主动发送 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Man-in-the-middle attack with ARP spoofing</p>
+<p>通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-25_10-53-55_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>MAC flooding</p>
+<p>每个switch 会内置一个CAM (Content Addressable memory) 表，用于记录不同的MAC address所对应的port number <!-- raw HTML omitted -->
+每当有frame 讲过switches, switch就会通过这个table 来实现转发 <!-- raw HTML omitted --></p>
+<p>MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而被迫广播，使attacker可以利用sniffer所监听到。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-25_11-04-54_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="dhcp-spoofing">DHCP spoofing</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>DHCP (Dynamic Host Configuration Protocol)</p>
+<p>DHCP是用来自动的给其他的用户分配IP地址以及其他相关配置的（网关，DNS服务器等）协议 <!-- raw HTML omitted --></p>
+<p>Protocol operations
+: 1.  Discovery <!-- raw HTML omitted -->
+client 广播DHCP Discovery message来寻找server <!-- raw HTML omitted -->
+2.  Offer <!-- raw HTML omitted -->
+server单播提供IP给client <!-- raw HTML omitted -->
+3.  Request <!-- raw HTML omitted -->
+client 发送接收IP的message <!-- raw HTML omitted -->
+4.  Acknowledge <!-- raw HTML omitted -->
+server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HTML omitted --></p>
+<pre><code>     <figure><img src="/ox-hugo/2022-04-26_09-31-53_screenshot.png" width="700px"/>
+</figure>
+ &lt;br/&gt;
+</code></pre>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>DHCP spoofing attack</p>
+<p>DHCP spoofing 主要是通过向DHCP server发送大量的Spoofed DHCP request message来占用IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 <!-- raw HTML omitted --></p>
+<p>正常的DHCP request message： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_09-43-14_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Spoofed DHCP discovery message: 利用大量虚假的MAC地址来占用可分配的IP地址 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_09-43-53_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>DHCP starvation
+:</p>
+<p>通过发送大量的带有伪造MAC Address的DHCP request message来占用所有的IP池中的IP地址，进而使用假的DHCP server给其他client分配地址和其他配置信息，对他们进行控制 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_09-45-24_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_09-45-38_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_09-45-50_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="flooding-and-amplification">Flooding and Amplification</h3>
+<h4 id="icmp-smurfing">ICMP Smurfing</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ICMP</p>
+<p>Ping
+: 提到ICMP协议，就不得不提到ping，ping就类似于一个声纳系统，通过向特定的电脑发送ICMP ECHO_REQUEST，来使他们通过返回ECHO_REPLY_REQUEST来验证是否可以通信 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ICMP Smurfing</p>
+<p>Attacker通过向一个局域网的广播域中发送大量的spoofed ICMP ECHO_REQUEST来诱导大量的clients发送 ICMP ECHO_REPLY_REQUEST到指定的一台client进而使其崩溃 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_10-11-31_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Amplification
+: 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是Amplification,可以通过多层的amplifiers来实现巨大的DDoS流量 <!-- raw HTML omitted --></p>
+<pre><code> <figure><img src="/ox-hugo/2022-04-26_10-13-55_screenshot.png" width="700px"/>
+</figure>
+ &lt;br/&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="ntp-amplification-ddos-attack">NTP Amplification DDoS Attack</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>NTP</p>
+<ul>
+<li>Network time protocol <!-- raw HTML omitted --></li>
+<li>UPD protocol <!-- raw HTML omitted --></li>
+<li>port 123 <!-- raw HTML omitted --></li>
+</ul>
+<p>NTP用来用来各个主机的时钟 <!-- raw HTML omitted --></p>
+<p>NTP是一个分层的，中间层的时间资源系统 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-26_22-46-00_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>每一层我们称为 <code>stratum</code> ,由最上层的clock一层层同步到不同 <code>stratum</code> 的NTP server <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>NTP如何工作</p>
+<p><figure><img src="/ox-hugo/2022-04-26_22-50-06_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Client首先发出NTP message，并且在上面记录当前的时间戳： <code>T1=9:00:00am</code>  <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-26_22-50-55_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>NTP server 收到后马上打上时间戳： <code>T2=10:00:01am</code> <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-26_22-52-06_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>NTP sever返回一条NTP message，然后在发出之前打上时间戳： <code>T3=10:00:02am</code> <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-26_22-56-25_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>NTP message到达用户的时候马上打上时间戳： <code>T4=9:00:03am</code> <!-- raw HTML omitted --></li>
+</ol>
+<p>用这四个时间戳，我们就足以同步client的时间 <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>09:00:00</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>10:00:01</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>10:00:02</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>09:00:03</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>
+<p>计算所有的Message在传输中delay的时间 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">delay = D1 - D2 = (T4-T1) - (T3-T2) = 通信花费的总时长 - 在server上的处理时间 = 3 - 1 = 2 seconds
+</span></span></code></pre></div></li>
+<li>
+<p>计算 NTP client 与NTP server 之间的时间差 <!-- raw HTML omitted --></p>
+<p>O1 = T2 - T1 = 1h 1s <!-- raw HTML omitted --></p>
+<p>O2 = T3 - T4 = 59min <!-- raw HTML omitted --></p>
+<p>T2 = T1 + offset + delay/2 <!-- raw HTML omitted -->
+T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
+<p>因此Offset = (O1 + O2)/2 = [(T2 - T1 - delay/2) + (T3 - T4 + delay/2)] / 2 = 1 hour <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>NTP amplification attack</p>
+<p>NTP amplification attack 依赖于利用公共可以访问的NTP server来发出NTP RESPONSE实现对victim host的DDoS攻击 <!-- raw HTML omitted --></p>
+<p>补充知识
+: NTP 服务支持管理员向NTP server查询其所管理同步的clients信息，NTP servers通过向client发送monlist命令来获得所有最近连接过的hosts的列表 <!-- raw HTML omitted --></p>
+<p>ntpd
+: NTP daemon是一个操作系统的后台驻留程序，用来设置和维护系统时间并与NTP server交互实现时钟同步 <!-- raw HTML omitted -->
+在Ntpd在4.2.7之前的版本都是存在漏洞的。 <!-- raw HTML omitted -->
+在老的机器中，monlist command是默认开启的,它将会返回最近600个通信过的client的IP地址（也就是说一条monlist command，可以返回比原本大的多的数据） <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>How NTP amplification attack works?</p>
+<p><figure><img src="/ox-hugo/2022-04-27_09-36-42_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Attacker使用bot来伪造NTP request packets，使用victim的IP地址 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-27_09-36-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Botnet 发送这些伪造的NTP请求，来诱使NTP servers调用他们的monlist命令，返回大量的response <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-27_09-38-14_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Client收到了每一个NTP server所返回的600个IP地址的信息，相当于收到了一次DoS攻击。我们根据上面Wireshark的截图可以观察到，一条的spoofed NTP request只需要234bytes，但是却要受到100个482 bytes的数据包，可见其攻击力度。 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="botnet">Botnet</h4>
+<p>我们之前在NTP amplification attack已经提到过了bot的使用，在这一章节中，我们来稍微展开讲一讲Botnet的内容 <!-- raw HTML omitted --></p>
+<p>Botnet，僵尸网络，简单来说就是黑客通过控制一系列的设备（主机，手机，IoT设备等），实现对于本机信息的获取以及控制权，可以利用所感染的bot或者僵尸来实现各种攻击，并通过C&amp;C(command and control) server来实现通信与指令下发 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>如何搭建一个Botnet?</p>
+<ol>
+<li>黑客首先需要得到一群受感染的用户设备，他们可以自己想办法去感染，也可以从地下市场购买别人感染的 <!-- raw HTML omitted --></li>
+<li>然后，让这些被感染的bots去连接上 C&amp;C server,实现通信与管理 <!-- raw HTML omitted --></li>
+<li>接着，黑客就可以通过C&amp;C server来下达指令，要求Bot去偷取本机的信息，亦或者是配合实现攻击 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<h4 id="tcp-syn-flooding">TCP SYN Flooding</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP</p>
+<ul>
+<li>
+<p>TCP 是一个传输层的协议，用于很多我们耳熟能详的协议例如HTTP, SMTP 还有 ftp <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>TCP 提供了可靠的点对点的基于连接的通信，如果说网络层的IP地址是提供了快递从揽货到送达的路径，那么传输层的TCP和UDP相当于是提供了传输路上的保险 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>其可靠性主要是通过 <code>segment sequencing</code>, <code>re-trasmission</code> and =loss detection=来实现的 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>同时TCP提供了流量控制和拥塞管理的功能，只要是通过滑动窗口算法以及丢包检测实现的 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP connection</p>
+<p>每一个 <code>TCP connection</code> 的标识符就是： <!-- raw HTML omitted --></p>
+<ul>
+<li>Source IP address + port number, Destination IP address + port number <!-- raw HTML omitted --></li>
+<li>其中Port number指代的就是所跑的服务所对应的number <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Three-way handshake 三次握手协议</p>
+<p>之前我们提到过TCP协议是基于连接的协议，那么三次握手协议，就是其内置的，用于建立连接的协议 <!-- raw HTML omitted --></p>
+<p>首先我们先来认识一下一个用于三次握手协议的TCP header应该包含什么信息 <!-- raw HTML omitted --></p>
+<p>其应该包括： <!-- raw HTML omitted --></p>
+<ul>
+<li>Port numbers (16 bits each) <!-- raw HTML omitted --></li>
+<li>SYN flag (1 bit) <!-- raw HTML omitted --></li>
+<li>ACK flag (1 bit) <!-- raw HTML omitted --></li>
+<li>Sequence number (32 bits) <!-- raw HTML omitted --></li>
+<li>Acknowledgement number (32 bits) <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-04-27_10-36-39_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>然后看一个具体的例子 <!-- raw HTML omitted --></p>
+<ol>
+<li>Source首先发起第一次握手请求，名为 <code>SYN</code> 发出其所定义的一个sequence number为x <!-- raw HTML omitted --></li>
+<li>接着Destination返回第二次握手请求，名为 <code>SYN+ACK</code> ，将sequence number改为其所定义的值y，并将acknowledge number设为x+1 <!-- raw HTML omitted --></li>
+<li>最后Source发起第三次握手请求，名为 <code>ACK</code> , 返回acknowledgement number为y+1, 同时递增自己的 sequence number为x+1 <!-- raw HTML omitted --></li>
+<li>至此三次握手连接成功，接下来就可以正常的进行通信，并且Source 和 Destination将逐渐递增其自己的sequence number以及acknowledge number <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-27_10-35-28_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP SYN flooding</p>
+<p>TCP SYN flooding attack本质上是一个DoS attack, 其目的是为了通过向目标服务器发送大量的无效 <code>SYN</code>, 来诱使服务器发送对等数量的 <code>SYN+ACK</code> 请求, 继而等待 <code>ACK</code> 请求回复，同时利用本地缓存这个连接，最终导致本地的缓存空间被占满。 <!-- raw HTML omitted --></p>
+<p>我们最后通过一个具体的例子来复现一下这个过程 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-27_10-48-13_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>首先黑客向服务器发送大量的 <code>SYN</code> 请求,用的是伪造过的IP地址 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-27_10-52-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>接着服务器在收到了 <code>SYN</code> 请求之后，便会发出对应的 <code>SYN+ACK</code> 回复请求到之前伪造的IP地址 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-27_10-52-30_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>被伪造的IP地址的主机收到由服务器发来的大量 <code>SYN+ACK</code> 请求，可发现没有记录显示自己之前有发送过 <code>SYN</code> 请求到该服务器，因此不会回复 <code>ACK</code> 请求。同时，每维护一个等待 <code>ACK</code> 的连接，服务器都要开设一个新的端口，同时用缓存保存这些信息，一旦超出上限，那么就会使服务器瘫痪 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Apr 27, 2022 10:53 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/password_cracking/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Password Cracking</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/social_engineering/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Social Engineering</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/network_security_assessment/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Network Security Assessment</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Under The Ginkgo
+    </section>
+    
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#spoofing-flooding-and-amplification">Spoofing, flooding and amplification</a>
+      <ul>
+        <li><a href="#spoofing">Spoofing</a>
+          <ul>
+            <li><a href="#arp-spoofing">ARP spoofing</a></li>
+            <li><a href="#dhcp-spoofing">DHCP spoofing</a></li>
+          </ul>
+        </li>
+        <li><a href="#flooding-and-amplification">Flooding and Amplification</a>
+          <ul>
+            <li><a href="#icmp-smurfing">ICMP Smurfing</a></li>
+            <li><a href="#ntp-amplification-ddos-attack">NTP Amplification DDoS Attack</a></li>
+            <li><a href="#botnet">Botnet</a></li>
+            <li><a href="#tcp-syn-flooding">TCP SYN Flooding</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

