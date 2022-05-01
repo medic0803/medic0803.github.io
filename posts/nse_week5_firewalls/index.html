@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week5: Firwalls How to protect edges of the Internet or Internal network? Local area networks (LANs), personal area networks (PANs), wireless local area networks (WLANs), 以及 wireless sensor networks (WSNs) 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我'><title>NSE Week5: Firewalls</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week5_firewalls/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week5: Firewalls'>
+<meta property='og:description' content='NSE Week5: Firwalls How to protect edges of the Internet or Internal network? Local area networks (LANs), personal area networks (PANs), wireless local area networks (WLANs), 以及 wireless sensor networks (WSNs) 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week5_firewalls/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T13:05:51&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week5: Firewalls">
+<meta name="twitter:description" content="NSE Week5: Firwalls How to protect edges of the Internet or Internal network? Local area networks (LANs), personal area networks (PANs), wireless local area networks (WLANs), 以及 wireless sensor networks (WSNs) 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week5_firewalls/">NSE Week5: Firewalls</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 29, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week5-firwalls">NSE Week5: Firwalls</h2>
+<h3 id="how-to-protect-edges-of-the-internet-or-internal-network">How to protect edges of the Internet or Internal network?</h3>
+<p><code>Local area networks (LANs)</code>, <code>personal area networks (PANs)</code>, <code>wireless local area networks (WLANs)</code>, 以及 <code>wireless sensor networks (WSNs)</code> 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我们可以把保护这样的互联网边缘网络或者内部网络比喻成保卫一座城市，通过三层的保护措施来防止入侵: <!-- raw HTML omitted --></p>
+<ol>
+<li>Perimeter Security (边界安全): 通过减少入口来控制进出，派遣武装守卫把守，同时要求进出的人员拥有预先设定的证明 <!-- raw HTML omitted --></li>
+<li>Street patrolling (街道巡逻): 派遣武装守卫定期上街巡逻，来识别入侵者 <!-- raw HTML omitted --></li>
+<li>House cleaning (入室排查): 派遣专业的安全专家挨家挨户的排查外来危险品以及安全漏洞 <!-- raw HTML omitted --></li>
+</ol>
+<p>这三道对于城邦的包围也就可以对应网络安全中的三项技术： <!-- raw HTML omitted --></p>
+<ul>
+<li>Perimeter Security &lt;-&gt; Firewall: 防火墙 <!-- raw HTML omitted --></li>
+<li>Street patrolling &lt;-&gt; Intrusion detection systems: 入侵检测 <!-- raw HTML omitted --></li>
+<li>House cleaning &lt;-&gt; Anti-malicious-software: 杀毒软件 <!-- raw HTML omitted --></li>
+</ul>
+<p>而我们今天要讲的，就是内网的第一道防线，防火墙。 <!-- raw HTML omitted --></p>
+<p>在正式介绍防火墙之前，我们最后再介绍一下针对边界攻击的防御理念：5Ds of Perimeter Security: <!-- raw HTML omitted -->
+Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Deter
+: 组织入侵的发生，即使用 <code>fencing 围栏</code>, <code>lighting 完全照明</code>, <code>signs 出入签名</code> 等方式对犯罪者进行被动威慑，从最开始就扼杀入侵的念头 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Detect
+: 检测入侵的行为，例如 <code>CCTV 监控</code>, 用来监控和记录所有的入侵行为 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Deny
+: 拒绝危险的进入，通过一些认证系统来主动拒绝入侵的行为，其中防火墙就属于 <code>Deny</code> <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Delay
+: 延缓入侵的速度，通过设置障碍来延长入侵的时间，迫使入侵者放弃或者给予安全团队更多的时间 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Defend
+: 主动地对入侵者进行打击，通过安全团队或者警方的行动来组织入侵 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="what-is-a-firewall">What is a firewall?</h3>
+<p>什么是防火墙，它有什么作用呢？ <!-- raw HTML omitted --></p>
+<p>防火墙是一台主机或者一个网络服务，架设于内网和外部网络之间，用来： <!-- raw HTML omitted --></p>
+<ol>
+<li>防止坏事发生 (内部泄露机密到外部，外部攻击内部系统) <!-- raw HTML omitted --></li>
+<li>同时使正常的行为不收到影响(员工正常访问外网交互) <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-04-29_10-26-51_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="防火墙的主要功能">防火墙的主要功能</h4>
+<p>主要工作：Access control 访问控制 <!-- raw HTML omitted --></p>
+<ul>
+<li>建立一道屏障，所有方向上的网络流量都需要经过防火墙 <!-- raw HTML omitted --></li>
+<li>防火墙会预设一系列安全协议来对所有这些经过的流量进行审计和控制（可以对异常的行为设置警报） <!-- raw HTML omitted --></li>
+<li>可以对IP packet或者更早层的数据进行过滤 <!-- raw HTML omitted --></li>
+<li>同时也可以部署NAT(network Address Translation)服务以及使用监控等服务 <!-- raw HTML omitted --></li>
+<li>也可以通过IPSec来实现VPNs <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="防火墙的技术">防火墙的技术</h4>
+<dl>
+<dt>What? -&gt; Service Control</dt>
+<dd>通过 <code>transport layer ports</code> 决定 <!-- raw HTML omitted -->
+<p>决定 <!-- raw HTML omitted -->What types of Internet services<!-- raw HTML omitted --> 可以通过 <!-- raw HTML omitted --></p>
+</dd>
+<dt>Where? -&gt; Direction control</dt>
+<dd>通过 <code>{Source adddress -&gt; Destination address}</code> 决定 <!-- raw HTML omitted -->
+<p>决定特定方向的流量是否可以通过 <!-- raw HTML omitted --></p>
+</dd>
+<dt>Who? -&gt; User control</dt>
+<dd>通过 <code>{IP address -&gt; Transport layer port}</code> 决定 <!-- raw HTML omitted -->
+<p>决定什么服务可以被什么用户所访问 <!-- raw HTML omitted --></p>
+</dd>
+<dt>How? -&gt; Behaviour control</dt>
+<dd>控制服务应该被如何使用，比如一些核心的服务只能在特定的时间被使用 <!-- raw HTML omitted --></dd>
+</dl>
+<h4 id="防火墙的类型">防火墙的类型</h4>
+<dl>
+<dt>Positive filter</dt>
+<dd>主动过滤，白名单过滤，主允许符合规则的数据通过，其他都不可以通过 <!-- raw HTML omitted -->
+<p>假设所有人都是坏人 <!-- raw HTML omitted --></p>
+<p>主动的，选定是好人的，允许其通过 <!-- raw HTML omitted --></p>
+</dd>
+<dt>Negative filter</dt>
+<dd>被动过滤，黑名单过滤，不允许不符合规则的数据通过，其他都可以通过 <!-- raw HTML omitted -->
+<p>假设所有人都是好人 <!-- raw HTML omitted --></p>
+<p>被动的，在发现了坏人之后，将其过滤 <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<p>根据防火墙的类型，过滤的策略也会不一样: <!-- raw HTML omitted --></p>
+<ul>
+<li>一个或多个协议头 <!-- raw HTML omitted --></li>
+<li>Payload的内容 <!-- raw HTML omitted --></li>
+<li>一串数据包的pattern <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="防火墙的限制">防火墙的限制</h4>
+<p>防火墙也存在很多的限制，要不怎么需要多道的保护呢 <!-- raw HTML omitted -->
+其无法保护: <!-- raw HTML omitted --></p>
+<ul>
+<li>绕过过滤规则的进攻 <!-- raw HTML omitted --></li>
+<li>在外部被感染的设备 <!-- raw HTML omitted --></li>
+<li>通过外部的WiFi网络进行的攻击 <!-- raw HTML omitted --></li>
+<li>来自内部的威胁 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>sneakernet</p>
+<p>球鞋网络，顾名思义就是使用物理媒介运输数据，而非通过网络，记得以前上计算机网络的时候，老师就提到过，在网络不稳定或者质量较差的时候，往往还是使用物理传输更为高校 <!-- raw HTML omitted --></p>
+<p>那么这种时候 <code>Firewall</code> 就完全失效了，因为其所针对的都是网络数据包 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>WiFi</p>
+<p>WiFi之前的数据共享没办法集中到Firewall进行管理 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_11-24-28_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="packet-filtering-firewall">Packet filtering firewall</h3>
+<p>• What is a packet filtering firewall <!-- raw HTML omitted -->
+包过滤防火墙是最基础也是最普遍使用的防火墙，其作用在两种数据包上： <!-- raw HTML omitted --></p>
+<ol>
+<li>Ingress packets: 从外网到内网的数据包 <!-- raw HTML omitted --></li>
+<li>Egress packets: 从内网到外网的数据包 <!-- raw HTML omitted --></li>
+</ol>
+<p>同时也对应 <code>ingress filtering</code>, <code>egress filtering</code> 两种过滤手段 <!-- raw HTML omitted --></p>
+<p><code>Packet filtering firewall</code> 通过预设一系列的规则来决定是否让某一种数据包通过，而这些规则都是用来检测 <code>IP headers</code> 以及 <code>TCP headers</code>, 对于应用层所放入的payload一定都不感兴趣 <!-- raw HTML omitted --></p>
+<p><code>Packet filtering firewall</code> 也分成 <code>stateless filtering</code> 以及 <code>stateful filter</code> 主要的区别就在于应用的规则是否会审计网络连接的状态，即判断一个数据包的去留是否会参考之前的记录，也可以说是考虑了上下文 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_22-07-19_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="stateless-filtering-无状态过滤">Stateless filtering 无状态过滤</h4>
+<p>其无状态的过滤主要体现在： <!-- raw HTML omitted --></p>
+<ol>
+<li>对所有收到的包都一视同仁，单独决断是否放过 <!-- raw HTML omitted --></li>
+<li>以前的记录不会影响对改数据包的判断 <!-- raw HTML omitted --></li>
+</ol>
+<p>我们之前提到过 <code>Packet filtering firewall</code> 主要是通过审查 <code>IP headers</code> 以及 <code>TCP headers</code>, 那么细化来说 <!-- raw HTML omitted --></p>
+<p>是IP header中的： <!-- raw HTML omitted --></p>
+<ul>
+<li>Source IP address <!-- raw HTML omitted --></li>
+<li>Destination IP address <!-- raw HTML omitted --></li>
+<li>other fields: defines the transport protocol <!-- raw HTML omitted --></li>
+</ul>
+<p>以及 TCP/UDP header 中的： <!-- raw HTML omitted --></p>
+<ul>
+<li>Source port <!-- raw HTML omitted --></li>
+<li>Destination port <!-- raw HTML omitted --></li>
+</ul>
+<p>通过设定对以上信息的规则来实现过滤审查，那么所有的这些规则都会被记录到 <code>ACL (access control list)</code> 访问控制列表上. <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_20-46-55_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>过滤规则</p>
+<p>通常来说，ACL上定义的规则会被 <code>从上至下</code> 依次与审查的数据包进行匹配，然后执行对应的动作。 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>默认规则</p>
+<p>之前我们提到过主动过滤和被动过滤，在这里我们展开讲讲 <!-- raw HTML omitted --></p>
+<p>Default = discard 默认丢包
+: -   主动过滤（主动的选择可以通过的名单） <!-- raw HTML omitted -->
+-   白名单过滤 <!-- raw HTML omitted -->
+-   禁止未经明确许可的行为 (That which is not expressively permitted is prohibited) <!-- raw HTML omitted -->
+-   更为稳健和保守的政策 <!-- raw HTML omitted -->
+-   所有被允许的服务都需要一个个添加 <!-- raw HTML omitted -->
+-   对用户不太友好（就像我们之前所提到的，用户的端口更为灵活，利用白名单一个个加很不明显） <!-- raw HTML omitted -->
+-   用户的可见性随着规则的增加而降低 <!-- raw HTML omitted -->
+-   相对的，对企业和政府来说更加友好 <!-- raw HTML omitted --></p>
+<p>Default = forward 默认放行
+: -   被动过滤（默认不用过滤，直到被动的知道了有威胁才过滤） <!-- raw HTML omitted -->
+-   黑名单过滤 <!-- raw HTML omitted -->
+-   没有明确禁止的就是允许的（That which is not expressively prohibited is permitted） <!-- raw HTML omitted -->
+-   较于白名单更不安全 <!-- raw HTML omitted -->
+-   每当出现新的威胁需要更新记录到黑名单上 <!-- raw HTML omitted -->
+-   通常被开发的组织采纳，比如大学 <!-- raw HTML omitted --></p>
+<p>Granularity of filtering 过滤的颗粒度
+: 除了前面提到那几个常见的匹配规则，还有一些内容可以实现更精确的过滤，根据firewall使用的不同的routers来决定 <!-- raw HTML omitted -->
+-   在入站时进行过滤 <!-- raw HTML omitted -->
+-   在出站时进行过滤 <!-- raw HTML omitted -->
+-   在入站和出站同时践行过滤 <!-- raw HTML omitted -->
+-   检查数据包的其他控制区域 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ACL实例</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Rule set A</p>
+<p><figure><img src="/ox-hugo/2022-04-29_22-39-21_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们先来看这第一组规则 <!-- raw HTML omitted -->
+&rsquo; * &rsquo; = ANY <!-- raw HTML omitted --></p>
+<p>第一条
+: -   两个端口号都没有指定，说明这条规则没有方向（端口号的大小指示了客户端和服务端） <!-- raw HTML omitted -->
+-   只指定了 <code>SPIGOT</code> 的IP地址，说明到SPIGOT的数据包和从SPIGOT来的数据包都会被禁止，也许是以前有过恶意行为，所以被整一个禁止了 <!-- raw HTML omitted --></p>
+<p>第二条
+: -   指定了IP地址以及对应的端口号25， 是SMTP服务所对应的端口 <!-- raw HTML omitted -->
+-   这里是允许内网的邮件系统收取邮件 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Rule set B</p>
+<p><figure><img src="/ox-hugo/2022-04-30_09-52-19_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>这是一条默认丢弃规则，一般来说是放在最下面 <!-- raw HTML omitted --></li>
+<li>默认丢弃就是我们之前说的主动过滤，白名单过滤 <!-- raw HTML omitted --></li>
+<li>在此之上就是定义的可以通过的规则 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Rule set C</p>
+<p><figure><img src="/ox-hugo/2022-04-30_09-53-39_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>与rule set A类似，这次是允许内网所有的主机向外发邮件 <!-- raw HTML omitted --></li>
+<li>但是存在两个漏洞 <!-- raw HTML omitted -->
+<ol>
+<li>外面的服务可以修改他们的端口号到25，这样就可以使泄密的数据绕过防火墙策略 <!-- raw HTML omitted --></li>
+<li>attacker也可以修改他们的客户端端口号，从而绕过防火墙策略实现入侵 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Rule set D</p>
+<p><figure><img src="/ox-hugo/2022-04-30_09-55-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>与之前三条不同的是，Rule set D多了flags的信息，主要运用于TCP的连接的判断 <!-- raw HTML omitted --></p>
+<ul>
+<li>第一条和之前Rule set C一样，是允许内网的主机发送邮件到外网 <!-- raw HTML omitted --></li>
+<li>第二条则做了更多的限制，要求进入内网的邮件需要是TCP ACK数据包 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Rule set E</p>
+<p><figure><img src="/ox-hugo/2022-04-30_09-58-55_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>第一条，允许内网的主机向外发送数据 <!-- raw HTML omitted --></li>
+<li>第二条，允许回复的ACK包 <!-- raw HTML omitted --></li>
+<li>第三条，允许内网的服务对外网的客户端进行回复 (port &gt; 1024) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>其他常见过滤规则</p>
+<ol>
+<li>
+<p>Ingress packet 的source IP address 是内网的地址
+: 我们知道防火墙是建立在内网和外网之前的，因此 <code>Ingress packet</code> 只有可能是从外网的地址到内网的地址，这类不寻找的数据包通常都是被恶意修改的数据包 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>指定了路由器的数据包
+: 这类数据包通常也是被恶意修改的来绕过防火墙规则的 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Payload特别小的数据包
+: 这类特别小的数据包，很有可能是用来分离会被审查的信息，以此来绕过防火墙规则 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>来自外网地址的用于控制的数据包
+: 有一些数据包是专门用来进行内网设备管理和控制的，比如DHCP, Bootp, TFTP, NFS, 都是来给内网下发指令或者发送配置的，这些数据包如果来自外网很有可能就是恶意的，应该丢弃 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Stateless filtering的优劣势以及漏洞</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Advantages</p>
+<ol>
+<li>实现 <code>stateless filtering</code> 比较方便 <!-- raw HTML omitted --></li>
+<li>规则对用户比较透明，速度也很快 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Disadvantages</p>
+<ul>
+<li>没办法对更高层的数据进行过滤，因此没办法部署对于应用层的漏洞的过滤 <!-- raw HTML omitted -->
+<ul>
+<li>一些恶意的指令（存在于payload中）无法被过滤 <!-- raw HTML omitted --></li>
+<li>如果一个客户端端口号被允许通过（&gt;1024）,那么其所有的数据包都会被放行 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>日志记录的信息较少（因为本来指定规则以及审核数据包所需要用到的数据就很少） <!-- raw HTML omitted --></li>
+<li>无法部署高级的认证系统 <!-- raw HTML omitted -->
+<ul>
+<li>同样因为缺乏高层的审核功能 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Vulnerabilities</p>
+<ul>
+<li>无法检测出TCP/IP被修改过的数据 <!-- raw HTML omitted -->
+<ul>
+<li>无法应用更高层的审核机制，导致数据内容被修改后即可绕过规则 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>由于用于过滤规则制定的变量较少，因此错误的配置很容易就发生了，从而招致入侵 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>攻防实例</p>
+<p>接下来我们来看一些攻防的实例，来看看stateless filtering能抵御哪些攻击 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>IP address spoofing</p>
+<p><code>IP address spoofing</code> 通常都是通过修改IP地址来欺骗服务器其真正的主机地址 <!-- raw HTML omitted --></p>
+<p>Countermeasure
+: -   我们可以制定一些规则来避免一些不合理的数据包，例如 <!-- raw HTML omitted -->
+-   Ingress（从连接外网的interface传向连接内网的interface）的数据包本来应该是外网到内网的地址，可如果source IP address变成了外网的地址，那就有问题了 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Source routing attack</p>
+<p>Source routing是一种特殊的路由机制，即发送方可以指定到达接收方的路由（通常来说，我们只是指定gateway，然后让路由器去寻找路由） <!-- raw HTML omitted --></p>
+<p>那么Attacker可以利用这个机制来伪造数据包的IP address绕过过滤规则，同时使用source routing指示数据包真正的路径和方向 <!-- raw HTML omitted --></p>
+<p>Countermeasure
+: -   丢弃所有使用source routing的数据包 <!-- raw HTML omitted -->
+-   禁止这些指定了路由的数据包 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Tiny fragment attacks</p>
+<p>就像我们之前提到过的，攻击者可以将数据包分离成多个小的数据包，将所需要的信息分散到小的数据包当中，而防火墙往往只会检查最开始的数据包片段，由此可以绕过检测规则 <!-- raw HTML omitted --></p>
+<p>Countermeasure
+: -   防火墙可以设定一些规则比如，丢弃所有分散化的TCP数据包，或者在进行审核之前先重组这些数据包片段 <!-- raw HTML omitted -->
+-   规定第一个数据包片段必须含有足够多的数据便于防火墙审核 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>补充知识</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP port numbers</p>
+<p>我们再来复习一下 <code>TCP port numbers</code> <!-- raw HTML omitted --></p>
+<p>TCP port number 一般用来指示运行的应用或者服务： <!-- raw HTML omitted --></p>
+<ul>
+<li>服务器端（本地的）应用的端口号一般小于1024，这些端口号一般都已经被占用了，我们自己在写程序的时候应该避免使用 <!-- raw HTML omitted --></li>
+<li>而其他1024~66535的端口号一般被用于客户端（外部的）程序 (16 bits端口号) <!-- raw HTML omitted --></li>
+</ul>
+<p>还记得我们之前的送快递的例子吗，我们说传输层是上保险，IP地址是送货地址，网络层是找送货的地图，MAC地址是邮编，物理层是送货，那么这个端口号就是写的名字，表明是什么服务传输数据给什么服务 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_21-04-52_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>从中，我们又看出了一些 <code>stateless filtering</code> 的局限，用户的端口号千变万化，那么就会设置一下较为宽松的规则，从而引发漏洞 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>How to block an entire subnet?</p>
+<p>Use subnet address with CIDR prefix or subnet masks，使用子网划分的后缀 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_22-09-37_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="stateful-firewall">Stateful firewall</h4>
+<p><code>Stateful filtering</code>, 也叫做 <code>connection-state filtering</code>,通过追踪外部和内部的主机的连接来决定出入规则 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Connection state</dt>
+<dd>当我们说连接的是，指的就是一个TCP连接的状态，是否已经建立（UDP不建立连接） <!-- raw HTML omitted --></dd>
+</dl>
+<p>所有这些建立的TCP连接都会存入 <code>state table</code>  <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_21-33-38_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>How stateful firewall works?</p>
+<p>当有ingress或者egress的数据包通过的时候，firwall会查找 <code>state table</code> 来判断他们是否属于被记录的connection <!-- raw HTML omitted --></p>
+<p>如果属于一个连接，发行，并记录信息（比如TCP sequence number，可以用来防御 <code>TCP session hijacking</code> ） <!-- raw HTML omitted --></p>
+<p>如果不属于，再判断是否是一个TCP SYN packet which用于建立一个连接，如果是的话就新开一条记录用来记录这个新的连接，如果不是的话，那就丢弃 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Drawbacks of stateful firewall?</p>
+<p>我们可以同时使用 <code>stateful filtering</code> 以及 <code>stateless filtering</code>,因为从上面的描述中，也许有一些朋友已经嗅到了一丝漏洞的味道，存储 -&gt; Emm -&gt;flooding lol. <!-- raw HTML omitted --></p>
+<p>查询连接，判断从属，记录信息等等这些动作都需要消耗大量的存储空间和CPU资源，因此很容易遭受攻击，因此可以选择只保存有限的信息，以及一段时间内的连接来减少消耗 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>IPTables</p>
+<p>IPtables是Linux的 stateful packet filtering工具，其主要的功能有两个： <!-- raw HTML omitted --></p>
+<p>Tables
+:</p>
+<p>Chains
+: 定义了一系列的过滤规则用来处理经过的数据包，然后做出响应的决定（accept or drop） <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="stateful-firwall-and-proxy-firewall">Stateful firwall and proxy firewall</h3>
+<h4 id="application-level-proxy-firewall">Application-level proxy firewall</h4>
+<h4 id="circuit-level-gateway-proxy-firewall">Circuit-level gateway/proxy firewall</h4>
+<h3 id="firewall-location-and-configuration">Firewall location and configuration</h3>
+<h4 id="personal-firewall">Personal firewall</h4>
+<h4 id="host-based-firewall">Host-based firewall</h4>
+<h4 id="dmz-networks">DMZ networks</h4>
+<h4 id="distributed-firewalls">Distributed firewalls</h4>
+<h4 id="cloud-firwalls">Cloud firwalls</h4>
+<p>Virtual private cloud (VPC) <!-- raw HTML omitted --></p>
+<h3 id="firewall-basing">Firewall basing</h3>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 01, 2022 13:05 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/password_cracking/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Password Cracking</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/social_engineering/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Social Engineering</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/network_security_assessment/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Network Security Assessment</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Under The Ginkgo
+    </section>
+    
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week5-firwalls">NSE Week5: Firwalls</a>
+      <ul>
+        <li><a href="#how-to-protect-edges-of-the-internet-or-internal-network">How to protect edges of the Internet or Internal network?</a></li>
+        <li><a href="#what-is-a-firewall">What is a firewall?</a>
+          <ul>
+            <li><a href="#防火墙的主要功能">防火墙的主要功能</a></li>
+            <li><a href="#防火墙的技术">防火墙的技术</a></li>
+            <li><a href="#防火墙的类型">防火墙的类型</a></li>
+            <li><a href="#防火墙的限制">防火墙的限制</a></li>
+          </ul>
+        </li>
+        <li><a href="#packet-filtering-firewall">Packet filtering firewall</a>
+          <ul>
+            <li><a href="#stateless-filtering-无状态过滤">Stateless filtering 无状态过滤</a></li>
+            <li><a href="#stateful-firewall">Stateful firewall</a></li>
+          </ul>
+        </li>
+        <li><a href="#stateful-firwall-and-proxy-firewall">Stateful firwall and proxy firewall</a>
+          <ul>
+            <li><a href="#application-level-proxy-firewall">Application-level proxy firewall</a></li>
+            <li><a href="#circuit-level-gateway-proxy-firewall">Circuit-level gateway/proxy firewall</a></li>
+          </ul>
+        </li>
+        <li><a href="#firewall-location-and-configuration">Firewall location and configuration</a>
+          <ul>
+            <li><a href="#personal-firewall">Personal firewall</a></li>
+            <li><a href="#host-based-firewall">Host-based firewall</a></li>
+            <li><a href="#dmz-networks">DMZ networks</a></li>
+            <li><a href="#distributed-firewalls">Distributed firewalls</a></li>
+            <li><a href="#cloud-firwalls">Cloud firwalls</a></li>
+          </ul>
+        </li>
+        <li><a href="#firewall-basing">Firewall basing</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

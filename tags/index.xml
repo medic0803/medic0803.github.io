@@ -6,12 +6,36 @@
         <description>Recent content in Tags on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>network_security</title>
         <link>https://ginkgo.org.cn/tags/network_security/</link>
-        <pubDate>Sun, 24 Apr 2022 00:00:00 +0000</pubDate>
+        <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/network_security/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>file_upload</title>
+        <link>https://ginkgo.org.cn/tags/file_upload/</link>
+        <pubDate>Wed, 27 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/file_upload/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>security</title>
+        <link>https://ginkgo.org.cn/tags/security/</link>
+        <pubDate>Wed, 27 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/security/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>server_side_vul</title>
+        <link>https://ginkgo.org.cn/tags/server_side_vul/</link>
+        <pubDate>Wed, 27 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/server_side_vul/</guid>
         <description></description>
         </item>
         <item>
@@ -28,14 +52,6 @@
         <pubDate>Sat, 02 Apr 2022 00:00:00 +0100</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/php/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>security</title>
-        <link>https://ginkgo.org.cn/tags/security/</link>
-        <pubDate>Sat, 02 Apr 2022 00:00:00 +0100</pubDate>
-        
-        <guid>https://ginkgo.org.cn/tags/security/</guid>
         <description></description>
         </item>
         <item>
