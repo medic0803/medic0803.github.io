@@ -9,7 +9,7 @@
 <meta property='og:description' content='File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/file_upload_ggctf_upload/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_upload' /><meta property='article:tag' content='security' /><meta property='article:tag' content='server_side_vul' /><meta property='article:published_time' content='2022-04-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T22:58:53&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_upload' /><meta property='article:tag' content='security' /><meta property='article:tag' content='server_side_vul' /><meta property='article:published_time' content='2022-04-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-03T17:43:53&#43;01:00'/>
 <meta name="twitter:title" content="File Upload: ggctf-upload">
 <meta name="twitter:description" content="File Upload: ggctf-upload 《学了一天 file-uploads之直接换到国光师傅的靶场.jpg》 主要是file-uploads 看上去还有很多的 open的issue">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    11 minute read
+                    13 minute read
                 </time>
             </div>
         
@@ -735,7 +735,153 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><p>我们首先上传一张图片 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/1603669426842.jpg" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>然后下载二次渲染之后的图片，用脚本注入php payload（可以改一下注入的payload）： <a class="link" href="https://github.com/BlackFan/jpg_payload"  target="_blank" rel="noopener"
+    >BlackFan / <!-- raw HTML omitted -->
+jpg_payload</a>  <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">php php jpg_payload.php <span class="o">[</span>uploaded_jpg_image<span class="o">]</span>
+</span></span></code></pre></div><p>然后我们检查payload是否注入成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-03_11-59-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>再次上传，下载二次渲染后的图片查看 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/payload_second.jpg" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-03_12-00-33_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->  <!-- raw HTML omitted -->
+最后尝试解析和使用，成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-03_11-55-45_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>尝试了很多不同的图片，感觉就像国光师傅总结的那样，图片越大，payload越小越容易成功，因为之前上传了很多小的图片，一句话木马都被截断了，猜测可能是因为图片太小，同时一句话木马太长了占用关键的部分所以被替换了 <!-- raw HTML omitted --></p>
+<ol>
+<li>大图片 <!-- raw HTML omitted --></li>
+<li>短payload <!-- raw HTML omitted --></li>
+<li>先上传二次渲染之后，再执行脚本，再上传 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="move-uploaded-file-绕过">move_uploaded_file 绕过</h3>
+<p>我们看一下源码先 <!-- raw HTML omitted --></p>
+<p>发现是一个白名单，那么肯定又需要利用一些有漏洞的方法或者操作系统的特殊机制了 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$deny_ext</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span><span class="s2">&#34;php5&#34;</span><span class="p">,</span><span class="s2">&#34;php4&#34;</span><span class="p">,</span><span class="s2">&#34;php3&#34;</span><span class="p">,</span><span class="s2">&#34;php2&#34;</span><span class="p">,</span><span class="s2">&#34;html&#34;</span><span class="p">,</span><span class="s2">&#34;htm&#34;</span><span class="p">,</span><span class="s2">&#34;phtml&#34;</span><span class="p">,</span><span class="s2">&#34;pht&#34;</span><span class="p">,</span><span class="s2">&#34;jsp&#34;</span><span class="p">,</span><span class="s2">&#34;jspa&#34;</span><span class="p">,</span><span class="s2">&#34;jspx&#34;</span><span class="p">,</span><span class="s2">&#34;jsw&#34;</span><span class="p">,</span><span class="s2">&#34;jsv&#34;</span><span class="p">,</span><span class="s2">&#34;jspf&#34;</span><span class="p">,</span><span class="s2">&#34;jtml&#34;</span><span class="p">,</span><span class="s2">&#34;asp&#34;</span><span class="p">,</span><span class="s2">&#34;aspx&#34;</span><span class="p">,</span><span class="s2">&#34;asa&#34;</span><span class="p">,</span><span class="s2">&#34;asax&#34;</span><span class="p">,</span><span class="s2">&#34;ascx&#34;</span><span class="p">,</span><span class="s2">&#34;ashx&#34;</span><span class="p">,</span><span class="s2">&#34;asmx&#34;</span><span class="p">,</span><span class="s2">&#34;cer&#34;</span><span class="p">,</span><span class="s2">&#34;swf&#34;</span><span class="p">,</span><span class="s2">&#34;htaccess&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$file_ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$file_name</span><span class="p">,</span> <span class="nx">PATHINFO_EXTENSION</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$file_ext</span><span class="p">,</span> <span class="nv">$deny_ext</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span> <span class="o">.</span><span class="nv">$file_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">,</span> <span class="nv">$img_path</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></div><p>这里的漏洞在<a class="link" href="https://www.smi1e.top/2019/02/07/upload-labs-20%E5%85%B3%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/#Pass-09-%E7%A9%BA%E6%A0%BC-%E7%BB%95%E8%BF%87"  target="_blank" rel="noopener"
+    >Smile师傅的笔记</a>中有提到，即 <code>move_uploaded_file</code> 会忽略/. <!-- raw HTML omitted --></p>
+<p>那么我们通过构造文件名为 <code>trojan.php/.</code> 即可绕过白名单，同时使webshell被正常解析 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-03_12-19-13_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>蚁剑连接成功 <!-- raw HTML omitted --></p>
+<h3 id="代码审计">代码审计</h3>
+<p>因为是代码审计，我们直接来看代码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$msg</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//检查MIME
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$allow_type</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span><span class="s1">&#39;image/gif&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span><span class="nv">$allow_type</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该类型文件!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//检查文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$file</span> <span class="o">=</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$file</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$file</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">end</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$allow_suffix</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">,</span><span class="s1">&#39;gif&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allow_suffix</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该后缀文件!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nx">reset</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.&#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">[</span><span class="nx">count</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$img_path</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span> <span class="o">.</span><span class="nv">$file_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$temp_file</span><span class="p">,</span> <span class="nv">$img_path</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;文件上传成功！&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;文件上传失败！&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;请选择要上传的文件！&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们接着一块块来看源码中的审核机制以及我们对应的绕过 <!-- raw HTML omitted --></p>
+<p>检查 <code>MIME</code>,因此我们需要在Burp中修改 <code>MIME</code> 类型 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$allow_type</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span><span class="s1">&#39;image/gif&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span><span class="nv">$allow_type</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该类型文件!&#34;</span><span class="p">;</span>
+</span></span></code></pre></div><p>检查我们提交的 <code>save_name</code> 字符串是否为空，有内容的话使用我们自定义的文件保存名，接着检查是否为数组，如果不是的话就要使用 <code>explode()</code> 方法将内容用 <code>‘.’</code> 分隔为数组（感觉和其他语言中的 <code>split()</code> 方法很像） <!-- raw HTML omitted --></p>
+<dl>
+<dt>explode()</dt>
+<dd><ul>
+<li>explode(string $separator, string $string, int $limit = PHP_INT_MAX): array <!-- raw HTML omitted --></li>
+<li>Returns an array of strings created by splitting the string parameter on boundaries formed by the separator. <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$file</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接着取出数组最后一个元素进行后缀名校验 <!-- raw HTML omitted --></p>
+<dl>
+<dt>end()</dt>
+<dd><ul>
+<li>end(array|object &amp;$array): mixed <!-- raw HTML omitted --></li>
+<li>Returns the value of the last element or false for empty array. <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$ext</span> <span class="o">=</span> <span class="nx">end</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="nv">$allow_suffix</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">,</span><span class="s1">&#39;gif&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allow_suffix</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该后缀文件!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="p">}</span>
+</span></span></code></pre></div><p>我们可以通过在 <code>save_name</code> 这个变量处传入一个数组，使最后一个元素为白名单的图片格式，再想办法在最后的存储的时候，让最后一个元素的内容无效就行了 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">=&gt;</span><span class="s1">&#39;shell.php/&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s1">&#39;png&#39;</span><span class="p">]</span>
+</span></span></code></pre></div><dl>
+<dt>reset()</dt>
+<dd><ul>
+<li>reset(array|object &amp;$array): mixed <!-- raw HTML omitted --></li>
+<li>Returns the value of the first array element, or false if the array is empty. <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<p>最后因为这里会拼接一个 <code>'.'</code> ，因此与之前的 <code>'/'</code> 构成我们上一关提到的 <code>move_uploaded_file</code> 的漏洞，即 <code>/.</code> 末尾的内容会被忽略，即可完成绕过，上传成功 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file_name</span> <span class="o">=</span> <span class="nx">reset</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.&#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">[</span><span class="nx">count</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-03_17-43-07_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>上传成功使用蚁剑连接成功 <!-- raw HTML omitted --></p>
+
 </section>
 
 
@@ -774,7 +920,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 
 
         <span>
-            Last updated on May 01, 2022 22:58 BST
+            Last updated on May 03, 2022 17:43 BST
         </span>
     </section></footer>
 
@@ -1026,6 +1172,8 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
             <li><a href="#jpg">JPG</a></li>
           </ul>
         </li>
+        <li><a href="#move-uploaded-file-绕过">move_uploaded_file 绕过</a></li>
+        <li><a href="#代码审计">代码审计</a></li>
       </ul>
     </li>
   </ul>

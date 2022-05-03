@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CFC Week 7: Memory and network forensics Learning outcomes  Define the fundamental aspects of computer and network forensics.  Describe the data collection processes through the different abstraction layers.  List the kind of evidence that can be obtained from volatile memory and non-persistent network data.   Device forensics target the OS and the data structures present in the system What are primary sources of evidence in device forensics?'><title>CFC Week 7: Memory and network forensics</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/cfc_week_7_memory_and_network_forensics/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CFC Week 7: Memory and network forensics'>
+<meta property='og:description' content='CFC Week 7: Memory and network forensics Learning outcomes  Define the fundamental aspects of computer and network forensics.  Describe the data collection processes through the different abstraction layers.  List the kind of evidence that can be obtained from volatile memory and non-persistent network data.   Device forensics target the OS and the data structures present in the system What are primary sources of evidence in device forensics?'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/cfc_week_7_memory_and_network_forensics/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='digital_forensics' /><meta property='article:published_time' content='2022-05-03T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-03T14:54:12&#43;01:00'/>
+<meta name="twitter:title" content="CFC Week 7: Memory and network forensics">
+<meta name="twitter:description" content="CFC Week 7: Memory and network forensics Learning outcomes  Define the fundamental aspects of computer and network forensics.  Describe the data collection processes through the different abstraction layers.  List the kind of evidence that can be obtained from volatile memory and non-persistent network data.   Device forensics target the OS and the data structures present in the system What are primary sources of evidence in device forensics?">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/cfc_week_7_memory_and_network_forensics/">CFC Week 7: Memory and network forensics</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 03, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="cfc-week-7-memory-and-network-forensics">CFC Week 7: Memory and network forensics</h2>
+<h3 id="learning-outcomes">Learning outcomes</h3>
+<ul>
+<li>Define the fundamental aspects of computer and network forensics. <!-- raw HTML omitted --></li>
+<li>Describe the data collection processes through the different abstraction layers. <!-- raw HTML omitted --></li>
+<li>List the kind of evidence that can be obtained from volatile memory and non-persistent network data. <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="device-forensics">Device forensics</h3>
+<p>target the OS and the data structures present in the system <!-- raw HTML omitted --></p>
+<h3 id="what-are-primary-sources-of-evidence-in-device-forensics">What are primary sources of evidence in device forensics?</h3>
+<p>are storage devices: <!-- raw HTML omitted --></p>
+<ol>
+<li>Hard disk drives (HDDs) <!-- raw HTML omitted --></li>
+<li>Solid state drives (SSDs) <!-- raw HTML omitted --></li>
+<li>External media (USB sticks) <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="how-to-understand-the-data-stored-on-devices">How to understand the data stored on devices?</h3>
+<p>Use Data abstraction layers: <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Physical media
+: -   lowest level examinations <!-- raw HTML omitted --></p>
+<ul>
+<li>Access through host bus adapter (HBA) interface <!-- raw HTML omitted --></li>
+<li>which implement low-level operations: SATA and SCSI <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Block devices
+: block device is an abstract device of fixed size block <!-- raw HTML omitted --></p>
+<p>use term sector as unites for magnetic hard disks <!-- raw HTML omitted --></p>
+<p>Data acquisition at the block level is done through imaging <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>File system
+: aims to organise the block storage into a file-based store <!-- raw HTML omitted --></p>
+<p>provide files with attributes (name, size, owner, timestamps, access permissions, etc.) <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Application artefacts
+: where we find executable binaries, libraries, configuration and log files and registry entries <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="what-is-the-physical-data-acquisition-in-device-forensics">What is the <code>physical data acquisition</code> in device forensics?</h3>
+<p>is the process of obtaining data directly from hardware media, <!-- raw HTML omitted --></p>
+<p>without the mediation of any potentially untrusted third-party software <!-- raw HTML omitted --></p>
+<p>we also use <code>logical data acquisitions</code> which relies on one or more software layers as intermediaries <!-- raw HTML omitted --></p>
+<h3 id="characteristics-of-ssds">Characteristics of SSDs</h3>
+<p>SSDs use semiconductors to store data <!-- raw HTML omitted --></p>
+<p>two memory areas: <!-- raw HTML omitted --></p>
+<ol>
+<li>one area is used to save data <!-- raw HTML omitted --></li>
+<li>one area is used as a cache <!-- raw HTML omitted --></li>
+</ol>
+<p>SSD blocks need to be written twice in order to be reused: <!-- raw HTML omitted --></p>
+<ol>
+<li>First write to reset the state <!-- raw HTML omitted --></li>
+<li>Second write to store the data <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="file-content-carving">File content carving</h3>
+<p>aims to recover the data by reassembling file contents from fragments <!-- raw HTML omitted --></p>
+<p>why this works? <!-- raw HTML omitted -->
+Most file formats have specific beginning and end tags <!-- raw HTML omitted --></p>
+<p>Four types of file content, require different carving approaches: <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-03_10-09-37_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Contiguous
+: The header of file A is followed by the contents of file A and ends with a footer of that file <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Nested
+: The header of file A is followed by a part of that file&rsquo;s content, then the header of file B is present followed by the content and footer of that file. A finished after B. <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Bifragmented
+: The Header and some part of file A followed by some unrealted data then followed by remains <!-- raw HTML omitted --></p>
+<p>The recovery of this file will depend on how easily the unrealted data is recognised <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Interleaved
+: The content of file A is mixed with File B, A finished before B <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="why-we-are-interested-in-doing-memory-forensics">Why we are interested in doing Memory forensics?</h3>
+<p>Data can persist for quite a long time in volatile memory <!-- raw HTML omitted --></p>
+<h3 id="how-to-perform-offline-memory-forensics">How to perform offline memory forensics</h3>
+<p>Freeze the RAM of a computer <!-- raw HTML omitted --></p>
+<h3 id="what-a-forensic-analyst-must-know-about-memory-forensics">What a forensic analyst must know about memory forensics?</h3>
+<ul>
+<li>What are the things that might change across time? <!-- raw HTML omitted --></li>
+<li>What are the things that will not? <!-- raw HTML omitted --></li>
+<li>How presenting evidence from memory can impact your investigation <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="what-are-the-challenges-behind-live-forensics">What are the challenges behind live forensics?</h3>
+<ol>
+<li>In live forensics, we&rsquo;re unsure whether evidence will be accepted or not. <!-- raw HTML omitted --></li>
+<li>Extract evidence from memory is not easy and takes long time <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="what-does-generally-change">What does generally change?</h3>
+<dl>
+<dt>Process information</dt>
+<dd>identifying correlated user actions and file system activities, potentially demonstrating their intent <!-- raw HTML omitted -->
+<ul>
+<li>Running processes <!-- raw HTML omitted --></li>
+<li>Threads and loaded systems modules <!-- raw HTML omitted --></li>
+<li>Copy of the individual processes&rsquo; code, stack, heap, code and data segments <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Artefacts and fragments</dt>
+<dd>Caching disk and network data tends to leave traces in memory for a long time <!-- raw HTML omitted --></dd>
+<dt>File information</dt>
+<dd><ul>
+<li>open files <!-- raw HTML omitted --></li>
+<li>shared libraries <!-- raw HTML omitted --></li>
+<li>shared memory <!-- raw HTML omitted --></li>
+<li>anonymously mapped memory <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Network connections</dt>
+<dd><ul>
+<li>closed network connections <!-- raw HTML omitted --></li>
+<li>protocol information <!-- raw HTML omitted --></li>
+<li>sending and receiving queues of data not yet send or delivered <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="network-forensics">Network forensics</h3>
+<p>monitor and analyse the computer network traffic for information gathering, legal evidence or intrusion detection <!-- raw HTML omitted --></p>
+<h3 id="why-is-the-difference-between-network-forensics-with-other-digital-forensics">Why is the difference between network forensics with other digital forensics</h3>
+<ul>
+<li>
+<p>network investigations focus on volatile and dynamic information <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>because network traffic is transmitted and then lost <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Thus the data would be actively collected <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="what-are-two-common-scenarios-in-network-forensics">What are two common scenarios in network forensics?</h3>
+<dl>
+<dt>Security</dt>
+<dd><ul>
+<li>monitor a network for anomalous traffic and identify intrusion. <!-- raw HTML omitted --></li>
+<li>when attacker has erased all log files on a compromised host <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Law enforcement</dt>
+<dd><ul>
+<li>reassemble transferred files <!-- raw HTML omitted --></li>
+<li>search for keywords <!-- raw HTML omitted --></li>
+<li>parse human communication <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="what-are-two-strategies-in-network-forensics">What are two strategies in network forensics?</h3>
+<ol>
+<li>&ldquo;catch-it-as-you-can&rdquo; <!-- raw HTML omitted -->
+<ul>
+<li>all packets are captured and written to storage for analysis <!-- raw HTML omitted --></li>
+<li>require large amounts of storage <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>&ldquo;stop, look, listen&rdquo; <!-- raw HTML omitted -->
+<ul>
+<li>each packet is analysed in a rudimentary way in memory <!-- raw HTML omitted --></li>
+<li>only certain meta information is saved <!-- raw HTML omitted --></li>
+<li>require more processing capabilities <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h3 id="what-method-we-apply-to-network-forensics-on-ethernet-layer">What method we apply to network forensics on ethernet layer?</h3>
+<p>Use <code>sniffer</code> to eavedrop the beta stream: Wireshark and tcpdump <!-- raw HTML omitted --></p>
+<h3 id="wireless-forensics">Wireless forensics</h3>
+<p>collect and analyse wireless network traffic that can correspond to plain data or with a broad usage of. <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/digital_forensics/">digital_forensics</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 03, 2022 14:54 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_8_anti_forensics/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 8: Anti-forensics</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_6_the_forensics_process/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 6: The forensics process</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week5_firewalls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/password_cracking/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Password Cracking</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cfc-week-7-memory-and-network-forensics">CFC Week 7: Memory and network forensics</a>
+      <ul>
+        <li><a href="#learning-outcomes">Learning outcomes</a></li>
+        <li><a href="#device-forensics">Device forensics</a></li>
+        <li><a href="#what-are-primary-sources-of-evidence-in-device-forensics">What are primary sources of evidence in device forensics?</a></li>
+        <li><a href="#how-to-understand-the-data-stored-on-devices">How to understand the data stored on devices?</a></li>
+        <li><a href="#what-is-the-physical-data-acquisition-in-device-forensics">What is the <code>physical data acquisition</code> in device forensics?</a></li>
+        <li><a href="#characteristics-of-ssds">Characteristics of SSDs</a></li>
+        <li><a href="#file-content-carving">File content carving</a></li>
+        <li><a href="#why-we-are-interested-in-doing-memory-forensics">Why we are interested in doing Memory forensics?</a></li>
+        <li><a href="#how-to-perform-offline-memory-forensics">How to perform offline memory forensics</a></li>
+        <li><a href="#what-a-forensic-analyst-must-know-about-memory-forensics">What a forensic analyst must know about memory forensics?</a></li>
+        <li><a href="#what-are-the-challenges-behind-live-forensics">What are the challenges behind live forensics?</a></li>
+        <li><a href="#what-does-generally-change">What does generally change?</a></li>
+        <li><a href="#network-forensics">Network forensics</a></li>
+        <li><a href="#why-is-the-difference-between-network-forensics-with-other-digital-forensics">Why is the difference between network forensics with other digital forensics</a></li>
+        <li><a href="#what-are-two-common-scenarios-in-network-forensics">What are two common scenarios in network forensics?</a></li>
+        <li><a href="#what-are-two-strategies-in-network-forensics">What are two strategies in network forensics?</a></li>
+        <li><a href="#what-method-we-apply-to-network-forensics-on-ethernet-layer">What method we apply to network forensics on ethernet layer?</a></li>
+        <li><a href="#wireless-forensics">Wireless forensics</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
