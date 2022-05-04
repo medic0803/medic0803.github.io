@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CFC Week 6: The forensics process Before the forensics Why we said that computer information is a double-edged sword in forensic? One the one hand, this information can provide compelling evidence in an investigation One the other hand, it also introduce complexity that can trouble experienced practitioners 8. How does digital forensics differ in practice from conventional forensics?   Conventional forensics
-Conventional forensics is based on Locard&#39;s Exchange Principle Locard&amp;rsquo;s Exchange Principle : Every contact leaves a trace.'><title>CFC Week 6: The forensics process</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CFC Week 9: Incident Management Learning outcomes  Explain the Incident Management process.  List the elements of the logging process.  Describe the life cycle of events.   What is the incident? is an unexpected event that disrupts the normal operation of a system What is the objective of the incident management process? is to return the service to normal operation as quickly as possbile after disruption What is the aim of incident management process?'><title>CFC Week 9: Incident Management</title>
 
-<link rel='canonical' href='https://ginkgo.org.cn/posts/cfc_week_6_the_forensics_process/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/cfc_week_9_incident_management/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CFC Week 6: The forensics process'>
-<meta property='og:description' content='CFC Week 6: The forensics process Before the forensics Why we said that computer information is a double-edged sword in forensic? One the one hand, this information can provide compelling evidence in an investigation One the other hand, it also introduce complexity that can trouble experienced practitioners 8. How does digital forensics differ in practice from conventional forensics?   Conventional forensics
-Conventional forensics is based on Locard&#39;s Exchange Principle Locard&amp;rsquo;s Exchange Principle : Every contact leaves a trace.'>
-<meta property='og:url' content='https://ginkgo.org.cn/posts/cfc_week_6_the_forensics_process/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CFC Week 9: Incident Management'>
+<meta property='og:description' content='CFC Week 9: Incident Management Learning outcomes  Explain the Incident Management process.  List the elements of the logging process.  Describe the life cycle of events.   What is the incident? is an unexpected event that disrupts the normal operation of a system What is the objective of the incident management process? is to return the service to normal operation as quickly as possbile after disruption What is the aim of incident management process?'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/cfc_week_9_incident_management/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='digital_forensics' /><meta property='article:published_time' content='2022-05-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-04T17:56:07&#43;01:00'/>
-<meta name="twitter:title" content="CFC Week 6: The forensics process">
-<meta name="twitter:description" content="CFC Week 6: The forensics process Before the forensics Why we said that computer information is a double-edged sword in forensic? One the one hand, this information can provide compelling evidence in an investigation One the other hand, it also introduce complexity that can trouble experienced practitioners 8. How does digital forensics differ in practice from conventional forensics?   Conventional forensics
-Conventional forensics is based on Locard&#39;s Exchange Principle Locard&amp;rsquo;s Exchange Principle : Every contact leaves a trace.">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='digital_forensics' /><meta property='article:published_time' content='2022-05-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-04T11:49:51&#43;01:00'/>
+<meta name="twitter:title" content="CFC Week 9: Incident Management">
+<meta name="twitter:description" content="CFC Week 9: Incident Management Learning outcomes  Explain the Incident Management process.  List the elements of the logging process.  Describe the life cycle of events.   What is the incident? is an unexpected event that disrupts the normal operation of a system What is the objective of the incident management process? is to return the service to normal operation as quickly as possbile after disruption What is the aim of incident management process?">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -230,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/cfc_week_6_the_forensics_process/">CFC Week 6: The forensics process</a>
+            <a href="/posts/cfc_week_9_incident_management/">CFC Week 9: Incident Management</a>
         </h2>
     
         
@@ -249,7 +246,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">May 02, 2022</time>
+                <time class="article-time--published">May 04, 2022</time>
             </div>
         
 
@@ -264,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    6 minute read
+                    5 minute read
                 </time>
             </div>
         
@@ -278,297 +275,285 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="cfc-week-6-the-forensics-process">CFC Week 6: The forensics process</h2>
-<h3 id="before-the-forensics">Before the forensics</h3>
-<h4 id="why-we-said-that-computer-information-is-a-double-edged-sword-in-forensic">Why we said that computer information is a double-edged sword in forensic?</h4>
-<p>One the one hand, this information can provide compelling evidence in an investigation <!-- raw HTML omitted --></p>
-<p>One the other hand, it also introduce complexity that can trouble experienced practitioners <!-- raw HTML omitted --></p>
-<h4 id="8-dot-how-does-digital-forensics-differ-in-practice-from-conventional-forensics">8. How does digital forensics differ in practice from conventional forensics?</h4>
-<!-- raw HTML omitted -->
+    <h2 id="cfc-week-9-incident-management">CFC Week 9: Incident Management</h2>
+<h3 id="learning-outcomes">Learning outcomes</h3>
 <ul>
-<li>
-<p>Conventional forensics</p>
-<p><code>Conventional forensics</code> is based on <code>Locard's Exchange Principle</code> <!-- raw HTML omitted --></p>
-<p>Locard&rsquo;s Exchange Principle
-: Every contact leaves a trace. <!-- raw HTML omitted -->
-Physical contact leaves exchange of physical material. <!-- raw HTML omitted --></p>
-<p>Conventional forensics also called <code>wet forensics</code>
-: Human body sweats, fingers are greasy -&gt; touch and walk leave fingerprints and footprints <!-- raw HTML omitted --></p>
-</li>
+<li>Explain the Incident Management process. <!-- raw HTML omitted --></li>
+<li>List the elements of the logging process. <!-- raw HTML omitted --></li>
+<li>Describe the life cycle of events. <!-- raw HTML omitted --></li>
 </ul>
-<h4 id="why-we-need-to-isolate-the-crime-scene-and-how">Why we need to isolate the crime scene, and How?</h4>
-<p>To save a great number of logs which provide actions and interactions and avoid: <!-- raw HTML omitted --></p>
-<ul>
-<li>Cover digital tracks <!-- raw HTML omitted --></li>
-<li>and commit the perfect cybercrime <!-- raw HTML omitted --></li>
-</ul>
-<h4 id="what-are-the-paramount-challenges-of-crime-scene-isolation">What are the paramount challenges of crime scene isolation?</h4>
-<p>More and more devices are hyper-connected <!-- raw HTML omitted --></p>
-<h4 id="why-the-crime-scene-need-to-be-frozen-and-how">Why the crime scene need to be frozen, and How?</h4>
-<p>Services are connected to network or Internet, to define the crime scene, we have to freeze the scene and control the range. <!-- raw HTML omitted --></p>
-<p>freeze the memory RAM of a device,and also cut the network (Faraday cage to cancel wireless signal) <!-- raw HTML omitted --></p>
-<h3 id="define-digital-forensics-process">Define digital forensics process</h3>
-<p>A set of methods driven towards the acquisition of legal evidence, which is possible for presentation in a court of law. <!-- raw HTML omitted --></p>
-<h4 id="i-dot-acquisition-process">i. Acquisition process</h4>
-<p>&ldquo;Going there and getting the stuff&rdquo; <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-incident">What is the incident?</h3>
+<p>is an unexpected event that disrupts the normal operation of a system <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-objective-of-the-incident-management-process">What is the objective of the incident management process?</h3>
+<p>is to return the service to normal operation as quickly as possbile after disruption <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-aim-of-incident-management-process">What is the aim of incident management process?</h3>
+<p>create as little negative impact as possbile on the business <!-- raw HTML omitted --></p>
+<h3 id="what-are-two-modes-of-operations-in-incident-management-process">What are two modes of operations in incident management process?</h3>
 <ol>
-<li>Judges have reasonable suspicion <!-- raw HTML omitted --></li>
-<li>A <code>warrant</code> indicates what type of devices that a forensic can seize (which corresponding to suspicions due to <code>principle of proportionality</code>  <!-- raw HTML omitted --></li>
-<li>The place of a device is found is important to determine whether it&rsquo;s relevant or not (like the one hidden in secret compartment of a drawer, even the type of mobile phone is not on the list) <!-- raw HTML omitted --></li>
-<li>Careful documentation of the acquisition process: <!-- raw HTML omitted -->
+<li>
+<p>In practice
+: find a temporal workaround to ensure services are up and running <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>In parallel
+: -   investigate the incident <!-- raw HTML omitted --></p>
 <ul>
-<li>take photographs <!-- raw HTML omitted --></li>
-<li>tag all the bags with all details <!-- raw HTML omitted --></li>
-<li>watch out for hidden devices in plain sight <!-- raw HTML omitted --></li>
+<li>identify the cause root <!-- raw HTML omitted --></li>
+<li>find a permanent fix <!-- raw HTML omitted --></li>
 </ul>
 </li>
 </ol>
-<h4 id="ii-dot-preservation">ii. Preservation</h4>
-<ol>
-<li>
-<p>Provenance and change of custody are paramount (based on ACPO principles) <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Making bit-for-bit images of all seized media <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Use Write-blocker to make all drive devices read-only <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Use cryptographic hashes to verify the integrity of the files (MD5 of SHA2) <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>In traditional forensics, you can destroy part of the evidence once you done with interventions like DNA testing <!-- raw HTML omitted --></p>
-<p>the sample used in testing could be destroyed after the test <!-- raw HTML omitted --></p>
-<p>However in computer forensics, 2,3 are required for the future <!-- raw HTML omitted --></p>
-</li>
-</ol>
-<h4 id="iii-dot-searching">iii. Searching</h4>
-<p>aims to reduce the data volume to a manageable and reviewable level, but it has potential to impact the completeness and accuracy of an investigation <!-- raw HTML omitted --></p>
+<h3 id="what-are-frameworks-used-to-tackle-incidents">What are frameworks used to tackle incidents?</h3>
 <dl>
-<dt>Search Method</dt>
-<dd></dd>
-</dl>
-<p><code>Keyword-searching</code> (not works on encoded or encrypted files, there are other tools) <!-- raw HTML omitted --></p>
-<p>Other tools for special files(compressed, encoded, encrypted or password protected files) <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>What if you find a evidence of another crime?</p>
-<ol>
-<li>Start an independent process with warrant <!-- raw HTML omitted --></li>
-<li>Not allowed to collect evidence for that crime <!-- raw HTML omitted --></li>
-</ol>
-</li>
+<dt>ITIL</dt>
+<dd><ul>
+<li>Information technology infrastructure library <!-- raw HTML omitted --></li>
+<li>uses a workflow for efficient resolution <!-- raw HTML omitted --></li>
 </ul>
-<h4 id="iv-dot-analysis-of-evidence">iv. Analysis of evidence</h4>
-<p>aims explain what does the evidence signify? <!-- raw HTML omitted --></p>
-<ol>
-<li>correlate evidence to your hypothesis <!-- raw HTML omitted --></li>
-<li>explain their timeline <!-- raw HTML omitted --></li>
-<li>identify what has happened <!-- raw HTML omitted --></li>
-</ol>
-<h4 id="v-dot-evaluation-of-evidence">v. Evaluation of evidence</h4>
-<p>aims to confront the evidence <!-- raw HTML omitted --></p>
-<ol>
-<li>Assess how strong that evidence is <!-- raw HTML omitted --></li>
-<li>Challenge your own hypothesis using the evidence <!-- raw HTML omitted --></li>
-<li>Be able to know how compelling evidence is <!-- raw HTML omitted --></li>
-</ol>
-<h4 id="vi-dot-reporting">vi. Reporting</h4>
-<p>aims to inform how the forensic analysis has reached a conclusion <!-- raw HTML omitted --></p>
-<p>It should be done in a form and style that lets both: <!-- raw HTML omitted --></p>
-<ol>
-<li><code>Technical experts</code> validate their findings <!-- raw HTML omitted --></li>
-<li><code>Legal personnel and juries</code> can understand it <!-- raw HTML omitted --></li>
-</ol>
-<p>Put <code>layman's terms</code> what the evidence means on executive summary would help <!-- raw HTML omitted --></p>
-<h3 id="characteristics-of-legal-evidence--in-uk">Characteristics of Legal Evidence (in UK)</h3>
-<h4 id="admissibility">Admissibility</h4>
-<p>Evidence has to be first-hand information, original and not hearsay. <!-- raw HTML omitted --></p>
-<h4 id="authenticity">Authenticity</h4>
-<p>Evidence should be genuine with clearly authentication to authenticate what it claims to be. <!-- raw HTML omitted --></p>
-<p>The correctness would be determined by court and judge later based on the evidence (we just try to use evidence to tell the hypothesis and evidence are correct) <!-- raw HTML omitted --></p>
-<h4 id="accuracy">Accuracy</h4>
-<p>Evidence should provide precise, clear and not vague information <!-- raw HTML omitted --></p>
-<h4 id="completeness">Completeness</h4>
-<p>Evidence should be self-contained and not partial <!-- raw HTML omitted --></p>
-<h4 id="probative-value">Probative value</h4>
-<p>Evidence should be probative, if evidence&rsquo;s danger outweight the value, the court can exclude it <!-- raw HTML omitted --></p>
-<dl>
-<dt>Danger of evidence</dt>
-<dd><ol>
-<li>introduce an unfair prejudice <!-- raw HTML omitted --></li>
-<li>confuse the issues <!-- raw HTML omitted --></li>
-<li>mislead the jury <!-- raw HTML omitted --></li>
-<li>introduce undue delay or waste time, or just simply present cumulative evidence <!-- raw HTML omitted --></li>
-</ol>
 </dd>
 </dl>
-<h3 id="list-and-describe-the-key-steps-of-the-investigative-methodology">List and describe the key steps of the investigative methodology</h3>
-<dl>
-<dt>Fundamental questions relating to a crime</dt>
-<dd><ol>
-<li>Sequencing (when things happend?) <!-- raw HTML omitted --></li>
-<li>Linkage (who interacted with whom?) <!-- raw HTML omitted --></li>
-<li>Evaluation of source (the origin of items) <!-- raw HTML omitted --></li>
-<li>Attribution (who is responsible?) <!-- raw HTML omitted --></li>
+<h3 id="what-are-incident-management-workflow">What are incident management workflow?</h3>
+<p><figure><img src="/ox-hugo/2022-05-04_09-51-29_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Incident management <!-- raw HTML omitted --></li>
+<li>Logging <!-- raw HTML omitted --></li>
 </ol>
+<p>Streamlined processes <!-- raw HTML omitted --></p>
+<ol>
+<li>Categorisation <!-- raw HTML omitted --></li>
+<li>Prioritisation <!-- raw HTML omitted --></li>
+<li>Response <!-- raw HTML omitted --></li>
+</ol>
+<p>Follow corporations&rsquo; guidelines <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Diagnosis <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Escalation <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Resolution and recovery <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>closure <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="what-is-incident-identification-in-incident-management-workflow">What is Incident identification in incident management workflow?</h3>
+<p>Incidents are generally reported when attacks or incidents have been identified <!-- raw HTML omitted --></p>
+<dl>
+<dt>Unreported incidents</dt>
+<dd>False negative, pose a systematic risk to the organisation <!-- raw HTML omitted --></dd>
+<dt>Mistakenly reported incidents</dt>
+<dd>False positives, when the system begin to report anomalous behaviours? <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="where-does-incident-identification-start-with">Where does incident identification start with?</h3>
+<p>It start with identify through the automated/manual analysis of digital artefacts and logs <!-- raw HTML omitted --></p>
+<h3 id="what-is-logging-process-in-incident-management-workflow">What is logging process in incident management workflow?</h3>
+<ul>
+<li>Logging is the process in which systems and applications inform about &ldquo;what they do.&rdquo; <!-- raw HTML omitted --></li>
+<li>Useful to administrators to check when something goes wrong <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="does-incident-management-workflow-always-start-with-analysis-of-digital-artefacts-and-logs">Does incident management workflow always start with analysis of digital artefacts and logs?</h3>
+<p>Incidents are often discovered by the user of the system <!-- raw HTML omitted --></p>
+<ul>
+<li>they notice that something is abnormal <!-- raw HTML omitted --></li>
+<li>they simply see evidence of an attack <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="what-are-the-most-important-elements-of-the-logging-process">What are the most important elements of the logging process?</h3>
+<p>The most important one is the event. <!-- raw HTML omitted --></p>
+<dl>
+<dt>Event</dt>
+<dd>a single occurrence within an environment <!-- raw HTML omitted -->
+<ul>
+<li>consists of event fields and event records <!-- raw HTML omitted --></li>
+<li>event fields describe  characteristic of the event <!-- raw HTML omitted --></li>
+<li>event records describe a collection of event fields <!-- raw HTML omitted --></li>
+</ul>
 </dd>
 </dl>
-<h4 id="what-is-the-scientific-method">What is the scientific method?</h4>
-<p>Scientific method is a cyclic process, aims to repeat the steps to get the conclusion <!-- raw HTML omitted --></p>
-<ol>
-<li>
-<p>Gather information and make observations
-: aims to provide all evidence which you have access to <!-- raw HTML omitted --></p>
-<ul>
-<li><strong>Process legal evidence:</strong> 1.  Acquire <!-- raw HTML omitted -->
-2.  Preserve <!-- raw HTML omitted -->
-3.  Search <!-- raw HTML omitted -->
-4.  Verify integrity <!-- raw HTML omitted -->
-5.  Authentication <!-- raw HTML omitted --></li>
-<li><strong>Process digital evidence:</strong> 1.  preprocess <!-- raw HTML omitted -->
-2.  salvage deleted data <!-- raw HTML omitted -->
-3.  handle special files <!-- raw HTML omitted -->
-4.  filter out irrelevant data <!-- raw HTML omitted -->
-5.  extract embedded metadata <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Form a hypothesis to explain observations
-: Develop possible explanations <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Evaluate the hypothesis
-: Aims to suppress biases and hunches and try to disprove current working hypothesis through <!-- raw HTML omitted -->experiment<!-- raw HTML omitted --> <!-- raw HTML omitted --></p>
-<ul>
-<li><strong>Avoid <code>confirmation bias</code>:</strong> -   do not skew our thinking and analysis in favour of the working hypothesis <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Draw conclusions and communicate findings
-: Communicate the explanations which supported by evidence with decision makers <!-- raw HTML omitted --></p>
-</li>
-</ol>
+<h3 id="what-is-log-in-logging-process">What is Log in logging process?</h3>
 <dl>
-<dt>Understand the capabilities of the tools</dt>
-<dd><ol>
-<li>Understand the capabilities of the tools <!-- raw HTML omitted --></li>
-<li>Use multiple tools when possible <!-- raw HTML omitted --></li>
-</ol>
+<dt>Log</dt>
+<dd>a collection of event records <!-- raw HTML omitted -->
+<ul>
+<li>data logs <!-- raw HTML omitted --></li>
+<li>log files <!-- raw HTML omitted --></li>
+</ul>
 </dd>
 </dl>
-<h4 id="list-the-functions-of-forensic-analysis">List the functions of forensic analysis</h4>
-<ol>
-<li>
-<p>Attribution of activities
-: aims to attribute computer activities to a particular person <!-- raw HTML omitted --></p>
-<p>To avoid a person to deny the responsibilities for the illegal activities, we could use <!-- raw HTML omitted --></p>
-<ul>
-<li>personal communication <!-- raw HTML omitted --></li>
-<li>access to online banking or e-commerce accounts <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Assessing alibis
-: to prove the alibis we need to use evidence from multiple sources <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Determining intent
-: can be done by analysing <!-- raw HTML omitted --></p>
-<ul>
-<li>internet search history <!-- raw HTML omitted --></li>
-<li>suspicious behaviour <!-- raw HTML omitted --></li>
-<li>Go thought notes and plans <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Evaluating sources
-: can real the source (where it from) of the piece of evidence which produce or altered it <!-- raw HTML omitted --></p>
-<p>Comare the evidence with an exemplar can real useful information <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Document authentication
-: -   Look for nuances on date-time stamps <!-- raw HTML omitted --></p>
+<h3 id="what-is-audit-in-logging-process">What is Audit in logging process?</h3>
+<dl>
+<dt>Audit</dt>
+<dd>process of evaluating logs <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="what-is-recording-in-logging-process">What is Recording in logging process?</h3>
+<dl>
+<dt>Recording</dt>
+<dd>Process of tracking event fields (&ldquo;I am going to track an IP address&rdquo;) <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="what-is-logging-in-logging-process">What is Logging in logging process</h3>
+<dl>
+<dt>Logging</dt>
+<dd>is the process of saving events into logs <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="what-is-security-incident-in-logging-process">What is Security incident in logging process</h3>
+<dl>
+<dt>Security incident</dt>
+<dd>is the occurrence of a security event (intrusion attempt or data leakage) <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="what-is-the-lifecycle-of-events">What is the lifecycle of events?</h3>
 <ul>
 <li>
-<p>look for meta-data within files <!-- raw HTML omitted --></p>
+<p>turn information from unstructured logs with low-level descriptions of the characteristics of events <!-- raw HTML omitted --></p>
 </li>
 <li>
-<p>extract attributes buried within storage media with in-depth analysis of a digital device <!-- raw HTML omitted --></p>
+<p>into a high-level representation of actionable events, namely alarms <!-- raw HTML omitted --></p>
 </li>
-</ul>
-</li>
-</ol>
-<h3 id="the-e-discovery-process">The e-discovery process</h3>
-<h4 id="what-is-the-e-discovery-process">What is the e-discovery process</h4>
-<p>Exchange of data between parties in civil or criminal litigation <!-- raw HTML omitted --></p>
-<p>The process is largely controlled by attorneys who determine what data should be produced based on relevance, or withheld based on claims of privilege <!-- raw HTML omitted --></p>
-<h4 id="electronic-discovery-reference-model">Electronic Discovery Reference Model</h4>
-<!-- raw HTML omitted -->
+<li>
+<p>The first funnel filters <!-- raw HTML omitted --></p>
 <ul>
 <li>
 <ol>
-<li>Preservation</li>
+<li>decentralised logs into centralised logs <!-- raw HTML omitted --></li>
 </ol>
-<p>Ensuring that ESI is protected against inappropriate alteration or destruction. <!-- raw HTML omitted --></p>
 </li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
 <li>
 <ol start="2">
-<li>Collection</li>
+<li>then turn into normalised logs <!-- raw HTML omitted --></li>
 </ol>
-<p>Gathering ESI for further use in the e-discovery process (processing, review, etc). <!-- raw HTML omitted --></p>
 </li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
 <li>
 <ol start="3">
-<li>Processing</li>
+<li>then into the second funnel <!-- raw HTML omitted --></li>
 </ol>
-<p>Reducing the volume of ESI and converting it, if necessary, to forms more suitable for review and analysis. <!-- raw HTML omitted --></p>
 </li>
+</ul>
+</li>
+<li>
+<p>The second funnel produces alarms through <!-- raw HTML omitted --></p>
+<ul>
+<li>log filtering <!-- raw HTML omitted --></li>
+<li>aggregation, <!-- raw HTML omitted --></li>
+<li>correlation <!-- raw HTML omitted --></li>
+<li>finally trigger the alarms <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Final alarms supported by <!-- raw HTML omitted --></p>
+<ul>
+<li>false alarm reduction <!-- raw HTML omitted --></li>
+<li>attack strategy analysis <!-- raw HTML omitted --></li>
+<li>prioritisation <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-04_11-18-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-04_11-31-16_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="what-are-alarms">What are Alarms?</h3>
+<dl>
+<dt>Alarms</dt>
+<dd><ul>
+<li>are meant to be reported to humans <!-- raw HTML omitted --></li>
+<li>alarms help security operator analyse the strategy of an attack and prioritise responses. <!-- raw HTML omitted --></li>
+</ul>
+Intrusion detection system should be configured in such a way that false alarms are minimised <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="what-is-normalisation-of-logs">What is normalisation of logs?</h3>
+<p>is the procedure in which <!-- raw HTML omitted --></p>
+<ul>
+<li>all logs that are processed by an intrusion detection system <!-- raw HTML omitted --></li>
+<li>are processed and stored in a common format <!-- raw HTML omitted --></li>
+<li>and all relevant attributes of the event are identified and processed <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="what-is-event-correlation">What is event correlation?</h3>
+<p>Event correlation brings a higher level of intelligence to the process <!-- raw HTML omitted --></p>
+<p>It teaches the system to consider various conditions before trigger the alarm <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-security-information-management--sim">What is the Security information management (SIM)?</h3>
+<p>The practice of collecting, monitoring and analysing security-related data from computer logs. <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-security-information-management-system--sims">What is the Security information management system (SIMS)?</h3>
+<ol>
+<li>It automates the collection of event log data from security devices <!-- raw HTML omitted --></li>
+<li>It translates the logged data into correlated and simplified formats <!-- raw HTML omitted --></li>
+<li>It has strong log management capabilities (compress logs for storing over long periods of time) <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="what-is-the-security-event-management--sem--systems">What is the Security event management (SEM) systems?</h3>
+<p>It provides strong: <!-- raw HTML omitted --></p>
+<ul>
+<li>event management <!-- raw HTML omitted --></li>
+<li>real time threat analysis <!-- raw HTML omitted --></li>
+<li>visualisation <!-- raw HTML omitted --></li>
+<li>ticketing <!-- raw HTML omitted --></li>
+<li>incident response <!-- raw HTML omitted --></li>
+<li>and security operations <!-- raw HTML omitted --></li>
+</ul>
+<p>Based on enterprise SQL databases <!-- raw HTML omitted --></p>
+<p>Not ideal for log management and long-term storage of excessive amounts of logs (poor at log compression) <!-- raw HTML omitted --></p>
+<h3 id="what-is-the--ossim">What is the  (OSSIM)?</h3>
+<h3 id="how-open-source-security-information-management--ossim--evaluates-the-risks">How Open Source Security Information Management (OSSIM) evaluates the risks?</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-latex" data-lang="latex"><span class="line"><span class="cl">Risk = (Asset * Priority * Reliability) /24
+</span></span></code></pre></div><dl>
+<dt>Asset</dt>
+<dd><ul>
+<li>is the quantitative measure of the importance <!-- raw HTML omitted --></li>
+<li>and/or a notion of how vulnerable a given asset is <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Priority</dt>
+<dd>is the threat or impact of the attack <!-- raw HTML omitted --></dd>
+<dt>Reliability</dt>
+<dd>is the probability that a given set of events  will actually be an attack <!-- raw HTML omitted --></dd>
+</dl>
+<!-- raw HTML omitted -->
+<ul>
+<li>Asset - 0 - 5 <!-- raw HTML omitted --></li>
+<li>Priority - 0 - 5 <!-- raw HTML omitted --></li>
+<li>Reliability - 0 - 10 <!-- raw HTML omitted --></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
-<li>
-<ol start="4">
-<li>Review</li>
-</ol>
-<p>Evaluating ESI for relevance and privilege. <!-- raw HTML omitted --></p>
-</li>
+<li>0 - 2 = Low <!-- raw HTML omitted --></li>
+<li>3 - 4 = Medium <!-- raw HTML omitted --></li>
+<li>5 - 6 = Medium-high <!-- raw HTML omitted --></li>
+<li>7 - 8 = High <!-- raw HTML omitted --></li>
+<li>9 - 10 = Very high <!-- raw HTML omitted --></li>
 </ul>
-<!-- raw HTML omitted -->
+<h3 id="how-forensics-cooperate-with-siem">How forensics cooperate with SIEM?</h3>
+<p>forensic investigator would collect the evidence from the source, the native logs. <!-- raw HTML omitted --></p>
+<h3 id="what-is-the-sensing-strategies">What is the Sensing strategies?</h3>
+<p>It defines how the SIEM is deployed. <!-- raw HTML omitted --></p>
+<p>It details: <!-- raw HTML omitted --></p>
 <ul>
 <li>
-<ol start="5">
-<li>Analysis</li>
-</ol>
-<p>Evaluating ESI for content and context, including key patterns, topics, people and discussion. <!-- raw HTML omitted --></p>
+<p>Where to place the different sensors <!-- raw HTML omitted --></p>
 </li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
 <li>
-<ol start="6">
-<li>Production</li>
-</ol>
-<p>Delivering ESI to others in appropriate forms and using appropriate delivery mechanisms. <!-- raw HTML omitted --></p>
+<p>how these sensors are interconnected <!-- raw HTML omitted --></p>
 </li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
 <li>
-<ol start="7">
-<li>Presentation</li>
-</ol>
-<p>Displaying ESI before audiences (at depositions, hearings, trials, etc), to elicit further information, validate existing facts or positions, or persuade an audience. <!-- raw HTML omitted --></p>
+<p>what the security measures are <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>who the people in charge of each sensor are <!-- raw HTML omitted --></p>
+</li>
+<li>
+<ul>
+<li>collectors, <!-- raw HTML omitted --></li>
+<li>normalisers <!-- raw HTML omitted --></li>
+<li>aggregators <!-- raw HTML omitted --></li>
+<li>Intrusion Detection Systems and correlation and report engines <!-- raw HTML omitted --></li>
+</ul>
 </li>
 </ul>
+<p><figure><img src="/ox-hugo/2022-05-04_11-49-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -604,7 +589,7 @@ Physical contact leaves exchange of physical material. <!-- raw HTML omitted -->
 
 
         <span>
-            Last updated on May 04, 2022 17:56 BST
+            Last updated on May 04, 2022 11:49 BST
         </span>
     </section></footer>
 
@@ -646,18 +631,6 @@ Physical contact leaves exchange of physical material. <!-- raw HTML omitted -->
             
                 
 <article class="">
-    <a href="/posts/cfc_week_9_incident_management/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">CFC Week 9: Incident Management</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
     <a href="/posts/cfc_week_7_memory_and_network_forensics/">
         
         
@@ -676,6 +649,18 @@ Physical contact leaves exchange of physical material. <!-- raw HTML omitted -->
 
         <div class="article-details">
             <h2 class="article-title">CFC Week 8: Anti-forensics</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_6_the_forensics_process/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 6: The forensics process</h2>
         </div>
     </a>
 </article>
@@ -879,48 +864,36 @@ Physical contact leaves exchange of physical material. <!-- raw HTML omitted -->
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#cfc-week-6-the-forensics-process">CFC Week 6: The forensics process</a>
+    <li><a href="#cfc-week-9-incident-management">CFC Week 9: Incident Management</a>
       <ul>
-        <li><a href="#before-the-forensics">Before the forensics</a>
-          <ul>
-            <li><a href="#why-we-said-that-computer-information-is-a-double-edged-sword-in-forensic">Why we said that computer information is a double-edged sword in forensic?</a></li>
-            <li><a href="#8-dot-how-does-digital-forensics-differ-in-practice-from-conventional-forensics">8. How does digital forensics differ in practice from conventional forensics?</a></li>
-            <li><a href="#why-we-need-to-isolate-the-crime-scene-and-how">Why we need to isolate the crime scene, and How?</a></li>
-            <li><a href="#what-are-the-paramount-challenges-of-crime-scene-isolation">What are the paramount challenges of crime scene isolation?</a></li>
-            <li><a href="#why-the-crime-scene-need-to-be-frozen-and-how">Why the crime scene need to be frozen, and How?</a></li>
-          </ul>
-        </li>
-        <li><a href="#define-digital-forensics-process">Define digital forensics process</a>
-          <ul>
-            <li><a href="#i-dot-acquisition-process">i. Acquisition process</a></li>
-            <li><a href="#ii-dot-preservation">ii. Preservation</a></li>
-            <li><a href="#iii-dot-searching">iii. Searching</a></li>
-            <li><a href="#iv-dot-analysis-of-evidence">iv. Analysis of evidence</a></li>
-            <li><a href="#v-dot-evaluation-of-evidence">v. Evaluation of evidence</a></li>
-            <li><a href="#vi-dot-reporting">vi. Reporting</a></li>
-          </ul>
-        </li>
-        <li><a href="#characteristics-of-legal-evidence--in-uk">Characteristics of Legal Evidence (in UK)</a>
-          <ul>
-            <li><a href="#admissibility">Admissibility</a></li>
-            <li><a href="#authenticity">Authenticity</a></li>
-            <li><a href="#accuracy">Accuracy</a></li>
-            <li><a href="#completeness">Completeness</a></li>
-            <li><a href="#probative-value">Probative value</a></li>
-          </ul>
-        </li>
-        <li><a href="#list-and-describe-the-key-steps-of-the-investigative-methodology">List and describe the key steps of the investigative methodology</a>
-          <ul>
-            <li><a href="#what-is-the-scientific-method">What is the scientific method?</a></li>
-            <li><a href="#list-the-functions-of-forensic-analysis">List the functions of forensic analysis</a></li>
-          </ul>
-        </li>
-        <li><a href="#the-e-discovery-process">The e-discovery process</a>
-          <ul>
-            <li><a href="#what-is-the-e-discovery-process">What is the e-discovery process</a></li>
-            <li><a href="#electronic-discovery-reference-model">Electronic Discovery Reference Model</a></li>
-          </ul>
-        </li>
+        <li><a href="#learning-outcomes">Learning outcomes</a></li>
+        <li><a href="#what-is-the-incident">What is the incident?</a></li>
+        <li><a href="#what-is-the-objective-of-the-incident-management-process">What is the objective of the incident management process?</a></li>
+        <li><a href="#what-is-the-aim-of-incident-management-process">What is the aim of incident management process?</a></li>
+        <li><a href="#what-are-two-modes-of-operations-in-incident-management-process">What are two modes of operations in incident management process?</a></li>
+        <li><a href="#what-are-frameworks-used-to-tackle-incidents">What are frameworks used to tackle incidents?</a></li>
+        <li><a href="#what-are-incident-management-workflow">What are incident management workflow?</a></li>
+        <li><a href="#what-is-incident-identification-in-incident-management-workflow">What is Incident identification in incident management workflow?</a></li>
+        <li><a href="#where-does-incident-identification-start-with">Where does incident identification start with?</a></li>
+        <li><a href="#what-is-logging-process-in-incident-management-workflow">What is logging process in incident management workflow?</a></li>
+        <li><a href="#does-incident-management-workflow-always-start-with-analysis-of-digital-artefacts-and-logs">Does incident management workflow always start with analysis of digital artefacts and logs?</a></li>
+        <li><a href="#what-are-the-most-important-elements-of-the-logging-process">What are the most important elements of the logging process?</a></li>
+        <li><a href="#what-is-log-in-logging-process">What is Log in logging process?</a></li>
+        <li><a href="#what-is-audit-in-logging-process">What is Audit in logging process?</a></li>
+        <li><a href="#what-is-recording-in-logging-process">What is Recording in logging process?</a></li>
+        <li><a href="#what-is-logging-in-logging-process">What is Logging in logging process</a></li>
+        <li><a href="#what-is-security-incident-in-logging-process">What is Security incident in logging process</a></li>
+        <li><a href="#what-is-the-lifecycle-of-events">What is the lifecycle of events?</a></li>
+        <li><a href="#what-are-alarms">What are Alarms?</a></li>
+        <li><a href="#what-is-normalisation-of-logs">What is normalisation of logs?</a></li>
+        <li><a href="#what-is-event-correlation">What is event correlation?</a></li>
+        <li><a href="#what-is-the-security-information-management--sim">What is the Security information management (SIM)?</a></li>
+        <li><a href="#what-is-the-security-information-management-system--sims">What is the Security information management system (SIMS)?</a></li>
+        <li><a href="#what-is-the-security-event-management--sem--systems">What is the Security event management (SEM) systems?</a></li>
+        <li><a href="#what-is-the--ossim">What is the  (OSSIM)?</a></li>
+        <li><a href="#how-open-source-security-information-management--ossim--evaluates-the-risks">How Open Source Security Information Management (OSSIM) evaluates the risks?</a></li>
+        <li><a href="#how-forensics-cooperate-with-siem">How forensics cooperate with SIEM?</a></li>
+        <li><a href="#what-is-the-sensing-strategies">What is the Sensing strategies?</a></li>
       </ul>
     </li>
   </ul>
