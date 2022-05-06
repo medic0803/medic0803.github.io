@@ -6,7 +6,118 @@
         <description>Recent content on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Wed, 04 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 06 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CFC Week 5: Legal Framework</title>
+        <link>https://ginkgo.org.cn/posts/cfc_week_5_legal_framework/</link>
+        <pubDate>Fri, 06 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/cfc_week_5_legal_framework/</guid>
+        <description>&lt;h2 id=&#34;cfc-week-5-legal-framework&#34;&gt;CFC Week 5: Legal Framework&lt;/h2&gt;
+&lt;h3 id=&#34;learning-outcomes&#34;&gt;Learning outcomes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Briefly describe the legal aspects of cybersecurity. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Summarise the main pieces of computer misuse legislation. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Identify the different pieces of legislation governing intellectual property, copyright and data protection. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Identify the three ACPO principles and explain their implications for computer forensics. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11-dot-describe-the-three-main-sections-of-the-uk-computer-misuse-act-1990-as-modified-by-the-police-and-justice-act-2006-dot&#34;&gt;11. Describe the three main sections of the UK Computer Misuse Act 1990, as modified by the Police and Justice Act 2006.&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;unauthorised access&lt;/code&gt; to computer material, punishable by 24 months&amp;rsquo; imprisonment and/or an unlimited fine &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;updated (2006): punishable by up to 2 years in prison or a fine or both &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;unauthorised access with intent&lt;/code&gt; to commit or facilitate commission of further offence(s), punishable by 24 months’ imprisonment and/or an unlimited fine on summary conviction and/or 5 years imprisonment and/or an unlimited fine on indictment; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;unauthorised modification&lt;/code&gt; of computer material, punishable by 24 months’ imprisonment and/or an unlimited fine on summary conviction and/or 10 years imprisonment and/or an unlimited fine on indictment; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;updated (2006) by &lt;code&gt;unauthorised acts&lt;/code&gt; with intent to impair operation of computer, etc. &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;punishable by up to 10 years in prison or a fine or both to cover Denial of Service (DoS) attacks. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;12-dot-describe-the-main-provisions-of-the-investigatory-powers-act-2017-and-explain-how-the-act-can-benefit-certain-digital-forensic-investigations-dot&#34;&gt;12. Describe the main provisions of the Investigatory Powers Act 2017 and explain how the Act can benefit certain digital forensic investigations.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides for UK intelligence agencies and UK law enforcement to carry out targeted interception of communications, bulk collection of communications data, and bulk interception of communications; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;permits access to CSP(communication service providers) and ISP(Internet Service Provider) logs, and right to demand decryption keys to encrypted data. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;how-would-law-enforcement-go-about-prosecuting-terrorism-in-the-uk-and-outside-of-the-uk&#34;&gt;How would law enforcement go about prosecuting terrorism in the UK and outside of the UK?&lt;/h3&gt;
+&lt;p&gt;Apply Mutual Legal Assistance Treaties applicable for specific country &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;two-tiers-of-administrative-fines-that-can-be-levied-as-penalties-for-non-compliance-in-general-data-protection-regulations--2018&#34;&gt;Two tiers of administrative fines that can be levied as penalties for non-compliance in General Data Protection Regulations (2018)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Up to €10 million, or 2 per cent annual global turnover – whichever is higher. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Up to €20 million, or 4 per cent annual global turnover – whichever is higher. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-type-of-data-and-individual-s-fundamental-rights-are-protected-under-the-gdpr--general-data-protection-regulation&#34;&gt;What type of data and individual&amp;rsquo;s fundamental rights are protected under the GDPR(General Data Protection Regulation)?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Type &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Data minimisation: only collect and use what is needed for the processing activity being undertaken &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rights &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Retention: keep it only for as long as required &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Accountability: record keeping of data processing &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Security: protect data against breaches or unlawful processing of personal data &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Purpose limitation – data can only be used for the purpose it was collected for &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;10-dot-describe-the-four-uk-acpo--association-of-chief-police-officers--principles-on-handling-digital-evidence-explaining-the-rationale-underlying-them-dot&#34;&gt;10. Describe the four UK ACPO(Association of Chief Police Officers) principles on handling digital evidence, explaining the rationale underlying them.&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;No action taken by law enforcement agencies or their agents should change data held on a computer or storage media which may subsequently be relied upon in court. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;In circumstances where a person finds it necessary to access original data held on a computer or on storage media, that person must be competent to do so and be able to give evidence explaining the relevance and the implications of their actions. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;An audit trail or other record of all processes applied to computer-based electronic evidence should be created and preserved. An independent third party should be able to examine those processes and achieve the same result. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;The person in charge of the investigation (the case officer) has overall responsibility for ensuring that the law and these principles are adhered to. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;proportionality-issues-relating-to-seizure&#34;&gt;Proportionality issues relating to seizure&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Does the item may hold evidence? &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Where the item is found? &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;When the offfence was committed? &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Seize the items current in usage first. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Every seizure of item should be reasonable &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Follow the Human Rights &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;what-should-be-prepared-before-attending-a-scene-to-capture-digital-evidence&#34;&gt;What should be prepared before attending a scene to capture digital evidence?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Necessary equipment &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Consider potential sources of evidence: what, where? &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Consider seize cameras for taking digital photographs when evidence involve user-created digital images &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Take force&amp;rsquo;s speciallist advice in advance &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;what-should-do-when-attending-a-scene&#34;&gt;What should do when attending a scene?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;All actions should be recorded &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Avoid unwanted changes, be aware of volatile data, accessed by trained personnel, e.g. powered on/running systems &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;capturing-online-evidence&#34;&gt;Capturing online evidence&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Online evidence&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;publicly available (e.g. forum postins, do not need to login), be aware of potential issues. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;private (login required) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;make records of all actions &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;what-could-be-included-in-source-data&#34;&gt;What could be included in source data&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Internet history records; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;E-mails; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Instan Messaging logs; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Media files (images and videos); &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Text Messages; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Text documents; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Spreadsheets; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;CCTV &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>CFC Week 9: Incident Management</title>
         <link>https://ginkgo.org.cn/posts/cfc_week_9_incident_management/</link>
         <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
