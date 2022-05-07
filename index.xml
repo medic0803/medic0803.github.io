@@ -6,7 +6,85 @@
         <description>Recent content on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 06 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 07 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CFC Week 4: Cybercrime mitigations</title>
+        <link>https://ginkgo.org.cn/posts/cfc_week_4_cybercrime_mitigations/</link>
+        <pubDate>Sat, 07 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/cfc_week_4_cybercrime_mitigations/</guid>
+        <description>&lt;h2 id=&#34;cfc-week-4-cybercrime-mitigations&#34;&gt;CFC Week 4: Cybercrime mitigations&lt;/h2&gt;
+&lt;h3 id=&#34;learning-outcomes&#34;&gt;Learning outcomes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;List and describe the various mitigation strategies. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Understand that there is a constant arms race between criminals and investigators. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;list-four-mitigation-strategies&#34;&gt;List four mitigation strategies&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Engineering&lt;/dt&gt;
+&lt;dd&gt;Securing computers and networks crippling botnet operations. &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Law&lt;/dt&gt;
+&lt;dd&gt;Effectively prosecuting malware authors and their associates. &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Economics&lt;/dt&gt;
+&lt;dd&gt;Making sure that cybercriminals don&amp;rsquo;t make money. &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Education&lt;/dt&gt;
+&lt;dd&gt;Increasing user awareness of cybercrime threats. &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;two-types-of-intrusion-detection-system--ids&#34;&gt;Two types of Intrusion detection system (IDS)&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Misuse-based IDS&lt;/dt&gt;
+&lt;dd&gt;rely on models of malicious behaviour to identify matching entries in the event stream &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Anomaly-based IDS&lt;/dt&gt;
+&lt;dd&gt;rely on models of normal behaviour to identify anomalous entries in the event stream &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;list-engineering-mitigations-techniques&#34;&gt;List engineering mitigations techniques&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;antivirus software &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;intrusion detection &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;patch vulnerabilities &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Blacklist &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;mitigate blackhat search engine optimisation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;DNS sinkholing (ISPs can avoid directing their clients to domains that are known to be malicious) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Dynamically allocating the resources (against DDoS) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;how-to-take-down-a-botnet&#34;&gt;How to take down a botnet?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;seize active C&amp;amp;C servers (law enforcement/ ISPs) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;mitigate existing infections (DNS sinkholing) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;clean up infected computers (redirect the user and teach them how to) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;how-to-improve-user-awareness-for-reducing-the-rate-of-malware-infections&#34;&gt;How to improve user awareness for reducing the rate of malware infections&lt;/h3&gt;
+&lt;p&gt;Educations on: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Social engineering, how to avoid installing scareware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Software updates, how to keep systems up to date to avoid driven-by download attacks &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Scams, how not to be money mule or reshipping mule scams &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-arrest-criminals-is-more-effective&#34;&gt;Why arrest criminals is more effective&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Attackers could always set up a new operation &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Botnet is easy to set up &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Attackers learn from the takedown and make the operation more resilient &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;two-reasons-for-taking-down-c-and-c-servers&#34;&gt;Two reasons for taking down C&amp;amp;C servers:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Because the act of misusing computers through malware is illegal &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Because the operations that the botnet carried out are illegal &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;list-economics-mitigation-strategies&#34;&gt;List economics mitigation strategies&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Raise domain cost to curb misuse &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;ISPs need to keep good relations with each other &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Banks need to keep good relationships with other financial institutions which force rogue banks to stop doing business with cybercriminals &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>CFC Week 5: Legal Framework</title>
         <link>https://ginkgo.org.cn/posts/cfc_week_5_legal_framework/</link>
         <pubDate>Fri, 06 May 2022 00:00:00 +0000</pubDate>
@@ -497,7 +575,8 @@ Most file formats have specific beginning and end tags &lt;!-- raw HTML omitted 
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;why-we-are-interested-in-doing-memory-forensics&#34;&gt;Why we are interested in doing Memory forensics?&lt;/h3&gt;
-&lt;p&gt;Data can persist for quite a long time in volatile memory &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Data can persist for quite a long time in volatile memory &lt;!-- raw HTML omitted --&gt;
+Volatile memory can contain useful information which hard disk does not (en/decryption key) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;how-to-perform-offline-memory-forensics&#34;&gt;How to perform offline memory forensics&lt;/h3&gt;
 &lt;p&gt;Freeze the RAM of a computer &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;what-a-forensic-analyst-must-know-about-memory-forensics&#34;&gt;What a forensic analyst must know about memory forensics?&lt;/h3&gt;
@@ -905,31 +984,31 @@ Physical contact leaves exchange of physical material. &lt;!-- raw HTML omitted 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Assessing alibis
-: to prove the alibis we need to use evidence from multiple sources &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: use evidence from multiple sources &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Determining intent
-: can be done by analysing &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: analyse: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;internet search history &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;suspicious behaviour &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;Go thought notes and plans &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;suspicious behaviours &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;notes and plans &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Evaluating sources
-: can real the source (where it from) of the piece of evidence which produce or altered it &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;Comare the evidence with an exemplar can real useful information &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: reveal the source of the evidence, and where it is produced or altered. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Compare the evidence with an exemplar can reveal useful information &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Document authentication
 : -   Look for nuances on date-time stamps &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;look for meta-data within files &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;look for metadata within files &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;extract attributes buried within storage media with in-depth analysis of a digital device &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;extract attributes buried within storage media &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
