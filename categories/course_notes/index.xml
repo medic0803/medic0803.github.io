@@ -7,6 +7,165 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <lastBuildDate>Sat, 07 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CFC Week 2: Advanced malware and worldwide SPAM</title>
+        <link>https://ginkgo.org.cn/posts/cfc_week_2_advanced_malware_and_worldwide_spam_economy/</link>
+        <pubDate>Sat, 07 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/cfc_week_2_advanced_malware_and_worldwide_spam_economy/</guid>
+        <description>&lt;h2 id=&#34;cfc-week-2-advanced-malware-and-worldwide-spam&#34;&gt;CFC Week 2: Advanced malware and worldwide SPAM&lt;/h2&gt;
+&lt;h3 id=&#34;learning-outcomes&#34;&gt;Learning outcomes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Describe how users get infected with malware. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Describe how malware hides and how botnets function. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Discuss the different ways criminals use malware. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-infection-vector&#34;&gt;What is Infection vector?&lt;/h3&gt;
+&lt;p&gt;The method malware uses to propagate itself or infect a system or device &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;list-methods-users-get-infected&#34;&gt;List methods users get infected&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Social engineering
+: -   Users are made to believe that they are installing a useful program instead of a malicious one &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Common vehicles are: &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Email attachments &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Software updates &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Scareware &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Drive-by-download
+: -   A vulnerability on the user&amp;rsquo;s computer is exploited to have the computer automatically download and install malicious software &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Common processes: &lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The user click on a link and is redirected to a malicious site &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Malware is downloaded to the user&amp;rsquo;s computer &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;By exploiting a vulnerability, malware is executed and spread without the user&amp;rsquo;s interaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;how-mebroot-malware-works&#34;&gt;How mebroot malware works?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Install in the Master Boot record, where executed before the operating system is loaded &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;then the malware modifies the operating system when it is loaded, disable the antivirus &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-are-differences-between-instruction-reordering-and-instruction-substitution&#34;&gt;What are differences between instruction reordering and instruction substitution?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Instruction reordering
+: -   the order of the instructions is changed &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;output is the same &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;signature is different &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Instruction substitution
+: -   different instructions are used with produce the same result &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;how-modern-antivirus-software-works-against-instruction-reordering-substitution&#34;&gt;How modern antivirus software works against instruction reordering/substitution?&lt;/h3&gt;
+&lt;p&gt;looks for behaviours that are typical of malicious code &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-polymorphic-malware&#34;&gt;What is polymorphic malware&lt;/h3&gt;
+&lt;p&gt;malware itself comes encrypted, each infection file looks different &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;how-malware-authors-prevent-analysis-in-the-first-place&#34;&gt;How malware authors prevent analysis in the first place?&lt;/h3&gt;
+&lt;p&gt;Malware developers try to detect whether their malware is being analysed and stop execution &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;how-botnets-works&#34;&gt;How botnets works?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A number of computers compromised by an attacker &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;bots connect to a botmaster to receive commands &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-fast-flux&#34;&gt;What is fast flux?&lt;/h3&gt;
+&lt;p&gt;Host C&amp;amp;C servers in static domain names, but frequently change the IP addresses behind &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-does-domain-generation-algorithm--dga--do&#34;&gt;What does domain generation algorithm(DGA) do?&lt;/h3&gt;
+&lt;p&gt;constantly change the domain names of C&amp;amp;C servers, DGA is used to map domain names to C&amp;amp;C servers &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-remote-access-tools--rats&#34;&gt;What is remote access tools(RATs)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;usually used in commodity malware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;RAT operator interacts with the victim&amp;rsquo;s machine via a GUI &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;capture audio and video from device &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;logging keyboard inputs &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;browse files on machine &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;three-main-challenges-of-criminals-evolving-in-an-arms-race&#34;&gt;Three main challenges of criminals evolving in an arms race?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Modern malware does not need user interaction to install &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Malware uses advanced techniques to avoid detection &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Botnets are constantly evolving their communication model to become more resilient &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;ways-of-monetising-botnets-include&#34;&gt;Ways of monetising botnets include:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Send email spam &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Post malicious content on social networks &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Perform advertisement fraud &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Encrypt victim data and ask for ransom &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Steal the victim&amp;rsquo;s financial information &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;differences-between-legitimate-and-malicious-affiliate-programmes&#34;&gt;Differences between legitimate and malicious affiliate programmes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;they deal with products that are illegal &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;they endorse criminal promotion techniques(botnets, black-hat SEO) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-blackhat-search-engine-optimisation--seo--and-how-it-works&#34;&gt;What is blackhat search engine optimisation(SEO), and how it works?&lt;/h3&gt;
+&lt;p&gt;To attract victims, malicious websites are pushed high in search engine ranking for keywords that are unrelated to the website &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Find popular trends on Google &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Generate content related to the trends and link to the malicious site &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Upload the content on a forum, or on a compromised websites &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;what-are-two-tiers-in-spam-operations&#34;&gt;What are two tiers in spam operations&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Front-end&lt;/dt&gt;
+&lt;dd&gt;Deals with sending spam emails: &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Email harvesters &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Botmasters &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Spammers &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Back-end&lt;/dt&gt;
+&lt;dd&gt;Deals with converting spam traffic into money: &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;affiliate programmes &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;actors-in-underground-economy&#34;&gt;Actors in underground economy&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Botmasters&lt;/dt&gt;
+&lt;dd&gt;infect computers, create botnets, and rent them &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Harvesters&lt;/dt&gt;
+&lt;dd&gt;crawl the internet looking for valid email addresses &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Search engine optimisation(SEO) experts&lt;/dt&gt;
+&lt;dd&gt;make sure that malicious sites are highly ranked on search engines &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Spam affiliate programs&lt;/dt&gt;
+&lt;dd&gt;Set up sites selling goods - spammers can sign up to these programs and receive their cut &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+</description>
+        </item>
+        <item>
         <title>CFC Week 4: Cybercrime mitigations</title>
         <link>https://ginkgo.org.cn/posts/cfc_week_4_cybercrime_mitigations/</link>
         <pubDate>Sat, 07 May 2022 00:00:00 +0000</pubDate>
