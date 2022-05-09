@@ -6,7 +6,123 @@
         <description>Recent content on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Sat, 07 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 09 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CFC Week 3: Malware uses and monetisation</title>
+        <link>https://ginkgo.org.cn/posts/cfc_week_3_malware_uses_and_monetisation/</link>
+        <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/cfc_week_3_malware_uses_and_monetisation/</guid>
+        <description>&lt;h2 id=&#34;cfc-week-3-malware-uses-and-monetisation&#34;&gt;CFC Week 3: Malware uses and monetisation&lt;/h2&gt;
+&lt;h3 id=&#34;learning-outcomes&#34;&gt;Learning outcomes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain the different monetisation strategies. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Discuss the other ways malware is used, apart from monetisation. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain how cybercrime is a commodity and how it is supported by an underground economy. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-the-information-stealing-malware&#34;&gt;What is the information-stealing malware?&lt;/h3&gt;
+&lt;p&gt;Information-stealing malware monitors its victims to collect usernames, passwords and financial information &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-two-factor-authentication&#34;&gt;What is two-factor authentication?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;what you know (password) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;what you have (mobile phone for code) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;what you are (fingerprint, face, retina) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-man-in-the-browser-attack&#34;&gt;What is man-in-the-browser attack?&lt;/h3&gt;
+&lt;p&gt;Man-in-the-browser attacks changes the browser window and makes users think that they are performing a legitimate transaction when they are sending money to the attacker instead. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;describe-operations-of-a-mobile-banking-trojans&#34;&gt;Describe operations of a mobile banking trojans&lt;/h3&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-09_15-09-49_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-ransomware&#34;&gt;What is Ransomware&lt;/h3&gt;
+&lt;p&gt;Cybercriminals encrypt user&amp;rsquo;s files and ask for a ransom to decrypt them again &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-fake-antivirus&#34;&gt;What is fake antivirus?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;lure user to pay the money and download fake antivirus. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;The fake antivirus doesn&amp;rsquo;t to anything, but perform malicious activities itself &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-is-pay-per-installs-scheme&#34;&gt;What is pay-per-installs scheme&lt;/h3&gt;
+&lt;p&gt;rent botnets for other cybercriminals for installing malware &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;what-is-ddos-as-a-service&#34;&gt;What is DDoS as a service&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Types&lt;/dt&gt;
+&lt;dd&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;use servers: higher bandwidth &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;use infected computers: cheaper &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Services&lt;/dt&gt;
+&lt;dd&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;damage their competitor &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;stress-testing services &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mining-bitcoin&#34;&gt;Mining bitcoin&lt;/h3&gt;
+&lt;p&gt;use infected computers to mine bitcoin, set up botnets &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ways-of-using-malware-to-make-money&#34;&gt;Ways of using malware to make money&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Man-in-the-browser attacks &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Financial malware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Ransomware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Fake anti-virus &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;DDoS as a service &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Mining bitcoin &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;how-underground-communities-avoid-lemon-market&#34;&gt;How underground communities avoid lemon market?&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;self-policing&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;scrutinise newly listed products and services &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;interview people who want to join &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;require recommendations from joined members to join &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;escrow system&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;payments first made to the administrator &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;forwarded to seller after authenticity has been confirmed &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;how-cybercrime-supported-by-an-underground-economy&#34;&gt;How cybercrime supported by an underground economy?&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;CAPTCHA-solving service
+: automated software solver or human manually solve the CAPTCHAs &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Phone vertification abuse
+: -   use Voice over IP (VoIP) numbers &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;purchase SIM cards in developing countries (cheap) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;use SMS-vertification as a service &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Fake social media accounts
+: -   automatically create accounts and followers &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Proxy
+: is a server that relays connections for a host, which hide the location and circumvent censorship &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Exploit kits
+: automate the exploitation of vulnerabilities &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Payment
+: -   find banks willing to process criminal payment (high transaction fees) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;use cryptocurrency &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
         <title>CFC Week 2: Advanced malware and worldwide SPAM</title>
         <link>https://ginkgo.org.cn/posts/cfc_week_2_advanced_malware_and_worldwide_spam_economy/</link>
         <pubDate>Sat, 07 May 2022 00:00:00 +0000</pubDate>
@@ -582,7 +698,7 @@ Intrusion detection system should be configured in such a way that false alarms 
 &lt;p&gt;Not ideal for log management and long-term storage of excessive amounts of logs (poor at log compression) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;what-is-the--ossim&#34;&gt;What is the  (OSSIM)?&lt;/h3&gt;
 &lt;h3 id=&#34;how-open-source-security-information-management--ossim--evaluates-the-risks&#34;&gt;How Open Source Security Information Management (OSSIM) evaluates the risks?&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-latex&#34; data-lang=&#34;latex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Risk = (Asset * Priority * Reliability) /24
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-latex&#34; data-lang=&#34;latex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Risk = (Asset * Priority * Reliability) /25
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;dl&gt;
 &lt;dt&gt;Asset&lt;/dt&gt;
 &lt;dd&gt;&lt;ul&gt;
