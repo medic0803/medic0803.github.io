@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Mastering Bitcoin 2nd Edition Chapter 2 Bitcoin transactions Terms Transaction Move value from transaction inputs to transaction outputs 将多个 bitcoin value 转移给多个outputs地址 Input: reference to a previous transaction&amp;rsquo;s output, showing where the value is coming from Wallet里面的bitcoin都来自'><title>Mastering Bitcoin 2nd Edition Chapter 2</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/mb2_chapter_2/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mastering Bitcoin 2nd Edition Chapter 2'>
+<meta property='og:description' content='Mastering Bitcoin 2nd Edition Chapter 2 Bitcoin transactions Terms Transaction Move value from transaction inputs to transaction outputs 将多个 bitcoin value 转移给多个outputs地址 Input: reference to a previous transaction&amp;rsquo;s output, showing where the value is coming from Wallet里面的bitcoin都来自'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/mb2_chapter_2/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='bitcoin' /><meta property='article:tag' content='cryptocurrecy' /><meta property='article:tag' content='blockchain' /><meta property='article:published_time' content='2022-05-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-11T10:09:52&#43;01:00'/>
+<meta name="twitter:title" content="Mastering Bitcoin 2nd Edition Chapter 2">
+<meta name="twitter:description" content="Mastering Bitcoin 2nd Edition Chapter 2 Bitcoin transactions Terms Transaction Move value from transaction inputs to transaction outputs 将多个 bitcoin value 转移给多个outputs地址 Input: reference to a previous transaction&amp;rsquo;s output, showing where the value is coming from Wallet里面的bitcoin都来自">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/reading_notes/" >
+                reading_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/mb2_chapter_2/">Mastering Bitcoin 2nd Edition Chapter 2</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 11, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mastering-bitcoin-2nd-edition-chapter-2">Mastering Bitcoin 2nd Edition Chapter 2</h2>
+<h3 id="bitcoin-transactions">Bitcoin transactions</h3>
+<h4 id="terms">Terms</h4>
+<dl>
+<dt>Transaction</dt>
+<dd>Move value from <code>transaction inputs</code> to <code>transaction outputs</code> <!-- raw HTML omitted -->
+<p>将多个 bitcoin value 转移给多个outputs地址 <!-- raw HTML omitted --></p>
+<p>Input: reference to a previous transaction&rsquo;s output, showing where the value is coming from <!-- raw HTML omitted --></p>
+<p>Wallet里面的bitcoin都来自于之前的 transaction 的 output，使用的时候就是引用之前 outputs的地址 <!-- raw HTML omitted --></p>
+<p>Output: directs a specific value to new owner&rsquo;s bitcoin address, and can include a change output back to the original owner <!-- raw HTML omitted --></p>
+<p>Bitcoin value发送到新的拥有者的地址，同时一部分找零回到原有者的地址 <!-- raw HTML omitted --></p>
+<p>Transaction as double-entry bookkeeping <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-21_10-55-13_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</dd>
+<dt>Change</dt>
+<dd>找零 <!-- raw HTML omitted -->
+<p>与物理货币使用类似，当作为input的bitcoin value大于实际所需要的output的值，那么由于不能把一个bitcoin value拆开，因此output除了原来要求的值，还有一个新的bitcoin value返回给原有的账户，均使用新的地址 <!-- raw HTML omitted --></p>
+</dd>
+<dt>Transaction fee</dt>
+<dd>The slight difference between input and outputs <!-- raw HTML omitted -->
+<p>It is collected by the miner as a fee for validating and including the transaction in a block to be recorded on the blockchain <!-- raw HTML omitted --></p>
+<p>Transaction output 后会扣除一定的 <code>transcation fee</code>,用于作为miner验证和将transaction加入block的奖励 <!-- raw HTML omitted --></p>
+</dd>
+<dt>&ldquo;Spending&rdquo;</dt>
+<dd>sign a transaction that transfers value from a previous transaction over to a new owner identified by a bitcoin address <!-- raw HTML omitted -->
+使用用户的 key 来确认一次transaction <!-- raw HTML omitted --></dd>
+<dt>Transaction chains</dt>
+<dd>所有当前拥有者所拥有的bitcoin value 均来自于上一次 transaction的 output，这些 bitcoin value将会作为下一次 transaction 的 input <!-- raw HTML omitted -->
+<p><figure><img src="/ox-hugo/2022-04-21_10-54-39_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<h4 id="transaction-forms">Transaction forms</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Most common transaction</p>
+<p>最普通的 transaction，input的value 大于output，因此一部分转交给新的owner，一部分找零返回原来的地址 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-21_10-56-43_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Transaction aggregating funds</p>
+<p>当有很多“零钱”的时候，凑齐（aggregate）很多的inputs转交给新的owner <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-21_10-57-21_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Transaction distributing funds</p>
+<p>一份或多份inputs需要转交给多个owners，例如发工资(payroll) <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-04-21_10-58-21_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="constructing-a-transaction">Constructing a Transaction</h3>
+<h4 id="getting-the-right-inputs">Getting the Right Inputs:</h4>
+<p>Most wallets keep track of all the available outputs belonging to addresses in the wallet <!-- raw HTML omitted --></p>
+<p>Wallet application queries the bitcoin network to retrieve this information <!-- raw HTML omitted --></p>
+<p>For example, use HTTP GET command to a specific URL to return all the unspent transaction outputs for an address <!-- raw HTML omitted --></p>
+<p>Wallet application can construct transactions even if it is completely offline <!-- raw HTML omitted --></p>
+<p>关于Transaction的工作完全是由用户选择的wallet application来完成的，那么在获取正确的inputs的时候 <!-- raw HTML omitted --></p>
+<p>如果用户选择的wallet是一个full node，那么wallet就会直接去查询bitcoin network 中的内容； <!-- raw HTML omitted --></p>
+<p>如果用户选择的是一个lightweight 的wallet，那么它只会追踪用户个人的unspent outputs <!-- raw HTML omitted --></p>
+<p>然后进行转账，这时候不需要网络也可以进行，就像在家里写了一张支票，可以稍后再交给银行一样，这里在本地离线写好了transaction的inputs和outputs，随后再交给bitcoin network 也可以 <!-- raw HTML omitted --></p>
+<h4 id="creating-outputs">Creating outputs</h4>
+<p>&ldquo;A transaction output is created in the form of a script that creates an encumbrance on the value and can only be redeemed by the introduction of a solution to the script.&rdquo; <!-- raw HTML omitted --></p>
+<p>&ldquo;Alice’s transaction output will contain a script that says something like, “This output is payable to whoever can present a signature from the key corresponding to Bob’s public address.” Because only Bob has the wallet with the keys corresponding to that address, only Bob’s wallet can present such a signature to redeem this output. Alice will therefore “encumber” the output value with a demand for a signature from Bob.&rdquo; <!-- raw HTML omitted --></p>
+<p>创建outputs: <!-- raw HTML omitted --></p>
+<p>Alice 创建一个脚本，这个脚本会实现：将一部分的inputs抵押在bitcoin network 上，随后等待Bob 来赎回。那么赎回就需要Bob 提供他对应的key来进行签名，只要签名正确就可以赎回这部分的 bitcoin value <!-- raw HTML omitted --></p>
+<p>同时transaction 会产生transaction fee 用来支付 miner 对transaction进行验证和记账的奖励，这个 trasaction fee 通常会在找零 change 里扣除 <!-- raw HTML omitted --></p>
+<h3 id="bitcoin-mining">Bitcoin Mining</h3>
+<h4 id="记账">记账</h4>
+<p>转发交易：最终的目的是将每一次交易都记录在block chain 上面 <!-- raw HTML omitted --></p>
+<p>所有参与到bitcoin network 中的终端都叫做bitcoin node  他们都通过bitcoin protocol 来进行交流 <!-- raw HTML omitted --></p>
+<p>当Alice的wallet 将一个transaction 发送到另一个bitcoin node 的时候，每个节点都会验证这个transaction 是否属于自己，因为他们都可以用自己的key来验证，直到传递到Bob <!-- raw HTML omitted --></p>
+<p>当一个bitcoin node 收到了之前没有见过的transaction 的时候，他们就会做flooding 来确保大部分的节点都能收到这个transaction <!-- raw HTML omitted --></p>
+<p>这里有一个常见的误区就是，Bob 需要等待10min或者60min的时间，等待transaction被记账之后，才能完成咖啡的交付，实际上只需要几秒钟的时间，Bob 所拥有的 bitcoin node 就会得知有一个属于他的待赎回的outputs, 这已经是十分可靠的了 <!-- raw HTML omitted --></p>
+<h4 id="挖矿">挖矿</h4>
+<p>矿工负担高性能的机器以及运行所需要的电费来进行挖矿，主要的工作是验证 Proof-of-Work <!-- raw HTML omitted --></p>
+<p>“The algorithm for Proof-of-Work involves repeatedly hashing the header of the block and a random number with the SHA256 cryptographic algorithm until a solution matching a predetermined pattern emerges.” <!-- raw HTML omitted --></p>
+<p>矿工之前都可以互相合作，通过 mining pool <!-- raw HTML omitted --></p>
+<p>每次当bitcoin network 中有bitcoin node 提交一个新的transaction ，这些transaction就会被放到pool of unverified transactions 当中。 <!-- raw HTML omitted --></p>
+<p>每个矿工开始挖矿的目的都是为了创造一个属于自己的block, 然后将这个block 添加到blockchain 上面去 <!-- raw HTML omitted --></p>
+<p>因此他们会首先创建一个 <code>candidate block</code>, 然后开始验证所有当前存在于 <code>pool of unverified</code> 的 transactions, 同时他们会添加一条新的transaction which 指向他们的地址，这个transaction 所包含的bitcoin value 就是一个新的block 的奖励以及所有的transaction fee ，相当于是银行印了新的钱还有所有转账的手续费，当他们谁第一个完成了 proof of work algorithm的计算，就可以将他们所创造的 <code>candidate block</code> 添加到block chain 的末尾去成为新的block，其他人验证了其正确性之后，就会转而创建新的candidate block来计算新的block <!-- raw HTML omitted --></p>
+<p>一个很好的比喻就是proof of work 就是一个大型的数独游戏，通过增加行和列的大小可以很容易的增加难度，但是验证起来却十分容易 <!-- raw HTML omitted --></p>
+<p>同时除了验证pool of unverified transactions 之外，还需要验证以前的transactions ，也就是说计算量会越来越大，之前的transaction 也会变得越来越可靠，一般认为存在于6个blocks的 transaction就已经是不可逆的了 <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/bitcoin/">bitcoin</a>
+        
+            <a href="/tags/cryptocurrecy/">cryptocurrecy</a>
+        
+            <a href="/tags/blockchain/">blockchain</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 11, 2022 10:09 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 6</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mastering-bitcoin-2nd-edition-chapter-2">Mastering Bitcoin 2nd Edition Chapter 2</a>
+      <ul>
+        <li><a href="#bitcoin-transactions">Bitcoin transactions</a>
+          <ul>
+            <li><a href="#terms">Terms</a></li>
+            <li><a href="#transaction-forms">Transaction forms</a></li>
+          </ul>
+        </li>
+        <li><a href="#constructing-a-transaction">Constructing a Transaction</a>
+          <ul>
+            <li><a href="#getting-the-right-inputs">Getting the Right Inputs:</a></li>
+            <li><a href="#creating-outputs">Creating outputs</a></li>
+          </ul>
+        </li>
+        <li><a href="#bitcoin-mining">Bitcoin Mining</a>
+          <ul>
+            <li><a href="#记账">记账</a></li>
+            <li><a href="#挖矿">挖矿</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
