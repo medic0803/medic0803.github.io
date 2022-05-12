@@ -6,7 +6,96 @@
         <description>Recent content in Posts on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Mastering Bitcoin 2nd Edition Chapter 9</title>
+        <link>https://ginkgo.org.cn/posts/mb2_chapter_9/</link>
+        <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/mb2_chapter_9/</guid>
+        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-9&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 9&lt;/h2&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;在这一章中，我们将要介绍blockchain区块链的概念，区块链顾名思义，就是很多的block串联在一起，形成了一条长长的链子。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;在实际情况中，blockchain使用了stack栈的结构，也就是第一个block，我们称为 &lt;code&gt;genesis block&lt;/code&gt; 被放在栈底，然后随着新的block的产生，慢慢一个一个压入栈。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;每一个block（出了genesis block）都有一个 &lt;code&gt;parent block&lt;/code&gt; 也就是父区块，同时每一个block都有一个block header，和我们熟知的TCP header一样，里面可以有很多的fields，其中就有一个field叫做 &lt;code&gt;previous block hash&lt;/code&gt; ，指示了其父区块的hash &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这里我讲一下自己对hash的理解，就是本身每一个block header都会包含很多的信息，我们可以通过hash的方法将这些复杂的信息转化为一条唯一的哈希值，那么也就是说，一个block的block header中有其父区块的hash，那么当其再被hash保存的时候，就会收到父区块的hash的影响，也就是说，如果父区块的hash改变了，那么接下来一系列的子区块的hash都会随之发生改变。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这也就是为什么blockchain如此安全，因为如果你企图篡改一个block的内容，那么势必会引发整个一个blockchain的重新计算，而这样的计算是不可能完成的，越长的链越难实现，所以就像我们在之前的章节中提到的那样，到了6个以上的block我们就可以说是安全了。这就和地层一样，越在上面的地质层就越容易发生改变，收到季节气候的影响，而越埋在下面的地质层就越稳定，越不容易收到影响。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;一个block会对应一个父区块，但一个block可以拥有很多的子区块，这就是我们说的Fork，这个概念我们会在后面一起学习到。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;block的结构&#34;&gt;Block的结构&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;一个block的构成&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;block header &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;transactions &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_10-37-33_screenshot.png&#34; width=&#34;500px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Block header&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;previous block hash，用来指向父区块的hash &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;a set of metadata: difficulty, timestamp, and nonce, 这些是在挖矿中产生的 metadata &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;merkle tree root, 用来总结当前block的所有transaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_10-39-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Block identifiers&lt;/dt&gt;
+&lt;dd&gt;我们有两种办法来指代一个block： &lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;block hash，或者准确的来说是block header hash,因为是将block header用SHA256 hash两边的结果 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这里细心的朋友可能会发现，在block的数据结构当中，并没有包含当前block hash的信息，因为其是由每一个收到当前block的node来计算，并保存在另外的数据库中的metadata &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;block height, 第一个block的height就是0，后面就越来越高，当然这不是唯一的，之后我们在Fork中会讲到 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;genesis-block&#34;&gt;Genesis Block&lt;/h4&gt;
+&lt;p&gt;Genesis block也就是所有block的祖先，其于2009年被Satoshi Nakamoto所创建，并附带有一条隐藏的信息， &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.” &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;通过引用了泰晤士报的标题来指示了其最早创建的时间，同时用以调侃全球正在经历的货币危机。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Genesis Block的hash值如下，我们可以在任意一个区块查询网站上找到它的信息 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.blockchain.com/btc/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.blockchain.com/btc/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;区块链中链接新的区块&#34;&gt;区块链中链接新的区块&lt;/h4&gt;
+&lt;p&gt;每一个Bitcoin full nodes都在本地保存了完整的区块链的副本，从genesis block开始到最新的区块，当收到新的区块的时候，每一个node就会验证这个block并添加到本地的blockchain上面去，验证的方法则是核对previous block hash的值是否为本地blockchain的最后一个区块的hash（有待考证，我觉得是不是太简单了一点，后期可能会修改，如果发现错误没有修改，请联系我修改） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_21-19-24_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;merkle-trees&#34;&gt;Merkle Trees&lt;/h3&gt;
+&lt;p&gt;记得我们之前提到过每一个Block中都包含了所有的Transactions，但是很明显维护所有的这些transactions需要花费大量的内存空间，因此在这里我们就会采用Merkle Trees这个数据结构，顾名思义是一个Tree的结构，由root，nodes以及leaves组成，来简化对于transactions的维护 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Merkle Trees的目的就是将所有的Transaction的hash（double-SHA256）作为树的leaves，并将每一对transaction的hash组合起来再进行hash，递归得不断hash，最终得到 &lt;code&gt;merkle root&lt;/code&gt; 来表示所有的transaction的summary &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;举一个例子，当我们有A, B, C, D四个transactions，那他们的Hash就是，H_A, H_B, H_C and H_D，将他们两来那个配对再次Hash，最终得到Merkle Root（如何transaction的数量是单数，那么就重复最后一个leaves来实现平衡树） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;H_A = SHA256(SHA256(Transaction A)) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;H_AB = SHA256(SHA256(H_A + H_B)) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_21-29-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;理解这个结构非常的简单，但是这里我们就要问一个问题，这有什么好处呢？ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;首先因为是树的结构，因此在查询一个特定的节点就将算法的复杂度从N降低到了log(N)的水平 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;想象一个场景，首先我们有一个可靠的Merkle Root(如下图的结构),然后我们想要验证Transaction K在这个block当中，那么就可以只利用H_L, HIJ, H_MNOP, H_ABCDEFGH的信息，就可以和H_K一起算出最后的Merkle Root来核对是否正确。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_22-05-58_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这里我们就需要引出一个新的概念：Simplified Payment Verification (SPV) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;simplified-payment-verification--spv&#34;&gt;Simplified Payment Verification (SPV)&lt;/h4&gt;
+&lt;p&gt;就像我们之前说的，Full node会记录并实时维护所有的transaction，但是SPV nodes作为一个轻量级的node，只需要记录和维护所有的block headers就够了，因为其中就有可靠的Merkle root信息，每当我们想要验证一个transaction是否存在的时候，SPV只需要向blockchain network请求对应的需要验证的hash值，就可以进行完成验证。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Mastering Bitcoin 2nd Edition Chapter 2</title>
         <link>https://ginkgo.org.cn/posts/mb2_chapter_2/</link>
         <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
