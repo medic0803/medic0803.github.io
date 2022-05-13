@@ -6,13 +6,211 @@
         <description>Recent content on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Mastering Bitcoin 2nd Edition Chapter 9</title>
+        <lastBuildDate>Fri, 13 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</title>
+        <link>https://ginkgo.org.cn/posts/mb2_chapter_10/</link>
+        <pubDate>Fri, 13 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/mb2_chapter_10/</guid>
+        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-10-mining-and-consensus&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus&lt;/h2&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;在本章开始的时候，我们就要为大家解决一个误区，Mining，挖矿，其实它的主要目的并不是获取新的比特币，或者赚取transaction fee，而是为了更为重要的目的，即作为Bitcoin的安全机制，以及保证去中心化的概念得以实现。获取新的比特币以及transaction fee作为奖励，属于独立的一个incentive system奖励系统，用于激励矿工们完成mining的任务，保证bitcoin的安全。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;不过挖矿这个比喻实在是有点贴切（也许就是为什么即使容易误导还是这么叫），挖矿不仅获得了珍贵的资源，同时这些资源是有限的，越挖越少的，因为大约每10min就会产生一个新的block，那么每四年，准确来说是每210,000个区块后新的bitcoin就会减半，从2009年的50 bitcoin per block最后到2140年，20.9999998 million的比特币都被挖出来之后就不再产生了。那么谁还挖矿呢？答案就是transaction fee的奖励，届时每一个block的transaction势必越来越多，产生的费用也会占据reward的主导地位，矿工就会为了transaction fee而继续挖矿。不得不说，即懂得密码学，又回编程，有懂经济货币，能设计如此完善的机制，Satoshi Nakamoto要么就是一个绝世天才，要不就是一群来自各个领域的天才结合在一起创造了这个杰作。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_09-39-58_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;bitcoin如何抵御inflation通货膨胀&#34;&gt;Bitcoin如何抵御Inflation通货膨胀？&lt;/h3&gt;
+&lt;p&gt;首先我来简单说说我对于通货膨胀的理解，也就是说政府通过让货币贬值，来刺激消费，因为大家存在银行里的钱慢慢变得越来越不值钱了，那么大家就会倾向于趁早把钱价值高的时候换成商品来保值。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么政府一般来说就是通过直接打印更多的钱来实现这一点，因为当钱越来越多的时候，商品的价格也会随之上涨来应对，其实这也是一种隐性的对于存储者的税收或者说惩罚，因为他们在银行中的钱的实际价值实际上是减少了。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么我们为什么说Bitcoin其实是一个Deflationary Money，即通货紧缩的货币呢，因为其的总数量是固定的，不会无限的印钱，并且其产量在不断的减少，那么bitcoin实际上就会变得越来越值钱，造成了这个通货紧缩。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;decentralized-consensus-去中心化的共识&#34;&gt;Decentralized Consensus 去中心化的共识&lt;/h3&gt;
+&lt;p&gt;传统的支付系统依赖于一个权威中心机构来完成所有交易的认证和清算，但是Satoshi Nakamoto 想要在Bitcoin上构建的就是一个去中心化的系统，即不需要一个权威机构，而是想办法让每一个拥有完整账本拷贝的 bitcoin full nodes都能认同一个结果，达成一个共识。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;实现这个去中心化共识需要四个步骤，我们一个一个展开来将 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Independent verification of each transaction, by every full node, based on a comprehensive list of criteria &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Independent aggregation of those transactions into new blocks by mining nodes, coupled with demonstrated computation through a Proof-of-Work algorithm &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Independent verification of the new blocks by every node and assembly into a chain &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Independent selection, by every node, of the chain with the most cumulative computation demonstrated through Proof-of-Work &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;independent-verification-of-transactions&#34;&gt;Independent Verification of Transactions&lt;/h3&gt;
+&lt;p&gt;在第六章的学习中，我们知道了当wallet想要创造一个新的transaction，它就会收集用户可支配的UTXO，然后提供解锁这些UTXO的unlocking scripts从而构建outputs的内容并将构建好的这个transaction发送给邻居节点，从而扩散到整一个Bitcoin网络当中。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;但是在邻居节点转发这个transaction之前，每一个转发的节点都会进行一个independent verification of transactions，独立的交易验证，它们会创建一个valid transactions pool来收录所有的有效的transaction。而验证的过程包括了数据结构，以及一些基本的数值的范围的确认，同时还有一些更为复杂的验证例如： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;检查transaction的inputs，所对应的outputs是否真的存在 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;检查transaction的inputs，所对应的outputs，是否已经被本地已经收录的valid transaction所使用了 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;检查transaction的inputs，所对应的outputs是否已经被花费了 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;以及我们之前提到过的，验证unlocking scripts 以及 locking scripts的组合是否能够匹配 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mining-nodes&#34;&gt;Mining Nodes&lt;/h4&gt;
+&lt;p&gt;Miners，矿工，是bitcoin network中一些特殊的节点，我们拿本书的一个经典例子来介绍，Jing作为一个miner，运行着一个bitcoin full node，miner的职责有： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;接收和传递未经确认的transaction &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;集中这些transaction放入新的block当中 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;监听新的block的到来，这也意味着新block的竞争失败，也是下一个block竞争的开始 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;aggregating-transactions-into-blocks&#34;&gt;Aggregating Transactions into Blocks&lt;/h4&gt;
+&lt;p&gt;当一个node验证了transactions之后，就会将他们放入本地的 &lt;code&gt;memory pool&lt;/code&gt;, or &lt;code&gt;transaction pool&lt;/code&gt; 当中，然后接着被放入新的 candidate block当中，当一个新的block到来之后，Jing的miner node会首先明白当前block已经竞争失败，那么会丢弃当前的candidate block进而创建新的candidate block来竞争下一个block，同时将新到来的block于本地的memory pool中的transaction进行比较，剔除那些已经被包含在block中的transaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The Coinbase Transaction&lt;/p&gt;
+&lt;p&gt;我们在之前的章节中就介绍过，coinbase transaction就是一条特殊的transaction，由miner所创建，包含在新的candidate block当中，作为新的block挖掘的奖励，奖励的数值每四年减半，这些都需要miner自行计算并构造coinbase transaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们可以观察一下以下的transaction和之前我们在第六章中见过的有什么区别，主要是在inputs这一块，没有再指向一个特定的UTXO,而是一个coinbase &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_11-49-53_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;通过下图我们也可以比较普通的transaction与coinbase transaction的区别 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;
+之后是Transaction fee的计算，我们在第九章中提到过，transaction fee是unallocated value，只需要用inputs减去outpus即可 &lt;!-- raw HTML omitted --&gt;
+Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;再加上coinbase transaction的值就可以得到总的reward。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Constructing the Block Header&lt;/p&gt;
+&lt;p&gt;在开始mining工作之前，miner需要先构造好这样一个block header然后，填好出了Nonce之外的所有fields，最后的mining的目标就是找到一个特定的nonce，使构成的block hash小于target的值，一个mining node需要尝试十亿或者数万亿的nonce才能找到一个符合条件的。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;关于target的介绍我们会放到后面，我们可以先将其当作是一个需要解决的puzzle,而mining的目的就是解决这个puzzle &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_11-59-20_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mining-the-block&#34;&gt;Mining the Block&lt;/h3&gt;
+&lt;p&gt;简单来说，mining挖矿的过程就是不断的hash得到block header hash,只改变一个变量（Nonce），直到匹配到一个特定的target值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;proof-of-work-algorithm&#34;&gt;Proof-of-Work Algorithm&lt;/h4&gt;
+&lt;p&gt;接下来，我们通过几个例子，来说明整一个POW algorithm. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;想象小朋友们在玩一个游戏，用两个骰子，谁先掷出结果小于12的值就算获胜，这是不是非常简单，因为只要不是两个6，就能取胜。那么随着要求小于的数值变得越小，那么需要尝试的次数是不是自然就需要增多，当要求小于3才能获胜的时候，只有一种可能可以获胜，那么需要投掷的次数就达到了最高，概率学我已经忘的差不多了（大概的意思大家懂就好了，具体的数值我也不算出来搞笑了） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;是不是有点类似我们的之前提到的挖矿的目标，就是通过不断的尝试来达到一个特定的符合要求的值。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;再来看一个例子，假设我们需要一个nonce，加在&amp;quot;I am Satoshi Nakamoto&amp;quot;的后面，再利用SHA256 hash之后，得到的结果以0为开头，那么我们简单的以数字递增来类比掷骰子尝试，就会是这样： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_14-55-02_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们通过观察可以发现，简单的一位数字的变化，可以让最后的hash值发生很大的变化，这也就是为什么我们频繁的看到hash再bitcoin的出现，因为任何长度的内容再经过了hash之后，都会生成每一位都完全随机，且简单的变化input会造成output的巨大变化的hash值，且没有办法找到一个特定的hash值的inputs，也没有办法找到另一个input与当前的input有相同的hash值。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那我们接着回到例子，观察hash的结果可以发现当nonce = 13的时候，hash的值第一位是0了，也就是hash值小于： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;0x1000000000000000000000000000000000000000000000000000000000000000 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;最后，我们来说说具体的Proof of Work algorithm 是如何工作的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;回忆一下block header中的fields，有target，有nonce，target就是骰子游戏获胜的要求，也是最后计算的结果，nonce，就是需要不断尝试的内容，而整一个block header就是上一个例子中和nonce加在一起hash的&amp;quot;I am Satoshi Nakamoto&amp;quot;，那么每一个block header 里面的内容都包含了很多特有的信息，也就意味着他们的hash都会非常的不同，也就保证了mining的工作只能不停的做尝试。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;target-representation&#34;&gt;Target Representation&lt;/h4&gt;
+&lt;p&gt;至此，我也就理解了target的结构的作用： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Target由4个bytes组成，用来指代一个幂运算，第一个8位的byte，用来表示指数，后面三个bytes一共24位，用来表示一个系数，算出的结果，就是我们需要最后的block header hash需要小于的值。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;比如block 277,316的target bits就是0x1903a30c，0x19 就是coefficient指数，0x03a30c就是exponent系数 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Target的计算公式是： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;target = coefficient * 2^(8 * (exponent – 3)) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;target = 0x03a30c * 2^(0x08 * (0x19 - 0x03))^ &lt;!-- raw HTML omitted --&gt;
+=&amp;gt; target = 0x03a30c * 2^(0x08 * 0x16)^ &lt;!-- raw HTML omitted --&gt;
+=&amp;gt; target = 0x03a30c * 2^0xB0^ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;十进制表达： &lt;!-- raw HTML omitted --&gt;
+=&amp;gt; target = 238,348 * 2^176^ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;=&amp;gt; target = 22,829,202,948,393,929,850,749,706,076,701,368,331,072,452,018,388,575,715,328 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;十六进制表达： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;=&amp;gt; target = 0x0000000000000003A30C00000000000000000000000000000000000000000000 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么调整难度的方法也很简单，就和掷骰子一样，下调target的大小即可，具体的做法就是增加开头的0就好了，高位的0越多，意味着结果越小，意味找到匹配hash值的概率越低，需要做的尝试就越大。一般来说，每多一位0，需要的时间就会翻倍（匹配的值的数量会减半） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;当nonce计算完毕之后，其他full node只需要将block header hash与target一做比较就知道了。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;retargeting-to-adjust-difficulty&#34;&gt;Retargeting to Adjust Difficulty&lt;/h4&gt;
+&lt;p&gt;那么整一个去中心化的网络要如何统一的调整难度呢？ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;每一个node都会独立地，自动地调整难度，也就是target，每隔2,016个blocks，所有的block都会计算之前的2,016个blocks所需要mining的总时间，如果超出了每10min每个，就会降低难度，如果少于10min每个，就会增加难度： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;New Target = Old Target * (Actual Time of Last 2016 Blocks / 20160 minutes) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;successfully-mining-the-block&#34;&gt;Successfully Mining the Block&lt;/h4&gt;
+&lt;p&gt;一次成功的挖矿过程应该就是Jing在其mining node上组装好了block header之后，将这个block header发送给所有的高性能机器去进行hash的尝试，直到试出了匹配target的nonce后，mining node就会将这个block转发出去，其他mining node在验证了这个block之后，就会放弃自己当前的candidate block并加Jing的block添加到本地的blockchain上，并将其block header hash作为新的candidate block的previous hash,这其实也是一种投票的代表，即表示认同Jing的block，并将自己的算力运用在Jing的block header hash上。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;validating-a-new-block&#34;&gt;Validating a New Block&lt;/h3&gt;
+&lt;p&gt;每一个bitcoin node都会通过一系列的标准验证新到来的block，只要有一个没有符合标准，那么整一个block就会作废，如果miner在一些内容上做了一些欺骗，比如把coinbase transaction 写的很大，然后再花大量的算力来完成proof-of-works algorithm，那么他们就会浪费所消耗的所有电费而做了一次无用功。这个检查将会包括block header的fields，也会包含一些例如大小的metadata，同时别忘了之前提到过的所有transaction的验证。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;assembling-and-selecting-chains-of-blocks&#34;&gt;Assembling and Selecting Chains of Blocks&lt;/h3&gt;
+&lt;p&gt;Bitcoin 去中心化共识机制的最后一个步骤就是将验证好的block链接到blockchain上面去，大家注意到标题上有一个selecting chains的字眼，没错，最后一步还面临着chains的选择，这也意味着可以链接的chain不只一条，这与我们之后要讲到的 &lt;code&gt;Fork&lt;/code&gt; 的有关。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;每一个Nodes将维护三种区块 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;链接在主链上的区块 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;链接在主链分支上的区块 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;孤儿区块，也就是找不到父区块的区块 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们这里直接开始介绍Fork的概念，否则我觉得chain的变动的问题很难理解 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;blockchain-forks&#34;&gt;Blockchain Forks&lt;/h4&gt;
+&lt;p&gt;Fork这个概念发生在两个mining node同时挖出了一个合法的block，那么他们在验证了proof-of-work algorithm的一瞬间就会将这个新的block传播出去，很显然离这两个mining node越近的node将会越早收到这个新的block，但是最终整个bitcoin network上的所有node，都会有两个新的block来指向上一个父区块 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;下图的结构就是每一个node连接在一起，形成整一个bitcoin network,同时圆圈中的星星就表示blockchain的末端，最新的一个block，在这个时候，所有的node中的blockchain都是一样的。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_16-54-15_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么此时，Node X和Node Y同时计算出了新的block,我们用三角和倒三角表示，然后他们开始传递这个新的block，X 与 Y周围的node都会更优先收到他们的block &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_16-55-50_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;但是最终，他们的blockchain上前一个父区块上都会连着两个新的block，他们都可以算是合法的，那么一如既往，每一个mining node就会以其中一个block，正三角或者倒三角作为previous block hash 进行新的block的计算。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_16-57-15_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这时候，总有一个节点会算出新的一个block，根据其选中的previous block hash,这里也能更好的体现我们之前说的算力投票的问题，当有两个节点同时合法的时候，每一个mining node都会做出自己的选择来通过行动（hash计算）来支持其中的一个node。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_16-59-10_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;当这个新的block产生的时候，进而扩散到整一个bitcoin network，那么每个node在验证过后就会根据previous block hash链接到其中一个竞争的block上，最终形成了一条更长的chain，同时也意味付出了更多的算力，我们称这条chain为main chain 主链。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_17-02-46_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那些“站错队”的mining node将会马上停止手中的工作，开始为新的主链进行计算，因为之后计算的block都会变成orphan孤儿区块 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;有了Fork的指示之后我们再来说主链，分支的概念就容易的多了 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Main chain&lt;/dt&gt;
+&lt;dd&gt;主链，也就是拥有最长的，也就是付出了更多算力的链 &lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;main chain上可能也会有分支区块，这些分支将被保留下来，因为可能在将来用来取代现有的main chain &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Orphan block&lt;/dt&gt;
+&lt;dd&gt;孤儿区块，顾名思义，他们的各项标准都被验证会合法，可是previous block hash却找不到一个存在父区块可以匹配 &lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;这种区块可能会发生在前后两个block 的计算时间间隔很短，同时子区块的传播快于父区块，导致了子区块先达到却尴尬的发现没有父区块可以连接 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么这些区块就会被放在orphan block pool中等待可以链接的父区块的到来 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;consensus-attacks&#34;&gt;Consensus Attacks&lt;/h3&gt;
+&lt;p&gt;Bitcoin在理论是是可以被攻击的，但需要注意的是，这也仅仅是针对未来的consensus共识，或者最近的几个block（最近的几十个），因为随着blockchain的变长，越早的block就越不容易被收到影响，就像我们之前举的地质层的例子一样。Consensus attacks只能影响最近的blocks以及造成针对未来blocks创建的DoS攻击。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;其中一个场景就是&amp;quot;51% attack&amp;quot;，也就是当attackers能够控制超过半数的hashing power，就可以成功的攻击bitcoin，有三种攻击的手段 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;deliberate forks &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;double-spend transactions &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;DoS attacks &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其实根据研究不需要51%的算力，只要能够控制超过1/3成功的概率就已经很高了 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Fork/double-spend attack&lt;/dt&gt;
+&lt;dd&gt;主要目的是为了最近的block无效化，通过fork一个区块，然后通过掌握大量的算力，使main chain切换到新fork的区块链分支上来 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;这里要注意的是一个double-spend attack只能在attacker拥有目标transaction中的inputs的合法signature的情况下才能进行 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;我们通过一个具体的例子来说明一个double-spend attack是如何发生的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;有一个Attacker Mallory想要从Carol的画廊中买一副价值很高的画作，他在付款之后，画廊在最新的一个block上确认了transaction，于是就把画交给了Mallory。但是于此同时，Mallory有一个帮手叫做Paul，他运营这一个mining pool，控制了相当大的算力，他直接重新mine/fork了相同高度的这个block，改写了transaction，将原本需要花费给画廊的UTXO转向了自己的钱包，并又算了一个block使当前的chain变得比原来的更长，成为了主链，这也就意味着原本的block失效了，transaction也就无效了，那么这个UTXO其实也就无法被消费了。因此，对于大数值的交易来说，最好可以采用第三方担保的手段来进行交易，并且等待6个以上的block都确认了这条transaction之后，才会比较稳妥。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;当然，一旦有一方人员拥有这样庞大的算力，并开始破坏bitcoin的运行，那他们肯定不是冲着钱去的，或者说不是为了从bitcoin中直接获利的，因为一旦去中心化的共识安全机制被破坏，那么没有人会相信这个系统，价格也会崩溃。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;changing-the-consensus-rules&#34;&gt;Changing the Consensus Rules&lt;/h3&gt;
+&lt;p&gt;在上面的章节中我们介绍了decentralised consensus mechanism的四个步骤，这是整一个bitcoin的基石，但是随着时代的变化，技术以及需求的改变，整一个bitcoin的系统也将不断更新和进步，但是去中心化系统以及机制的升级，将会被一般中心化开发管理的软件升级要难得多。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Forks这个概念我们在之前已经提到过了，一般会出现在两个竞争的block的出现中，让blockchain产生了分支。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们接下来要介绍的两个概念 &lt;code&gt;Hard Forks&lt;/code&gt; ，以及 &lt;code&gt;Soft Forks&lt;/code&gt; 也是相同的结果，他们也会创造分支，但是意义不同，这是为了对Consensus rules进行改变 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;hard-forks&#34;&gt;Hard Forks&lt;/h4&gt;
+&lt;p&gt;我们通过一个具体的例子来介绍Hard forks是如何实现与运行的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;下图展现的是一个blockchain，在Block4的位置出现了一个普通的fork，在竞争中4a获胜了，因为block5先被添加了，因此有4a的成为了主链 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么在Block6之后发生的就是 &lt;code&gt;Hard Forks&lt;/code&gt; ，在Block6之后，一部分client进行了系统的升级，并采用了新的 consensus rule，假设新的规则改变了transaction中，用在unlocking script中的signature生成算法被改变了，当使用新的算法构建的transaction被广播出去之后，只有采用新规则的mining node能够验证并处理这条transaction，进而聚集到candidate block当中去。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么对于那些没有升级的node，他们会直接拒绝这种transaction，因为在他们的核对机制当中，这条transaction是不合法的。他们会拒绝所有新规则下的transaction 以及block，新的block也会被他们视为orphan block，此后这两条分支将独立运行，互不兼容。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_21-58-56_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;soft-forks&#34;&gt;Soft Forks&lt;/h4&gt;
+&lt;p&gt;Soft forks准确来说并不是一个典型的fork，即其不会使blockchain产生分支。Hard forks对于consensus rules的改变是与老版本的规则互不兼容的,可以说是有所创新，新老版本互相无法理解，而相反的，soft forks对于对老版本的consensus rules做出限制，即在原有的基础上进行限制与修改，其作用范围小于老版本的内容。因此新老版本仍然可以互相理解，transaction和block的验证与添加也可以继续进行。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Mastering Bitcoin 2nd Edition Chapter 9: The Blockchain</title>
         <link>https://ginkgo.org.cn/posts/mb2_chapter_9/</link>
         <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/mb2_chapter_9/</guid>
-        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-9&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 9&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-9-the-blockchain&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 9: The Blockchain&lt;/h2&gt;
 &lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;在这一章中，我们将要介绍blockchain区块链的概念，区块链顾名思义，就是很多的block串联在一起，形成了一条长长的链子。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;在实际情况中，blockchain使用了stack栈的结构，也就是第一个block，我们称为 &lt;code&gt;genesis block&lt;/code&gt; 被放在栈底，然后随着新的block的产生，慢慢一个一个压入栈。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -96,12 +294,12 @@
 </description>
         </item>
         <item>
-        <title>Mastering Bitcoin 2nd Edition Chapter 2</title>
+        <title>Mastering Bitcoin 2nd Edition Chapter 2: How Bitcoin Works</title>
         <link>https://ginkgo.org.cn/posts/mb2_chapter_2/</link>
         <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/mb2_chapter_2/</guid>
-        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-2&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 2&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;mastering-bitcoin-2nd-edition-chapter-2-how-bitcoin-works&#34;&gt;Mastering Bitcoin 2nd Edition Chapter 2: How Bitcoin Works&lt;/h2&gt;
 &lt;h3 id=&#34;bitcoin-transactions&#34;&gt;Bitcoin transactions&lt;/h3&gt;
 &lt;h4 id=&#34;terms&#34;&gt;Terms&lt;/h4&gt;
 &lt;dl&gt;
@@ -2645,7 +2843,7 @@ jpg_payload&lt;/a&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
-        <title>Mastering Bitcoin 2nd Edition Chapter 6</title>
+        <title>Mastering Bitcoin 2nd Edition Chapter 6: Transactions</title>
         <link>https://ginkgo.org.cn/posts/mb2_chapter_6/</link>
         <pubDate>Sun, 24 Apr 2022 00:00:00 +0000</pubDate>
         

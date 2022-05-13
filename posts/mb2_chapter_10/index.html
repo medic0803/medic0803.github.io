@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus Introduction 在本章开始的时候，我们就要为大家解决一个误区，Mining，挖矿，其实它的主要目的并不是获取新的比特币，或者赚取tran'><title>Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/mb2_chapter_10/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus'>
+<meta property='og:description' content='Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus Introduction 在本章开始的时候，我们就要为大家解决一个误区，Mining，挖矿，其实它的主要目的并不是获取新的比特币，或者赚取tran'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/mb2_chapter_10/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='bitcoin' /><meta property='article:tag' content='cryptocurrecy' /><meta property='article:tag' content='blockchain' /><meta property='article:published_time' content='2022-05-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-13T22:25:49&#43;01:00'/>
+<meta name="twitter:title" content="Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus">
+<meta name="twitter:description" content="Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus Introduction 在本章开始的时候，我们就要为大家解决一个误区，Mining，挖矿，其实它的主要目的并不是获取新的比特币，或者赚取tran">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/reading_notes/" >
+                reading_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/mb2_chapter_10/">Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 13, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    17 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mastering-bitcoin-2nd-edition-chapter-10-mining-and-consensus">Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</h2>
+<h3 id="introduction">Introduction</h3>
+<p>在本章开始的时候，我们就要为大家解决一个误区，Mining，挖矿，其实它的主要目的并不是获取新的比特币，或者赚取transaction fee，而是为了更为重要的目的，即作为Bitcoin的安全机制，以及保证去中心化的概念得以实现。获取新的比特币以及transaction fee作为奖励，属于独立的一个incentive system奖励系统，用于激励矿工们完成mining的任务，保证bitcoin的安全。 <!-- raw HTML omitted --></p>
+<p>不过挖矿这个比喻实在是有点贴切（也许就是为什么即使容易误导还是这么叫），挖矿不仅获得了珍贵的资源，同时这些资源是有限的，越挖越少的，因为大约每10min就会产生一个新的block，那么每四年，准确来说是每210,000个区块后新的bitcoin就会减半，从2009年的50 bitcoin per block最后到2140年，20.9999998 million的比特币都被挖出来之后就不再产生了。那么谁还挖矿呢？答案就是transaction fee的奖励，届时每一个block的transaction势必越来越多，产生的费用也会占据reward的主导地位，矿工就会为了transaction fee而继续挖矿。不得不说，即懂得密码学，又回编程，有懂经济货币，能设计如此完善的机制，Satoshi Nakamoto要么就是一个绝世天才，要不就是一群来自各个领域的天才结合在一起创造了这个杰作。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_09-39-58_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="bitcoin如何抵御inflation通货膨胀">Bitcoin如何抵御Inflation通货膨胀？</h3>
+<p>首先我来简单说说我对于通货膨胀的理解，也就是说政府通过让货币贬值，来刺激消费，因为大家存在银行里的钱慢慢变得越来越不值钱了，那么大家就会倾向于趁早把钱价值高的时候换成商品来保值。 <!-- raw HTML omitted --></p>
+<p>那么政府一般来说就是通过直接打印更多的钱来实现这一点，因为当钱越来越多的时候，商品的价格也会随之上涨来应对，其实这也是一种隐性的对于存储者的税收或者说惩罚，因为他们在银行中的钱的实际价值实际上是减少了。 <!-- raw HTML omitted --></p>
+<p>那么我们为什么说Bitcoin其实是一个Deflationary Money，即通货紧缩的货币呢，因为其的总数量是固定的，不会无限的印钱，并且其产量在不断的减少，那么bitcoin实际上就会变得越来越值钱，造成了这个通货紧缩。 <!-- raw HTML omitted --></p>
+<h3 id="decentralized-consensus-去中心化的共识">Decentralized Consensus 去中心化的共识</h3>
+<p>传统的支付系统依赖于一个权威中心机构来完成所有交易的认证和清算，但是Satoshi Nakamoto 想要在Bitcoin上构建的就是一个去中心化的系统，即不需要一个权威机构，而是想办法让每一个拥有完整账本拷贝的 bitcoin full nodes都能认同一个结果，达成一个共识。 <!-- raw HTML omitted --></p>
+<p>实现这个去中心化共识需要四个步骤，我们一个一个展开来将 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Independent verification of each transaction, by every full node, based on a comprehensive list of criteria <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Independent aggregation of those transactions into new blocks by mining nodes, coupled with demonstrated computation through a Proof-of-Work algorithm <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Independent verification of the new blocks by every node and assembly into a chain <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Independent selection, by every node, of the chain with the most cumulative computation demonstrated through Proof-of-Work <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="independent-verification-of-transactions">Independent Verification of Transactions</h3>
+<p>在第六章的学习中，我们知道了当wallet想要创造一个新的transaction，它就会收集用户可支配的UTXO，然后提供解锁这些UTXO的unlocking scripts从而构建outputs的内容并将构建好的这个transaction发送给邻居节点，从而扩散到整一个Bitcoin网络当中。 <!-- raw HTML omitted --></p>
+<p>但是在邻居节点转发这个transaction之前，每一个转发的节点都会进行一个independent verification of transactions，独立的交易验证，它们会创建一个valid transactions pool来收录所有的有效的transaction。而验证的过程包括了数据结构，以及一些基本的数值的范围的确认，同时还有一些更为复杂的验证例如： <!-- raw HTML omitted --></p>
+<ul>
+<li>检查transaction的inputs，所对应的outputs是否真的存在 <!-- raw HTML omitted --></li>
+<li>检查transaction的inputs，所对应的outputs，是否已经被本地已经收录的valid transaction所使用了 <!-- raw HTML omitted --></li>
+<li>检查transaction的inputs，所对应的outputs是否已经被花费了 <!-- raw HTML omitted --></li>
+<li>以及我们之前提到过的，验证unlocking scripts 以及 locking scripts的组合是否能够匹配 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="mining-nodes">Mining Nodes</h4>
+<p>Miners，矿工，是bitcoin network中一些特殊的节点，我们拿本书的一个经典例子来介绍，Jing作为一个miner，运行着一个bitcoin full node，miner的职责有： <!-- raw HTML omitted --></p>
+<ul>
+<li>接收和传递未经确认的transaction <!-- raw HTML omitted --></li>
+<li>集中这些transaction放入新的block当中 <!-- raw HTML omitted --></li>
+<li>监听新的block的到来，这也意味着新block的竞争失败，也是下一个block竞争的开始 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="aggregating-transactions-into-blocks">Aggregating Transactions into Blocks</h4>
+<p>当一个node验证了transactions之后，就会将他们放入本地的 <code>memory pool</code>, or <code>transaction pool</code> 当中，然后接着被放入新的 candidate block当中，当一个新的block到来之后，Jing的miner node会首先明白当前block已经竞争失败，那么会丢弃当前的candidate block进而创建新的candidate block来竞争下一个block，同时将新到来的block于本地的memory pool中的transaction进行比较，剔除那些已经被包含在block中的transaction <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>The Coinbase Transaction</p>
+<p>我们在之前的章节中就介绍过，coinbase transaction就是一条特殊的transaction，由miner所创建，包含在新的candidate block当中，作为新的block挖掘的奖励，奖励的数值每四年减半，这些都需要miner自行计算并构造coinbase transaction <!-- raw HTML omitted --></p>
+<p>我们可以观察一下以下的transaction和之前我们在第六章中见过的有什么区别，主要是在inputs这一块，没有再指向一个特定的UTXO,而是一个coinbase <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_11-49-53_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>通过下图我们也可以比较普通的transaction与coinbase transaction的区别 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+之后是Transaction fee的计算，我们在第九章中提到过，transaction fee是unallocated value，只需要用inputs减去outpus即可 <!-- raw HTML omitted -->
+Total Transaction Fees = Sum(Inputs) - Sum(Outputs) <!-- raw HTML omitted --></p>
+<p>再加上coinbase transaction的值就可以得到总的reward。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Constructing the Block Header</p>
+<p>在开始mining工作之前，miner需要先构造好这样一个block header然后，填好出了Nonce之外的所有fields，最后的mining的目标就是找到一个特定的nonce，使构成的block hash小于target的值，一个mining node需要尝试十亿或者数万亿的nonce才能找到一个符合条件的。 <!-- raw HTML omitted --></p>
+<p>关于target的介绍我们会放到后面，我们可以先将其当作是一个需要解决的puzzle,而mining的目的就是解决这个puzzle <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_11-59-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="mining-the-block">Mining the Block</h3>
+<p>简单来说，mining挖矿的过程就是不断的hash得到block header hash,只改变一个变量（Nonce），直到匹配到一个特定的target值 <!-- raw HTML omitted --></p>
+<h4 id="proof-of-work-algorithm">Proof-of-Work Algorithm</h4>
+<p>接下来，我们通过几个例子，来说明整一个POW algorithm. <!-- raw HTML omitted --></p>
+<p>想象小朋友们在玩一个游戏，用两个骰子，谁先掷出结果小于12的值就算获胜，这是不是非常简单，因为只要不是两个6，就能取胜。那么随着要求小于的数值变得越小，那么需要尝试的次数是不是自然就需要增多，当要求小于3才能获胜的时候，只有一种可能可以获胜，那么需要投掷的次数就达到了最高，概率学我已经忘的差不多了（大概的意思大家懂就好了，具体的数值我也不算出来搞笑了） <!-- raw HTML omitted --></p>
+<p>是不是有点类似我们的之前提到的挖矿的目标，就是通过不断的尝试来达到一个特定的符合要求的值。 <!-- raw HTML omitted --></p>
+<p>再来看一个例子，假设我们需要一个nonce，加在&quot;I am Satoshi Nakamoto&quot;的后面，再利用SHA256 hash之后，得到的结果以0为开头，那么我们简单的以数字递增来类比掷骰子尝试，就会是这样： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_14-55-02_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们通过观察可以发现，简单的一位数字的变化，可以让最后的hash值发生很大的变化，这也就是为什么我们频繁的看到hash再bitcoin的出现，因为任何长度的内容再经过了hash之后，都会生成每一位都完全随机，且简单的变化input会造成output的巨大变化的hash值，且没有办法找到一个特定的hash值的inputs，也没有办法找到另一个input与当前的input有相同的hash值。 <!-- raw HTML omitted --></p>
+<p>那我们接着回到例子，观察hash的结果可以发现当nonce = 13的时候，hash的值第一位是0了，也就是hash值小于： <!-- raw HTML omitted --></p>
+<p>0x1000000000000000000000000000000000000000000000000000000000000000 <!-- raw HTML omitted --></p>
+<p>最后，我们来说说具体的Proof of Work algorithm 是如何工作的 <!-- raw HTML omitted --></p>
+<p>回忆一下block header中的fields，有target，有nonce，target就是骰子游戏获胜的要求，也是最后计算的结果，nonce，就是需要不断尝试的内容，而整一个block header就是上一个例子中和nonce加在一起hash的&quot;I am Satoshi Nakamoto&quot;，那么每一个block header 里面的内容都包含了很多特有的信息，也就意味着他们的hash都会非常的不同，也就保证了mining的工作只能不停的做尝试。 <!-- raw HTML omitted --></p>
+<h4 id="target-representation">Target Representation</h4>
+<p>至此，我也就理解了target的结构的作用： <!-- raw HTML omitted --></p>
+<p>Target由4个bytes组成，用来指代一个幂运算，第一个8位的byte，用来表示指数，后面三个bytes一共24位，用来表示一个系数，算出的结果，就是我们需要最后的block header hash需要小于的值。 <!-- raw HTML omitted --></p>
+<p>比如block 277,316的target bits就是0x1903a30c，0x19 就是coefficient指数，0x03a30c就是exponent系数 <!-- raw HTML omitted --></p>
+<p>Target的计算公式是： <!-- raw HTML omitted --></p>
+<p>target = coefficient * 2^(8 * (exponent – 3)) <!-- raw HTML omitted --></p>
+<p>target = 0x03a30c * 2^(0x08 * (0x19 - 0x03))^ <!-- raw HTML omitted -->
+=&gt; target = 0x03a30c * 2^(0x08 * 0x16)^ <!-- raw HTML omitted -->
+=&gt; target = 0x03a30c * 2^0xB0^ <!-- raw HTML omitted --></p>
+<p>十进制表达： <!-- raw HTML omitted -->
+=&gt; target = 238,348 * 2^176^ <!-- raw HTML omitted --></p>
+<p>=&gt; target = 22,829,202,948,393,929,850,749,706,076,701,368,331,072,452,018,388,575,715,328 <!-- raw HTML omitted --></p>
+<p>十六进制表达： <!-- raw HTML omitted --></p>
+<p>=&gt; target = 0x0000000000000003A30C00000000000000000000000000000000000000000000 <!-- raw HTML omitted --></p>
+<p>那么调整难度的方法也很简单，就和掷骰子一样，下调target的大小即可，具体的做法就是增加开头的0就好了，高位的0越多，意味着结果越小，意味找到匹配hash值的概率越低，需要做的尝试就越大。一般来说，每多一位0，需要的时间就会翻倍（匹配的值的数量会减半） <!-- raw HTML omitted --></p>
+<p>当nonce计算完毕之后，其他full node只需要将block header hash与target一做比较就知道了。 <!-- raw HTML omitted --></p>
+<h4 id="retargeting-to-adjust-difficulty">Retargeting to Adjust Difficulty</h4>
+<p>那么整一个去中心化的网络要如何统一的调整难度呢？ <!-- raw HTML omitted --></p>
+<p>每一个node都会独立地，自动地调整难度，也就是target，每隔2,016个blocks，所有的block都会计算之前的2,016个blocks所需要mining的总时间，如果超出了每10min每个，就会降低难度，如果少于10min每个，就会增加难度： <!-- raw HTML omitted --></p>
+<p>New Target = Old Target * (Actual Time of Last 2016 Blocks / 20160 minutes) <!-- raw HTML omitted --></p>
+<h4 id="successfully-mining-the-block">Successfully Mining the Block</h4>
+<p>一次成功的挖矿过程应该就是Jing在其mining node上组装好了block header之后，将这个block header发送给所有的高性能机器去进行hash的尝试，直到试出了匹配target的nonce后，mining node就会将这个block转发出去，其他mining node在验证了这个block之后，就会放弃自己当前的candidate block并加Jing的block添加到本地的blockchain上，并将其block header hash作为新的candidate block的previous hash,这其实也是一种投票的代表，即表示认同Jing的block，并将自己的算力运用在Jing的block header hash上。 <!-- raw HTML omitted --></p>
+<h3 id="validating-a-new-block">Validating a New Block</h3>
+<p>每一个bitcoin node都会通过一系列的标准验证新到来的block，只要有一个没有符合标准，那么整一个block就会作废，如果miner在一些内容上做了一些欺骗，比如把coinbase transaction 写的很大，然后再花大量的算力来完成proof-of-works algorithm，那么他们就会浪费所消耗的所有电费而做了一次无用功。这个检查将会包括block header的fields，也会包含一些例如大小的metadata，同时别忘了之前提到过的所有transaction的验证。 <!-- raw HTML omitted --></p>
+<h3 id="assembling-and-selecting-chains-of-blocks">Assembling and Selecting Chains of Blocks</h3>
+<p>Bitcoin 去中心化共识机制的最后一个步骤就是将验证好的block链接到blockchain上面去，大家注意到标题上有一个selecting chains的字眼，没错，最后一步还面临着chains的选择，这也意味着可以链接的chain不只一条，这与我们之后要讲到的 <code>Fork</code> 的有关。 <!-- raw HTML omitted --></p>
+<p>每一个Nodes将维护三种区块 <!-- raw HTML omitted --></p>
+<ul>
+<li>链接在主链上的区块 <!-- raw HTML omitted --></li>
+<li>链接在主链分支上的区块 <!-- raw HTML omitted --></li>
+<li>孤儿区块，也就是找不到父区块的区块 <!-- raw HTML omitted --></li>
+</ul>
+<p>我们这里直接开始介绍Fork的概念，否则我觉得chain的变动的问题很难理解 <!-- raw HTML omitted --></p>
+<h4 id="blockchain-forks">Blockchain Forks</h4>
+<p>Fork这个概念发生在两个mining node同时挖出了一个合法的block，那么他们在验证了proof-of-work algorithm的一瞬间就会将这个新的block传播出去，很显然离这两个mining node越近的node将会越早收到这个新的block，但是最终整个bitcoin network上的所有node，都会有两个新的block来指向上一个父区块 <!-- raw HTML omitted --></p>
+<p>下图的结构就是每一个node连接在一起，形成整一个bitcoin network,同时圆圈中的星星就表示blockchain的末端，最新的一个block，在这个时候，所有的node中的blockchain都是一样的。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_16-54-15_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>那么此时，Node X和Node Y同时计算出了新的block,我们用三角和倒三角表示，然后他们开始传递这个新的block，X 与 Y周围的node都会更优先收到他们的block <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_16-55-50_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>但是最终，他们的blockchain上前一个父区块上都会连着两个新的block，他们都可以算是合法的，那么一如既往，每一个mining node就会以其中一个block，正三角或者倒三角作为previous block hash 进行新的block的计算。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_16-57-15_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>这时候，总有一个节点会算出新的一个block，根据其选中的previous block hash,这里也能更好的体现我们之前说的算力投票的问题，当有两个节点同时合法的时候，每一个mining node都会做出自己的选择来通过行动（hash计算）来支持其中的一个node。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_16-59-10_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>当这个新的block产生的时候，进而扩散到整一个bitcoin network，那么每个node在验证过后就会根据previous block hash链接到其中一个竞争的block上，最终形成了一条更长的chain，同时也意味付出了更多的算力，我们称这条chain为main chain 主链。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_17-02-46_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>那些“站错队”的mining node将会马上停止手中的工作，开始为新的主链进行计算，因为之后计算的block都会变成orphan孤儿区块 <!-- raw HTML omitted --></p>
+<p>有了Fork的指示之后我们再来说主链，分支的概念就容易的多了 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Main chain</dt>
+<dd>主链，也就是拥有最长的，也就是付出了更多算力的链 <!-- raw HTML omitted -->
+<p>main chain上可能也会有分支区块，这些分支将被保留下来，因为可能在将来用来取代现有的main chain <!-- raw HTML omitted --></p>
+</dd>
+<dt>Orphan block</dt>
+<dd>孤儿区块，顾名思义，他们的各项标准都被验证会合法，可是previous block hash却找不到一个存在父区块可以匹配 <!-- raw HTML omitted -->
+<p>这种区块可能会发生在前后两个block 的计算时间间隔很短，同时子区块的传播快于父区块，导致了子区块先达到却尴尬的发现没有父区块可以连接 <!-- raw HTML omitted --></p>
+<p>那么这些区块就会被放在orphan block pool中等待可以链接的父区块的到来 <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<h3 id="consensus-attacks">Consensus Attacks</h3>
+<p>Bitcoin在理论是是可以被攻击的，但需要注意的是，这也仅仅是针对未来的consensus共识，或者最近的几个block（最近的几十个），因为随着blockchain的变长，越早的block就越不容易被收到影响，就像我们之前举的地质层的例子一样。Consensus attacks只能影响最近的blocks以及造成针对未来blocks创建的DoS攻击。 <!-- raw HTML omitted --></p>
+<p>其中一个场景就是&quot;51% attack&quot;，也就是当attackers能够控制超过半数的hashing power，就可以成功的攻击bitcoin，有三种攻击的手段 <!-- raw HTML omitted --></p>
+<ul>
+<li>deliberate forks <!-- raw HTML omitted --></li>
+<li>double-spend transactions <!-- raw HTML omitted --></li>
+<li>DoS attacks <!-- raw HTML omitted --></li>
+</ul>
+<p>其实根据研究不需要51%的算力，只要能够控制超过1/3成功的概率就已经很高了 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Fork/double-spend attack</dt>
+<dd>主要目的是为了最近的block无效化，通过fork一个区块，然后通过掌握大量的算力，使main chain切换到新fork的区块链分支上来 <!-- raw HTML omitted -->
+<ul>
+<li>这里要注意的是一个double-spend attack只能在attacker拥有目标transaction中的inputs的合法signature的情况下才能进行 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<p>我们通过一个具体的例子来说明一个double-spend attack是如何发生的 <!-- raw HTML omitted --></p>
+<p>有一个Attacker Mallory想要从Carol的画廊中买一副价值很高的画作，他在付款之后，画廊在最新的一个block上确认了transaction，于是就把画交给了Mallory。但是于此同时，Mallory有一个帮手叫做Paul，他运营这一个mining pool，控制了相当大的算力，他直接重新mine/fork了相同高度的这个block，改写了transaction，将原本需要花费给画廊的UTXO转向了自己的钱包，并又算了一个block使当前的chain变得比原来的更长，成为了主链，这也就意味着原本的block失效了，transaction也就无效了，那么这个UTXO其实也就无法被消费了。因此，对于大数值的交易来说，最好可以采用第三方担保的手段来进行交易，并且等待6个以上的block都确认了这条transaction之后，才会比较稳妥。 <!-- raw HTML omitted --></p>
+<p>当然，一旦有一方人员拥有这样庞大的算力，并开始破坏bitcoin的运行，那他们肯定不是冲着钱去的，或者说不是为了从bitcoin中直接获利的，因为一旦去中心化的共识安全机制被破坏，那么没有人会相信这个系统，价格也会崩溃。 <!-- raw HTML omitted --></p>
+<h3 id="changing-the-consensus-rules">Changing the Consensus Rules</h3>
+<p>在上面的章节中我们介绍了decentralised consensus mechanism的四个步骤，这是整一个bitcoin的基石，但是随着时代的变化，技术以及需求的改变，整一个bitcoin的系统也将不断更新和进步，但是去中心化系统以及机制的升级，将会被一般中心化开发管理的软件升级要难得多。 <!-- raw HTML omitted --></p>
+<p>Forks这个概念我们在之前已经提到过了，一般会出现在两个竞争的block的出现中，让blockchain产生了分支。 <!-- raw HTML omitted --></p>
+<p>我们接下来要介绍的两个概念 <code>Hard Forks</code> ，以及 <code>Soft Forks</code> 也是相同的结果，他们也会创造分支，但是意义不同，这是为了对Consensus rules进行改变 <!-- raw HTML omitted --></p>
+<h4 id="hard-forks">Hard Forks</h4>
+<p>我们通过一个具体的例子来介绍Hard forks是如何实现与运行的 <!-- raw HTML omitted --></p>
+<p>下图展现的是一个blockchain，在Block4的位置出现了一个普通的fork，在竞争中4a获胜了，因为block5先被添加了，因此有4a的成为了主链 <!-- raw HTML omitted --></p>
+<p>那么在Block6之后发生的就是 <code>Hard Forks</code> ，在Block6之后，一部分client进行了系统的升级，并采用了新的 consensus rule，假设新的规则改变了transaction中，用在unlocking script中的signature生成算法被改变了，当使用新的算法构建的transaction被广播出去之后，只有采用新规则的mining node能够验证并处理这条transaction，进而聚集到candidate block当中去。 <!-- raw HTML omitted --></p>
+<p>那么对于那些没有升级的node，他们会直接拒绝这种transaction，因为在他们的核对机制当中，这条transaction是不合法的。他们会拒绝所有新规则下的transaction 以及block，新的block也会被他们视为orphan block，此后这两条分支将独立运行，互不兼容。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-13_21-58-56_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="soft-forks">Soft Forks</h4>
+<p>Soft forks准确来说并不是一个典型的fork，即其不会使blockchain产生分支。Hard forks对于consensus rules的改变是与老版本的规则互不兼容的,可以说是有所创新，新老版本互相无法理解，而相反的，soft forks对于对老版本的consensus rules做出限制，即在原有的基础上进行限制与修改，其作用范围小于老版本的内容。因此新老版本仍然可以互相理解，transaction和block的验证与添加也可以继续进行。 <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/bitcoin/">bitcoin</a>
+        
+            <a href="/tags/cryptocurrecy/">cryptocurrecy</a>
+        
+            <a href="/tags/blockchain/">blockchain</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 13, 2022 22:25 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 9: The Blockchain</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 2: How Bitcoin Works</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 6: Transactions</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mastering-bitcoin-2nd-edition-chapter-10-mining-and-consensus">Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</a>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#bitcoin如何抵御inflation通货膨胀">Bitcoin如何抵御Inflation通货膨胀？</a></li>
+        <li><a href="#decentralized-consensus-去中心化的共识">Decentralized Consensus 去中心化的共识</a></li>
+        <li><a href="#independent-verification-of-transactions">Independent Verification of Transactions</a>
+          <ul>
+            <li><a href="#mining-nodes">Mining Nodes</a></li>
+            <li><a href="#aggregating-transactions-into-blocks">Aggregating Transactions into Blocks</a></li>
+          </ul>
+        </li>
+        <li><a href="#mining-the-block">Mining the Block</a>
+          <ul>
+            <li><a href="#proof-of-work-algorithm">Proof-of-Work Algorithm</a></li>
+            <li><a href="#target-representation">Target Representation</a></li>
+            <li><a href="#retargeting-to-adjust-difficulty">Retargeting to Adjust Difficulty</a></li>
+            <li><a href="#successfully-mining-the-block">Successfully Mining the Block</a></li>
+          </ul>
+        </li>
+        <li><a href="#validating-a-new-block">Validating a New Block</a></li>
+        <li><a href="#assembling-and-selecting-chains-of-blocks">Assembling and Selecting Chains of Blocks</a>
+          <ul>
+            <li><a href="#blockchain-forks">Blockchain Forks</a></li>
+          </ul>
+        </li>
+        <li><a href="#consensus-attacks">Consensus Attacks</a></li>
+        <li><a href="#changing-the-consensus-rules">Changing the Consensus Rules</a>
+          <ul>
+            <li><a href="#hard-forks">Hard Forks</a></li>
+            <li><a href="#soft-forks">Soft Forks</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
