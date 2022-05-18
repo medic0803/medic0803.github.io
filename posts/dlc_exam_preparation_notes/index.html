@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='DLC EXAM Preparation Notes Week 4 Byzantine Faults and CAP Theorem Byzantine General Problems 拜占庭将军问题，也是分布式计算中的投票问题 即当有9位将军协同作战，现在他们遇到了麻烦，需要决定是撤退还是继续进攻'><title>DLC EXAM Preparation Notes</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/dlc_exam_preparation_notes/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='DLC EXAM Preparation Notes'>
+<meta property='og:description' content='DLC EXAM Preparation Notes Week 4 Byzantine Faults and CAP Theorem Byzantine General Problems 拜占庭将军问题，也是分布式计算中的投票问题 即当有9位将军协同作战，现在他们遇到了麻烦，需要决定是撤退还是继续进攻'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/dlc_exam_preparation_notes/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='bitcoin' /><meta property='article:tag' content='cryptocurrecy' /><meta property='article:tag' content='blockchain' /><meta property='article:published_time' content='2022-05-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-18T22:41:04&#43;01:00'/>
+<meta name="twitter:title" content="DLC EXAM Preparation Notes">
+<meta name="twitter:description" content="DLC EXAM Preparation Notes Week 4 Byzantine Faults and CAP Theorem Byzantine General Problems 拜占庭将军问题，也是分布式计算中的投票问题 即当有9位将军协同作战，现在他们遇到了麻烦，需要决定是撤退还是继续进攻">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/dlc_exam_preparation_notes/">DLC EXAM Preparation Notes</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 13, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    23 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="dlc-exam-preparation-notes">DLC EXAM Preparation Notes</h2>
+<h3 id="week-4">Week 4</h3>
+<h4 id="byzantine-faults-and-cap-theorem">Byzantine Faults and CAP Theorem</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Byzantine General Problems 拜占庭将军问题，也是分布式计算中的投票问题</p>
+<p>即当有9位将军协同作战，现在他们遇到了麻烦，需要决定是撤退还是继续进攻，他们通过投票来决定最后的决定，4位进攻，4位撤退，一位背叛者告诉一边他们会进攻，告诉另一边他们会撤退，导致协同作战失败。 <!-- raw HTML omitted --></p>
+<p>那么Bitcoin是如何解决这个问题的呢，即使用PoW算法，使发送一条虚假的消息的成本变得很高 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Database on ACID</p>
+<p>ACID,即是为了保证数据库的所有业务的办理是可靠的，需要具备的四个特性的缩写 <!-- raw HTML omitted --></p>
+<ul>
+<li>Atomicity 原子性，即所有的操作都必须完整的进行，如果期间发生错误，即整一个过程全部回滚，当作没有发生过 <!-- raw HTML omitted --></li>
+<li>Consistency一致性，保证数据库的完整性没有被破坏，所有的操作都需要符合标准 <!-- raw HTML omitted --></li>
+<li>Isolation隔离性，即防止多个操作处理同一个数据，导致竞争出现混乱 <!-- raw HTML omitted --></li>
+<li>Durability持久性，所有的处理完成后都可以长期保存，不会丢失和更改 <!-- raw HTML omitted --></li>
+</ul>
+<p>那么当数据库变大了之后，这四个特性就会收到挑战。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>CAP Theorem</p>
+<p>CAP为三个对于实现分布式数据库的挑战的简写 <!-- raw HTML omitted --></p>
+<ul>
+<li>Consistency of data,一致性，所有的节点在访问分布式的数据库时，能够保证访问的都是最新的数据 <!-- raw HTML omitted --></li>
+<li>Availability of data，可用性，每次请求都能获得不报错的响应（但不保证获取的一定是最新的数据） <!-- raw HTML omitted --></li>
+<li>Partition-tolerance，分区容错性，当一致性无法表达的时候，就会产生分歧， <!-- raw HTML omitted --></li>
+</ul>
+<p>根据定力，分布式系统只能保证三项中的两项 <!-- raw HTML omitted --></p>
+<p>一般来说，Partition-tolerance必须得到保证，因此只能在Availability和Consistency之间进行选择 <!-- raw HTML omitted --></p>
+<ol>
+<li>选择Consistency一致性，那么响应的时间可能会变长 <!-- raw HTML omitted --></li>
+<li>选择Availability，那么需要保证响应的时间是即时的 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<h4 id="consensus-protocols">Consensus Protocols</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Proof of Work (Pow)</p>
+<p>How it works
+: 通过让mining node通过改变block header中的nonce来不断的改变block header hash的值，使其小于block header中target的值 <!-- raw HTML omitted --></p>
+<p>后果 <!-- raw HTML omitted -->
+-   大量的资源消耗，运行算力机器以及冷却机器所要消耗的电费 <!-- raw HTML omitted --></p>
+<pre><code> -   大量的计算群 &lt;br/&gt;
+
+ -   集中的mining power &lt;br/&gt;
+</code></pre>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Proof of Stake (PoS)</p>
+<p>Proof of Stake不需要再向PoW那样消耗大量的算力以及电力资源来互相竞争，永远要记住一点的就是mining的过程本身不是为了加密货币，而是为了维持整一个区块链上的安全。 <!-- raw HTML omitted --></p>
+<p>比如以太坊，他们要求想要成为 validator 的用户抵押一部分的虚拟货币，然后随机选择一名validator来进行新的block的创造以及transaction的验证，你抵押的越多，也就越容易成为validator。 <!-- raw HTML omitted --></p>
+<p>那么如何避免用户的不良行为呢，PoW通过大量的运算提高了成本，而PoS中，则是使用抵押的机制来防止产生不良的行为，如果发生了他们就丧失他们抵押的虚拟货币 <!-- raw HTML omitted --></p>
+<p>在PoS中，人们会倾向与合作，而不是PoW中的竞争，他们可以将资源集中起来，从而获得更大的机会来成为validator <!-- raw HTML omitted --></p>
+<p>在PoS中，51% attack对于attacker来说也十分危险，因为他们需要抵押大量的货币来得到validator的地位，那么一旦遭受惩罚，损失将会是巨大的 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Proof of Authority</p>
+<p>Block的创建以及transaction的校验工作被轮流分配到可信的权威机构或者组织身上，这些组织可能需要抵押一部分的资金来成为可靠的节点，进入轮值列表 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Other turn-taking protocols</p>
+<ul>
+<li>Protocol来直接决定那个节点来完成工作 <!-- raw HTML omitted -->
+<ul>
+<li>随机分配 <!-- raw HTML omitted --></li>
+<li>轮流 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Proof of Elapsed Time (PoET) hardware: <!-- raw HTML omitted -->
+<ul>
+<li>只有特定的硬件才能完成工作 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="consensus-attacks">Consensus attacks</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Sybil attacks</p>
+<p>女巫攻击，攻击者通过利用proxy代理来伪造多个身份来对整一个decentralised consensus机制进行攻击，但同样也需要大量的hash power，因为即使你控制了很多节点，那也需要能够在这些节点上面来完成PoW才行 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="week-8-dlt-infrastructure-and-platforms">Week 8: DLT Infrastructure &amp; Platforms</h3>
+<p>Bitcoin blockchain最主要的目的是为了防住double-spending（通过增加修改一个block所需要的cost，特别是当多个block都确认信息之后） <!-- raw HTML omitted --></p>
+<h4 id="ethereum">Ethereum</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>What is Ethereum</p>
+<p>在Ethereum宇宙中，有一个唯一的虚拟的机器叫做EVM（Ethereum Virtual Machine）,所有参与Ethereum网络的用户都认可的一个机器，用来记录整个网络包括用户的状态。 <!-- raw HTML omitted --></p>
+<p>EVM类似于bitcoin中每一个full node所存储的database，当有transaction产生之后，将会被广播到整一个Ehthereum网络当中，被验证并加入的新的block当中，然后作为一条指令被EVM做执行，所有的node上都有一份完整的EVM的拷贝，每一条transaction都相当于是对EVM这个机器发出的指令，让其进行一些操作造成状态的改变。 <!-- raw HTML omitted --></p>
+<p>global computers <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>What is Ether</p>
+<p>Ether就是Ethereum中的所使用的cryptocurrency，其作用是为了激励miner积极的转发，验证transaction，来维护整个一个blockchain，同时也可以防止发生DDoS攻击，因为每个transaction都需要支付一定的费用。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>What is Smart contracts</p>
+<p>Smart contracts 智能合约，本质上是一个个在EVM上的程序（一组代码指令），用户可以通过发送对应的变量参数同时支付一定的Eth来发起一个transaction，而一个miner讲在其本地的EVM上的所对应的smart contract程序上输入参数执行这个程序，完成相应的工作。 <!-- raw HTML omitted --></p>
+<p>程序员通过向EVM中上传这些开发的智能合约程序，就可以在EVM的基础上搭建应用程序供用户调用使用。 <!-- raw HTML omitted --></p>
+<p>同时也被叫做dapps, or Decentralised Apps. <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Transaction</p>
+<p>Ethereum中的transaction是丰富多样的，例如： <!-- raw HTML omitted --></p>
+<ul>
+<li>Send X ether from my account to Alice&rsquo;s account. <!-- raw HTML omitted --></li>
+<li>Publish some smart contract code into EVM state. <!-- raw HTML omitted --></li>
+<li>Execute the code of the smart contract at address X in the EVM, with arguments Y. <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>GAS</p>
+<p>GAS，汽油，顾名思义，是用来驱动Ethereum工作的一个东西。 <!-- raw HTML omitted --></p>
+<p>我们从上面的介绍中了解，用户可以发起 transaction 来转移ETH,也可以发送对应的参数来执行smart contracts,那么这些工作都需要消耗计算机资源，那么GAS就作为费用来驱动计算机资源为用户服务， <!-- raw HTML omitted --></p>
+<p>GAS cost
+:</p>
+<p>你需要执行多大的smart contracts程序 <!-- raw HTML omitted --></p>
+<p>你需要执行的速度有多快 <!-- raw HTML omitted --></p>
+<p>Gas price (measure in ETH) <!-- raw HTML omitted --></p>
+<p>用户在发起transaction的时候可以决定想要花费多少GAS来作为报酬 <!-- raw HTML omitted --></p>
+<p>Total processing fee in ETH = <!-- raw HTML omitted --></p>
+<p>Gas limit (total # of gas to be used) X gas price in ETH. <!-- raw HTML omitted --></p>
+<p>Transaction的执行具有Atomicity原子性（我觉得是这样），即如果transaction的执行失败了，或者未完成，gas不会退回，因为确实已经占用了计算机资源，但是EVM的状态不会发生任何改变。 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Why have Ethereum Gas?</p>
+<p>可以用于减少infinite loops 以及防止DoS attack的发生， <!-- raw HTML omitted --></p>
+<p>因为最终支付的有限的Gas将被用完，并且attacker需要付出gas才能继续工作 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cryptokitties problem</p>
+<p>Cryptokitties刚出来的时候，大量的transaction突然涌入整一个Ethereum，Miners提高了他们的gas几个，导致很多老的用户还在自动的支付较低的gas，导致很多transaction并不会被处理与执行 <!-- raw HTML omitted --></p>
+<p>解决的方法： <!-- raw HTML omitted --></p>
+<ul>
+<li>短期：修改前端页面来允许用户增加他们的gas费用并重新提交transaction <!-- raw HTML omitted --></li>
+<li>长期：将类似的app转移到sidechains来执行，即只有一部分人可以执行和运行特定的transaction，而不会影响主链上的nodes <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Ethereum Enterprise</p>
+<p>企业和组织可以在Ethereum上开辟permissioned chains来实现自己的一个blockchain，他们会重新开发EVM的code来接收和转发特定的transaction，这些transaction与主链上的node并不兼容，但是却可以在特定的一些参与到这个sidechain上的node之间进行交互 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="corda">Corda</h4>
+<p>designed for private transactions <!-- raw HTML omitted --></p>
+<p>enterprise version is called R3 Corda. <!-- raw HTML omitted -->
+Design <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Consensus <!-- raw HTML omitted --></p>
+<p>只有参与本次transaction的机构才能看到和参与这个transaction <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Validation <!-- raw HTML omitted --></p>
+<p>只有合法的利益相关者才会进行transaction的验证 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Use of Independent notaries <!-- raw HTML omitted --></p>
+<p>独立的第三方公证处会帮助完成时间的验证（什么时候做出的交易），以及防止transaction发生两次 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Focus on inter-operability <!-- raw HTML omitted -->
+确保法律条文能够绑定，以及老旧的内部系统能够参与合作 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Corda的特性</p>
+<ul>
+<li>
+<p>Transactions private to the parties involved <!-- raw HTML omitted --></p>
+<p>– Witnessed by notaries 只有公证处才能看得到 <!-- raw HTML omitted --></p>
+<p>– Only participants to a transaction can view it 只有参与transaction的组织才能知道transaction的存在与参与其中 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>No single chain <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>No global state <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>No native crypto-currency <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Records an explicit link between legal code and smart contracts <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Supports a variety of consensus mechanisms <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Can include transaction within arbitrary workflows. <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>Corda中也没有block的概念，所有的transaction都是实时处理的，意味着不需要等待block被添加才能被确认， <!-- raw HTML omitted --></p>
+<p>金融机构对Corda感兴趣的主要原因就是可以自动化繁琐的工作流，比如学校的注册，就需要一系列的工作流，他们如果能被自动化，并记录在blockchain上面，就会方便很多。 <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.r3.com/blockchain-101/"  target="_blank" rel="noopener"
+    >https://www.r3.com/blockchain-101/</a> <!-- raw HTML omitted -->
+Peers have a single shared ledger — once the transaction is validated, the record is permanent, secure and immutable. <!-- raw HTML omitted --></p>
+<p>A smart contract — code running on top of a blockchain that contains a set of rules under which the parties mutually agree — eliminates the need for third parties. <!-- raw HTML omitted --></p>
+<p>Owner of the transaction has the power to move anything of value freely and instantly without intermediaries. <!-- raw HTML omitted --></p>
+<p>Eliminates or reduces paper processes, need for intermediaries, speeds up transaction times and increases efficiencies and transparency. <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="hyperledger">Hyperledger</h4>
+<p>a family of platforms <!-- raw HTML omitted -->
+作为基础设施，然后加入的组织可以在其基础设施上搭建自己的服务 <!-- raw HTML omitted --></p>
+<p>Different large IT companies, financial institutions join the Hyperledger as members and run a family of platforms <!-- raw HTML omitted --></p>
+<p>用户可以选择加入这些platforms也可以寻求这些组织提供服务 <!-- raw HTML omitted --></p>
+<h4 id="other-technologies">Other technologies</h4>
+<p>一个常见的批评的声音就是：你实际上不需要一个分布式账本平台，因为使用集中式的数据库一样可以存储隐私信息 <!-- raw HTML omitted --></p>
+<p>但是这仍然面临很多的威胁： <!-- raw HTML omitted --></p>
+<ul>
+<li>第三方数据库的安全性，以及价格的支出 <!-- raw HTML omitted --></li>
+<li>如何保证数据库不被攻击或者被第三方数据库所利用？ <!-- raw HTML omitted --></li>
+<li>
+<ol>
+<li>禁止合作伙伴持有竞争对手的数据 <!-- raw HTML omitted --></li>
+<li>因此每一个企业都需要将数据存储在第三方的数据库中 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<h3 id="week-9-smart-contracts">Week 9: Smart Contracts</h3>
+<p>当我们在自动贩卖机买饮料的时候，我们投入硬币，然后选择想要的饮料，然后饮料掉出来，这其实完成了一个隐性的合约，就是你付出了一定的钱，机器把对应的商品交付给你，这个工作由自动贩卖机完成，而不需要再签署一份合同，来进行交付。 <!-- raw HTML omitted --></p>
+<p>Smart contracts,智能合约就是为了实现这样一个概念，但是就如同Mining挖矿的目的是为了维护去中心化的共识机制的安全一样，smart contracts并不是严格意义上的合同，它的本质上运行在分布式账本上的一个程序，能够自动的接受参数然后进行运行 <!-- raw HTML omitted --></p>
+<p>Bitcoin的script其实就是一个很基础的智能合约，transaction中的locking script &amp; unlocking script合在一起就可以实现UTXO的花费，但是由于Bitcoin本身设计的限制，script没有很强大的功能，不能循环或者递归，是图灵不完备的。 <!-- raw HTML omitted --></p>
+<p>那么如果我们设计一个更为强大的计算机语言，使其图灵完备，那么是不是就能完成更有创造性的功能呢，这也就是Ethereum的出现以及Solidity语言的实现。 <!-- raw HTML omitted --></p>
+<p>每一个smart contract程序在运行的时候都可以在分布式账本上修改其特定的数据，可供使用的数据当然也有一系列的限制。 <!-- raw HTML omitted --></p>
+<h4 id="smart-contract-and-trust">Smart contract and trust</h4>
+<p>我们可以说，smart contract程序（相较于普通的程序）将信任加入了系统，因为所有的代码都存在于整一个分布式账本上，并且所有的操作都会被所有的节点独立的验证，并且会永久被保存，理论上无法被修改。同时这些操作将会被自动执行。 <!-- raw HTML omitted --></p>
+<h4 id="关于名字">关于名字</h4>
+<p>其实智能合约并不智能，他们只是一组代码可以被自动执行，仅此而已（我们说的智能一般会联系到AI之类的方向） <!-- raw HTML omitted --></p>
+<p>其实智能合约不是传统意义上的合约，可能只是一次简单的加密货币的交易，如果需要加上法律条文，需要额外的服务，并且也不一定是两个组织为了达成某些交易而诞生的合同。 <!-- raw HTML omitted --></p>
+<h4 id="what-are-agreements-in-the-context-of-distributed-ledgers">What are agreements in the context of distributed ledgers?</h4>
+<ol>
+<li>法律合同（人们能够读得懂的） <!-- raw HTML omitted --></li>
+<li>隐性的合同（自动调用的计算机操作，protcols之类的） <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="stampery-servie">Stampery servie</h4>
+<p>Stampery是一项可以提供合同证明服务，即合同是否达成，在何时达成？ <!-- raw HTML omitted --></p>
+<p>举个例子，比如你与房东达成了租房合同，然后你们各有一份经过签字的合同，你可以通过Stampery服务来将其上传到分布式账本中进行保存： <!-- raw HTML omitted --></p>
+<ol>
+<li>首先他们会hash这份电子的合同 <!-- raw HTML omitted --></li>
+<li>然后将这个hash值与其他需要的hash一起组成称merkle tree <!-- raw HTML omitted --></li>
+<li>接着上传到一个或多个分布式账本中 <!-- raw HTML omitted --></li>
+</ol>
+<p>那么当你未来需要验证自己的合同没有经过修改的话就可以： <!-- raw HTML omitted --></p>
+<ol>
+<li>重新用同样的算法hash你自己的文件 <!-- raw HTML omitted --></li>
+<li>然后与分布式账本上的hash进行匹配就可以验证了（可信的是分布式账本） <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="ricardian-contracts-link-legal-agreements-to-code">Ricardian Contracts: link legal agreements to code</h4>
+<p>可以将有法律效应的文件转换成电脑系统可以处理的形式，同时又可以轻松的转换回来供法律人士阅读和使用。 <!-- raw HTML omitted --></p>
+<p>所有的参与者都会电子的给合同签名，同时使用hash算法将文件电子的保存在blockchain上，供以将来使用 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-14_22-11-25_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Barclay银行第一次采用了这个Ricardian contract与blockchain（corda）的结合 <!-- raw HTML omitted -->
+<a class="link" href="https://www.youtube.com/watch?v=YIH4MJf6kH8&amp;t=237s&amp;ab_channel=Rise%2CcreatedbyBarclays"  target="_blank" rel="noopener"
+    >https://www.youtube.com/watch?v=YIH4MJf6kH8&t=237s&ab_channel=Rise%2CcreatedbyBarclays</a> <!-- raw HTML omitted --></p>
+<p>他们实现了一个prototype，可以将签合同的时候所需要的法律文件转换为电子版的，然后就交易的双方以及其中的细节进行简单的填充，就可以快速生成双份的具有法律效应的合同，之后再上传到corda的blockchain之上，保证了其不可被修改的性质 <!-- raw HTML omitted --></p>
+<p>还是之前那个租房合同的例子，现在我们很多的合同还是要求要用手写签名为证，但是有了这样的smart contract program，我们就可以更为方便的生成合同，并永久的保存，且将合同保存在可以信任的平台上，方便再次追溯。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-14_22-43-56_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="agreements-using-smart-contracts">Agreements using smart contracts</h4>
+<p>智能合约如果是放在permissioned账本上的话，那么只会被参与的几个用户有权利查看 <!-- raw HTML omitted --></p>
+<p>并且就像之前提到过的那样，一旦智能合约开始执行，那么一切的后果都必须要接受，也就是说这一切都是建立在你已经完全掌握了智能合约要做的事情以及将会发生的后果，一旦上传到分布式账本之后，一切都不会改变了 <!-- raw HTML omitted --></p>
+<p>智能合约的方法分为两种： <!-- raw HTML omitted --></p>
+<ol>
+<li>Getters，获取变量 <!-- raw HTML omitted --></li>
+<li>Setters，通过得到的变量来更改EVM的状态 <!-- raw HTML omitted --></li>
+</ol>
+<p>往往这些智能合约程序会设定自动的函数来自动提醒相关人员一旦状态发生了任何改变 <!-- raw HTML omitted --></p>
+<h4 id="smart-contract-languages">Smart Contract Languages</h4>
+<p><figure><img src="/ox-hugo/2022-05-14_23-25-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="总结">总结</h4>
+<ul>
+<li>
+<p>智能合约就是分布式账本上自动运行的程序 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>每一个智能合约程序都会在P2P网络中的每一个full node上被执行 <!-- raw HTML omitted --></p>
+<ul>
+<li>其结果就是改变每一个full node上的virtual machine <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>智能合约可以或者不用代表多个团体之间的达成的合同 <!-- raw HTML omitted --></p>
+<ul>
+<li>有些只是开发者所开发的应用程序 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>每一个节点都会运行，但是可能会在不同的时间完成 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>这也就是为什么所有智能合约程序的输入参数只能在blockchain内部获取，因为如果在外部获取，万一出现问题，那么不同的node上的virtual machine的结果不同，就会破坏整一个blockchain <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>不同使用随机数，一切都是确定的，要保证所有的EVM都是相同的 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="lecture-10-some-case-studies">Lecture 10: Some Case Studies</h3>
+<h4 id="shared-databases">Shared Databases</h4>
+<p><figure><img src="/ox-hugo/2022-05-15_10-44-58_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="what-are-main-benefits-of-dlt">What are main benefits of DLT</h4>
+<ol>
+<li>
+<p>状态共享 Shared State <!-- raw HTML omitted --></p>
+<p>不同的企业需要共享相同的数据，那么DLT可以可以建立一个多方都可以信任的平台，平切在所有的节点上的数据都是相同的 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Stateful(history kept) 状态是实时更新的 <!-- raw HTML omitted --></p>
+<p>keep track the state <!-- raw HTML omitted -->
+所有的状态噶遍都需要经过所有节点的验证，认可，以及记录 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Stored data is effectively immutable 存储的数据几乎不可能被改变 <!-- raw HTML omitted --></p>
+<p>数据被存储在所有的节点上，特别是在PoW的blockchain上，如果想要修改数据，需要所有的node都同意，并且花费大量的资源 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Unique allocations &amp; co-ordinated allocation <!-- raw HTML omitted --></p>
+<p>解决double-spend problem, 每一条transaction都会被所有的节点记录，并且不断被之后的block所记录，double-spend需要颠覆这些很难 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Witnessing <!-- raw HTML omitted --></p>
+<ul>
+<li>Multi-party aggregation，permissioned至少需要三个团体，其中一个作为监督 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Immediate settlement for digital assets <!-- raw HTML omitted --></p>
+<p>change of custody都会被记录 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-15_10-52-36_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="nft">NFT</h4>
+<h3 id="lecture-5-money-and-e-money">Lecture 5: Money and e-Money</h3>
+<p>Money在现代有两种基本的形式 <!-- raw HTML omitted --></p>
+<ol>
+<li>硬币 <!-- raw HTML omitted --></li>
+<li>纸钞 <!-- raw HTML omitted --></li>
+</ol>
+<p>同样还有 <!-- raw HTML omitted -->
+旅行支票 <!-- raw HTML omitted -->
+银行活期存款 <!-- raw HTML omitted -->
+储蓄存款 <!-- raw HTML omitted -->
+定期存款（24小时年） <!-- raw HTML omitted -->
+货币市场存款（商业借贷) <!-- raw HTML omitted --></p>
+<h4 id="money在英国的合法解释">Money在英国的合法解释</h4>
+<ul>
+<li>
+<p>Top-Down 自上而下： <!-- raw HTML omitted --></p>
+<ul>
+<li>政府说什么是钱，什么就是钱 <!-- raw HTML omitted --></li>
+<li>Legal Tender法定货币 <!-- raw HTML omitted --></li>
+<li>fiat money 法定货币 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Bottom-Up 自下而上： <!-- raw HTML omitted --></p>
+<ul>
+<li>老百姓说什么是钱，什么就是钱 <!-- raw HTML omitted --></li>
+<li>Promissory notes从18实际中期开始流行，在19世纪被英国法院所接受 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="money的种类">Money的种类</h4>
+<dl>
+<dt>Commodity money 商品货币</dt>
+<dd><ul>
+<li>其价值来源于制造材料本身的价值 <!-- raw HTML omitted --></li>
+<li>通常是金属(金银铜) <!-- raw HTML omitted --></li>
+<li>Yap Rai stones <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<dl>
+<dt>Representative Money 代表性货币</dt>
+<dd><ul>
+<li>价值来源于其所代表的基础商品的国币 <!-- raw HTML omitted --></li>
+<li>对商品的要求：金本位 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Fiat Money 法定货币</dt>
+<dd><ul>
+<li>
+<p>没有任何内在价值的货币，也没有基础商品 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>其价值来源于用户的认可 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>也可以说是老百姓认同了政府颁发的Top-Down自上而下的货币 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+</dl>
+<h4 id="money的主要功能">Money的主要功能</h4>
+<ul>
+<li>
+<p>作为交易的终结 <!-- raw HTML omitted --></p>
+<ul>
+<li>减少了以物换物的麻烦 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>用于商品衡量机制的标准，也是记账的单位 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>价值的存储 <!-- raw HTML omitted --></p>
+<ul>
+<li>如果没有通货膨胀的话，可以一直保持价值 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>作为匿名支付的手段 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>作为延迟交付的手段 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="money的次要功能">Money的次要功能</h4>
+<ul>
+<li>
+<p>可变性 <!-- raw HTML omitted --></p>
+<ul>
+<li>纸币/硬币是可以互换的 <!-- raw HTML omitted -->
+<ul>
+<li>不像（比如）钻石或稀有邮票 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>可携带性 <!-- raw HTML omitted --></p>
+<ul>
+<li>不像房屋或土地那样 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>耐用性 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>纸质钞票与塑料钞票 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>比如说。澳大利亚的第一张聚合物美元纸币。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>可分割性 <!-- raw HTML omitted --></p>
+<ul>
+<li>与牛不同 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>可验证性 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>需要验证真实性 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>使用水印、全息图 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>储存性 <!-- raw HTML omitted --></p>
+<ul>
+<li>与牛不同（牛最终会死）。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>不容易伪造 <!-- raw HTML omitted --></p>
+<ul>
+<li>使用水印、全息图。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="什么是money的价值">什么是Money的价值</h4>
+<p>在法定货币中，其价值取决于人民是否愿意接受其作为支付手段 <!-- raw HTML omitted --></p>
+<p>主要是由人民的态度决定 <!-- raw HTML omitted --></p>
+<ul>
+<li>由什么政府颁发的 <!-- raw HTML omitted --></li>
+<li>对其货币政策的态度 <!-- raw HTML omitted --></li>
+</ul>
+<p>在通货膨胀或者通货紧缩之下，人民会做出响应的动作来表达他们对于货币价值的态度： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>在高通货膨胀率下，做债务人比做债权人更好 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>借钱而不是放钱 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>他们可能试图将储蓄转化为其他资产。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="货币的流通性">货币的流通性</h4>
+<p>Liquidity refers to the speed &amp; ease with which an asset can be turned into cash without lowering its price <!-- raw HTML omitted -->
+流动性指的是如何将实际资产与现金之间的转换速度以及难易程度（在不影响价格的情况下） <!-- raw HTML omitted --></p>
+<ul>
+<li>现金的流通性是最好的 <!-- raw HTML omitted --></li>
+<li>贵金属也还可以 <!-- raw HTML omitted --></li>
+<li>虚拟货币的流通性也还不错 <!-- raw HTML omitted --></li>
+<li>但是房子或者其他实际的资产的流通性就很差，因为不是所有人都想要这个资产，同时，他们的价值也还需要评估 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="money在金融中的定义">Money在金融中的定义</h4>
+<p>MØ = 流通中的硬币和纸币 + 银行储备基金（英国）（称为狭义货币） <!-- raw HTML omitted -->
+MB = MØ + 银行金库中的硬币和纸币（称为货币基础） <!-- raw HTML omitted -->
+M1 = 流通中或金库中的硬币和纸币 + 旅行支票 + 活期存款 + 其他可支票存款 <!-- raw HTML omitted -->
+M2 = M1 + 储蓄存款 + 10万美元以下定期存款 <!-- raw HTML omitted -->
+M3 = M2 + 货币市场基金 + 较长期的存款 <!-- raw HTML omitted -->
+MZM = M3 + 所有货币市场基金。 <!-- raw HTML omitted --></p>
+<h4 id="发放money">发放Money</h4>
+<p>在大多数国家只有由政府控制的中心银行才有资格发放货币 <!-- raw HTML omitted --></p>
+<p>具体如何发放呢： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>铸造硬币 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>印刷纸币 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>将电子存款存入商业银行的账户 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>进入商业银行的Nostro账户 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>用抵押品（例如，银行拥有的土地、建筑物）作担保 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>然后，银行可以把这些钱借出。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="货币政策">货币政策</h4>
+<p>大多数的银行都有明确的目标，例如 <!-- raw HTML omitted --></p>
+<ul>
+<li>将通货膨胀保持在一个稳定的标准 <!-- raw HTML omitted --></li>
+<li>扩大就业（让银行中的钱贬值，人们才会愿意去赚钱） <!-- raw HTML omitted --></li>
+<li>缓和长期利率 <!-- raw HTML omitted --></li>
+</ul>
+<p>为了实现这些目标，他们可以通过影响货币的数量来达到这个目的： <!-- raw HTML omitted --></p>
+<ul>
+<li>通过发行货币 <!-- raw HTML omitted --></li>
+<li>通过要求商业银行在中央银行存放安全资金（&ldquo;储备金&rdquo;）。 <!-- raw HTML omitted --></li>
+<li>通过设定基本利率（&ldquo;基准利率&rdquo;）（英国：0.50%）。 <!-- raw HTML omitted --></li>
+<li>通过将电子货币存入商业银行的银行账户（&ldquo;量化宽松&rdquo;）。 <!-- raw HTML omitted --></li>
+<li>通过公开市场操作（OMO） <!-- raw HTML omitted --></li>
+<li>购买和出售债券 <!-- raw HTML omitted --></li>
+<li>从而从经济中释放或提取资金。 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="对于货币政策的信息共享">对于货币政策的信息共享</h4>
+<p>政府一般会对于信息的共享非常小心，因为一个普通的消息，很容易造成民众的过度解读与过度反应，进而引起恐慌 <!-- raw HTML omitted --></p>
+<h4 id="inflation-and-hyperinflation-通货膨胀和恶性通货膨胀">Inflation and Hyperinflation 通货膨胀和恶性通货膨胀</h4>
+<p>如果银行发行过多的货币（或使贷款过于容易），那么 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>可用的货币多于要购买的商品（至少在短期内）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>商品的价格上升（因为对它们的需求超过了供应）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>商品的平均价格上升，因此我们得到了通货膨胀 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>每单位时间内的价格上涨率。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>通货膨胀的水平没有上限 <!-- raw HTML omitted --></p>
+<p>恶性通货膨胀:当通货膨胀率每月超过50%。 <!-- raw HTML omitted --></p>
+<h4 id="加密货币的作用">加密货币的作用</h4>
+<ul>
+<li>交易媒介 <!-- raw HTML omitted --></li>
+<li>价值的衡量标准与记账单位 <!-- raw HTML omitted --></li>
+<li>价值的存储 <!-- raw HTML omitted --></li>
+<li>匿名支付 <!-- raw HTML omitted --></li>
+<li>延期支付 <!-- raw HTML omitted --></li>
+</ul>
+<p>但是，加密货币的稳定性与其对现实世界商品以及服务的购买和卖出的关系成反比 <!-- raw HTML omitted --></p>
+<p>作为一种存储媒介，加密货币对跨国转移资产的人来说可能特别有价值 <!-- raw HTML omitted --></p>
+<h4 id="加密货币的用户">加密货币的用户</h4>
+<ul>
+<li>犯罪者，洗钱 <!-- raw HTML omitted --></li>
+<li>逃避国际制裁的政府和人民 <!-- raw HTML omitted --></li>
+<li>处于资产出口管制，恶性通货膨胀或者高度腐败的国家的人民 <!-- raw HTML omitted --></li>
+<li>任何有使用货币合法/不合法需求的人 <!-- raw HTML omitted --></li>
+<li>投资者 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="加密货币在2017年的增长">加密货币在2017年的增长</h4>
+<ul>
+<li>不合法交易的增加 <!-- raw HTML omitted --></li>
+<li>ICO <!-- raw HTML omitted --></li>
+<li>大众行为 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="herd-behaviours-从众行为">Herd behaviours 从众行为</h4>
+<p>人们会倾向于模仿别人 <!-- raw HTML omitted --></p>
+<p>Pump &amp; dump scams <!-- raw HTML omitted --></p>
+<dl>
+<dt>抽水和倾倒骗局</dt>
+<dd><ul>
+<li>诈骗者购买股票（或加密货币）并向其他人推销。 <!-- raw HTML omitted --></li>
+<li>当其他人买入时，价格上升 <!-- raw HTML omitted --></li>
+<li>诈骗者以高于他/她支付的价格卖出 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>庞氏骗局</dt>
+<dd><ul>
+<li>
+<p>骗子招揽投资基金，承诺快速和高额回报 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>早期投资者从后期投资者的投资中获得回报 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>由于世界人口是有限的，这样的骗局总要结束。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+</dl>
+<h4 id="泡沫经济-bubbles">泡沫经济 Bubbles</h4>
+<p>泡沫经济，指资产价值超越实体经济，极易丧失持续发展能力的宏观经济状态。 <!-- raw HTML omitted --></p>
+<p>泡沫经济经常由大量投机活动支撑，本质就是贪婪。 <!-- raw HTML omitted --></p>
+<p>由于缺乏实体经济的支撑，因此其资产犹如泡沫一般容易破裂，因此经济学上称之为“泡沫经济”。 <!-- raw HTML omitted --></p>
+<p>新兴产业处于早期的时候，人们开始炒作商品，赋予其过高的价值 <!-- raw HTML omitted --></p>
+<p>一旦投机者丧失了投机的欲望，开始撤出他们的资金，那么被哄抬的商品价格机会面临大量的下降，最终导致泡沫破裂，手中的泡沫不值钱了，贷款却还还不清 <!-- raw HTML omitted --></p>
+<h4 id="虚拟货币的价值">虚拟货币的价值</h4>
+<p>需要考虑的方面 <!-- raw HTML omitted --></p>
+<dl>
+<dt>供应方</dt>
+<dd><ul>
+<li>供应量是否固定 <!-- raw HTML omitted --></li>
+<li>比如比特币的发行总量目前是由上上限 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>需求方</dt>
+<dd>是否有一个会产生需求的基础应用？ <!-- raw HTML omitted -->
+<p>如果有一个基础应用，需求可能是什么？ <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>在短期和长期内 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>是否有类似或竞争的代币？ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>是否有来自投资者的需求（或可能有）？ <!-- raw HTML omitted --></p>
+<p>供应和需求之间的平衡？ <!-- raw HTML omitted --></p>
+<p>供应和需求是如何匹配的？ <!-- raw HTML omitted --></p>
+<p>其他类似加密货币的价格是多少？ <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<h3 id="lecture-7-icos-and-tges">Lecture 7: ICOs and TGEs</h3>
+<h4 id="raising-funds">Raising Funds</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>创业公司如何收集资金</p>
+<ul>
+<li>FF&amp;F: 创始人，朋友和家人 <!-- raw HTML omitted --></li>
+<li>天使投资人 <!-- raw HTML omitted --></li>
+<li>政府拨款或者贷款 <!-- raw HTML omitted --></li>
+<li>商业贷款（银行） <!-- raw HTML omitted --></li>
+<li>风险投资公司 <!-- raw HTML omitted --></li>
+<li>IPO：当公司在正确交易所上市的时候，就可以通过出售股份来募集资金 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>寻找贷款或者投资人</p>
+<ul>
+<li>
+<p>发布招股说明书 <!-- raw HTML omitted --></p>
+<p>一份包含机会，terms and conditions (T&amp;C) 以及风险的文档 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>传统的借贷形式 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>存储者将钱存入银行，信用社 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>银行用这些钱向个人或者公司提供大额贷款 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>众筹资金 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>通过众筹服务以及网站募集资金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>通过大数量的投资者投资的小额资金 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>P2P贷款 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>ICO <!-- raw HTML omitted -->
+预先出售代币 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="icos-and-tges">ICOs and TGEs</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>什么是ICO？</p>
+<p>ICO是一种募集资金的方法 <!-- raw HTML omitted --></p>
+<p>举一个例子，比如我们将要开设一条新的航线，那么建设航线需要时间与资金，我们通过发放crypto token代币来交换投资者的资金支持 <!-- raw HTML omitted --></p>
+<p>投资者通过支持资金，就会获得一定量的代币 <!-- raw HTML omitted --></p>
+<p>在项目结束之后，他们就可以进行对代币的贸易 <!-- raw HTML omitted --></p>
+<p>Why invest? <!-- raw HTML omitted --></p>
+<p>– Business or utility reason <!-- raw HTML omitted --></p>
+<p>– Investment reasons <!-- raw HTML omitted --></p>
+<p>• to hold tokens and resell them later 持有代币并在日后转售（投资然后获得回报） <!-- raw HTML omitted --></p>
+<p>– Speculation reasons <!-- raw HTML omitted --></p>
+<p>• to buy and sell tokens. 购买和出售代币（用来获取代币） <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-15_17-42-31_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Token standards: ERC</p>
+<p>Ethereum Request for Comment <!-- raw HTML omitted -->
+任何人都可以计入并提供他们的想法，然后让其他人讨论并投入资金 <!-- raw HTML omitted -->
+这个协议可以让代币的互动更加方便，通过与以太坊网络的交互 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ERC721: The Ethereum standard for Non-Fungible Tokens (NFTs)</p>
+<p>ERC721中token被用来表示一样unique特有的物品，使其无法被代替 <!-- raw HTML omitted --></p>
+<p>最早的NTF就是CryptoKitties <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>监管机构</p>
+<p>防止诈骗 <!-- raw HTML omitted --></p>
+<p>要求所有的募集资金的人了解这些投资者： <!-- raw HTML omitted --></p>
+<ul>
+<li>发起人的过去记录 <!-- raw HTML omitted --></li>
+<li>公司的真正计划和意图 <!-- raw HTML omitted --></li>
+<li>法律和监管状况 <!-- raw HTML omitted --></li>
+<li>内幕交易和关系 <!-- raw HTML omitted --></li>
+<li>风险 <!-- raw HTML omitted --></li>
+</ul>
+<p>来防止来自于各种方面的风险： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>市场需求 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>竞争者 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>监管风险 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>技术发展。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Accredited investors 受到认可的投资者</p>
+<p>大多数金融业监管机构更关注普通消费者和投资者的风险 <!-- raw HTML omitted --></p>
+<p>较少关注对以下人群的风险 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>高净值个人（财富超过10万美元的人）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>私人投资池 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>一些机构专有的认可投资者的范围： <!-- raw HTML omitted --></p>
+<ul>
+<li>对这些投资者和他们加入的投资池的监管和监督较少 <!-- raw HTML omitted --></li>
+<li>对冲基金&ndash;使用高风险策略的认可投资者的资金池。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cryptocurrency Hedge Funds 加密货币对冲基金</p>
+<p>集合投资基金，目标是投资于。 <!-- raw HTML omitted --></p>
+<ul>
+<li>加密货币和替代币 <!-- raw HTML omitted --></li>
+<li>ICOs <!-- raw HTML omitted --></li>
+<li>在区块链上运行的初创企业 <!-- raw HTML omitted --></li>
+</ul>
+<p>通常由传统对冲基金的合作伙伴和投资者创建 <!-- raw HTML omitted --></p>
+<ul>
+<li>加密货币对传统投资者来说太不稳定了 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Checks on investors 对投资者的审查</p>
+<p>对投资者的审查主要是为了通过了解投资人的信息以防止洗钱以及其他投资背后的违法行为 <!-- raw HTML omitted --></p>
+<p>KYC – Know Your Customer regulations
+: – Identity <!-- raw HTML omitted --></p>
+<pre><code> – Location &lt;br/&gt;
+
+ – Wealth &amp;amp; assets &lt;br/&gt;
+
+ – Other investments &lt;br/&gt;
+</code></pre>
+<p>AML – Anti-Money Laundering regulations
+:</p>
+<p>– What are the source(s) of funds? 钱从哪儿来的 <!-- raw HTML omitted --></p>
+<p>Money-laundering
+:</p>
+<p>目标： <!-- raw HTML omitted -->
+– Proceeds of criminal activity (often in cash) 犯罪活动的收益 <!-- raw HTML omitted --></p>
+<p>– Proceeds of transactions with entities under sanctions 与受制裁的目标进行交易所得利益 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Registration of security 证券注册</p>
+<p>需要向美国证券交易委员会注册证券（除非获得豁免），并提供以下细节。 <!-- raw HTML omitted --></p>
+<p>公司的属性和商业目的 <!-- raw HTML omitted -->
+所提供的证券 <!-- raw HTML omitted -->
+公司的管理层 <!-- raw HTML omitted -->
+由独立会计师认证的财务报表。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Howey Test</p>
+<p>Howey测试是用来鉴定一份证券投资合同是否为合法的，需要满足以下四个条件 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>它是金钱的投资 <!-- raw HTML omitted --></p>
+<ul>
+<li>&ldquo;金钱 &ldquo;可能包括其他形式的近似金钱 <!-- raw HTML omitted --></li>
+<li>金钱的投资 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>存在对投资利润的预期 <!-- raw HTML omitted --></p>
+<ul>
+<li>想要赚钱的 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>资金的投资是在一个共同的企业中 <!-- raw HTML omitted -->
+&ndash;将资金汇集到一个股份公司或类似的联合企业中去 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>任何利润都来自于发起人或第三方的努力 <!-- raw HTML omitted --></p>
+<ul>
+<li>如果利润来自于投资者自己的行为，那么可能就不是证券。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>对于有意向的ICO，大致有3种选择</p>
+<p>选择1（重度监管） <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>将代币作为证券在美国SEC注册 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>约50万美元的法律费用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>4-6个月的过程 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>方案2（轻度监管） <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>不向美国公民或居民出售，以获得美国证券交易委员会的豁免。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>同样地，不向中国或韩国居民出售（获得当地委员会的和面）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>约5-10万美元的法律费用，2-3个月 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>需要收集KYC和反洗钱信息 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>与Cypher-punk的精神背道而驰 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>选项3（无法规） <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>无视这些法规 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>有被监管机构起诉和/或被投资人起诉的风险 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>需要找个好律师 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ICO的发起的阶段</p>
+<ol>
+<li>
+<p>私人代币分配 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>给朋友和员工 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>私人代币分配 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>通常是给大型投资者和加密对冲基金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>公开代币分配 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>给任何人（也许受限制）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>例如，不提供给美国、中国或韩国的公民或居民 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在白皮书和招股说明书的基础上筹集资金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>平台的开发 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>并创建代币 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>启动业务 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>和代币的使用。 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ICOs - 一个典型的组织结构</p>
+<ul>
+<li>
+<p>一个慈善基金会（F）发起ICO并接收资金 <!-- raw HTML omitted --></p>
+<ul>
+<li>拥有独立的董事会 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>一家软件开发公司（D）开发理念和白皮书 <!-- raw HTML omitted --></p>
+<ul>
+<li>当筹集到资金时，部分资金由F分配给D以建立平台。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>地点 <!-- raw HTML omitted --></p>
+<ul>
+<li>基金会通常在有利于监管的司法管辖区注册 <!-- raw HTML omitted --></li>
+<li>例如，瑞士、直布罗陀、新加坡。 <!-- raw HTML omitted --></li>
+<li>软件公司在其他地方注册 <!-- raw HTML omitted --></li>
+<li>例如，英国，美国。 <!-- raw HTML omitted --></li>
+<li>雇员可能在任何地方。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>潜在的治理问题 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>基金会（F）和软件公司（D）之间的关系是什么？ <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>如果发生纠纷，管辖权在哪里？ <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>代币持有者对软件有权利吗？ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>代币分配机制</p>
+<ul>
+<li>
+<p>在公开销售中使用各种分配机制来分配代币 <!-- raw HTML omitted --></p>
+<ul>
+<li>通常是拍卖，将代币授予出价最高的人 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>基本关注代币（BATCoin）ICO <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>2017年5月：在30秒内筹集了3500万美元的资金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>只有130名投资者 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>前20个地址控制了50%以上的代币 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Bancor ICO <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>2017年6月12日 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>3小时内筹集了1.53亿美元（以太币）的资金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>比计划多出5100万美元 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>批评 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>对内部人士的偏爱 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>速度 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>没有给代币总量设置上限。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="case-studies">Case Studies</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Ethereum</p>
+<p>以太坊 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>2013: Vitalik Buterin的白皮书 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>建议在区块链上实现完全的编程能力（Solidity） <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>2014年7-8月进行ICO <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>在当时的ICO中排名第六 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>筹集了1840万美元 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>以固定价格递减的BTC进行支付 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>2000 ETH / BTC降至1337 ETH / BTC <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>31.5K BTC或6000万ETH <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>DAO</p>
+<p>Decentralized Autonomous Organization <!-- raw HTML omitted --></p>
+<p>DAO <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>去中心化的自治组织 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在以太坊上运行的自营风险投资基金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在1个月内（2016年5月）从11000名投资者那里筹集了1.5亿美元的资金 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>打算让代币持有人对投资建议进行投票 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>2016年6月。代码漏洞被利用 <!-- raw HTML omitted --></p>
+<ul>
+<li>5000万美元被抽走 <!-- raw HTML omitted --></li>
+</ul>
+<p>投资者的风险 <!-- raw HTML omitted --></p>
+<ul>
+<li>由于设计（或测试）不当的代码造成的资金损失 <!-- raw HTML omitted --></li>
+</ul>
+<p>以太坊节点投票决定硬分叉以恢复损失的资金 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>2016年7月20日在区块1,920,000处 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>现在有2个分支。 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>以太坊（区块链排除了损失） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>以太坊classic（漏洞仍然存在）。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Tezos</p>
+<p>一个去中心化的区块链，以促进代码的正式验证，以及智能合约。 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>发起人和s/w开发者。阿瑟-布莱特曼和凯瑟琳-布莱特曼（美国） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Tezos基金会（瑞士）。Johann Gevers <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>2017年7月的ICO <!-- raw HTML omitted --></p>
+<ul>
+<li>筹集了2.32亿美元的ETH和BTC <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>布雷特曼夫妇与基金会之间存在分歧 <!-- raw HTML omitted --></p>
+<ul>
+<li>两人之间的律师函 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>推迟开发和推出代币的时间 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>谁来做系统/软件开发？ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>投资者对延迟的不满 <!-- raw HTML omitted --></p>
+<ul>
+<li>投资者提出集体诉讼的风险。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Polkadot 2017</p>
+<p>目标 <!-- raw HTML omitted --></p>
+<ul>
+<li>将私人区块链和公共区块链联系在一起 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>推动者 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Gavin Wood（前以太坊CTO） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Jutta Steiner（前以太坊）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Parity软件公司 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Parity软件公司（英国） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Web 3.0基金会（柏林） <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>2017年10月进行ICO，募集资金。 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>私人销售：8300万美元的瑞士法郎 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>公开销售：1.4亿美元的以太币和比特币 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>拍卖过程是降价拍卖（荷兰拍卖）。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Polkadot: 多签名钱包的问题</p>
+<p>支付到以太坊多签名钱包的资金 <!-- raw HTML omitted --></p>
+<p>以太坊多签名钱包模板将大部分的处理（除了支付出去）放在一个库钱包里 <!-- raw HTML omitted --></p>
+<ul>
+<li>这是为了减少处理成本 <!-- raw HTML omitted --></li>
+</ul>
+<p>库钱包有一个漏洞 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>有人可以调用它并初始化它（获得它的所有权）。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>然后可以杀死它 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>有人这么做了! (可能是意外的) <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>任何使用这个钱包的多重签名的钱包都不能再访问了 一些50万ETH不能再访问了 <!-- raw HTML omitted --></p>
+<ul>
+<li>包括为Polkadot筹集的9000万美元的资金。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="risks-of-an-ico">Risks of an ICO</h4>
+<ul>
+<li>
+<p>任何商业投资的风险投资可能失败 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>市场需求可能不存在 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>特别是对于寻求创造新市场类别的产品 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>诈骗和欺诈 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>对新技术投资的风险 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>技术可能会向前发展 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>技术人才的短缺 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>可能出现竞争 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>网络效应和路径依赖 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>ICO的特殊风险 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>技术是新的和不成熟的，还没有得到很好的理解 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>监管风险（例如，被监管机构起诉） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>可能是一个庞氏骗局 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>投资者的集体诉讼 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>早期投资者可能会被后期投资者起诉。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/bitcoin/">bitcoin</a>
+        
+            <a href="/tags/cryptocurrecy/">cryptocurrecy</a>
+        
+            <a href="/tags/blockchain/">blockchain</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 18, 2022 22:41 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_10/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 10: Mining and Consensus</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 9: The Blockchain</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 2: How Bitcoin Works</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mb2_chapter_6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mastering Bitcoin 2nd Edition Chapter 6: Transactions</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_3_malware_uses_and_monetisation/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 3: Malware uses and monetisation</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#dlc-exam-preparation-notes">DLC EXAM Preparation Notes</a>
+      <ul>
+        <li><a href="#week-4">Week 4</a>
+          <ul>
+            <li><a href="#byzantine-faults-and-cap-theorem">Byzantine Faults and CAP Theorem</a></li>
+            <li><a href="#consensus-protocols">Consensus Protocols</a></li>
+            <li><a href="#consensus-attacks">Consensus attacks</a></li>
+          </ul>
+        </li>
+        <li><a href="#week-8-dlt-infrastructure-and-platforms">Week 8: DLT Infrastructure &amp; Platforms</a>
+          <ul>
+            <li><a href="#ethereum">Ethereum</a></li>
+            <li><a href="#corda">Corda</a></li>
+            <li><a href="#hyperledger">Hyperledger</a></li>
+            <li><a href="#other-technologies">Other technologies</a></li>
+          </ul>
+        </li>
+        <li><a href="#week-9-smart-contracts">Week 9: Smart Contracts</a>
+          <ul>
+            <li><a href="#smart-contract-and-trust">Smart contract and trust</a></li>
+            <li><a href="#关于名字">关于名字</a></li>
+            <li><a href="#what-are-agreements-in-the-context-of-distributed-ledgers">What are agreements in the context of distributed ledgers?</a></li>
+            <li><a href="#stampery-servie">Stampery servie</a></li>
+            <li><a href="#ricardian-contracts-link-legal-agreements-to-code">Ricardian Contracts: link legal agreements to code</a></li>
+            <li><a href="#agreements-using-smart-contracts">Agreements using smart contracts</a></li>
+            <li><a href="#smart-contract-languages">Smart Contract Languages</a></li>
+            <li><a href="#总结">总结</a></li>
+          </ul>
+        </li>
+        <li><a href="#lecture-10-some-case-studies">Lecture 10: Some Case Studies</a>
+          <ul>
+            <li><a href="#shared-databases">Shared Databases</a></li>
+            <li><a href="#what-are-main-benefits-of-dlt">What are main benefits of DLT</a></li>
+            <li><a href="#nft">NFT</a></li>
+          </ul>
+        </li>
+        <li><a href="#lecture-5-money-and-e-money">Lecture 5: Money and e-Money</a>
+          <ul>
+            <li><a href="#money在英国的合法解释">Money在英国的合法解释</a></li>
+            <li><a href="#money的种类">Money的种类</a></li>
+            <li><a href="#money的主要功能">Money的主要功能</a></li>
+            <li><a href="#money的次要功能">Money的次要功能</a></li>
+            <li><a href="#什么是money的价值">什么是Money的价值</a></li>
+            <li><a href="#货币的流通性">货币的流通性</a></li>
+            <li><a href="#money在金融中的定义">Money在金融中的定义</a></li>
+            <li><a href="#发放money">发放Money</a></li>
+            <li><a href="#货币政策">货币政策</a></li>
+            <li><a href="#对于货币政策的信息共享">对于货币政策的信息共享</a></li>
+            <li><a href="#inflation-and-hyperinflation-通货膨胀和恶性通货膨胀">Inflation and Hyperinflation 通货膨胀和恶性通货膨胀</a></li>
+            <li><a href="#加密货币的作用">加密货币的作用</a></li>
+            <li><a href="#加密货币的用户">加密货币的用户</a></li>
+            <li><a href="#加密货币在2017年的增长">加密货币在2017年的增长</a></li>
+            <li><a href="#herd-behaviours-从众行为">Herd behaviours 从众行为</a></li>
+            <li><a href="#泡沫经济-bubbles">泡沫经济 Bubbles</a></li>
+            <li><a href="#虚拟货币的价值">虚拟货币的价值</a></li>
+          </ul>
+        </li>
+        <li><a href="#lecture-7-icos-and-tges">Lecture 7: ICOs and TGEs</a>
+          <ul>
+            <li><a href="#raising-funds">Raising Funds</a></li>
+            <li><a href="#icos-and-tges">ICOs and TGEs</a></li>
+            <li><a href="#case-studies">Case Studies</a></li>
+            <li><a href="#risks-of-an-ico">Risks of an ICO</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

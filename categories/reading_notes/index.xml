@@ -201,7 +201,8 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;soft-forks&#34;&gt;Soft Forks&lt;/h4&gt;
-&lt;p&gt;Soft forks准确来说并不是一个典型的fork，即其不会使blockchain产生分支。Hard forks对于consensus rules的改变是与老版本的规则互不兼容的,可以说是有所创新，新老版本互相无法理解，而相反的，soft forks对于对老版本的consensus rules做出限制，即在原有的基础上进行限制与修改，其作用范围小于老版本的内容。因此新老版本仍然可以互相理解，transaction和block的验证与添加也可以继续进行。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Soft forks准确来说并不是一个典型的fork，即其不会使blockchain产生分支。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Hard forks对于consensus rules的改变是与老版本的规则互不兼容的,可以说是有所创新，新老版本互相无法理解，而相反的，soft forks对于对老版本的consensus rules做出限制，即在原有的基础上进行限制与修改，其作用范围小于老版本的内容。因此新老版本仍然可以互相理解，transaction和block的验证与添加也可以继续进行。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
