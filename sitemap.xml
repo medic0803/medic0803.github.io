@@ -3,28 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-05-18T22:41:04+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/client_side_attacks/</loc>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/ctf/</loc>
-    <lastmod>2022-05-18T22:40:45+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/ctf/</loc>
-    <lastmod>2022-05-18T22:40:45+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-05-18T22:41:04+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-05-18T22:41:04+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-05-18T22:41:04+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/xss/</loc>
-    <lastmod>2022-05-18T22:40:45+01:00</lastmod>
+    <lastmod>2022-05-19T23:52:07+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/xss_challenge_trip/</loc>
-    <lastmod>2022-05-18T22:40:45+01:00</lastmod>
+    <lastmod>2022-05-19T21:19:38+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/bitcoin/</loc>
     <lastmod>2022-05-18T22:41:04+01:00</lastmod>
