@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>Mr. Robot writeup</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SCT Topic 1 Introduction to Security Testing What is Security Testing? 什么是安全测试 安全测试是一个很广泛的概念，我们可以列举几个典型的活动： Security Audit 安全审计 Vulnerability Assessment 漏洞评估 Penetration Testing 渗透测试 Red Teaming 红队测试'><title>SCT Topic 1 Introduction to Security Testing</title>
 
-<link rel='canonical' href='https://ginkgo.org.cn/posts/mr_robot/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mr. Robot writeup'>
-<meta property='og:description' content=''>
-<meta property='og:url' content='https://ginkgo.org.cn/posts/mr_robot/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SCT Topic 1 Introduction to Security Testing'>
+<meta property='og:description' content='SCT Topic 1 Introduction to Security Testing What is Security Testing? 什么是安全测试 安全测试是一个很广泛的概念，我们可以列举几个典型的活动： Security Audit 安全审计 Vulnerability Assessment 漏洞评估 Penetration Testing 渗透测试 Red Teaming 红队测试'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='security' /><meta property='article:published_time' content='2022-03-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-23T08:55:53&#43;00:00'/>
-<meta name="twitter:title" content="Mr. Robot writeup">
-<meta name="twitter:description" content="">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='security_testing' /><meta property='article:published_time' content='2022-05-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-20T11:04:29&#43;01:00'/>
+<meta name="twitter:title" content="SCT Topic 1 Introduction to Security Testing">
+<meta name="twitter:description" content="SCT Topic 1 Introduction to Security Testing What is Security Testing? 什么是安全测试 安全测试是一个很广泛的概念，我们可以列举几个典型的活动： Security Audit 安全审计 Vulnerability Assessment 漏洞评估 Penetration Testing 渗透测试 Red Teaming 红队测试">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -218,8 +218,8 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/writeups/" >
-                writeups
+            <a href="/categories/course_notes/" >
+                course_notes
             </a>
         
     </header>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/mr_robot/">Mr. Robot writeup</a>
+            <a href="/posts/sct_topic_1_introduction_to_security_testing/">SCT Topic 1 Introduction to Security Testing</a>
         </h2>
     
         
@@ -246,7 +246,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Mar 13, 2022</time>
+                <time class="article-time--published">May 20, 2022</time>
             </div>
         
 
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -275,129 +275,141 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="writeup">Writeup</h2>
-<h3 id="我的尝试">我的尝试</h3>
-<p>拿到题目，看到OVA格式，直接在virtualbox中打开</p>
-<p>看到关键词wordpress，貌似是一个写blog的工具？</p>
-<p>启动后发现需要登陆，根据师傅的提示没有过多纠缠，应该是要通过一个网页来入手</p>
-<p>这时候想到以前用ssh连接虚拟机的时候，往往用vmware启动虚拟机后不用管登陆，直接用ssh就可以，说明后台服务其实已经启动，加上需要网页的线索，想到通过分配到的局域网IP地址找到网页</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ifconfig <span class="p">|</span> grep <span class="s2">&#34;inet&#34;</span>
-</span></span></code></pre></div><!-- raw HTML omitted -->
-<figure><img src="/ox-hugo/2022-03-13_21-32-22_screenshot.png" width="600px"/>
-</figure>
+    <h2 id="sct-topic-1-introduction-to-security-testing">SCT Topic 1 Introduction to Security Testing</h2>
+<h3 id="what-is-security-testing-什么是安全测试">What is Security Testing? 什么是安全测试</h3>
+<p>安全测试是一个很广泛的概念，我们可以列举几个典型的活动： <!-- raw HTML omitted --></p>
+<ul>
+<li>Security Audit 安全审计 <!-- raw HTML omitted --></li>
+<li>Vulnerability Assessment 漏洞评估 <!-- raw HTML omitted --></li>
+<li>Penetration Testing 渗透测试 <!-- raw HTML omitted --></li>
+<li>Red Teaming 红队测试 <!-- raw HTML omitted --></li>
+<li>Ethical hacking 有道德的黑客攻击 <!-- raw HTML omitted --></li>
+</ul>
+<p>在这周的topic中我们会具体展开介绍每一个活动所对应的细节 <!-- raw HTML omitted --></p>
+<p>在此之前，我们可以先对安全测试下一个定义： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Security Testing is the process to reveal flaws in a system in terms of Confidentiality, Integrity, Availability (CIA).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">安全测试就是一个揭露系统在保密性，完整性和可用性（CIA）方面的缺陷的过程
+</span></span></code></pre></div><p>CIA也是所有安全话题中最重要的三要素： <!-- raw HTML omitted --></p>
+<ul>
+<li>Confidentiality 保密性: 限制没有授权的用户访问资源 <!-- raw HTML omitted --></li>
+<li>Integrity 完整性：限制没有授权的用户修改资源 <!-- raw HTML omitted --></li>
+<li>Availability 可用性: 保证资源随时可用 <!-- raw HTML omitted --></li>
+</ul>
+<p>然后我们再总结黑客的攻击归为三种： <!-- raw HTML omitted --></p>
+<ol>
+<li>Exploit the configuration done by the system administrator 修改管理员级别的系统配置 <!-- raw HTML omitted --></li>
+<li>Exploit how the users use the system/service 利用用户对系统进行操作 <!-- raw HTML omitted --></li>
+<li>Exploit software/hardware vulnerabilities 利用软硬件的漏洞 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="penetration-testing-渗透测试">Penetration Testing 渗透测试</h3>
+<p>Penetration Testing (PT) 渗透测试通过多种漏洞测试工具来模拟真实的攻击手段来尝试渗透计算机系统的活动。 <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://www.pentest-standard.org/index.php/Main_Page"  target="_blank" rel="noopener"
+    >Penetration Testing Execution Standard (PTES)</a> 列举了渗透测试的步骤，但这些步骤也并不固定 <!-- raw HTML omitted --></p>
+<ol>
+<li>Pre-engagement Interactions 预交互 <!-- raw HTML omitted --></li>
+<li>Intelligence Gathering 情报收集 <!-- raw HTML omitted --></li>
+<li>Threat Modeling 威胁建模 <!-- raw HTML omitted --></li>
+<li>Vulnerability Analysis 漏洞分析 <!-- raw HTML omitted --></li>
+<li>Exploitation 漏洞利用 <!-- raw HTML omitted --></li>
+<li>Post Exploitation 后漏洞利用 <!-- raw HTML omitted --></li>
+<li>Reporting 报告 <!-- raw HTML omitted --></li>
+</ol>
+<p>具体每一个环节大家可以根据上面的链接查看文档，这里需要需要强调的就是最后的报告环节，这也是很能反应专业性的地方，能清楚描述整一个渗透测试，对于后续客户的理解，采取措施是非常重要的（就是为了这份报告，才进行的这个渗透测试）。 <!-- raw HTML omitted --></p>
+<h3 id="security-audit">Security Audit</h3>
+<p>安全审计，主要是为了检查企业的安全是否满足标准（ISO 27000) 以及资格证书而进行的，我们在安全管理课程中已经看过了，对于中小企业的安全资格证书检查是非常重要，减少一些基础的漏洞可以帮助企业避免很多的问题，个人认为安全审计随着国内的安全意识的提高以及规范化的提高也会逐渐普及以及形成产业进一步增加安全就业。 <!-- raw HTML omitted --></p>
+<h3 id="vulnerability-analysis--va--漏洞分析">Vulnerability Analysis (VA) 漏洞分析</h3>
+<p>Vulnerability Analysis (VA) 漏洞分析是单纯地利用工具进行扫描系统和软件中的漏洞的活动，在进行扫描的时候，必须要同时使用开源和商业的工具，因为我们无法保证黑客不使用这些商业工具。 <!-- raw HTML omitted --></p>
+<p>同时与渗透测试不同的是，漏洞分析只是单纯的扫描工具使用，而不涉及任何的交互 <!-- raw HTML omitted --></p>
+<h3 id="red-teaming--rt--红队测试">Red Teaming (RT) 红队测试</h3>
+<p>红队测试也是安全测试员进行模拟攻击来测试目标系统的安全性 <!-- raw HTML omitted --></p>
+<p>这里有两个计量的单位： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Time To Detect (TTD) 检测响应时间： <!-- raw HTML omitted --></p>
+<p>指的是目标系统通过杀毒软件或者IDS扫描到本次入侵或者病毒所需要的时间，具体的表现为安全分析师第一次记录成报告的时间 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Time To Mitigate (TTM) 解决响应时间： <!-- raw HTML omitted --></p>
+<p>指的是目标企业的安全工程师多久能组织本次攻击 <!-- raw HTML omitted --></p>
+<p>也反应了其他的一些内容： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>安全团队与IT部门的配合是否高效 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>员工是否陷入了恐慌（安全培训） <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>但是要注意将渗透测试与红队测试区分开 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Red Team 红队</dt>
+<dd><ol>
+<li>攻击者（模拟） <!-- raw HTML omitted --></li>
+<li>模仿攻击的一整套流程 <!-- raw HTML omitted --></li>
+<li>不告知蓝队何时用何种方法进行进攻 <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>Blue Team 蓝队</dt>
+<dd><ol>
+<li>
+<p>企业中的防御者 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>不会被告知有红队的存在（但是在渗透测试中，双方会进行合作） <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</dd>
+</dl>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th></th>
+<th>Pennetration Tests</th>
+<th>Red Teaming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security Assessment</td>
+<td>Methodical</td>
+<td>Flexible</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>严格的目标</td>
+<td>没有具体的规则</td>
+</tr>
+<tr>
+<td></td>
+<td>1-2周的流程</td>
+<td>2-6个月的参与</td>
+</tr>
+<tr>
+<td></td>
+<td>告知对方企业的蓝队</td>
+<td>不通知对方的蓝队</td>
+</tr>
+<tr>
+<td></td>
+<td>识别漏洞</td>
+<td>测试蓝队在程序，安全政策，防御工具以及技能</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>用来测试TTD与TTM的水平</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>必须在合法的范围下进行</td>
+</tr>
+</tbody>
+</table></div>
 
-<p>再次启动后，查看网络配置，观察到出现了一个新的局域网</p>
-<figure><img src="/ox-hugo/2022-03-13_21-33-41_screenshot.png" width="600px"/>
-</figure>
-
-<p>然后通过nmap进行扫描，确认目标网络地址</p>
-<figure><img src="/ox-hugo/2022-03-13_21-36-02_screenshot.png" width="600px"/>
-</figure>
-
-<p>尝试两个ip地址，确认登陆到目标网站为192.168.56.118。
-在开场动画中观察到一组用户名:密码,root:â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢
-但是似乎没有办法直接输入特殊字符，应该也不重要，暂时放弃</p>
-<p>在终端界面尝试linux命令，均是同样的报错：Error: Command not recognized. Type help for a list of commands.</p>
-<p>此时我打开Burp Suite开始拦截http请求，
-接下来尝试提供的几个命令，发现都是未修改过的影片以及图片内容，感觉是来自某部电影或者电视剧，同时都没有拦截到与后台的交互，暂时感觉没有有价值的内容</p>
-<p>但join命令却要求输入邮箱，有用户输入感觉就可以操作，Burpsuite用intruder进行扫描，全都返回了统一的404，</p>
-<figure><img src="/ox-hugo/2022-03-13_21-54-08_screenshot.png" width="600px"/>
-</figure>
-
-<p>但同时返回了一个错误页面</p>
-<!-- raw HTML omitted -->
-<figure><img src="/ox-hugo/2022-03-13_22-01-34_screenshot.png" width="600px"/>
-</figure>
-
-<p>至此我已经没有什么其他想法了，其他的一些尝试包括访问<a class="link" href="https://www.whoismrrobot.com/"  target="_blank" rel="noopener"
-    >https://www.whoismrrobot.com/</a> ，尝试阅读html源码以及目录下的一些js代码，也没有收获 拿到了里面的一些user:pwd，但也没没有什么作用，然后就搜到了同样题目的write-up，一开始打算看点提示，但浏览一下发现已经超出能力范围，只能拿来学习一下了</p>
-<h3 id="根据write-up的复现">根据write-up的复现</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">以下内容是根据找到的write-up的复现，同时带有一些思考
-</span></span></code></pre></div><h4 id="第一个key">第一个key</h4>
-<p>首先使用目录扫描工具来对ip地址进行扫描，用到了diremap工具</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python3 dirmap.py -i 192.168.56.118 -lcf
-</span></span></code></pre></div><p>发现一个熟悉的文件robots.txt，以前也遇到过在这个文件中包含信息的情况</p>
-<p>得到两个文件，分别打开</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">User-agent: *
-</span></span><span class="line"><span class="cl">fsocity.dic
-</span></span><span class="line"><span class="cl">key-1-of-3.txt
-</span></span></code></pre></div><p>得到第一个key：key-1-of-3.txt, 以及一个字典文件fsocity.dic，此时判断可能是需要通过Burp进行爆破使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">073403c8a58a1f80d943455fb30724b9
-</span></span></code></pre></div><h4 id="第二个key">第二个key</h4>
-<p>利用字典进行爆破用户名，得到两个有用的用户名Elliot和elliot，似曾相识，之前在搜索 <a class="link" href="https://www.whoismrrobot.com/"  target="_blank" rel="noopener"
-    >https://www.whoismrrobot.com/</a> 网站信息的时候有人提到过这个名字</p>
-<figure><img src="/ox-hugo/2022-03-13_22-20-58_screenshot.png" width="600px"/>
-</figure>
-
-<p>再次爆破密码，得到密码ER28-0652</p>
-<p>登陆wordpress</p>
-<p>接下来需要获取一个shell，浏览wordpress，找到可以放入webshell的地方，将kali自带的php-reverse-shell.php导入，然后用nc反弹shell，</p>
-<p>我这边将php-reverse-shell.php导入404.php中，update file之后访问，但是我首先得到的是network unreachable(101)的结果，kali也没有监听到来自8888端口的任何信息，同样测试主机的nc，也无效。这时候我才意识到靶机可能不允许向不同网段的地址发送我们想要的信息。</p>
-<p>因此接下来需要将靶机和kali设置到同一网段下，重新在vmware fusion中打开靶机，设置为桥接</p>
-<figure><img src="/ox-hugo/2022-03-14_14-31-11_screenshot.png" width="600px"/>
-</figure>
-
-<p>此时在kali上搜索自己的网段，得到了新的ip地址，172.16.249.10，之后重复上述操作</p>
-<figure><img src="/ox-hugo/2022-03-14_14-32-15_screenshot.png" width="600px"/>
-</figure>
-
-<p>kali打开nc进行监听，拿到shell</p>
-<figure><img src="/ox-hugo/2022-03-14_14-33-12_screenshot.png" width="600px"/>
-</figure>
-
-<p>输入whoami查看用户，发现是daemon不是root，接着查看靶机的密码
-cat /etc/passwd</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<figure><img src="/ox-hugo/2022-03-14_14-52-06_screenshot.png" width="600px"/>
-</figure>
-
-<p>尝试用密码登陆robot用户：su robot</p>
-<figure><img src="/ox-hugo/2022-03-14_14-54-20_screenshot.png" width="600px"/>
-</figure>
-
-<p>提示需要终端才能执行，利用python生成一个终端</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
-</span></span></code></pre></div><p>使用密码进行登录后，查看文件，得到第二个key的值</p>
-<figure><img src="/ox-hugo/2022-03-14_14-55-54_screenshot.png" width="600px"/>
-</figure>
-
-<h4 id="第三个key">第三个key</h4>
-<p>接着进行提权
-学习参考文章：<a class="link" href="https://www.anquanke.com/post/id/86979"  target="_blank" rel="noopener"
-    >https://www.anquanke.com/post/id/86979</a>
-利用一下命令，可以将从 / 目录中查找具有SUID权限位且属主为root的文件并输出它们，然后将所有错误重定向到/dev/null，从而仅列出该用户具有访问权限的那些二进制文件。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">find / -user root -perm -100 -print 2&gt;/dev/null
-</span></span><span class="line"><span class="cl">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
-</span></span><span class="line"><span class="cl">find / -user root -perm -100 -exec ls -ldb <span class="o">{}</span> <span class="p">;</span>
-</span></span></code></pre></div><p>搜索常见的具有提权功能的Linux可执行文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Nmap
-</span></span><span class="line"><span class="cl">Vim
-</span></span><span class="line"><span class="cl">find
-</span></span><span class="line"><span class="cl">Bash
-</span></span><span class="line"><span class="cl">More
-</span></span><span class="line"><span class="cl">Less
-</span></span><span class="line"><span class="cl">Nano
-</span></span><span class="line"><span class="cl">cp
-</span></span></code></pre></div><p>执行后发现nmap，确认权限中包含&rsquo;s&rsquo;，为root所有</p>
-<figure><img src="/ox-hugo/2022-03-14_15-14-35_screenshot.png" width="600px"/>
-</figure>
-
-<p>接下来利用旧版本的nmap提供交互模式可以得到一个具有相同权限也就是root权限的shell，进行提权后，再/root目录下面得到第三个key</p>
-<figure><img src="/ox-hugo/2022-03-14_15-19-37_screenshot.png" width="600px"/>
-</figure>
-
-<h3 id="总结">总结</h3>
-<p>发现了很多的不足，学到了很多思路和工具的使用，感觉之后还是应该多做题，先把重点放在了解前人的思路以及各种工具的使用上，而不是过度纠结一些题目：
-文件目录扫描，dirbuster，dirmap,gobuster
-有用的用户名会有不一样的返回，可以先扫用户名再扫密码
-webshell与反弹shell，netcat的使用
-生成终端
-linux特定用户登录
-md5解密
-搜索具有root权限的可执行文件
-利用nmap的交互模式进行提权
-等等</p>
 </section>
 
 
@@ -405,9 +417,7 @@ md5解密
     
     <section class="article-tags">
         
-            <a href="/tags/ctf/">ctf</a>
-        
-            <a href="/tags/security/">security</a>
+            <a href="/tags/security_testing/">security_testing</a>
         
     </section>
 
@@ -434,7 +444,7 @@ md5解密
 
 
         <span>
-            Last updated on Mar 23, 2022 08:55 UTC
+            Last updated on May 20, 2022 11:04 BST
         </span>
     </section></footer>
 
@@ -476,36 +486,60 @@ md5解密
             
                 
 <article class="">
-    <a href="/posts/pwnthebox_web_easy/">
+    <a href="/posts/dlc_exam_preparation_notes/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Pwn The Box WEB-Easy</h2>
+            <h2 class="article-title">DLC EXAM Preparation Notes</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/posts/file_upload_ggctf_upload/">
+    <a href="/posts/cfc_week_3_malware_uses_and_monetisation/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">File Upload: ggctf-upload</h2>
+            <h2 class="article-title">CFC Week 3: Malware uses and monetisation</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/posts/sqli_labs_study/">
+    <a href="/posts/cfc_week_2_advanced_malware_and_worldwide_spam_economy/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Sqli-labs Study: Basic Challenges</h2>
+            <h2 class="article-title">CFC Week 2: Advanced malware and worldwide SPAM</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_4_cybercrime_mitigations/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 4: Cybercrime mitigations</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_5_legal_framework/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 5: Legal Framework</h2>
         </div>
     </a>
 </article>
@@ -685,17 +719,13 @@ md5解密
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#writeup">Writeup</a>
+    <li><a href="#sct-topic-1-introduction-to-security-testing">SCT Topic 1 Introduction to Security Testing</a>
       <ul>
-        <li><a href="#我的尝试">我的尝试</a></li>
-        <li><a href="#根据write-up的复现">根据write-up的复现</a>
-          <ul>
-            <li><a href="#第一个key">第一个key</a></li>
-            <li><a href="#第二个key">第二个key</a></li>
-            <li><a href="#第三个key">第三个key</a></li>
-          </ul>
-        </li>
-        <li><a href="#总结">总结</a></li>
+        <li><a href="#what-is-security-testing-什么是安全测试">What is Security Testing? 什么是安全测试</a></li>
+        <li><a href="#penetration-testing-渗透测试">Penetration Testing 渗透测试</a></li>
+        <li><a href="#security-audit">Security Audit</a></li>
+        <li><a href="#vulnerability-analysis--va--漏洞分析">Vulnerability Analysis (VA) 漏洞分析</a></li>
+        <li><a href="#red-teaming--rt--红队测试">Red Teaming (RT) 红队测试</a></li>
       </ul>
     </li>
   </ul>

@@ -329,8 +329,8 @@
 &lt;p&gt;CSRF tokens &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Referer检查 &lt;!-- raw HTML omitted --&gt;
-检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Referer检查 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/dd&gt;
@@ -616,7 +616,7 @@
 &lt;p&gt;如果有说错的地方希望各位师傅在评论区纠正和分享正确的思路，我对这方面不熟悉，这里走个流程了解一下工具。 &lt;!-- raw HTML omitted --&gt;
 实际实验在本地以及网页端包括firefox，chrome也没有成功，还是贴一下晚上的payload &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;arg01=version&amp;amp;arg02=&amp;lt;a href=&amp;#34;javascript:alert(1)&amp;#34;&amp;gt;123&amp;lt;/a&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;level-20&#34;&gt;level 20&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;level20&#34;&gt;level20&lt;/h3&gt;
 &lt;p&gt;还是贴一下网上的payload &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;level20.php?arg01=a&amp;amp;arg02=\&amp;#34;))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//%26width%26height
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?arg01=id&amp;amp;arg02=\%22))}catch(e){}if(!self.a)self.a=!alert(1)//%26width%26height

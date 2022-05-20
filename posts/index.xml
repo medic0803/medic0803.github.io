@@ -6,7 +6,149 @@
         <description>Recent content in Posts on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Thu, 19 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 20 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>SCT Topic 1 Introduction to Security Testing</title>
+        <link>https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/</link>
+        <pubDate>Fri, 20 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/</guid>
+        <description>&lt;h2 id=&#34;sct-topic-1-introduction-to-security-testing&#34;&gt;SCT Topic 1 Introduction to Security Testing&lt;/h2&gt;
+&lt;h3 id=&#34;what-is-security-testing-什么是安全测试&#34;&gt;What is Security Testing? 什么是安全测试&lt;/h3&gt;
+&lt;p&gt;安全测试是一个很广泛的概念，我们可以列举几个典型的活动： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Security Audit 安全审计 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Vulnerability Assessment 漏洞评估 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Penetration Testing 渗透测试 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Red Teaming 红队测试 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Ethical hacking 有道德的黑客攻击 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这周的topic中我们会具体展开介绍每一个活动所对应的细节 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;在此之前，我们可以先对安全测试下一个定义： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Security Testing is the process to reveal flaws in a system in terms of Confidentiality, Integrity, Availability (CIA).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;安全测试就是一个揭露系统在保密性，完整性和可用性（CIA）方面的缺陷的过程
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;CIA也是所有安全话题中最重要的三要素： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Confidentiality 保密性: 限制没有授权的用户访问资源 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Integrity 完整性：限制没有授权的用户修改资源 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Availability 可用性: 保证资源随时可用 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;然后我们再总结黑客的攻击归为三种： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Exploit the configuration done by the system administrator 修改管理员级别的系统配置 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Exploit how the users use the system/service 利用用户对系统进行操作 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Exploit software/hardware vulnerabilities 利用软硬件的漏洞 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;penetration-testing-渗透测试&#34;&gt;Penetration Testing 渗透测试&lt;/h3&gt;
+&lt;p&gt;Penetration Testing (PT) 渗透测试通过多种漏洞测试工具来模拟真实的攻击手段来尝试渗透计算机系统的活动。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://www.pentest-standard.org/index.php/Main_Page&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Penetration Testing Execution Standard (PTES)&lt;/a&gt; 列举了渗透测试的步骤，但这些步骤也并不固定 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Pre-engagement Interactions 预交互 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Intelligence Gathering 情报收集 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Threat Modeling 威胁建模 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Vulnerability Analysis 漏洞分析 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Exploitation 漏洞利用 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Post Exploitation 后漏洞利用 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Reporting 报告 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;具体每一个环节大家可以根据上面的链接查看文档，这里需要需要强调的就是最后的报告环节，这也是很能反应专业性的地方，能清楚描述整一个渗透测试，对于后续客户的理解，采取措施是非常重要的（就是为了这份报告，才进行的这个渗透测试）。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;security-audit&#34;&gt;Security Audit&lt;/h3&gt;
+&lt;p&gt;安全审计，主要是为了检查企业的安全是否满足标准（ISO 27000) 以及资格证书而进行的，我们在安全管理课程中已经看过了，对于中小企业的安全资格证书检查是非常重要，减少一些基础的漏洞可以帮助企业避免很多的问题，个人认为安全审计随着国内的安全意识的提高以及规范化的提高也会逐渐普及以及形成产业进一步增加安全就业。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;vulnerability-analysis--va--漏洞分析&#34;&gt;Vulnerability Analysis (VA) 漏洞分析&lt;/h3&gt;
+&lt;p&gt;Vulnerability Analysis (VA) 漏洞分析是单纯地利用工具进行扫描系统和软件中的漏洞的活动，在进行扫描的时候，必须要同时使用开源和商业的工具，因为我们无法保证黑客不使用这些商业工具。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;同时与渗透测试不同的是，漏洞分析只是单纯的扫描工具使用，而不涉及任何的交互 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;red-teaming--rt--红队测试&#34;&gt;Red Teaming (RT) 红队测试&lt;/h3&gt;
+&lt;p&gt;红队测试也是安全测试员进行模拟攻击来测试目标系统的安全性 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这里有两个计量的单位： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Time To Detect (TTD) 检测响应时间： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;指的是目标系统通过杀毒软件或者IDS扫描到本次入侵或者病毒所需要的时间，具体的表现为安全分析师第一次记录成报告的时间 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Time To Mitigate (TTM) 解决响应时间： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;指的是目标企业的安全工程师多久能组织本次攻击 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;也反应了其他的一些内容： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;安全团队与IT部门的配合是否高效 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;员工是否陷入了恐慌（安全培训） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;但是要注意将渗透测试与红队测试区分开 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Red Team 红队&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;攻击者（模拟） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;模仿攻击的一整套流程 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;不告知蓝队何时用何种方法进行进攻 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Blue Team 蓝队&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;企业中的防御者 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不会被告知有红队的存在（但是在渗透测试中，双方会进行合作） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Pennetration Tests&lt;/th&gt;
+&lt;th&gt;Red Teaming&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Security Assessment&lt;/td&gt;
+&lt;td&gt;Methodical&lt;/td&gt;
+&lt;td&gt;Flexible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Scope&lt;/td&gt;
+&lt;td&gt;严格的目标&lt;/td&gt;
+&lt;td&gt;没有具体的规则&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;1-2周的流程&lt;/td&gt;
+&lt;td&gt;2-6个月的参与&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;告知对方企业的蓝队&lt;/td&gt;
+&lt;td&gt;不通知对方的蓝队&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;识别漏洞&lt;/td&gt;
+&lt;td&gt;测试蓝队在程序，安全政策，防御工具以及技能&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;用来测试TTD与TTM的水平&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;必须在合法的范围下进行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        <item>
         <title>Client-side Attacks 针对客户端的Web攻击</title>
         <link>https://ginkgo.org.cn/posts/client_side_attacks/</link>
         <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
@@ -329,8 +471,8 @@
 &lt;p&gt;CSRF tokens &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Referer检查 &lt;!-- raw HTML omitted --&gt;
-检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Referer检查 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/dd&gt;
@@ -616,7 +758,7 @@
 &lt;p&gt;如果有说错的地方希望各位师傅在评论区纠正和分享正确的思路，我对这方面不熟悉，这里走个流程了解一下工具。 &lt;!-- raw HTML omitted --&gt;
 实际实验在本地以及网页端包括firefox，chrome也没有成功，还是贴一下晚上的payload &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;arg01=version&amp;amp;arg02=&amp;lt;a href=&amp;#34;javascript:alert(1)&amp;#34;&amp;gt;123&amp;lt;/a&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;level-20&#34;&gt;level 20&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;level20&#34;&gt;level20&lt;/h3&gt;
 &lt;p&gt;还是贴一下网上的payload &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;level20.php?arg01=a&amp;amp;arg02=\&amp;#34;))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//%26width%26height
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?arg01=id&amp;amp;arg02=\%22))}catch(e){}if(!self.a)self.a=!alert(1)//%26width%26height
