@@ -6,7 +6,81 @@
         <description>Recent content in web on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/web/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/web/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>URI &amp; URL &amp; URN 的关系</title>
+        <link>https://ginkgo.org.cn/posts/uri_url_urn/</link>
+        <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/uri_url_urn/</guid>
+        <description>&lt;h2 id=&#34;uri-and-url-and-urn-的关系&#34;&gt;URI &amp;amp; URL &amp;amp; URN 的关系&lt;/h2&gt;
+&lt;p&gt;很长一段时间以来，我都搞不清楚URI，URL的关系，最近养成了写博客的习惯，那么我们就来一起搞搞明白。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;如果有和我一样搞不清楚的师傅，我只能说这不怪我们，首先这两个玩意儿长的很像，很容易就搞混，因此在本文中将全部采用大写的形式加以区分。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;其次就是我到目前为止的一个观点，由于中文过于博大精深，导致很多翻译过来的内容变得非常绕口难懂，同时掺杂着一些不恰当的比喻，导致了这些概念之间的关系变得非常模糊。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;uri&#34;&gt;URI&lt;/h3&gt;
+&lt;p&gt;URI, Uniform Resource Identifier, 统一资源标志符 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“统一”，表示使用一种统一的规范来表示 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“资源标识符”，表示URI是用来指代一种资源，网页，图片，视频，etc.. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;下面是URI的统一格式规范，依次由五个部分组成 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;URI = scheme &amp;#34;:&amp;#34; [&amp;#34;//&amp;#34; authority] path [&amp;#34;?&amp;#34; query] [&amp;#34;#&amp;#34; fragment]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中Authority可以划成三个子模块 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;authority = [userinfo &amp;#34;@&amp;#34;] host [&amp;#34;:&amp;#34; port]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_16-11-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;具体的各个组成模块大家可以去&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Identifier&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Wikipedia&lt;/a&gt;一个个检查过来 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们用一个例子结束这个章节： &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://john.doe@www.example.com:123/forum/questions/?tag=networking&amp;amp;order=newest#top&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://john.doe@www.example.com:123/forum/questions/?tag=networking&amp;order=newest#top&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;相信这个也是大多数人常见的一个UR*的例子，那么大家也会好奇那么URL应该长什么样的？我们接着来看 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;url&#34;&gt;URL&lt;/h3&gt;
+&lt;p&gt;URL, Uniform Resource Locator, 统一资源定位符 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;和之前一样，我们从其名字出发来解释URL的作用 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“统一”，同样，表示使用一种统一的规范来表示 &lt;!-- raw HTML omitted --&gt;
+“资源定位符”，表示URL需要帮助找到一个资源所在的位置，使用用户能够获取到这个资源 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那它究竟应该长什么样呢？ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_16-11-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;和我们以前提到的格式一模一样，这就是一个URL：&lt;a class=&#34;link&#34; href=&#34;https://john.doe@www.example.com:123/forum/questions/?tag=networking&amp;amp;order=newest#top&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://john.doe@www.example.com:123/forum/questions/?tag=networking&amp;order=newest#top&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;先别急着糊涂，我们先仔细看这张图，我们可以发现，有很多可选项，作为一个URL虽然也使用同样的语法规范，但是和它的名字一样，它需要一切能够指示一个资源位置的可选项&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;反过来说，URI，只需要能够代表这个资源的名称就可以了，不需要完成指示的工作，因此可以选择很少的选项，那么一旦完成了指示资源位置的任务，一个URI也可以被叫做URL &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;也就是说： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;URI包含URL， &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;URI是URL的父类 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;一个能指示资源位置的URI也被叫做URL &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;一个URL一定是一个URI &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;一个URI不一定是一个URL，它还可以是URN &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;urn&#34;&gt;URN&lt;/h3&gt;
+&lt;p&gt;URN, Uniform Resource Name, 统一资源名称，是一种特殊的URI，特点是其scheme使用 &lt;code&gt;urn:&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“统一”，表示使用一种统一的规范来表示 &lt;!-- raw HTML omitted --&gt;
+“资源名称”，表达了URN会表示一个资源的名称，并称这个标识会同时在空间以及时间上保持其唯一性，及全球唯一，并且在未来也会保持唯一 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;其与URI和URL的区别就在于其在时空上的唯一性，以及其并不能用来定位一个资源 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_21-19-23_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;appendix&#34;&gt;Appendix&lt;/h3&gt;
+&lt;h4 id=&#34;uri-scheme&#34;&gt;URI scheme&lt;/h4&gt;
+&lt;p&gt;URI scheme也就是所有URI的第一部分，很多中文的翻译将其称作“协议”，但我总觉得有点怪怪的，因为如果是协议的话我们一般会用protocol，但是看到ftp，http又觉得无法反驳，直到我们看到了一个StackExchange上的回答： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;“It simply tells you how to interpret the part of the URL after the colon. &amp;hellip; This isn&amp;rsquo;t identical to a protocol, because there is no transport layer or encoding” &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;URI scheme仅仅是告诉浏览器应该如何去解析后面的内容，例如 &lt;code&gt;file:&lt;/code&gt; 就表示后面的是我们需要访问的本地资源的目录， &lt;code&gt;http:&lt;/code&gt; 就表示需要用后面的路径来发起HTTP连接。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is the difference between a URI, a URL and a URN?&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Identifier&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Uniform Resource Identifier&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/URL&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;URL&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Name&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Uniform Resource Name&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://softwareengineering.stackexchange.com/questions/294588/what-is-a-uri-scheme&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is a URI Scheme?&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Pwn The Box WEB-Easy</title>
         <link>https://ginkgo.org.cn/posts/pwnthebox_web_easy/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>

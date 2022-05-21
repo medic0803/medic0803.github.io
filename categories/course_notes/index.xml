@@ -4300,7 +4300,8 @@ The attacker could impersonate a manager/senior meember of the organisation, or 
         <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/network_security_assessment/</guid>
-        <description>&lt;h2 id=&#34;network-security-assessment&#34;&gt;Network Security Assessment&lt;/h2&gt;
+        <description>&lt;p&gt;&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;&lt;/p&gt;
+&lt;h2 id=&#34;network-security-assessment&#34;&gt;Network Security Assessment&lt;/h2&gt;
 &lt;h3 id=&#34;phase-1-reconnaissance&#34;&gt;Phase 1: Reconnaissance&lt;/h3&gt;
 &lt;p&gt;The initial phase of network security assessment is reconnaissance, in my understanding, this phase is used to gather the information of the target, including hosts, networks, users, services, etc. It is an essential preparation mission before you can really do something to the target.&lt;/p&gt;
 &lt;p&gt;And the recoonaissance could be separated to passive or active.&lt;/p&gt;
@@ -4308,7 +4309,7 @@ The attacker could impersonate a manager/senior meember of the organisation, or 
 &lt;p&gt;In this case, &amp;ldquo;passive&amp;rdquo; means you do not directly interact or engage with target system. More specifically, you do not send any type of request to the target, thus the targets have no way of acknowledgement what you are doing.&lt;/p&gt;
 &lt;p&gt;You should use all the tools to gather more information as possible&lt;/p&gt;
 &lt;p&gt;Querying Search Engines and Websites
-There are some typical data you can gather by querying search engines and wbsites&lt;/p&gt;
+There are some typical data you can gather by querying search engines and websites&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Physical address of office locations&lt;/li&gt;
 &lt;li&gt;Contact details, including email addresses and telephone numbers&lt;/li&gt;
@@ -4734,7 +4735,8 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 &lt;li&gt;Monitor network activity (e.g., Intrusion Detection System, SIEM)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+</description>
         </item>
         
     </channel>
