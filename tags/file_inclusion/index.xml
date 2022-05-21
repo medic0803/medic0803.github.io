@@ -254,8 +254,8 @@
 &lt;p&gt;测试 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;file&#34;&gt;&amp;lt;//&amp;gt;&lt;/h4&gt;
-&lt;p&gt;&amp;lt;//&amp;gt; 代表了本地文件的路径，它也是默认的分装类，如果文件路径没有指明使用哪一个分装类，那就默认是 &amp;lt;//&amp;gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;file&#34;&gt;file://&lt;/h4&gt;
+&lt;p&gt;file:// 代表了本地文件的路径，它也是默认的分装类，如果文件路径没有指明使用哪一个分装类，那就默认是 file:// &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Usage &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/path/to/file.ext
