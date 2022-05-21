@@ -3,25 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/categories/ctf/</loc>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/ctf/</loc>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/file_inclusion/</loc>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/lrfi_basic/</loc>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T23:47:36+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/uri_url_urn/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T22:31:18+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/web/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T22:31:18+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/web/</loc>
-    <lastmod>2022-05-21T21:36:58+01:00</lastmod>
+    <lastmod>2022-05-21T22:31:18+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
     <lastmod>2022-05-20T23:49:20+01:00</lastmod>
@@ -34,12 +46,6 @@
   </url><url>
     <loc>https://ginkgo.org.cn/posts/client_side_attacks/</loc>
     <lastmod>2022-05-19T23:52:45+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/categories/ctf/</loc>
-    <lastmod>2022-05-20T15:01:04+01:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/tags/ctf/</loc>
-    <lastmod>2022-05-20T15:01:04+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/xss/</loc>
     <lastmod>2022-05-20T15:01:04+01:00</lastmod>

@@ -69,14 +69,14 @@
 &lt;p&gt;URI scheme仅仅是告诉浏览器应该如何去解析后面的内容，例如 &lt;code&gt;file:&lt;/code&gt; 就表示后面的是我们需要访问的本地资源的目录， &lt;code&gt;http:&lt;/code&gt; 就表示需要用后面的路径来发起HTTP连接。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;What is the difference between a URI, a URL and a URN?&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Identifier&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Uniform Resource Identifier&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/URL&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;URL&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Name&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Uniform Resource Name&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://softwareengineering.stackexchange.com/questions/294588/what-is-a-uri-scheme&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is the difference between a URI, a URL and a URN?&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Identifier&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Uniform Resource Identifier&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/URL&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;URL&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Uniform_Resource_Name&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Uniform Resource Name&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://softwareengineering.stackexchange.com/questions/294588/what-is-a-uri-scheme&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;What is a URI Scheme?&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>

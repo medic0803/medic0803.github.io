@@ -7,6 +7,22 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ctf</title>
+        <link>https://ginkgo.org.cn/tags/ctf/</link>
+        <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/ctf/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>file_inclusion</title>
+        <link>https://ginkgo.org.cn/tags/file_inclusion/</link>
+        <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/file_inclusion/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>web</title>
         <link>https://ginkgo.org.cn/tags/web/</link>
         <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
@@ -20,14 +36,6 @@
         <pubDate>Fri, 20 May 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/security_testing/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>ctf</title>
-        <link>https://ginkgo.org.cn/tags/ctf/</link>
-        <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://ginkgo.org.cn/tags/ctf/</guid>
         <description></description>
         </item>
         <item>
