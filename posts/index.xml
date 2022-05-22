@@ -155,7 +155,7 @@
 &lt;p&gt;PHP只接受 &lt;code&gt;scheme://...&lt;/code&gt; 的形式，而 &lt;code&gt;scheme:/...&lt;/code&gt;, &lt;code&gt;scheme:...&lt;/code&gt; 都不行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;在CTF中的运用，个人目前的理解是，当服务器端存在需要用户输入的参数，并且调用这个参数的函数可以与PHP伪协议连用，那么就可以通过PHP伪协议来构造一些PHP操作来实现恶意行为（相当于在写php代码） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&amp;lt;//&amp;gt; — Accessing local filesystem &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;file:// — Accessing local filesystem &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;http://&lt;/a&gt; — Accessing HTTP(s) URLs &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;ftp://&#34; &gt;ftp://&lt;/a&gt; — Accessing FTP(s) URLs &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -226,6 +226,9 @@
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_23-00-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;可用的过滤器列表： &lt;!-- raw HTML omitted --&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/zh/filters.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.php.net/manual/zh/filters.php&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
@@ -266,19 +269,62 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;\\smbserver\share\path\to\winfile.ext
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;file:///path/to/file.ext
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;data&#34;&gt;data://&lt;/h4&gt;
-&lt;p&gt;待补充 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;data:// 是一个数据流封装器 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;使用格式： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;data:[&amp;lt;mime type&amp;gt;][;charset=&amp;lt;charset&amp;gt;][;base64],&amp;lt;encoded data&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;协议头：data://，使后面的内容被识别为一个data URI资源 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;MIME类型，我们在 File upload 中也曾经介绍过，例如text/plain, image/jpeg, image/gif, image/png, etc. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;编码设置，默认编码为 charset=US=ASCII （自动编码为%xx） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;base64编码设定，可选项，base64编码中仅包含0-9,a-z,A-Z,+,/,=，其中=是用来编码补白的 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;DATA URI所承载的内容（也是我们插入要注入的恶意代码的地方），它可以是纯文本编写的内容，也可以是经过base64编码的内容。 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;使用条件： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;allow_url_fopen: on
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;allow_url_include: on/off
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;php版本≥php5.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;需要注意的是，当allow_url_include为on时，任意文件包含就会成为任意命令执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;利用： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;plaintext:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=data://text/plain,&amp;lt;?php phpinfo()?&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;or encoded by base64:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=data://text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=data://text/plain,&amp;lt;?php phpinfo()?&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-22_09-44-50_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;phar&#34;&gt;phar://&lt;/h4&gt;
-&lt;p&gt;phar只能用在本地文件上 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;待补充 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;phar只能用在本地文件上，因此我们所举的例子都是在文件上传成功的基础上进行的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;使用格式 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=phar://[压缩包名称][/内部文件名称]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=phar://xxx.png/shell.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;压缩文件可以改为任意后缀 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;假设我们通过文件上传漏洞上传了一个叫做 &lt;code&gt;shell.png&lt;/code&gt; 的压缩包（一定要用zip压缩，rar不行），然后shell.png解压缩之后是phpinfo.php这个文件 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么我们就可以再利用 &lt;code&gt;phar&lt;/code&gt; 来进行解压缩并执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=phar://shell.png/phpinfo.php
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=phar://[绝对路径]shell.png/phpinfo.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-22_09-55-08_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;zip&#34;&gt;zip://&lt;/h4&gt;
-&lt;p&gt;待补充 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;用法与phar有所不同 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=zip://[压缩文件绝对路径]#[压缩文件内的子文件名]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;?filename=zip://xxx.png#shell.php。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;条件： PHP &amp;gt; =5.3.0，注意在windows下测试要 5.3.0&amp;lt;PHP&amp;lt;5.4 才可以 &lt;!-- raw HTML omitted --&gt;
+同时，#在url中要编码为%23，否则浏览器默认不会传输特殊字符。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=zip://[absolute_path]shell.png%23phpinfo.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-22_10-01-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.freebuf.com/articles/web/182280.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Web安全实战系列：文件包含漏洞&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000018991087#item-6&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Web安全实战系列：文件包含漏洞&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000018991087#item-6&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;PHP伪协议总结&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://dar1in9s.github.io/2020/02/03/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E4%B8%8Ephp%E4%BC%AA%E5%8D%8F%E8%AE%AE/#%E5%8C%85%E5%90%ABsession%E6%96%87%E4%BB%B6&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;文件包含漏洞与php伪协议&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/zh/wrappers.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;支持的协议和封装协议&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://paper.seebug.org/680/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;利用 phar 拓展 php 反序列化漏洞攻击面&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
