@@ -7,56 +7,66 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <lastBuildDate>Mon, 07 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/hacker/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Social Engineering</title>
+        <title>SCT Topic 7: Social Engineering</title>
         <link>https://ginkgo.org.cn/posts/social_engineering/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/social_engineering/</guid>
-        <description>&lt;h2 id=&#34;social-engineering&#34;&gt;Social Engineering&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;sct-topic-7-social-engineering&#34;&gt;SCT Topic 7: Social Engineering&lt;/h2&gt;
 &lt;h3 id=&#34;strategies-and-principles&#34;&gt;Strategies and Principles&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;&amp;ldquo;The easiest way to get the information you want is always by asking the victims themselves:)&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
 &lt;dl&gt;
 &lt;dt&gt;Definition: Social engineering&lt;/dt&gt;
-&lt;dd&gt;Social engineering is the practice of manipulating people into revealing condifential or sensitive information about the organisation, or to perform certain actions, such as:
+&lt;dd&gt;&lt;code&gt;Social engineering&lt;/code&gt; is the practice of &lt;!-- raw HTML omitted --&gt;manipulating people&lt;!-- raw HTML omitted --&gt; into revealing confidential or sensitive information about the organisation, or to perform certain actions, such as:
 &lt;ul&gt;
-&lt;li&gt;open an infected attachment via email&lt;/li&gt;
-&lt;li&gt;click on a URL of a compromised webiste&lt;/li&gt;
+&lt;li&gt;open an &lt;!-- raw HTML omitted --&gt;infected attachment&lt;!-- raw HTML omitted --&gt; via email&lt;/li&gt;
+&lt;li&gt;click on a URL of a &lt;!-- raw HTML omitted --&gt;compromised website&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;divulge information over the phone&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
-&lt;p&gt;Instead of utilising the vulnerabilities we have seen previously, social engineering relies on non-technical strategies to exploit the weaknesses of human psychology.&lt;/p&gt;
+&lt;p&gt;Instead of utilising the vulnerabilities we have seen previously, social engineering relies on &lt;!-- raw HTML omitted --&gt;non-technical&lt;!-- raw HTML omitted --&gt; strategies to exploit the weaknesses of human psychology.&lt;/p&gt;
 &lt;p&gt;It is very similar to some &amp;lsquo;marketing&amp;rsquo; purposes, which often involved &amp;lsquo;acting skills&amp;rsquo;, it requires social engineers to be confident with themsevles, and this sense of confidence will then naturally psychologically transfer also to the victim.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&amp;ldquo;Preteding not be afraid is as good as actually not being afraid. &amp;mdash;-David Letterman&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&amp;ldquo;Pretending not be afraid is as good as actually not being afraid. &amp;mdash;-David Letterman&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
 &lt;h4 id=&#34;key-principles&#34;&gt;Key principles&lt;/h4&gt;
-&lt;p&gt;There are six key principles of influence that correspond to human behaviours heavily explooited by social engineering, identified by Professor Robert Cialdini, Regents&amp;rsquo; Professor Emeritus of Psychology and Marketing at Arizona State University, which originally from &amp;lsquo;marketing&amp;rsquo; purposes.&lt;/p&gt;
+&lt;p&gt;There are six key principles of influence that correspond to human behaviours heavily exploited by social engineering, identified by Professor Robert Cialdini, Regents&amp;rsquo; Professor Emeritus of Psychology and Marketing at Arizona State University, which originally from marketing&amp;rsquo;s purposes.&lt;/p&gt;
 &lt;dl&gt;
 &lt;dt&gt;Principle 1: Reciprocity&lt;/dt&gt;
-&lt;dd&gt;People tend to return a favour. People usually do not trust free lunch, they would be more delight to take the benefit by doing a favour also to the attacker.&lt;/dd&gt;
+&lt;dd&gt;People tend to &lt;!-- raw HTML omitted --&gt;return a favour&lt;!-- raw HTML omitted --&gt;.
+&lt;p&gt;People usually do not trust free lunch, they would be more delight to take the benefit by &lt;!-- raw HTML omitted --&gt;doing a favour&lt;!-- raw HTML omitted --&gt; also to the attacker.&lt;/p&gt;
+&lt;/dd&gt;
 &lt;dt&gt;Principle 2: Commitment and consistency&lt;/dt&gt;
-&lt;dd&gt;People are willing to honor to the ideas and goals they committed which fits their self-image, e.g., particular charity activities,recyling, vegetarianism.
+&lt;dd&gt;People are willing to be honour to the ideas and goals they committed which fits their self-image, e.g., particular charity activities,recyling, vegetarianism.
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://tactics.convertize.com/definitions/commitment-and-consistency&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;This a mental shortut we use to simplify our decision-making:&lt;/a&gt; we tend to simplify our decision making by using a post decision as reference for subsequent related choices. Consequently, we act in ways that are consistent with our intial action our thought, so that when we commit to something or someone, we stick to it.&lt;/p&gt;
+    &gt;This a mental shortut we use to simplify our decision-making:&lt;/a&gt; we tend to &lt;!-- raw HTML omitted --&gt;simplify our decision making&lt;!-- raw HTML omitted --&gt; by using a post decision as reference for subsequent related choices. Consequently, we act in ways that are consistent with our intial action our thought, so that when we commit to something or someone, we stick to it.&lt;/p&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Principle 3: Social proof/consensus&lt;/dt&gt;
-&lt;dd&gt;People are tend to follow the crowd. For example, if attackers can convince the victim that their colleagues, friends or family already done that, the victims will be more willing to click the malicous link.&lt;/dd&gt;
+&lt;dd&gt;People are tend to follow the crowd.
+&lt;p&gt;For example, if attackers can convince the victim that their colleagues, friends or family already done that, the victims will be more willing to click the malicious link.&lt;/p&gt;
+&lt;/dd&gt;
 &lt;dt&gt;Principle 4: Autority/intimidation&lt;/dt&gt;
-&lt;dd&gt;People will tend to obey authority figures, even if they are asked to perform objectionable acts. The attacker can try to impersonate some senior members in their organisation or from government organisation, which the victim may not know personally.&lt;/dd&gt;
+&lt;dd&gt;People tend to obey authority figures, even if they are asked to perform objectionable acts.
+&lt;p&gt;The attacker can try to impersonate some senior members in their organisation or from government organisation, which the victim may not know personally.&lt;/p&gt;
+&lt;/dd&gt;
 &lt;dt&gt;Principle 5: Linking/familarity&lt;/dt&gt;
-&lt;dd&gt;People are more easily persuaded by other people whom they may familar with. The attackers could establish a link between them and victims by calling their first name, nickname, or throw some topics they may interesting (e.g., hobbies, sports).&lt;/dd&gt;
+&lt;dd&gt;People are more easily persuaded by people who seems to be familiar with themselves.
+&lt;p&gt;The attackers could establish a link between them and victims by calling their first name, nickname, or throw some topics they may interesting (e.g., hobbies, sports).&lt;/p&gt;
+&lt;/dd&gt;
 &lt;dt&gt;Pirnciple 6: Scarcity/urgency&lt;/dt&gt;
-&lt;dd&gt;Perceived scarcity will generate demand, and it may indcue urgency in the victim, in this kind of scenario, victim could more easily to lose their judgement. Like a time-limited demand of work from the boss.&lt;/dd&gt;
+&lt;dd&gt;Perceived scarcity will generate demand, and it may induce urgency in the victim.
+&lt;p&gt;In this kind of scenario, victim could more easily to lose their judgement. Like a time-limited demand of work from the boss.&lt;/p&gt;
+&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;h3 id=&#34;attack-phases&#34;&gt;Attack Phases&lt;/h3&gt;
 &lt;h4 id=&#34;reconnaissance-phase&#34;&gt;Reconnaissance Phase&lt;/h4&gt;
 &lt;dl&gt;
 &lt;dt&gt;Aims to&lt;/dt&gt;
-&lt;dd&gt;Appear credible and lure the victims into revealing sensitive information or perform dangerous actions&lt;/dd&gt;
+&lt;dd&gt;Appear credible and lure the victims into &lt;code&gt;revealing sensitive information&lt;/code&gt; or &lt;code&gt;perform dangerous actions&lt;/code&gt;&lt;/dd&gt;
 &lt;dt&gt;Goals&lt;/dt&gt;
-&lt;dd&gt;Learn about roles or key figures in the organisation, and find orangisation contact details and finally choosing victims.&lt;/dd&gt;
+&lt;dd&gt;Learn about roles or key figures in the organisation, and find &lt;!-- raw HTML omitted --&gt;organisation contact details&lt;!-- raw HTML omitted --&gt; and finally &lt;code&gt;choosing victims&lt;/code&gt;.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;Passive and Active reconnaissances can explore the tactics to identify hosts, networks, and users of interst, see more details in previoius post about reconnaissance.&lt;/p&gt;
-&lt;h4 id=&#34;victim-appraoch-phase&#34;&gt;Victim Appraoch Phase&lt;/h4&gt;
+&lt;h4 id=&#34;victim-approach-phase&#34;&gt;Victim Approach Phase&lt;/h4&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -65,7 +75,7 @@
 &lt;ul&gt;
 &lt;li&gt;Exact victim&amp;rsquo;s positions in the company&lt;/li&gt;
 &lt;li&gt;Use of nicknames known only in the company&lt;/li&gt;
-&lt;li&gt;Praising the fole of the victim (e.g., knowing what they do)&lt;/li&gt;
+&lt;li&gt;Praising the role of the victim (e.g., knowing what they do)&lt;/li&gt;
 &lt;li&gt;Belonging to some mailing list&lt;/li&gt;
 &lt;li&gt;Personal interests of the victim&lt;/li&gt;
 &lt;/ul&gt;
@@ -75,7 +85,7 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Who?&lt;/p&gt;
-&lt;p&gt;Usually, Not senior memebers,
+&lt;p&gt;Usually, Not senior members,
 but who closely tied to them (e.g., secretaries, collaborators)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -91,13 +101,13 @@ but who closely tied to them (e.g., secretaries, collaborators)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;How?&lt;/p&gt;
 &lt;p&gt;Spear phishing
-: Spear here is used to differentiating with traiditon phishing, which is crafted for &lt;!-- raw HTML omitted --&gt;a specific victim&lt;!-- raw HTML omitted --&gt;.
+: Spear here is used to differentiating with traditional phishing, which is crafted for &lt;!-- raw HTML omitted --&gt;a specific victim&lt;!-- raw HTML omitted --&gt;.
 Send a targeted email to the vicitm, to lure them into clicking a link, opening an attachment, or revealing some sensitive information.&lt;/p&gt;
 &lt;p&gt;Vishing
 : Make a &lt;!-- raw HTML omitted --&gt;voice phone call&lt;!-- raw HTML omitted --&gt; to lure the victim into believing there is a demand for revealing sensitive information or performing attacker-desired actions.
-The attacker could impersonate a manager/senior meember of the organisation, or pretending to be a colleagure in need, which use the principle of &amp;ldquo;Principle 4: Authority/intimidation&amp;rdquo;.&lt;/p&gt;
+The attacker could impersonate a manager/senior member of the organisation, or pretending to be a colleague in need, which use the principle of &amp;ldquo;Principle 4: Authority/intimidation&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Smishing
-: The attacker choose the most trusted communication method, and sending a text message to vicitims.&lt;/p&gt;
+: The attacker choose the most trusted communication method, and sending a text message to victims.&lt;/p&gt;
 &lt;p&gt;Tailgating
 : Instead of getting information from the victim in previous stragies, tailgating is aim to enter a restricted areas, it can be realised by following people with access, or pretending to be someone with access, for instance, a courier.&lt;/p&gt;
 &lt;p&gt;Quid Pro Quo
@@ -108,11 +118,21 @@ The attacker could impersonate a manager/senior meember of the organisation, or 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Countermeasures&lt;/p&gt;
-&lt;p&gt;The core of social engineering is people, companies need to make regular security training for exmployees in all roles, to make them be aware of the potential strategies of attackers.&lt;/p&gt;
+&lt;h4 id=&#34;watering-hole-attacks&#34;&gt;Watering hole attacks&lt;/h4&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.ncsc.gov.uk/collection/supply-chain-security/watering-hole-attacks&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.ncsc.gov.uk/collection/supply-chain-security/watering-hole-attacks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Watering hole attack is a social engineering attack, aims to exploit websites which frequently visit by target organisation for distribution of malware.&lt;/p&gt;
+&lt;p&gt;Predator animals are used to wait those preys who will come to watering hole for water.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;find a target organisation or group&lt;/li&gt;
+&lt;li&gt;find their frequently visited/viewed websites&lt;/li&gt;
+&lt;li&gt;find the weakness of these websites&lt;/li&gt;
+&lt;li&gt;Inject scripts which could trigger driven-by download attack&lt;/li&gt;
+&lt;li&gt;Victims visit the website and trigger the download attack&lt;/li&gt;
+&lt;li&gt;Malware could be a Remote Access Trojan which can gain remote access to target&amp;rsquo;s system&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;countermeasures&#34;&gt;Countermeasures&lt;/h4&gt;
+&lt;p&gt;The core of social engineering is people, companies need to make &lt;code&gt;regular security training&lt;/code&gt; for employees in all roles, to make them be aware of the potential strategies of attackers.&lt;/p&gt;
 &lt;p&gt;Some strategies to check if you are being a victim of social engineering include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;asking for the correct spelling of their name&lt;/li&gt;
@@ -120,26 +140,26 @@ The attacker could impersonate a manager/senior meember of the organisation, or 
 &lt;li&gt;asking them why they need this information&lt;/li&gt;
 &lt;li&gt;asking them who has authorised the request and let them know that you will verify the authorisation.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;In general, if you suspect a social engineering attempt, report incidents immediately to the company’s security teams. Be skeptical and aware of risks. Look for emails with urgent requests of sensitive information or delicate actions, and typosquatting e-mail addresses.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;In general, if you suspect a social engineering attempt, report incidents immediately to the company’s security teams. Be skeptical and aware of risks.&lt;/p&gt;
+&lt;p&gt;Look for emails with urgent requests of sensitive information or delicate actions, and typosquatting e-mail addresses.&lt;/p&gt;
+</description>
         </item>
         <item>
-        <title>Network Security Assessment</title>
+        <title>SCT Topic 6: Network Reconnaissance and OSINT</title>
         <link>https://ginkgo.org.cn/posts/network_security_assessment/</link>
         <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/network_security_assessment/</guid>
-        <description>&lt;p&gt;&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;&lt;/p&gt;
-&lt;h2 id=&#34;network-security-assessment&#34;&gt;Network Security Assessment&lt;/h2&gt;
-&lt;h3 id=&#34;phase-1-reconnaissance&#34;&gt;Phase 1: Reconnaissance&lt;/h3&gt;
-&lt;p&gt;The initial phase of network security assessment is reconnaissance, in my understanding, this phase is used to gather the information of the target, including hosts, networks, users, services, etc. It is an essential preparation mission before you can really do something to the target.&lt;/p&gt;
-&lt;p&gt;And the recoonaissance could be separated to passive or active.&lt;/p&gt;
-&lt;h4 id=&#34;passive-reconnaissance&#34;&gt;Passive reconnaissance&lt;/h4&gt;
-&lt;p&gt;In this case, &amp;ldquo;passive&amp;rdquo; means you do not directly interact or engage with target system. More specifically, you do not send any type of request to the target, thus the targets have no way of acknowledgement what you are doing.&lt;/p&gt;
-&lt;p&gt;You should use all the tools to gather more information as possible&lt;/p&gt;
-&lt;p&gt;Querying Search Engines and Websites
-There are some typical data you can gather by querying search engines and websites&lt;/p&gt;
+        <description>&lt;h2 id=&#34;sct-topic-6-network-reconnaissance-and-osint&#34;&gt;SCT Topic 6: Network Reconnaissance and OSINT&lt;/h2&gt;
+&lt;p&gt;The initial phase of network security assessment is reconnaissance, in my understanding, this phase is used to gather the information of the target, including hosts, networks, users, services, etc.&lt;/p&gt;
+&lt;p&gt;It is an essential preparation mission before you can really do something to the target.&lt;/p&gt;
+&lt;p&gt;And the reconnaissance could be separated to &lt;code&gt;passive&lt;/code&gt; or &lt;code&gt;active&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;passive-reconnaissance&#34;&gt;Passive reconnaissance&lt;/h3&gt;
+&lt;p&gt;In this case, &lt;code&gt;&amp;quot;passive&amp;quot;&lt;/code&gt; means you do not directly interact or engage with target system. More specifically, you do not send any type of request to the target, thus the targets have no way of acknowledgement what you are doing.&lt;/p&gt;
+&lt;p&gt;You should use all the tools to gather more information as possible (free, open source, commercial tools)&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Querying Search Engines and Websites&lt;/dt&gt;
+&lt;dd&gt;There are some typical data you can gather by querying search engines and websites
 &lt;ul&gt;
 &lt;li&gt;Physical address of office locations&lt;/li&gt;
 &lt;li&gt;Contact details, including email addresses and telephone numbers&lt;/li&gt;
@@ -147,41 +167,25 @@ There are some typical data you can gather by querying search engines and websit
 &lt;li&gt;DNS layout and naming conventions&lt;/li&gt;
 &lt;li&gt;Files residing on publicly accessible servers&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Here are some powerful tools we can use&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol&gt;
-&lt;li&gt;Google Advanced Search&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Here are some powerful tools we can use:&lt;/p&gt;
+&lt;h4 id=&#34;google-advanced-search&#34;&gt;Google Advanced Search&lt;/h4&gt;
 &lt;p&gt;It is very common for us to complain that Google returns some irrelevant results, but actually Google provides some powerful tools to enhance the search, it is the &amp;ldquo;Goolge Advanced search&amp;rdquo;, we can use its syntax to refine our search rules.&lt;/p&gt;
 &lt;p&gt;For example, &amp;ldquo;inurl:program&amp;rdquo; results in all the websites or resources whose url or cotent contains the keyword &amp;ldquo;program&amp;rdquo;, you can even use &amp;ldquo;allinurl:program&amp;rdquo; to query all the url which contains &amp;ldquo;program&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;Another common example is, when you search &amp;ldquo;program moon&amp;rdquo;, the result will probabaly give you a lot of results with &amp;ldquo;program&amp;rdquo; while excluding the keyword &amp;ldquo;moon&amp;rdquo; because obviously there is less result contains moon. However, if you want to search the whole word which contains both &amp;ldquo;program moon&amp;rdquo;, you can surround the keywords with double quotes &amp;ldquo;&amp;ldquo;program moon&amp;rdquo;&amp;rdquo;, powerful isn&amp;rsquo;t it?&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Querying Netcraft&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;Another common example is, when you search &amp;ldquo;program moon&amp;rdquo;, the result will probabaly give you a lot of results with &amp;ldquo;program&amp;rdquo; while excluding the keyword &amp;ldquo;moon&amp;rdquo; because obviously there is less result contains moon.&lt;/p&gt;
+&lt;p&gt;However, if you want to search the whole word which contains both &amp;ldquo;program moon&amp;rdquo;, you can surround the keywords with double quotes &amp;ldquo;&amp;ldquo;program moon&amp;rdquo;&amp;rdquo;, so powerful, isn&amp;rsquo;t it?&lt;/p&gt;
+&lt;h4 id=&#34;querying-netcraft&#34;&gt;Querying Netcraft&lt;/h4&gt;
 &lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://searchdns.netcraft.com/?restriction=site&amp;#43;contains&amp;amp;host=nist.gov&amp;amp;position=limited&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Netcraft Web Application&lt;/a&gt; contains historical server fingerprints, which you can use to check the OS versions or map network blocks of a company&lt;/p&gt;
-&lt;p&gt;The link above shows the result of all recorded NIST government sites with their site, netblock, OS.&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-01_10-47-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+    &gt;Netcraft Web Application&lt;/a&gt; contains &lt;code&gt;historical server fingerprints&lt;/code&gt;, which you can use to check the OS versions or map network blocks of a company&lt;/p&gt;
+&lt;p&gt;The link above shows the result of all recorded &lt;code&gt;NIST government sites&lt;/code&gt; with their site, netblock, OS.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-01_10-47-07_screenshot.png&#34; width=&#34;900px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;Shodan&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h4 id=&#34;shodan&#34;&gt;Shodan&lt;/h4&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://help.shodan.io/the-basics/what-is-shodan&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Shodan&lt;/a&gt; is a powerful search engine for gathering infomration on all devices connected to Internet.
-Use search query syntax(city, country, http.title net, org, port, etc.) to search for the devices information wihthin the whole Internet. Some entries even may list corresponding known vulnerabilities.&lt;/p&gt;
+    &gt;Shodan&lt;/a&gt; is a powerful search engine for gathering information on &lt;code&gt;all devices connected to Internet&lt;/code&gt;.
+Use search query syntax(city, country, http.title net, org, port, etc.) to search for the devices information within the whole Internet. Some entries even may list corresponding known vulnerabilities.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-01_14-50-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
@@ -190,74 +194,54 @@ Use search query syntax(city, country, http.title net, org, port, etc.) to searc
 &lt;li&gt;
 &lt;p&gt;Differences with Google?&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Google queries the resources on World Wide Web, but it is only a tiny fraction of Internet, Shodan&amp;rsquo;s goal is to provide a complete picture of the Internet.&lt;/li&gt;
-&lt;li&gt;Shodan explicityly requires search query syntax.&lt;/li&gt;
+&lt;li&gt;Google queries the resources on &lt;code&gt;World Wide Web&lt;/code&gt;, but it is only a tiny fraction of Internet, Shodan&amp;rsquo;s goal is to provide a complete picture of the Internet.&lt;/li&gt;
+&lt;li&gt;Shodan explicitly requires search query syntax.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;LinkedIn&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;LinkedIn has a lot of personal profile, it is always a good begining for attack like social engineering to dig deeper into an employee and an organisation. The LinkedIn Premium would help to look for people and roles without notifying them.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;Domain WHOIS&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h4 id=&#34;linkedin&#34;&gt;LinkedIn&lt;/h4&gt;
+&lt;p&gt;LinkedIn has a lot of personal profiles, it is always a good beginning for attacks like social engineering to dig deeper into an employee and an organisation. The LinkedIn Premium would help to look for people and roles without notifying them.&lt;/p&gt;
+&lt;h4 id=&#34;domain-whois&#34;&gt;Domain WHOIS&lt;/h4&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://who.is/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;WHOIS&lt;/a&gt; allows you to uncover the details information behind a domain. Typically, it contains:&lt;/p&gt;
+    &gt;WHOIS&lt;/a&gt; allows you to uncover the details information behind a &lt;code&gt;domain&lt;/code&gt;. Typically, it contains:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Administrative contact details&lt;/li&gt;
 &lt;li&gt;Mailing addresses for office locations&lt;/li&gt;
 &lt;li&gt;Details of authoritative name servers for each domain&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;6&#34;&gt;
-&lt;li&gt;Automated Email Enumeration&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The &lt;code&gt;TheHarvester&lt;/code&gt; tool is used for gathering information of emails. sub-domains, hosts, employee names, open ports, and banners from different public sources like search engines, PGP key servers, and SHODAN computer database.&lt;/p&gt;
+&lt;h4 id=&#34;automated-email-enumeration&#34;&gt;Automated Email Enumeration&lt;/h4&gt;
+&lt;p&gt;The &lt;code&gt;TheHarvester&lt;/code&gt; tool is used for gathering information of &lt;!-- raw HTML omitted --&gt;emails, sub-domains, hosts, employee names, open ports, and banners&lt;!-- raw HTML omitted --&gt; from different public sources like &lt;!-- raw HTML omitted --&gt;search engines, PGP key servers, and SHODAN computer database&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
 &lt;p&gt;example 1
 Search email addresses from domain kali.org with results of 200 and using Bing as data source.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;theharvester -d kali.org -l &lt;span class=&#34;m&#34;&gt;200&lt;/span&gt; -b bing
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;example 2&lt;/p&gt;
 &lt;p&gt;Search email addresses from domain nist.gov with results of 50 and using google as data source, finally  saved the resources in myresults.html&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol start=&#34;7&#34;&gt;
-&lt;li&gt;DNS Querying&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h4 id=&#34;dns-querying&#34;&gt;DNS Querying&lt;/h4&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://etutorials.org/Networking/network&amp;#43;security&amp;#43;assessment/Chapter&amp;#43;3.&amp;#43;Internet&amp;#43;Host&amp;#43;and&amp;#43;Network&amp;#43;Enumeration/3.3&amp;#43;DNS&amp;#43;Querying/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;http://etutorials.org/Networking/network+security+assessment/Chapter+3.+Internet+Host+and+Network+Enumeration/3.3+DNS+Querying/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;What information we could retrieve from DNS Querying?
-: Including:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; -   Ahutoritative DNS server information from name server (NS) records
- -   Domain and subdomain information
- -   Hostname information from A, PTR, and CNAME records
- -   Public points of presence taht list mail exchanger (MX) records
-
- In some cases, poorly configured DNS servers also allow you to enumerate:
-
- -   Operating-system and platform information of hosts from the host information (HINFO) record
- -   Names and IP addresses of internal or nonpublic hosts and networks
-&lt;/code&gt;&lt;/pre&gt;
+&lt;dl&gt;
+&lt;dt&gt;What information we could retrieve from DNS Querying?&lt;/dt&gt;
+&lt;dd&gt;Including:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Authoritative DNS server information&lt;/code&gt; from &lt;code&gt;name server (NS) records&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Domain and subdomain information&lt;/li&gt;
+&lt;li&gt;&lt;!-- raw HTML omitted --&gt;Hostname information&lt;!-- raw HTML omitted --&gt; from A, PTR, and CNAME records&lt;/li&gt;
+&lt;li&gt;Public points of presence that list &lt;!-- raw HTML omitted --&gt;mail exchanger (MX) records&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In some cases, poorly configured DNS servers also allow you to enumerate:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Operating-system and platform information&lt;/code&gt; of hosts from the host information (HINFO) record&lt;/li&gt;
+&lt;li&gt;Names and IP addresses of internal or nonpublic hosts and networks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Why it is a passive recon?
-: There is no active scanning or probing of the target networkds, you just probe and query the information with authroitative DNS servers (for those doamins or network blocks taht are often run by ISPs). Meanwhile, most name servers are not aware of these potential sweeps, because they looks like normal DNS traffic.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Why it is a passive recon?&lt;/dt&gt;
+&lt;dd&gt;There is no active scanning or probing of the target networks, you just probe and query the information with authoritative DNS servers (for those domains or network blocks that are often run by ISPs).
+&lt;p&gt;Meanwhile, most name servers are not aware of these potential sweeps, because they looks like normal DNS traffic.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -265,7 +249,7 @@ Search email addresses from domain kali.org with results of 200 and using Bing a
 &lt;p&gt;Legitimate forward query:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;An end user accesses web site&lt;/li&gt;
-&lt;li&gt;During the recipt of email when SMTP mail exchanger ifnormation is requested about the relevant domain&lt;/li&gt;
+&lt;li&gt;During the receipt of email when SMTP mail exchanger information is requested about the relevant domains&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Attacker:
 Issue forward DNS queries to identify mail servers and other obvious Internet-based systems&lt;/p&gt;
@@ -284,12 +268,15 @@ Issue forward DNS queries to identify mail servers and other obvious Internet-ba
 &lt;li&gt;
 &lt;p&gt;DNS Zone transfer Techniques&lt;/p&gt;
 &lt;p&gt;DNS zone
-: A DNS zone file contains all the naming infomration that the name server stores regarding a specific DNS domain, often including details of nonpublic internal networks and other userful information you can use to build an accurate map of the target infrastructure.&lt;/p&gt;
+: A &lt;!-- raw HTML omitted --&gt;DNS zone file&lt;!-- raw HTML omitted --&gt; contains all the naming information that the name server stores regarding a specific DNS domain, often including details of nonpublic internal networks and other userful information you can use to build an accurate map of the target infrastructure.&lt;/p&gt;
 &lt;p&gt;Why we need DNS Zone transfer?
-: In most organisations, they use multiple name server to implement laod balancing and fault tolerance.
-The main name server is known as the primary name server and all subsequent name servers are secondary name servers.
-Either a primary or secondary name server can be queried for name resolution, THUS it is important that each name server have current DNS zone information.
-To ensure this, a secondary name server will regularly requests a complete listing of the computers it is responsible for from the primary.&lt;/p&gt;
+: In most organisations, they use &lt;!-- raw HTML omitted --&gt;multiple name server&lt;!-- raw HTML omitted --&gt; to implement &lt;!-- raw HTML omitted --&gt;load balancing&lt;!-- raw HTML omitted --&gt; and &lt;!-- raw HTML omitted --&gt;fault tolerance&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; The main name server is known as the `primary name server` and all subsequent name servers are `secondary name servers`.
+
+ Either a `primary` or `secondary` name server can be &amp;lt;span class=&amp;quot;underline&amp;quot;&amp;gt;queried for name resolution&amp;lt;/span&amp;gt;, thus, it is important that each name server have current (primary) DNS zone information.
+
+ To ensure this, a `secondary name server` will &amp;lt;span class=&amp;quot;underline&amp;quot;&amp;gt;regularly&amp;lt;/span&amp;gt; requests a complete listing of the computers it is responsible for from the primary.
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Tools used to request DNS zone transfer information include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The Sam Spade Windows client (available from &lt;a class=&#34;link&#34; href=&#34;http://www.samspade.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -304,15 +291,11 @@ To ensure this, a secondary name server will regularly requests a complete listi
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Reverse DNS Sweeping&lt;/p&gt;
-&lt;p&gt;You may notice in previous techniques, they require domain name as parameter, but in this case, we do the opposite thing agains name resolution, we called reverse DNS, it can gather details of hosts that may be protected or filtered but still have DNS hostnames assigned to them. It is also able to identify hosts and potential weaknesses within Internet-based points of presence because it reveals hosts and networks that may not be revealed during DNS zone transfer queries.&lt;/p&gt;
+&lt;p&gt;You may notice in previous techniques, they require domain name as parameter, but in this case, we do the &lt;!-- raw HTML omitted --&gt;opposite&lt;!-- raw HTML omitted --&gt; thing against name resolution, we called &lt;code&gt;reverse DNS&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It can gather details of hosts that may be protected or filtered but still have DNS hostnames assigned to them. It is also able to identify hosts and potential weaknesses within Internet-based points of presence because it reveals hosts and networks that may not be revealed during DNS zone transfer queries.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Countermeasures&lt;/p&gt;
+&lt;h4 id=&#34;countermeasures&#34;&gt;Countermeasures&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Disable directory indexing on Web servers&lt;/li&gt;
 &lt;li&gt;Use “robots.txt” to prevent indexing of certain content by search engines
@@ -322,42 +305,40 @@ but do NOT rely on it to protect sensitive data&lt;/li&gt;
 &lt;li&gt;Prune DNS zone files from unnecessary information&lt;/li&gt;
 &lt;li&gt;Preventing TypoSquatting: you may check if a similar domain is available, if you are Nintendo you may check for alternative domains with small variants (that people may mistype by accident while trying to visit your website).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;active-reconnaissance&#34;&gt;Active reconnaissance&lt;/h4&gt;
-&lt;p&gt;Compare to the passive recoonaissance, ACTIVE means actively interact with target services, network and hosts.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Active Reconnaissance Tools&lt;/p&gt;
+&lt;h3 id=&#34;active-reconnaissance&#34;&gt;Active reconnaissance&lt;/h3&gt;
+&lt;p&gt;Compare to the passive reconnaissance, &lt;code&gt;ACTIVE&lt;/code&gt; means &lt;!-- raw HTML omitted --&gt;actively&lt;!-- raw HTML omitted --&gt; interact with target services, network and hosts.&lt;/p&gt;
+&lt;h4 id=&#34;active-reconnaissance-tools&#34;&gt;Active Reconnaissance Tools&lt;/h4&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://nmap.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Nmap&lt;/a&gt; (&amp;ldquo;Network mapper&amp;rdquo;) is the most used tools to perform Internet network scans, is a free and open source utility for network discovery and security auditing.&lt;/p&gt;
+    &gt;Nmap&lt;/a&gt; (&amp;ldquo;Network mapper&amp;rdquo;) is the most used tools to &lt;!-- raw HTML omitted --&gt;perform Internet network scans&lt;!-- raw HTML omitted --&gt;, is a free and open source utility for network discovery and security auditing.&lt;/p&gt;
 &lt;p&gt;Other commonly used tools include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Nessus&lt;/li&gt;
 &lt;li&gt;Rapid7 Nexpose&lt;/li&gt;
 &lt;li&gt;QualysGuard&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;You always need to use both free and commerical tools to assess the network because the attackers will do the same!&lt;/p&gt;
+&lt;p&gt;You always need to use both free and commercial tools to assess the network because the attackers will do the same!&lt;/p&gt;
 &lt;p&gt;Some types of nmap scans&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;TCP scanning with connection (-sT, the default)&lt;/li&gt;
+&lt;li&gt;TCP scanning with connection (-sT, the default), Connection scans&lt;/li&gt;
 &lt;li&gt;TCP scanning with SYN packets (-sS)&lt;/li&gt;
-&lt;li&gt;TCP scanning through FIN packets (-sF)&lt;/li&gt;
+&lt;li&gt;TCP scanning through FIN (finished, is used to initial to close the connection) packets (-sF), no log file on server&lt;/li&gt;
 &lt;li&gt;TCP scanning empty (-sN)&lt;/li&gt;
 &lt;li&gt;TCP scanning Xmas Tree (FIN + PUSH + URG, -sX)&lt;/li&gt;
 &lt;li&gt;TCP scanning through ACK packets (-sA)&lt;/li&gt;
 &lt;li&gt;TCP canning with Window Size (-sW)&lt;/li&gt;
 &lt;li&gt;TCP scanning through R&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Host Scanning&lt;/p&gt;
-&lt;p&gt;Aim
-: To confirm if a target IP is reachable/active through Internet&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap 10.130.1.43
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;dl&gt;
+&lt;dt&gt;nmap -Sp&lt;/dt&gt;
+&lt;dd&gt;The -sP option sends an ICMP echo request, TCP SYN to port 443, TCP ACK to port 80, and an ICMP timestamp request by default.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;host-scanning&#34;&gt;Host Scanning&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;Aim&lt;/dt&gt;
+&lt;dd&gt;To confirm if a target IP is reachable/active through Internet&lt;/dd&gt;
+&lt;/dl&gt;
 &lt;p&gt;Automated execution of a series of ping commands to determine which systems are active&lt;/p&gt;
 &lt;p&gt;Known Techniques&lt;/p&gt;
 &lt;ul&gt;
@@ -368,40 +349,59 @@ but do NOT rely on it to protect sensitive data&lt;/li&gt;
 &lt;p&gt;ICMP sweep&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Normally, the &amp;ldquo;ping&amp;rdquo; command is used to send ICMP ECHO_REQUEST packet to expect ICMP ECHO_REPLY
-However, it takes too much time in a large-scale networkds because of waiting for the replay sequencly&lt;/p&gt;
+&lt;p&gt;Normally, the &lt;code&gt;&amp;quot;ping&amp;quot;&lt;/code&gt; command is used to send &lt;code&gt;ICMP ECHO_REQUEST&lt;/code&gt; packet to expect &lt;code&gt;ICMP ECHO_REPLY&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;However, it takes &lt;!-- raw HTML omitted --&gt;too much time&lt;!-- raw HTML omitted --&gt; in a large-scale networks because of waiting for the replay sequencly&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Thus, wecould use fping to sends &amp;ldquo;blocks of ping&amp;rdquo;   at the same time to fix this problem&lt;/p&gt;
-&lt;p&gt;Defense against ping and fping scans
-: Block all ICMP traffic&lt;/p&gt;
-&lt;p&gt;Counter-dfense
-: -   scan ports at the transfer layer (TCP/UDP), e.g., through nmap or hping3 to send TCP ACK, you can see an example in Idle scanning later.&lt;/p&gt;
-&lt;/li&gt;
+&lt;p&gt;Thus, we could use &lt;code&gt;fping&lt;/code&gt; to sends &lt;!-- raw HTML omitted --&gt;&amp;ldquo;blocks of ping&amp;rdquo;&lt;!-- raw HTML omitted --&gt; at the same time to fix this problem&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Defense against ping and fping scans&lt;/dt&gt;
+&lt;dd&gt;Block all ICMP traffic&lt;/dd&gt;
+&lt;dt&gt;Counter-defense&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;scan ports at the &lt;!-- raw HTML omitted --&gt;transfer layer (TCP/UDP)&lt;!-- raw HTML omitted --&gt;, e.g., through &lt;code&gt;nmap&lt;/code&gt; or &lt;code&gt;hping3&lt;/code&gt; to send TCP ACK, you can see an example in Idle scanning later.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;port-scanning&#34;&gt;Port Scanning&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;Aim&lt;/dt&gt;
+&lt;dd&gt;Try to connect to &lt;!-- raw HTML omitted --&gt;TCP and UDP ports&lt;!-- raw HTML omitted --&gt; of the target system to determine which network services are &lt;!-- raw HTML omitted --&gt;active&lt;!-- raw HTML omitted --&gt; (or LISTENING).
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap -p(range) &amp;lt;target IP&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;namp -p3389,20-100 10.130.1.43
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;It is important to know the active ports which can by exploited to attack.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;UDP Portscan&lt;/dt&gt;
+&lt;dd&gt;Send a &lt;!-- raw HTML omitted --&gt;zero-length UDP packet&lt;!-- raw HTML omitted --&gt; to each port to determine which UDP services are available, if an &lt;code&gt;ICMP error message&lt;/code&gt; &amp;ldquo;port unreachable&amp;rdquo; is received, it assumed that this service is &lt;!-- raw HTML omitted --&gt;unavailable&lt;!-- raw HTML omitted --&gt;.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap -sU 192.168.1.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/dd&gt;
+&lt;dt&gt;TCP Portscan&lt;/dt&gt;
+&lt;dd&gt;Try to &lt;!-- raw HTML omitted --&gt;establish&lt;!-- raw HTML omitted --&gt; a TCP handshake to all the 65535 ports of the victim host to determine TCP services are available or not:
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;Port Scanning&lt;/p&gt;
-&lt;p&gt;Aim
-: Try to connect to TCP and UDP ports of the target system to determine which network services are active (or LISTENING)&lt;/p&gt;
-&lt;p&gt;It is important to know the active ports which can by exploited to attack&lt;/p&gt;
-&lt;p&gt;UDP Portscan
-: Send a zero-length UDP packet to each port to determine which UDP services are available, if an ICMP error message &amp;ldquo;port unreachable&amp;rdquo; is received, it assumed that this service is unavailable&lt;/p&gt;
-&lt;p&gt;TCP Portscan
-: Try to establish a TCP handshake to all the 65535 ports of the victim host to determine TCP services are available or not
--   Advantage: no need to be root
--   Disadvantage: very noisy&lt;/p&gt;
+&lt;p&gt;Advantage: no need to be root&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Disadvantage: very noisy&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap -sT 192.168.1.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;TCP FIN Scan&lt;/p&gt;
-&lt;p&gt;The attacker sends a FIN-makred (to close TCP connection) packet to victim host&lt;/p&gt;
+&lt;p&gt;The attacker sends a FIN-marked (to close TCP connection) packet to victim host&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;If the port is closed a RST pakcet is sent back&lt;/li&gt;
-&lt;li&gt;If the port is open the FIN pakcet is ignored (timeout)&lt;/li&gt;
+&lt;li&gt;If the port is closed, a &lt;code&gt;RST packet&lt;/code&gt; is sent back&lt;/li&gt;
+&lt;li&gt;If the port is open, the &lt;code&gt;FIN packet&lt;/code&gt; is ignored (timeout)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap -sF 110.130.1.43
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
@@ -410,71 +410,74 @@ However, it takes too much time in a large-scale networkds because of waiting fo
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.icterra.com/what-is-idle-scan/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.icterra.com/what-is-idle-scan/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;How to understand the word &amp;ldquo;idle&amp;rdquo;?
-: &amp;ldquo;Idle&amp;rdquo; is the requirement of the zombie computer, it requires the zombie computer have low network traffic (or better it has almost no traffic). Thus it usually happens overnight.&lt;/p&gt;
-&lt;p&gt;So why we need the zombie computers do not have any other traffic? The reason is directly point to the mechanism of idle scanning. Basically, idle scanning is aim to use zombie computers to &amp;ldquo;relay&amp;rdquo; the scan without exposing attackers, and get the status of service ports.&lt;/p&gt;
-&lt;p&gt;Before we elborate the mechnisms of idle scanning, let&amp;rsquo;s briefly recap the knowledge about the response of SYN segments
-TCP SYN Scanning:
+: &lt;code&gt;&amp;quot;Idle&amp;quot;&lt;/code&gt; is the requirement of the &lt;!-- raw HTML omitted --&gt;zombie computer&lt;!-- raw HTML omitted --&gt;, it requires the zombie computer have &lt;!-- raw HTML omitted --&gt;low network traffic&lt;!-- raw HTML omitted --&gt; (or better it has almost &lt;!-- raw HTML omitted --&gt;no traffic&lt;!-- raw HTML omitted --&gt;). Thus it usually happens &lt;!-- raw HTML omitted --&gt;overnight&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;So why we need the zombie computers do not have any other traffic?&lt;/p&gt;
+&lt;p&gt;The reason is directly pointing to the mechanism of &lt;code&gt;idle scanning&lt;/code&gt;: basically, idle scanning aims to use zombie computers to &amp;ldquo;relay&amp;rdquo; the scan without exposing attackers to victims, and get the status of service ports.&lt;/p&gt;
+&lt;p&gt;Before we elaborate the mechanisms of idle scanning, let&amp;rsquo;s briefly recap the knowledge about the response of SYN segments&lt;/p&gt;
+&lt;p&gt;TCP SYN Scanning:
 AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;If a SYN/ACK segment is sent to a host it responds with RST segment (because there is no correspoonding session which started with a SYN earlier to SYN/ACK)&lt;/li&gt;
-&lt;li&gt;If a SYN segment is sent to a host it responds with a RST if the port closed&lt;/li&gt;
+&lt;li&gt;If a &lt;code&gt;SYN/ACK&lt;/code&gt; segment is sent to a host, it will respond with &lt;code&gt;RST(reset)&lt;/code&gt; segment (because there is no corresponding session which started with a &lt;code&gt;SYN&lt;/code&gt; earlier to &lt;code&gt;SYN/ACK&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a &lt;code&gt;RST(reset)&lt;/code&gt; if the port closed&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;If a SYN segment is sent to a host it responds with a RST if the port closed,&lt;/p&gt;
+&lt;p&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a RST if the port closed,&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-25_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;If a SYN segment is sent to a host it doesn&amp;rsquo;t give a response if the port filtered.&lt;/p&gt;
+&lt;p&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it doesn&amp;rsquo;t give a response if the port &lt;!-- raw HTML omitted --&gt;filtered&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-30_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;Now let&amp;rsquo;s understand the mechanism details with three scanning examples:&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s talk about the mechanism details with three scanning examples:&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Idle Scan (Victim Port Open)&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;The attacker sends a SYN/ACK segment to the Zombie computer&lt;/p&gt;
+&lt;p&gt;The attacker sends a &lt;code&gt;SYN/ACK&lt;/code&gt; segment to the Zombie computer&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Zombie computer responses with RST segment and its IP ID is incremented by &amp;ldquo;one&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Zombie computer responses with &lt;code&gt;RST&lt;/code&gt; segment with its &lt;code&gt;IP ID&lt;/code&gt; is incremented by &amp;ldquo;one&amp;rdquo;&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed SYN segment with Zombie computer&amp;rsquo;s IP address to the Victim&amp;rsquo;s computer&lt;/p&gt;
+&lt;p&gt;Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed &lt;code&gt;SYN&lt;/code&gt; segment with Zombie computer&amp;rsquo;s IP address to the Victim&amp;rsquo;s computer&lt;/p&gt;
+&lt;p&gt;The Attacker pretend to be zombie computer, and communicate with the victim.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-16-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Since the target port is open, the victim computer will response a SYN/ACK segment to Zombie computer.&lt;/p&gt;
+&lt;p&gt;Since the target port is open, the victim computer will response a &lt;code&gt;SYN/ACK&lt;/code&gt; segment to Zombie computer.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-19-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;However, the zombie computer did not establish a session with Victim computer, so when it receive the SYN/ACK segment, it will respond with a RST segment to it, and meanwhile, increases its IP ID by &amp;ldquo;one&amp;rdquo; to 6,163&lt;/p&gt;
+&lt;p&gt;However, the zombie computer did not establish a session with Victim computer, so when it receive the &lt;code&gt;SYN/ACK&lt;/code&gt; segment, it will respond with a &lt;code&gt;RST&lt;/code&gt; segment to it, and meanwhile, increases its &lt;code&gt;IP ID&lt;/code&gt; by &amp;ldquo;one&amp;rdquo; to &lt;!-- raw HTML omitted --&gt;6,163&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-21-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;The attackers want to check the current IP ID, thus they send another SYN/ACK segment to The Zombie computer&lt;/p&gt;
+&lt;p&gt;The attackers want to check the current &lt;code&gt;IP ID&lt;/code&gt;, thus they send another &lt;code&gt;SYN/ACK&lt;/code&gt; segment to The Zombie computer&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-22-07_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;The Zombie computer responds with a RST segment and increases its IP ID by &amp;ldquo;one&amp;rdquo; to 6,164. The attackers check the IP ID is increased by &amp;ldquo;two&amp;rdquo; which could confirm that the victim computer is OPEN.&lt;/p&gt;
+&lt;p&gt;The Zombie computer responds with a &lt;code&gt;RST&lt;/code&gt; segment and increases its &lt;code&gt;IP ID&lt;/code&gt; by &amp;ldquo;one&amp;rdquo; to &lt;!-- raw HTML omitted --&gt;6,164&lt;!-- raw HTML omitted --&gt; then sends to the attacker&lt;/p&gt;
+&lt;p&gt;The attackers check the IP ID is increased by &amp;ldquo;two&amp;rdquo; which could confirm that the victim computer is OPEN.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Based on this, we can also get the reason why we require the victim computer to be &amp;ldquo;idle&amp;rdquo;, otherwise, the increment could be uncertain.&lt;/p&gt;
@@ -485,7 +488,7 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;Idle Scan (Victim Port Closed)&lt;/p&gt;
 &lt;p&gt;So, what if the port is closed?
-This time, the spoofed SYN segment will get the response of RST, which avoid the Zombie computer to interact with Victim computer, and the IP ID did not increase, thus finally we will get the IP ID only increase by &amp;ldquo;one&amp;rdquo;, which indicate the port is closed.&lt;/p&gt;
+This time, the spoofed &lt;code&gt;SYN&lt;/code&gt; segment will not get the response of &lt;code&gt;RST&lt;/code&gt;, which avoid the Zombie computer to interact with Victim computer, and the &lt;code&gt;IP ID&lt;/code&gt; did not increase, thus finally we will get the &lt;code&gt;IP ID&lt;/code&gt; only increase by &amp;ldquo;one&amp;rdquo;, which indicate the port is closed.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
@@ -504,7 +507,7 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Idle Scan (Victim Port Fillterd)&lt;/p&gt;
-&lt;p&gt;If there is a firewall filter the spoofed SYN segment, the Victim computer will not send anything to Zombie computer, which result in the same IP ID as Port closed case.&lt;/p&gt;
+&lt;p&gt;If there is a firewall filter the spoofed &lt;code&gt;SYN&lt;/code&gt; segment, the Victim computer will not send anything to Zombie computer, which result in the same &lt;code&gt;IP ID&lt;/code&gt; as Port closed case.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-31-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
@@ -518,53 +521,44 @@ This time, the spoofed SYN segment will get the response of RST, which avoid the
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;OS Fingerprinting&lt;/p&gt;
-&lt;p&gt;Aim
-: To determine the operating system of a host: Which OS? Which Version?&lt;/p&gt;
+&lt;h4 id=&#34;os-fingerprinting&#34;&gt;OS Fingerprinting&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;Aim&lt;/dt&gt;
+&lt;dd&gt;To determine the operating system of a host: Which OS? Which Version?&lt;/dd&gt;
+&lt;/dl&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nmap -O localhost
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Service Enumeration/Banner Grabbing&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;#+begin_src bash
+nmap -O -PN 192.168.1.1/24
+k#+end_src&lt;/p&gt;
+&lt;h4 id=&#34;service-enumeration-banner-grabbing&#34;&gt;Service Enumeration/Banner Grabbing&lt;/h4&gt;
 &lt;p&gt;By grabbing the headers of exposed services, nmap (option -sV) can try to infer the exact service version&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Nmap Scripting Engine&lt;/p&gt;
+&lt;h4 id=&#34;nmap-scripting-engine&#34;&gt;Nmap Scripting Engine&lt;/h4&gt;
 &lt;p&gt;Nmap provide a series of scripts for checking the vulnerabilities based on open services of victim host&lt;/p&gt;
 &lt;p&gt;Scripts can be found in &lt;em&gt;usr/share/nmap/scripts&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-06_11-32-26_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nmap --secript &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;script name&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;target&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-06_11-32-26_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Mitnick-Shimomura attack&lt;/p&gt;
+&lt;h4 id=&#34;mitnick-shimomura-attack&#34;&gt;Mitnick-Shimomura attack&lt;/h4&gt;
 &lt;p&gt;IP spoofing attack&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;We assume A and B trust each other, they will establish connection without further authentication with each other.&lt;/p&gt;
+&lt;p&gt;And C is the attacker who want to impersonate B with respect to A in opening a TCP connection&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;C first kill B with flooding, crashing or redirecting, then B can&amp;rsquo;t send RST segments back to A&lt;/li&gt;
+&lt;li&gt;C sends a spoofed TCP SYN segment with B&amp;rsquo;s IP address to A, and s_c as the sequence number&lt;/li&gt;
+&lt;li&gt;A replies with a TCP SYN/ACK segment to B with s_s as the sequence number. But B can&amp;rsquo;t reply.&lt;/li&gt;
+&lt;li&gt;C does not receive segment from A, but C wants to continue the connection, so C send an &lt;code&gt;ACK&lt;/code&gt; segment with s_s + 1 as the acknowledgement number
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Countermeasure:&lt;/p&gt;
+&lt;li&gt;C need to guess the sequence number&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;countermeasure&#34;&gt;Countermeasure:&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Block scanning (e.g., ICMP)&lt;/li&gt;
 &lt;li&gt;Check open ports and configuration, to make sure that only appropriate services are exposed.&lt;/li&gt;
 &lt;li&gt;Monitor network activity (e.g., Intrusion Detection System, SIEM)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>

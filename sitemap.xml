@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-05-22T10:02:47+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/ctf/</loc>
     <lastmod>2022-05-22T10:02:47+01:00</lastmod>
@@ -18,13 +18,13 @@
     <lastmod>2022-05-22T10:02:47+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-05-22T10:02:47+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-05-22T10:02:47+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-05-22T10:02:47+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/uri_url_urn/</loc>
     <lastmod>2022-05-21T22:31:18+01:00</lastmod>
@@ -36,13 +36,16 @@
     <lastmod>2022-05-21T22:31:18+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/</loc>
     <lastmod>2022-05-20T11:04:29+01:00</lastmod>
   </url><url>
+    <loc>https://ginkgo.org.cn/posts/sct_topic_4_web_attacks_bypassing_client-side_authentication_and_others/</loc>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
+  </url><url>
     <loc>https://ginkgo.org.cn/tags/security_testing/</loc>
-    <lastmod>2022-05-20T11:04:29+01:00</lastmod>
+    <lastmod>2022-05-22T22:35:14+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/client_side_attacks/</loc>
     <lastmod>2022-05-19T23:52:45+01:00</lastmod>
@@ -117,7 +120,7 @@
     <lastmod>2022-05-20T15:11:39+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/security/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T22:30:20+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/server_side_vul/</loc>
     <lastmod>2022-05-20T15:11:39+01:00</lastmod>
@@ -186,22 +189,22 @@
     <lastmod>2022-03-23T08:55:53+00:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/hacker/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T22:30:20+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/social_engineering/</loc>
-    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
+    <lastmod>2022-05-22T22:30:20+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/social_engineer/</loc>
-    <lastmod>2022-03-19T22:35:22+00:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/posts/network_security_assessment/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T22:30:20+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/osint/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T17:47:56+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/reconnaissance/</loc>
-    <lastmod>2022-05-20T23:49:20+01:00</lastmod>
+    <lastmod>2022-05-22T17:47:56+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/network_security_assessment/</loc>
+    <lastmod>2022-05-22T17:47:56+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
