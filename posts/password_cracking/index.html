@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
-Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
  Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What are the consequences?
- If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'><title>Password Cracking</title>
+ What were the consequences?
+ If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'><title>SCT Topic 8: Password Cracking</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/password_cracking/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Password Cracking'>
-<meta property='og:description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
-Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SCT Topic 8: Password Cracking'>
+<meta property='og:description' content='SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
  Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What are the consequences?
+ What were the consequences?
  If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/password_cracking/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='cryptanalysis' /><meta property='article:tag' content='password_cracking' /><meta property='article:tag' content='rainbow_table_attacks' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-24T11:14:46&#43;01:00'/>
-<meta name="twitter:title" content="Password Cracking">
-<meta name="twitter:description" content="&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;
-Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='cryptanalysis' /><meta property='article:tag' content='password_cracking' /><meta property='article:tag' content='rainbow_table_attacks' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-23T09:41:58&#43;01:00'/>
+<meta name="twitter:title" content="SCT Topic 8: Password Cracking">
+<meta name="twitter:description" content="SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
  Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What are the consequences?
+ What were the consequences?
  If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
@@ -245,7 +242,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/password_cracking/">Password Cracking</a>
+            <a href="/posts/password_cracking/">SCT Topic 8: Password Cracking</a>
         </h2>
     
         
@@ -293,23 +290,22 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <p>&lt;!&ndash;more&ndash;&gt;</p>
-<h2 id="password-cracking">Password Cracking</h2>
+    <h2 id="sct-topic-8-password-cracking">SCT Topic 8: Password Cracking</h2>
 <h3 id="case-study-adobe-password-leak">Case Study: Adobe Password Leak</h3>
 <p>If you are familiar with how online service store users&rsquo;s password, let me ask you:</p>
 <p>How Should You Do?</p>
 <figure><img src="/ox-hugo/2022-03-19_09-43-18_screenshot.png" width="700px"/>
 </figure>
 
-<p>Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.</p>
+<p>Yes, we will use <code>hash algorithm</code>, <code>salt</code> and store the hashed password and salt, which actively avoid the exposion of plaintext password and <!-- raw HTML omitted -->brute force<!-- raw HTML omitted -->.</p>
 <p>But how Adobe Did It?</p>
 <figure><img src="/ox-hugo/2022-03-19_09-46-25_screenshot.png" width="700px"/>
 </figure>
 
-<p>What are the consequences?</p>
+<p>What were the consequences?</p>
 <ol>
-<li>If you get the master key, literally you own all &ldquo;encrypted passwords&rdquo;</li>
-<li>If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.</li>
+<li>If you get the <code>master key</code>, literally you own all &ldquo;encrypted passwords&rdquo;</li>
+<li>If two users choose same password, their encrypted ciphertext are same, consequently, <code>frequently analysis</code> would help hacker to find out the details of encryption process.</li>
 </ol>
 <p>For more details, please refer to this article: <a class="link" href="https://nakedsecurity.sophos.com/2013/11/04/anatomy-of-a-password-disaster-adobes-giant-sized-cryptographic-blunder/"  target="_blank" rel="noopener"
     >Anatomy of a password disaster – Adobe’s giant-sized cryptographic blunder</a></p>
@@ -321,7 +317,7 @@ if (!doNotTrack) {
 <p>In other words, break the cryptographyic algorithms without knowing the key.</p>
 <p>Cryptanalysis are based on:</p>
 <ul>
-<li>The nature of the cryptographyic algorithm</li>
+<li>The nature of the cryptographic algorithm</li>
 <li>the key</li>
 <li>some knowledge on the text, such as language(common words), format or encoding (script, image alway begin with some same pattern),</li>
 <li>a section with both plaintext and encrypted text</li>
@@ -329,9 +325,9 @@ if (!doNotTrack) {
 <h4 id="brute-force-attacks">Brute-force attacks</h4>
 <dl>
 <dt>Brute-force attack</dt>
-<dd>Aim to decrypt an encrypted text by exhaustively traing all possible secret keys until you obtain a meaningful plaintext</dd>
+<dd>Aim to decrypt an encrypted text by exhaustively <code>trying all possible</code> secret keys until you obtain a meaningful plaintext</dd>
 </dl>
-<p>On average, you need to try at least half of all the posssbile keys to be successful</p>
+<p>On average, you need to try at least <code>half of all the possible</code> keys to be successful</p>
 <p>For example, to brute force a 4-digit password, the number of possibilities is 10^4 = 10000, therefore, on average, a brute-force attack in this scenario will succeed after 5000 attempts. If 1 attempt cost 1s, it needs at least 1h24min to finish this work.</p>
 <h4 id="dictionary-attacks">Dictionary attacks</h4>
 <p>4-digit password needs one hour and half? Forget about it, let&rsquo;s to try something not so naive.</p>
@@ -343,25 +339,26 @@ if (!doNotTrack) {
 <p>Common dictionaries for attacks include:</p>
 <ul>
 <li>Words and meaningful fragments of words combination for a certain language</li>
-<li>Personal information (eg, obtained from OSINT or social engineering)</li>
+<li>Personal information (e.g., obtained from OSINT or social engineering)</li>
 <li>Lists of names, locations, dates, companies, etc.</li>
 </ul>
-<p>Therefore, if the attackers use dictionary attack, the password length does not provide too much help on password robustness.</p>
+<p>Therefore, if the attackers use dictionary attack, the <code>password length</code> does not provide too much help on password robustness.</p>
 <h4 id="password-robustness">Password robustness</h4>
 <p>There are four main elements to determine the security of a password</p>
 <dl>
 <dt>Number of symbols in the password</dt>
-<dd>As we mentioned before, 4-digit locker would require on average 10^4/2 seconds, or almost 1.5 hours to bruite force, the longer password, the longer time to brute force.</dd>
+<dd>As we mentioned before, 4-digit locker would require on average 10^4/2 seconds, or almost 1.5 hours to brute force, the longer password, the longer time to brute force.</dd>
 <dt>Number of possibilities for each position</dt>
-<dd>We continue use previous example, if we expand the types of symbols to alphabet and number, the possibilities expand to 36*36*36 for brute force, which requires much more time than 1.5 horus</dd>
+<dd>We continue use previous example, if we expand the types of symbols to alphabet and number, the possibilities expand to 36*36*36 for brute force, which requires much more time than 1.5 hours.</dd>
 <dt>Time required for each attempt</dt>
 <dd>Based on my experience, some online service will delay the login attempt to expand the time of brute force, which may also help to defend the attack like DDoS.</dd>
 <dt>Are there easier alternatives</dt>
-<dd>Remember we metioned in <em>Social Engineering</em>: &ldquo;The easiest way to get the information you want is always by asking the victims themselves&rdquo;? There are always more than one way to get the anser of a question, so does cryptanalysis, you can even physically break the lock:)
-Some other common alternatives:
+<dd>Remember we metioned in <em>Social Engineering</em>: &ldquo;The easiest way to get the information you want is always by asking the victims themselves&rdquo;?
+<p>There are always more than one way to get the answer of a question, so does cryptanalysis, you can even physically break the lock :)</p>
+<p>Some common alternatives:</p>
 <ul>
 <li>finding write-down notes in officers</li>
-<li>shoulder-surfing, ie looking over someone&rsquo;s should when they&rsquo;re typing their passwords</li>
+<li>shoulder-surfing, i.e., looking over someone&rsquo;s shoulder when they&rsquo;re typing their passwords</li>
 <li>physical break-in</li>
 <li>physically stealing passwords lists or logbooks</li>
 </ul>
@@ -370,11 +367,11 @@ Some other common alternatives:
 <h3 id="cryptographic-hash-functions">Cryptographic hash functions</h3>
 <dl>
 <dt>Hash function</dt>
-<dd>A function that maps input data of <code>arbitrary size</code> to <code>fixed-size</code> outoput values called hashes.</dd>
+<dd>A function that maps input data of <code>arbitrary size</code> to <code>fixed-size</code> output values called <code>hashes</code>.</dd>
 <dt>Crytographic hash functions (CHF)</dt>
 <dd>are hash functions more suitable for information security applications which contains ideal following properties:
 <ol>
-<li>deterministic: given message M, its hash H(M) is always the same</li>
+<li>deterministic: given message M, its hash H(M) is <!-- raw HTML omitted -->always<!-- raw HTML omitted --> the same</li>
 <li>quick to compute</li>
 <li>unfeasible to generate message M that has a specific hash value H (hard to find alternative message M')</li>
 <li>unfeasible to find messages M1 and M2 such that H(M1) = H(M2) (hard to find a collision)</li>
@@ -383,25 +380,26 @@ Some other common alternatives:
 </dd>
 </dl>
 <p>Usage of CHF includes MACs (Message Authentication Codes), digital signatures and authentications.</p>
-<p>Let&rsquo;s use an example of CHF</p>
-<p>Left hand column is the input, after crypotographic hash function, we get the output, we called <code>Digest</code> here.</p>
+<p>Let&rsquo;s use an example for better understanding of CHF</p>
+<p>Left hand column is the input, after cryptographic hash function, we get the output, we called <code>Digest</code> here.</p>
 <p>We can observe that, a single character change of input text, the digest would be very different from previous one.</p>
 <figure><img src="/ox-hugo/2022-03-19_14-44-36_screenshot.png" width="700px"/>
 </figure>
 
-<p>As you can easily to guess, there are many problems and attacks which threat the CHF:</p>
+<p>As you can easily guess, there are many problems and attacks which threat the CHF:</p>
 <h4 id="the-birthday-problem--or-the-birthday-paradox">The birthday problem (or the birthday paradox)</h4>
 <p>Let me ask you a classic question, how many people you need in a single room, which makes the probability that at least two person share a birthday to be 50%?</p>
-<p>You need only 23 people to raise probability to 50 per cent.</p>
+<p>You only need 23 people to raise probability to 50 per cent.</p>
 <p>Prove:
-The goal is to compute P(A), the probability that at least two people in the room have same birthday.
-However, it is simpler to caculate the reverse one, P(A&rsquo;), the probability that no two people in the room have the same birthday.
-To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have the same birthday as <code>person 1</code>, and that persona 3 doest not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 thurough 22. Let&rsquo;s number this event as Event1 to Event 23</p>
+The goal is to compute P(A), the probability that at least two people in the room have same birthday.</p>
+<p>However, it is simpler to calculate the reverse one, P(A&rsquo;), the probability that <code>NO</code> two people in the room have the same birthday.</p>
+<p>To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have the same birthday as <code>person 1</code>, and that persona 3 does not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 through 22.</p>
+<p>Let&rsquo;s number this event as Event 1 to Event 23</p>
 <p>Let&rsquo;s calculate the product of the probability of these events:</p>
 <figure><img src="/ox-hugo/2022-03-19_15-31-52_screenshot.png" width="400px"/>
 </figure>
 
-<p>Evaluating equation (2) gives P(A&rsquo;) ≈ 0.492703</p>
+<p>Evaluating equation with (23) gives P(A&rsquo;) ≈ 0.492703</p>
 <p>Therefore, P(A) ≈ 1 − 0.492703 = 0.507297 (50.7297%).</p>
 <p>Also, according to the <a class="link" href="https://en.wikipedia.org/wiki/Pigeonhole_principle"  target="_blank" rel="noopener"
     >pigenhole principle</a>, the probability reaches 100 per cent when at least 367 people are present since there are only 366 possible birthdays.</p>
@@ -412,8 +410,8 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
 <p>This is why we need CHF to have the property to make it feasible to find the collision.</p>
 <h4 id="preimage-attack">Preimage attack</h4>
 <p>The preimage attack aims to find a message that has a specific hash value</p>
-<p>More formally, an adversary &rsquo;tweaks&rsquo; an input message M&rsquo; until H(M&rsquo;)=H(M)</p>
-<p>This attack will put huge harm to the security property: Integrity, because if this kind of tweak success, we can not trust anything, if even it has been hashed.</p>
+<p>More formally, an adversary &ldquo;tweaks&rdquo; an input message M&rsquo; until H(M&rsquo;)=H(M)</p>
+<p>This attack will put huge harm to the security property: Integrity, because if this kind of tweak success, we can not trust anything, even if it has been hashed.</p>
 <p>Let&rsquo;s see an example:</p>
 <ul>
 <li>Message M: Give Mr John Smith a salary increase of £1,000.</li>
@@ -432,13 +430,19 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
 <p>Let&rsquo;s see two programs like this:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Program 1: if (data1 == data1) then { good_program } else { evil_program }
 </span></span><span class="line"><span class="cl">Program 2: if (data2 == data1) then { good_program } else { evil_program }
-</span></span></code></pre></div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.</p>
+</span></span></code></pre></div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the <code>death of MD5</code>.</p>
 <h3 id="rainbow-table-attacks">Rainbow table attacks</h3>
-<p>In this section, we will see a smarter variant of dictionary attack to do the brute froce, it called <strong>precomputed dictionary attack</strong>.</p>
+<p>In this section, we will see a smarter variant of dictionary attack to do the brute force, it called <code>pre-computed dictionary attack</code>.</p>
 <p>In this attack, we will pre-compute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>
 <p>Let&rsquo;s use an example to introduce the terms and processes in a Rainbow Table usage.</p>
+<ul>
+<li>
 <p>The letter <code>H</code> denotes a hash function.</p>
-<p>The letters <code>R_i</code> denote different reduction functions, which are aim to store more plaintext-hashed_text chains in the table (The number and sequences of reduction functions are same in each row).</p>
+</li>
+<li>
+<p>The letters <code>R_i</code> denote different reduction functions, which aim to store more plaintext-hashed-text chains in the table (The number and sequences of reduction functions are same in each row).</p>
+</li>
+</ul>
 <p>We only store two columns of data in a system: 1. The <code>first column</code> (in green) and the <code>last</code> (in yellow).</p>
 <figure><img src="/ox-hugo/2022-03-19_16-33-39_screenshot.png" width="700px"/>
 </figure>
@@ -446,7 +450,7 @@ To calculate P(A&rsquo;), the event is that <code>person 2</code> does not have 
 <h4 id="how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text">How we utilise the rainbow table the plaintext of a given hashed text?</h4>
 <ul>
 <li>Step 0
-We find the hashed text &ldquo;re3xes&rdquo; in /etc/shadow directory of the victim, we want the plaintext of the password, and have a rainbow table which contains two columns (green and yellow).</li>
+We find the hashed text <code>&quot;re3xes&quot;</code> in /etc/shadow directory of the victim, we want the plaintext of this password, and have a rainbow table which contains two columns (green and yellow).</li>
 </ul>
 <figure><img src="/ox-hugo/2022-03-19_16-36-34_screenshot.png" width="700px"/>
 </figure>
@@ -454,7 +458,7 @@ We find the hashed text &ldquo;re3xes&rdquo; in /etc/shadow directory of the vic
 <ul>
 <li>
 <p>Step 1
-We use the reduction function R3 on &ldquo;re3xes&rdquo; (start from last reduction function) and see if the result &ldquo;rambo&rdquo; is in the last column of the rainbow table. In this example it is not.</p>
+We use the reduction function <code>R3</code> on <code>&quot;re3xes&quot;</code> (start from last reduction function) and see if the result &ldquo;rambo&rdquo; is in the last column of the rainbow table. In this example it is not.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-39-37_screenshot.png" width="700px"/>
 </figure>
 
@@ -484,21 +488,28 @@ Start with matched plaintext column &ldquo;passwd&rdquo; and do the reductions t
 <!-- raw HTML omitted -->
 <dl>
 <dt>Summary</dt>
-<dd>We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column. If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.
+<dd>We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column.
+<p>If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-43-11_screenshot.png" width="700px"/>
 </figure>
 
 </dd>
 </dl>
 <h4 id="salt">Salt</h4>
-<p>Remember that I mentioned a term in first section: Salt? Rainbow table attacks and pre-computed dictionary attacks can be thwarted via the use of salt. The reason is very simple, even if you can use pre-computed table based on some common use dictionaries, but you can predict what&rsquo;s the result used.</p>
+<p>Remember that I mentioned a term in first section: Salt?</p>
+<p>Rainbow table attacks and pre-computed dictionary attacks can be thwarted via the use of salt.</p>
+<p>The reason is very simple, even if you can use pre-computed table based on some common use dictionaries, but you can predict what&rsquo;s the salt are used in hashing.</p>
 <p>Here are the most common mistakes in applying salt:</p>
 <ol>
-<li>Using short salts:
-if the salt is too short, the attacker may predict or brute-force pre-computed dictionaries with known salts.</li>
-<li>Reusing salts:
-if you reuse the salt for multiple accounts, the attacker will easil find out that the plaintxt passwords were the same, and use side-channel information (eg, password hints) to corrupt multiple accounts at once.
-Moreover, if the attacker randomly predicted the correct salt while computing a precomputed dicionary, then all the passwords would be compromised at once.</li>
+<li>
+<p>Using short salts:
+if the salt is too short, the attacker may predict or brute-force pre-computed dictionaries with known salts.</p>
+</li>
+<li>
+<p>Reusing salts:
+if you reuse the salt for multiple accounts, the attacker can easily find out that the plaintext passwords were the same, and use side-channel information (e.g., password hints) to corrupt multiple accounts at once.</p>
+<p>Moreover, if the attacker randomly predicted the correct salt while computing a precomputed dicionary, then all the passwords would be compromised at once.</p>
+</li>
 </ol>
 <p>Finally it is important to note that using a ‘salt’ is not robust enough to thwart dictionary attacks, but only the pre-computation.</p>
 <h3 id="countermeasures-and-best-practices">Countermeasures and best practices</h3>
@@ -524,7 +535,7 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 </ul>
 </dd>
 <dt>Words with numbers appended</dt>
-<dd>These can be easily tested automatically by attackers with little lost time.
+<dd>These can be easily tested automatically by attackers with little time cost.
 <ul>
 <li>password1</li>
 <li>deer2000</li>
@@ -615,19 +626,19 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 </dd>
 </dl>
 <h4 id="side-channel-attacks">Side-channel attacks</h4>
-<p>As the name suggest, rather than exploit the weakness of the algorithm itself (eg. cryptanalysis and software bugs), a side-channel attack relies on information gained from the implementation of a computer system.</p>
+<p>As its name suggest, rather than exploiting the weakness of the algorithm itself (eg. cryptanalysis and software bugs), a side-channel attack relies on information gained from the implementation of a computer system.</p>
 <p>For example:</p>
 <ul>
 <li>timing information (eg, implement the encryption, hashing)</li>
-<li>power comsuption</li>
+<li>power consumption</li>
 <li>electromagnetic leaks</li>
 <li>sound</li>
 </ul>
-<p>If you are familar with SQL injection, the blind injection is also a side-channel attacks.</p>
+<p>If you are familar with SQL injection, the time-based blind injection is also a side-channel attacks.</p>
 <p>Let&rsquo;s look at the details of a <code>timeing attack</code>:
-By analyse time taken by the cryptographic algorithm implemenetation operation, the attacker is able to reverse enginner the input.</p>
+By analyse time taken by the cryptographic algorithm implementation operation, the attacker is able to reverse engineer the input.</p>
 <p>In 2003, <a class="link" href="https://id.elsevier.com/as/authorization.oauth2?platSite=SD%2Fscience&amp;scope=openid%20email%20profile%20els_auth_info%20els_idp_info%20els_idp_analytics_attrs%20els_sa_discover%20urn%3Acom%3Aelsevier%3Aidp%3Apolicy%3Aproduct%3Ainst_assoc&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fwww.sciencedirect.com%2Fuser%2Fidentity%2Flanding&amp;authType=SINGLE_SIGN_IN&amp;prompt=login&amp;client_id=SDFE-v3&amp;state=retryCounter%3D0%26csrfToken%3D8db72d04-1503-4c61-852a-86ec787771b8%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst_assoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS1389128605000125%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-7f672742-0676-47c6-9ce3-f01d2dc6f238"  target="_blank" rel="noopener"
-    >Boneh and Brumley</a> publsihed a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.</p>
+    >Boneh and Brumley</a> published a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.</p>
 <h4 id="good-practice-around-passwords">Good practice around passwords</h4>
 <ul>
 <li>Do not reuse passwords
@@ -681,7 +692,7 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
 
 
         <span>
-            Last updated on Apr 24, 2022 11:14 BST
+            Last updated on May 23, 2022 09:41 BST
         </span>
     </section></footer>
 
@@ -747,36 +758,36 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
             
                 
 <article class="">
+    <a href="/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT Topic 9: Exploitation Phase &#43; Industry Guest Seminar</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sct_topic_5_professional_reporting_of_security_testing_findings/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT_Topic_5_Professional_Reporting_of_Security_Testing_Findings</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
     <a href="/posts/sct_topic_1_introduction_to_security_testing/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">SCT Topic 1 Introduction to Security Testing</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/sct_topic_4_web_attacks_bypassing_client-side_authentication_and_others/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">SCT Topic 4: Web Attacks - Bypassing client-side authentication and others</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/dlc_exam_preparation_notes/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">DLC EXAM Preparation Notes</h2>
         </div>
     </a>
 </article>
@@ -956,7 +967,7 @@ By analyse time taken by the cryptographic algorithm implemenetation operation, 
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#password-cracking">Password Cracking</a>
+    <li><a href="#sct-topic-8-password-cracking">SCT Topic 8: Password Cracking</a>
       <ul>
         <li><a href="#case-study-adobe-password-leak">Case Study: Adobe Password Leak</a></li>
         <li><a href="#cryptanalysis-basics">Cryptanalysis basics</a>

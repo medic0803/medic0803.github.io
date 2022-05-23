@@ -6,7 +6,437 @@
         <description>Recent content in course_notes on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 20 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>SCT Topic 9: Exploitation Phase &#43; Industry Guest Seminar</title>
+        <link>https://ginkgo.org.cn/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/</link>
+        <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/</guid>
+        <description>&lt;h2 id=&#34;sct-topic-9-exploitation-phase-plus-industry-guest-seminar&#34;&gt;SCT Topic 9: Exploitation Phase + Industry Guest Seminar&lt;/h2&gt;
+&lt;h3 id=&#34;vulnerabilities-and-exploits&#34;&gt;Vulnerabilities and Exploits&lt;/h3&gt;
+&lt;p&gt;We often see these two terms, and sometimes we even interchangeable use both of them, but what&amp;rsquo;s the difference between them? &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;We should say first there is a &lt;code&gt;vulnerability&lt;/code&gt; found on software or system, and there is an &lt;code&gt;exploit&lt;/code&gt; which is the code that &lt;!-- raw HTML omitted --&gt;takes advantage of&lt;!-- raw HTML omitted --&gt; of the &lt;code&gt;vulnerability&lt;/code&gt; to compromise CIA of the target service. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Furthermore, the distinction between software vulnerability and software bug is: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;vulnerability&lt;/code&gt; derives from a &lt;code&gt;software bug&lt;/code&gt;, which means a &lt;code&gt;vulnerability&lt;/code&gt; must be a &lt;code&gt;software bug&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;But only a &lt;code&gt;software bug&lt;/code&gt; allows attacker to compromise the CIA of a system, it can be called a &lt;code&gt;vulnerability&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;how-to-find-exploits-of-the-vulnerabilities&#34;&gt;How to find exploits of the vulnerabilities?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Zero-day from underground market (be aware of fake exploits, always try to understand the exploit coee before running them) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Authorised sources: Security Focus and Exploit database, searchsploit on kali linux &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;popular-vulnerabilities&#34;&gt;Popular Vulnerabilities&lt;/h3&gt;
+&lt;h4 id=&#34;heartbleed&#34;&gt;Heartbleed&lt;/h4&gt;
+&lt;p&gt;Before we elborate the details of the vulnerability, let&amp;rsquo;s first talk about what is a SSL Heatbeat? &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;SSL Heartbeat&lt;/dt&gt;
+&lt;dd&gt;A message to know that two computer are still connected to each other, it contains information: &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Sender sends a message M of a &lt;code&gt;declared length L&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Receiver allocates a memory buffer of the &lt;code&gt;decalred length L&lt;/code&gt;, copies message M in memory, and reads it back to the sender &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Vulnerability happens due to missing checkgaurd: receiver &lt;code&gt;never&lt;/code&gt; checked the message is actually the same length as claimed to be! &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_15-55-33_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;We can see in above example, in the heartbeat packet, it constains both information client required to return and also sensitive information. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Attacker could require the information more than it should be to let server reveal those sensitive information. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s dig deeper into source code, the root cause back to one line code: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;memcpy(bp, pl, payload) which copy the data without checking the size &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;bp = destination &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;pl = source &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;payload = length &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;How to fix? &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;check if the size which client claimed to return is as same as it required. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;dirty-cow&#34;&gt;Dirty COW&lt;/h4&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://dirtycow.ninja/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://dirtycow.ninja/&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;
+&amp;ldquo;A &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Race_condition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;race condition&lt;/a&gt; was found in the way the Linux kernel&amp;rsquo;s memory subsystem handled the &lt;code&gt;copy-on-write (COW)&lt;/code&gt; breakage of private read-only memory mappings. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;It is a local privilege escalation vulnerability &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Copy-on-write&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Copy-on-write (COW)&lt;/a&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;is a resource-management techniques &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;If a resource is duplicated but not modified &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;the duplicated file is not actually instantiated until the source first change &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;for optimisation of resource usage &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;An unprivileged local user could use this flaw to gain write access to otherwise read-only memory mappings and thus increase their privileges on the system.&amp;rdquo; (&lt;a class=&#34;link&#34; href=&#34;https://bugzilla.redhat.com/show_bug.cgi?id=1384344#&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;RH&lt;/a&gt;) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;This flaw allows an attacker with a local system account to modify on-disk binaries, bypassing the standard permission mechanisms that would prevent modification without an appropriate permission set. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Impact&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;A read-only file can become writable &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Used with remote root access &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Fix: use a copy-on-write flag &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;phpmailer-rce&#34;&gt;PHPMailer RCE&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;PHPMailer Normal Process&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;PHPMailer gets user requests (to send a mail) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;PHPMailer validates user-supplied data (from xxx to xxx, content, &amp;hellip;) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;PHPMailer sends the data to the PHP &lt;code&gt;mail()&lt;/code&gt; function &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;PHPMailer calls the OS command &lt;code&gt;&amp;quot;sendmail&amp;quot;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;dt&gt;sendmail command&lt;/dt&gt;
+&lt;dd&gt;/usr/bin/sendmail -i -t -f &amp;lt;sender&amp;gt; &amp;hellip; &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;-i: don&amp;rsquo;t treat a message content with only a &amp;lsquo;.&amp;rsquo; as the end &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-f: sender: set the envelope sender address &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-t: extract recipients from message headers &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The Issue: PHPMailer does not &lt;code&gt;sanitise&lt;/code&gt; email values properly before sending them to sendmail &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;We can see how PHPMailer validate the user-supplied data, and below is the actually parameters read by &lt;code&gt;sendmail&lt;/code&gt; script &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-31-12_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Then we can compose a payload and inject the malicious command into /var/www/cache/phpcode.php file and the malicious injected code will be executed &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-32-27_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;imagetragick&#34;&gt;ImageTragick&lt;/h4&gt;
+&lt;p&gt;Fun fact, after people make the website of vulnerabilities on ImageMagick, the impact then become gradually serious &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://imagetragick.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://imagetragick.com/&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ImageMagick RCE [CVE-2016-3714]&lt;/p&gt;
+&lt;p&gt;it is a &lt;code&gt;Command injection&lt;/code&gt; vulnerability, due to insufficient parameter filtering during conversion of file formats &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;ImageMagick delegates some tasks to other services, such as wget, but it does not check the parameters which leave space for command injection &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-18-58_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;File Deletion&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-19-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;metasploit-framework&#34;&gt;MetaSploit Framework&lt;/h3&gt;
+&lt;p&gt;MetaSploit framework is a powerful tools, it supports &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Initial &lt;code&gt;reconnaissance phase&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Results can be saved and stored into a database &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Run nmap to check the status of target system &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Vulnerability scanniing&lt;/code&gt; and &lt;code&gt;Execution of exploits&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Exploits can be customised &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Terminology in Metasploit &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Exploit&lt;/dt&gt;
+&lt;dd&gt;the code which attackers or security testers could take advantage of a flaw within a system &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Payload&lt;/dt&gt;
+&lt;dd&gt;The code the attacker wants to be &lt;!-- raw HTML omitted --&gt;return after successful exploits&lt;!-- raw HTML omitted --&gt; on target system (e.g., reverse shell, bind shell) for further interactions &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Shellcode&lt;/dt&gt;
+&lt;dd&gt;Assembly instructions used as payload when the exploitation occurs &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;Module&lt;/dt&gt;
+&lt;dd&gt;Piece of software that can be used by metasploit &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Exploit module: to conduct attack &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Auxiliary module: to support an attack (e.g., scanning) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Post exploitation module &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Listener&lt;/dt&gt;
+&lt;dd&gt;component that waits connection of sorts &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;We will mainly focus on MSFconsole (which is based on command line instructions) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Commands on msfconsole &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;search portscan &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;use auxiliary/scanner/portscan/tcp &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;set rhosts x.x.x.x &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;run &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Every command will follow the context left by previous commands&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;metasploit-exploitation&#34;&gt;MetaSploit Exploitation&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;Main tools&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;msfconsole &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msfpayload &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msfencode &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Initial basic commands&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;msf&amp;gt; show exploits &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msf&amp;gt; show auxiliary &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msf&amp;gt; show options &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msf&amp;gt; search &amp;lt;string&amp;gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;msf&amp;gt; show payloads: platform-speciﬁc pieces of code delivered to the target platform (if you are in an actual exploit, you will see only payloads for that attack) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Meterpreter&lt;/p&gt;
+&lt;p&gt;After the exploitation, meterpreter used as a payload for further interaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;It is a special shell with additional commands &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;screenshot &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;sysinfo &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;shell &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;killav &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;exploitation-example&#34;&gt;Exploitation example&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Initial reconnaissance phase&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nmap -O -vv 172.17.0.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-36-30_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;vsftpd&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;search vsftpd exploits module &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-37-03_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;show options &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-38-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;set rhost and run &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-39-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Exploitation procedures&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Reconnaissance phase (nmap) for target system information (OS version, opened port status) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Search and grep exploits and auxiliary modules &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Select payload for further interactions (reverse shell) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Fill the options for modules and payload &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Run the exploits &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Interact with shells &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>SCT_Topic_5_Professional_Reporting_of_Security_Testing_Findings</title>
+        <link>https://ginkgo.org.cn/posts/sct_topic_5_professional_reporting_of_security_testing_findings/</link>
+        <pubDate>Sun, 22 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/sct_topic_5_professional_reporting_of_security_testing_findings/</guid>
+        <description>&lt;h2 id=&#34;sct-topic-5-professional-reporting-of-security-testing-findings&#34;&gt;SCT Topic 5: Professional Reporting of Security Testing Findings&lt;/h2&gt;
+&lt;h3 id=&#34;taxonomy-of-security-testing-activities&#34;&gt;Taxonomy of security testing activities&lt;/h3&gt;
+&lt;p&gt;This part actually overlap with what we talked about in &lt;a class=&#34;link&#34; href=&#34;https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SCT Topic 1&lt;/a&gt;, you can refer to there for more details. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;vulnerability-assessment&#34;&gt;Vulnerability assessment&lt;/h4&gt;
+&lt;p&gt;Vulnerability assessment (VA) aims to execute the tools to identify vulnerabilities in systems and software. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;To be notice, VA just use the tools and make report and comments based on the result, &lt;code&gt;WITHOUT&lt;/code&gt; any human-driven inspection and further interaction. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;And professional security testers need to use both free and paid tools, because we have to assume attackers also use all tools to scan for vulnerabilities. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;penetration-testing&#34;&gt;Penetration testing&lt;/h4&gt;
+&lt;p&gt;Penetration Testing (PT) simulate the attackers&amp;rsquo; behaviours and try to &amp;ldquo;penetrate&amp;rdquo; into a computer ssytem. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Pre-engagemnt interactions &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Intelligence gathering &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Threat modelling &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Vulnerability analysis &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Exploitation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Post exploitation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Reporting &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;red-teaming&#34;&gt;Red Teaming&lt;/h4&gt;
+&lt;p&gt;Red teaming aims to emulate &lt;code&gt;Tactics, Techniques and Procedures (TTPs)&lt;/code&gt; of adversaries in a more realistic way. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Red Team&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;simulate attackers &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;hired security testers &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Blue Team&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;real-world defenders &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;not informed the attacks in advance &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Differences Between PT and RT&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Penetration testing&lt;/th&gt;
+&lt;th&gt;Red teaming&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Security assessment&lt;/td&gt;
+&lt;td&gt;Methodical&lt;/td&gt;
+&lt;td&gt;Flexible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Restricted scope&lt;/td&gt;
+&lt;td&gt;No rules (without being illegal)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Engagement of 1 - 2 weeks&lt;/td&gt;
+&lt;td&gt;Engagement of between 2 weeks and 6 months&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Scope&lt;/td&gt;
+&lt;td&gt;Generally announced&lt;/td&gt;
+&lt;td&gt;No announcement&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;identifies vulnerabilities&lt;/td&gt;
+&lt;td&gt;Test Blue team on programs, policies, tools and skills&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Red teaming estimate the organisation&amp;rsquo;s with two metrics: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Time To Detect (TTD) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Time to Mitigate (TTM) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;professional-reporting-of-results&#34;&gt;Professional reporting of results&lt;/h3&gt;
+&lt;p&gt;Three fundamental objectives of a professional report: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Describe the findings &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Rate the vulnerabilities &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Explain how the results will affect the customer in the real world &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Possible sections in professional report &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Introduction/Overview &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Scope and objectives &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Deviations from the Statement of Work &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Methodology &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Significant assessment findings (critical findings) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Positive observations &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;findings summary &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Detailed summary &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Appendix &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Essentails details should be elaborated in a report: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Risk, exploitability and impact values
+: -   Risk, how critical a certain vulnerability is &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Exploitability, feasibility of taking advantage of a vulnerability &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Impact, estimation of the damage &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Category
+: -   define the category a vulnerability belongs to &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;e.g., data exposure, access control, validation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Location
+: -   The specific location of the vulnerability within the target system &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Description
+: -   Detailed description, including code examples on how to exploit it and the damage could be done &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Steps to replicate
+: -   Pick the easiest one to replicate the exploitation of vulnerability &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recommendation
+: -   Suggestion about how the client could remediate the vulnerability &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;May include patching guides, temporary hotfixes, or rethinking of system architecture &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;suggestions-for-reporting&#34;&gt;Suggestions for reporting&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Don&amp;rsquo;t show automatically generated report to client &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Rate the vulnerabilities properly (refer to the CIA) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Separate theoretical v.s. real findings &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Make sure vulnerabilities are real &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Reproducibility steps is important &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Remediations and solutions are important &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Standardise all templates &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>SCT Topic 1 Introduction to Security Testing</title>
         <link>https://ginkgo.org.cn/posts/sct_topic_1_introduction_to_security_testing/</link>
         <pubDate>Fri, 20 May 2022 00:00:00 +0000</pubDate>
@@ -4137,28 +4567,27 @@ T4 = T3 - offset + delay/2 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
-        <title>Password Cracking</title>
+        <title>SCT Topic 8: Password Cracking</title>
         <link>https://ginkgo.org.cn/posts/password_cracking/</link>
         <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/password_cracking/</guid>
-        <description>&lt;p&gt;&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt;&lt;/p&gt;
-&lt;h2 id=&#34;password-cracking&#34;&gt;Password Cracking&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;sct-topic-8-password-cracking&#34;&gt;SCT Topic 8: Password Cracking&lt;/h2&gt;
 &lt;h3 id=&#34;case-study-adobe-password-leak&#34;&gt;Case Study: Adobe Password Leak&lt;/h3&gt;
 &lt;p&gt;If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:&lt;/p&gt;
 &lt;p&gt;How Should You Do?&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-43-18_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.&lt;/p&gt;
+&lt;p&gt;Yes, we will use &lt;code&gt;hash algorithm&lt;/code&gt;, &lt;code&gt;salt&lt;/code&gt; and store the hashed password and salt, which actively avoid the exposion of plaintext password and &lt;!-- raw HTML omitted --&gt;brute force&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
 &lt;p&gt;But how Adobe Did It?&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_09-46-25_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;What are the consequences?&lt;/p&gt;
+&lt;p&gt;What were the consequences?&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.&lt;/li&gt;
+&lt;li&gt;If you get the &lt;code&gt;master key&lt;/code&gt;, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;If two users choose same password, their encrypted ciphertext are same, consequently, &lt;code&gt;frequently analysis&lt;/code&gt; would help hacker to find out the details of encryption process.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;For more details, please refer to this article: &lt;a class=&#34;link&#34; href=&#34;https://nakedsecurity.sophos.com/2013/11/04/anatomy-of-a-password-disaster-adobes-giant-sized-cryptographic-blunder/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Anatomy of a password disaster – Adobe’s giant-sized cryptographic blunder&lt;/a&gt;&lt;/p&gt;
@@ -4170,7 +4599,7 @@ T4 = T3 - offset + delay/2 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;In other words, break the cryptographyic algorithms without knowing the key.&lt;/p&gt;
 &lt;p&gt;Cryptanalysis are based on:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The nature of the cryptographyic algorithm&lt;/li&gt;
+&lt;li&gt;The nature of the cryptographic algorithm&lt;/li&gt;
 &lt;li&gt;the key&lt;/li&gt;
 &lt;li&gt;some knowledge on the text, such as language(common words), format or encoding (script, image alway begin with some same pattern),&lt;/li&gt;
 &lt;li&gt;a section with both plaintext and encrypted text&lt;/li&gt;
@@ -4178,9 +4607,9 @@ T4 = T3 - offset + delay/2 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;brute-force-attacks&#34;&gt;Brute-force attacks&lt;/h4&gt;
 &lt;dl&gt;
 &lt;dt&gt;Brute-force attack&lt;/dt&gt;
-&lt;dd&gt;Aim to decrypt an encrypted text by exhaustively traing all possible secret keys until you obtain a meaningful plaintext&lt;/dd&gt;
+&lt;dd&gt;Aim to decrypt an encrypted text by exhaustively &lt;code&gt;trying all possible&lt;/code&gt; secret keys until you obtain a meaningful plaintext&lt;/dd&gt;
 &lt;/dl&gt;
-&lt;p&gt;On average, you need to try at least half of all the posssbile keys to be successful&lt;/p&gt;
+&lt;p&gt;On average, you need to try at least &lt;code&gt;half of all the possible&lt;/code&gt; keys to be successful&lt;/p&gt;
 &lt;p&gt;For example, to brute force a 4-digit password, the number of possibilities is 10^4 = 10000, therefore, on average, a brute-force attack in this scenario will succeed after 5000 attempts. If 1 attempt cost 1s, it needs at least 1h24min to finish this work.&lt;/p&gt;
 &lt;h4 id=&#34;dictionary-attacks&#34;&gt;Dictionary attacks&lt;/h4&gt;
 &lt;p&gt;4-digit password needs one hour and half? Forget about it, let&amp;rsquo;s to try something not so naive.&lt;/p&gt;
@@ -4192,25 +4621,26 @@ T4 = T3 - offset + delay/2 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Common dictionaries for attacks include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Words and meaningful fragments of words combination for a certain language&lt;/li&gt;
-&lt;li&gt;Personal information (eg, obtained from OSINT or social engineering)&lt;/li&gt;
+&lt;li&gt;Personal information (e.g., obtained from OSINT or social engineering)&lt;/li&gt;
 &lt;li&gt;Lists of names, locations, dates, companies, etc.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Therefore, if the attackers use dictionary attack, the password length does not provide too much help on password robustness.&lt;/p&gt;
+&lt;p&gt;Therefore, if the attackers use dictionary attack, the &lt;code&gt;password length&lt;/code&gt; does not provide too much help on password robustness.&lt;/p&gt;
 &lt;h4 id=&#34;password-robustness&#34;&gt;Password robustness&lt;/h4&gt;
 &lt;p&gt;There are four main elements to determine the security of a password&lt;/p&gt;
 &lt;dl&gt;
 &lt;dt&gt;Number of symbols in the password&lt;/dt&gt;
-&lt;dd&gt;As we mentioned before, 4-digit locker would require on average 10^4/2 seconds, or almost 1.5 hours to bruite force, the longer password, the longer time to brute force.&lt;/dd&gt;
+&lt;dd&gt;As we mentioned before, 4-digit locker would require on average 10^4/2 seconds, or almost 1.5 hours to brute force, the longer password, the longer time to brute force.&lt;/dd&gt;
 &lt;dt&gt;Number of possibilities for each position&lt;/dt&gt;
-&lt;dd&gt;We continue use previous example, if we expand the types of symbols to alphabet and number, the possibilities expand to 36*36*36 for brute force, which requires much more time than 1.5 horus&lt;/dd&gt;
+&lt;dd&gt;We continue use previous example, if we expand the types of symbols to alphabet and number, the possibilities expand to 36*36*36 for brute force, which requires much more time than 1.5 hours.&lt;/dd&gt;
 &lt;dt&gt;Time required for each attempt&lt;/dt&gt;
 &lt;dd&gt;Based on my experience, some online service will delay the login attempt to expand the time of brute force, which may also help to defend the attack like DDoS.&lt;/dd&gt;
 &lt;dt&gt;Are there easier alternatives&lt;/dt&gt;
-&lt;dd&gt;Remember we metioned in &lt;em&gt;Social Engineering&lt;/em&gt;: &amp;ldquo;The easiest way to get the information you want is always by asking the victims themselves&amp;rdquo;? There are always more than one way to get the anser of a question, so does cryptanalysis, you can even physically break the lock:)
-Some other common alternatives:
+&lt;dd&gt;Remember we metioned in &lt;em&gt;Social Engineering&lt;/em&gt;: &amp;ldquo;The easiest way to get the information you want is always by asking the victims themselves&amp;rdquo;?
+&lt;p&gt;There are always more than one way to get the answer of a question, so does cryptanalysis, you can even physically break the lock :)&lt;/p&gt;
+&lt;p&gt;Some common alternatives:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;finding write-down notes in officers&lt;/li&gt;
-&lt;li&gt;shoulder-surfing, ie looking over someone&amp;rsquo;s should when they&amp;rsquo;re typing their passwords&lt;/li&gt;
+&lt;li&gt;shoulder-surfing, i.e., looking over someone&amp;rsquo;s shoulder when they&amp;rsquo;re typing their passwords&lt;/li&gt;
 &lt;li&gt;physical break-in&lt;/li&gt;
 &lt;li&gt;physically stealing passwords lists or logbooks&lt;/li&gt;
 &lt;/ul&gt;
@@ -4219,11 +4649,11 @@ Some other common alternatives:
 &lt;h3 id=&#34;cryptographic-hash-functions&#34;&gt;Cryptographic hash functions&lt;/h3&gt;
 &lt;dl&gt;
 &lt;dt&gt;Hash function&lt;/dt&gt;
-&lt;dd&gt;A function that maps input data of &lt;code&gt;arbitrary size&lt;/code&gt; to &lt;code&gt;fixed-size&lt;/code&gt; outoput values called hashes.&lt;/dd&gt;
+&lt;dd&gt;A function that maps input data of &lt;code&gt;arbitrary size&lt;/code&gt; to &lt;code&gt;fixed-size&lt;/code&gt; output values called &lt;code&gt;hashes&lt;/code&gt;.&lt;/dd&gt;
 &lt;dt&gt;Crytographic hash functions (CHF)&lt;/dt&gt;
 &lt;dd&gt;are hash functions more suitable for information security applications which contains ideal following properties:
 &lt;ol&gt;
-&lt;li&gt;deterministic: given message M, its hash H(M) is always the same&lt;/li&gt;
+&lt;li&gt;deterministic: given message M, its hash H(M) is &lt;!-- raw HTML omitted --&gt;always&lt;!-- raw HTML omitted --&gt; the same&lt;/li&gt;
 &lt;li&gt;quick to compute&lt;/li&gt;
 &lt;li&gt;unfeasible to generate message M that has a specific hash value H (hard to find alternative message M&#39;)&lt;/li&gt;
 &lt;li&gt;unfeasible to find messages M1 and M2 such that H(M1) = H(M2) (hard to find a collision)&lt;/li&gt;
@@ -4232,25 +4662,26 @@ Some other common alternatives:
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;Usage of CHF includes MACs (Message Authentication Codes), digital signatures and authentications.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s use an example of CHF&lt;/p&gt;
-&lt;p&gt;Left hand column is the input, after crypotographic hash function, we get the output, we called &lt;code&gt;Digest&lt;/code&gt; here.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s use an example for better understanding of CHF&lt;/p&gt;
+&lt;p&gt;Left hand column is the input, after cryptographic hash function, we get the output, we called &lt;code&gt;Digest&lt;/code&gt; here.&lt;/p&gt;
 &lt;p&gt;We can observe that, a single character change of input text, the digest would be very different from previous one.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_14-44-36_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;As you can easily to guess, there are many problems and attacks which threat the CHF:&lt;/p&gt;
+&lt;p&gt;As you can easily guess, there are many problems and attacks which threat the CHF:&lt;/p&gt;
 &lt;h4 id=&#34;the-birthday-problem--or-the-birthday-paradox&#34;&gt;The birthday problem (or the birthday paradox)&lt;/h4&gt;
 &lt;p&gt;Let me ask you a classic question, how many people you need in a single room, which makes the probability that at least two person share a birthday to be 50%?&lt;/p&gt;
-&lt;p&gt;You need only 23 people to raise probability to 50 per cent.&lt;/p&gt;
+&lt;p&gt;You only need 23 people to raise probability to 50 per cent.&lt;/p&gt;
 &lt;p&gt;Prove:
-The goal is to compute P(A), the probability that at least two people in the room have same birthday.
-However, it is simpler to caculate the reverse one, P(A&amp;rsquo;), the probability that no two people in the room have the same birthday.
-To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt; does not have the same birthday as &lt;code&gt;person 1&lt;/code&gt;, and that persona 3 doest not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 thurough 22. Let&amp;rsquo;s number this event as Event1 to Event 23&lt;/p&gt;
+The goal is to compute P(A), the probability that at least two people in the room have same birthday.&lt;/p&gt;
+&lt;p&gt;However, it is simpler to calculate the reverse one, P(A&amp;rsquo;), the probability that &lt;code&gt;NO&lt;/code&gt; two people in the room have the same birthday.&lt;/p&gt;
+&lt;p&gt;To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt; does not have the same birthday as &lt;code&gt;person 1&lt;/code&gt;, and that persona 3 does not have the same birthday as either person 1 or person 2, and so on, and finally that person 23 does not have the same birthday as any of persons 1 through 22.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s number this event as Event 1 to Event 23&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s calculate the product of the probability of these events:&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_15-31-52_screenshot.png&#34; width=&#34;400px&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;Evaluating equation (2) gives P(A&amp;rsquo;) ≈ 0.492703&lt;/p&gt;
+&lt;p&gt;Evaluating equation with (23) gives P(A&amp;rsquo;) ≈ 0.492703&lt;/p&gt;
 &lt;p&gt;Therefore, P(A) ≈ 1 − 0.492703 = 0.507297 (50.7297%).&lt;/p&gt;
 &lt;p&gt;Also, according to the &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Pigeonhole_principle&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;pigenhole principle&lt;/a&gt;, the probability reaches 100 per cent when at least 367 people are present since there are only 366 possible birthdays.&lt;/p&gt;
@@ -4261,8 +4692,8 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;p&gt;This is why we need CHF to have the property to make it feasible to find the collision.&lt;/p&gt;
 &lt;h4 id=&#34;preimage-attack&#34;&gt;Preimage attack&lt;/h4&gt;
 &lt;p&gt;The preimage attack aims to find a message that has a specific hash value&lt;/p&gt;
-&lt;p&gt;More formally, an adversary &amp;rsquo;tweaks&amp;rsquo; an input message M&amp;rsquo; until H(M&amp;rsquo;)=H(M)&lt;/p&gt;
-&lt;p&gt;This attack will put huge harm to the security property: Integrity, because if this kind of tweak success, we can not trust anything, if even it has been hashed.&lt;/p&gt;
+&lt;p&gt;More formally, an adversary &amp;ldquo;tweaks&amp;rdquo; an input message M&amp;rsquo; until H(M&amp;rsquo;)=H(M)&lt;/p&gt;
+&lt;p&gt;This attack will put huge harm to the security property: Integrity, because if this kind of tweak success, we can not trust anything, even if it has been hashed.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s see an example:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Message M: Give Mr John Smith a salary increase of £1,000.&lt;/li&gt;
@@ -4281,13 +4712,19 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;p&gt;Let&amp;rsquo;s see two programs like this:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Program 1: if (data1 == data1) then { good_program } else { evil_program }
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Program 2: if (data2 == data1) then { good_program } else { evil_program }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the death of MD5.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the &lt;code&gt;death of MD5&lt;/code&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;rainbow-table-attacks&#34;&gt;Rainbow table attacks&lt;/h3&gt;
-&lt;p&gt;In this section, we will see a smarter variant of dictionary attack to do the brute froce, it called &lt;strong&gt;precomputed dictionary attack&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In this section, we will see a smarter variant of dictionary attack to do the brute force, it called &lt;code&gt;pre-computed dictionary attack&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;In this attack, we will pre-compute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &amp;ldquo;hash-chain&amp;rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a &lt;code&gt;rainbow table&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s use an example to introduce the terms and processes in a Rainbow Table usage.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
 &lt;p&gt;The letter &lt;code&gt;H&lt;/code&gt; denotes a hash function.&lt;/p&gt;
-&lt;p&gt;The letters &lt;code&gt;R_i&lt;/code&gt; denote different reduction functions, which are aim to store more plaintext-hashed_text chains in the table (The number and sequences of reduction functions are same in each row).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The letters &lt;code&gt;R_i&lt;/code&gt; denote different reduction functions, which aim to store more plaintext-hashed-text chains in the table (The number and sequences of reduction functions are same in each row).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;We only store two columns of data in a system: 1. The &lt;code&gt;first column&lt;/code&gt; (in green) and the &lt;code&gt;last&lt;/code&gt; (in yellow).&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-33-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
@@ -4295,7 +4732,7 @@ To calculate P(A&amp;rsquo;), the event is that &lt;code&gt;person 2&lt;/code&gt
 &lt;h4 id=&#34;how-we-utilise-the-rainbow-table-the-plaintext-of-a-given-hashed-text&#34;&gt;How we utilise the rainbow table the plaintext of a given hashed text?&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Step 0
-We find the hashed text &amp;ldquo;re3xes&amp;rdquo; in /etc/shadow directory of the victim, we want the plaintext of the password, and have a rainbow table which contains two columns (green and yellow).&lt;/li&gt;
+We find the hashed text &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; in /etc/shadow directory of the victim, we want the plaintext of this password, and have a rainbow table which contains two columns (green and yellow).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-36-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
@@ -4303,7 +4740,7 @@ We find the hashed text &amp;ldquo;re3xes&amp;rdquo; in /etc/shadow directory of
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Step 1
-We use the reduction function R3 on &amp;ldquo;re3xes&amp;rdquo; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
+We use the reduction function &lt;code&gt;R3&lt;/code&gt; on &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
@@ -4333,21 +4770,28 @@ Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the redu
 &lt;!-- raw HTML omitted --&gt;
 &lt;dl&gt;
 &lt;dt&gt;Summary&lt;/dt&gt;
-&lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column. If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.
+&lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column.
+&lt;p&gt;If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;h4 id=&#34;salt&#34;&gt;Salt&lt;/h4&gt;
-&lt;p&gt;Remember that I mentioned a term in first section: Salt? Rainbow table attacks and pre-computed dictionary attacks can be thwarted via the use of salt. The reason is very simple, even if you can use pre-computed table based on some common use dictionaries, but you can predict what&amp;rsquo;s the result used.&lt;/p&gt;
+&lt;p&gt;Remember that I mentioned a term in first section: Salt?&lt;/p&gt;
+&lt;p&gt;Rainbow table attacks and pre-computed dictionary attacks can be thwarted via the use of salt.&lt;/p&gt;
+&lt;p&gt;The reason is very simple, even if you can use pre-computed table based on some common use dictionaries, but you can predict what&amp;rsquo;s the salt are used in hashing.&lt;/p&gt;
 &lt;p&gt;Here are the most common mistakes in applying salt:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Using short salts:
-if the salt is too short, the attacker may predict or brute-force pre-computed dictionaries with known salts.&lt;/li&gt;
-&lt;li&gt;Reusing salts:
-if you reuse the salt for multiple accounts, the attacker will easil find out that the plaintxt passwords were the same, and use side-channel information (eg, password hints) to corrupt multiple accounts at once.
-Moreover, if the attacker randomly predicted the correct salt while computing a precomputed dicionary, then all the passwords would be compromised at once.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Using short salts:
+if the salt is too short, the attacker may predict or brute-force pre-computed dictionaries with known salts.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Reusing salts:
+if you reuse the salt for multiple accounts, the attacker can easily find out that the plaintext passwords were the same, and use side-channel information (e.g., password hints) to corrupt multiple accounts at once.&lt;/p&gt;
+&lt;p&gt;Moreover, if the attacker randomly predicted the correct salt while computing a precomputed dicionary, then all the passwords would be compromised at once.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Finally it is important to note that using a ‘salt’ is not robust enough to thwart dictionary attacks, but only the pre-computation.&lt;/p&gt;
 &lt;h3 id=&#34;countermeasures-and-best-practices&#34;&gt;Countermeasures and best practices&lt;/h3&gt;
@@ -4373,7 +4817,7 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 &lt;/ul&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Words with numbers appended&lt;/dt&gt;
-&lt;dd&gt;These can be easily tested automatically by attackers with little lost time.
+&lt;dd&gt;These can be easily tested automatically by attackers with little time cost.
 &lt;ul&gt;
 &lt;li&gt;password1&lt;/li&gt;
 &lt;li&gt;deer2000&lt;/li&gt;
@@ -4464,19 +4908,19 @@ Moreover, if the attacker randomly predicted the correct salt while computing a 
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;h4 id=&#34;side-channel-attacks&#34;&gt;Side-channel attacks&lt;/h4&gt;
-&lt;p&gt;As the name suggest, rather than exploit the weakness of the algorithm itself (eg. cryptanalysis and software bugs), a side-channel attack relies on information gained from the implementation of a computer system.&lt;/p&gt;
+&lt;p&gt;As its name suggest, rather than exploiting the weakness of the algorithm itself (eg. cryptanalysis and software bugs), a side-channel attack relies on information gained from the implementation of a computer system.&lt;/p&gt;
 &lt;p&gt;For example:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;timing information (eg, implement the encryption, hashing)&lt;/li&gt;
-&lt;li&gt;power comsuption&lt;/li&gt;
+&lt;li&gt;power consumption&lt;/li&gt;
 &lt;li&gt;electromagnetic leaks&lt;/li&gt;
 &lt;li&gt;sound&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;If you are familar with SQL injection, the blind injection is also a side-channel attacks.&lt;/p&gt;
+&lt;p&gt;If you are familar with SQL injection, the time-based blind injection is also a side-channel attacks.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s look at the details of a &lt;code&gt;timeing attack&lt;/code&gt;:
-By analyse time taken by the cryptographic algorithm implemenetation operation, the attacker is able to reverse enginner the input.&lt;/p&gt;
+By analyse time taken by the cryptographic algorithm implementation operation, the attacker is able to reverse engineer the input.&lt;/p&gt;
 &lt;p&gt;In 2003, &lt;a class=&#34;link&#34; href=&#34;https://id.elsevier.com/as/authorization.oauth2?platSite=SD%2Fscience&amp;amp;scope=openid%20email%20profile%20els_auth_info%20els_idp_info%20els_idp_analytics_attrs%20els_sa_discover%20urn%3Acom%3Aelsevier%3Aidp%3Apolicy%3Aproduct%3Ainst_assoc&amp;amp;response_type=code&amp;amp;redirect_uri=https%3A%2F%2Fwww.sciencedirect.com%2Fuser%2Fidentity%2Flanding&amp;amp;authType=SINGLE_SIGN_IN&amp;amp;prompt=login&amp;amp;client_id=SDFE-v3&amp;amp;state=retryCounter%3D0%26csrfToken%3D8db72d04-1503-4c61-852a-86ec787771b8%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst_assoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS1389128605000125%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-7f672742-0676-47c6-9ce3-f01d2dc6f238&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Boneh and Brumley&lt;/a&gt; publsihed a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.&lt;/p&gt;
+    &gt;Boneh and Brumley&lt;/a&gt; published a practical network-based timing attack on SSL-enabled web server, the server key was recovered in a matter of hours using this method.&lt;/p&gt;
 &lt;h4 id=&#34;good-practice-around-passwords&#34;&gt;Good practice around passwords&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Do not reuse passwords
