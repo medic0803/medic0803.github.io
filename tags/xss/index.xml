@@ -297,7 +297,7 @@
 &lt;dt&gt;客户端&lt;/dt&gt;
 &lt;dd&gt;客户端的防御依赖于用户的安全意识以及一些浏览器还有插件的辅助 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
-&lt;li&gt;尽量反问原始网站，不要访问那些后面带着很多GET参数的链接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;尽量访问原始网站，不要访问那些后面带着很多GET参数的链接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;默认关闭JS来避免恶意代码的执行 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;在访问比较敏感的网页的时候尽量不要访问其他的网站 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;及时关闭重启浏览器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;

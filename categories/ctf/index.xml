@@ -620,7 +620,7 @@
 &lt;dt&gt;客户端&lt;/dt&gt;
 &lt;dd&gt;客户端的防御依赖于用户的安全意识以及一些浏览器还有插件的辅助 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
-&lt;li&gt;尽量反问原始网站，不要访问那些后面带着很多GET参数的链接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;尽量访问原始网站，不要访问那些后面带着很多GET参数的链接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;默认关闭JS来避免恶意代码的执行 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;在访问比较敏感的网页的时候尽量不要访问其他的网站 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;及时关闭重启浏览器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -1066,7 +1066,7 @@
 &lt;/dl&gt;
 &lt;h3 id=&#34;5-dot-如何防御sql注入&#34;&gt;5. 如何防御SQL注入&lt;/h3&gt;
 &lt;dl&gt;
-&lt;dt&gt;i. 使用预编译语句&lt;/dt&gt;
+&lt;dt&gt;i. 使用预编译语句 Prepared statement&lt;/dt&gt;
 &lt;dd&gt;顾名思义，就是将SQL语句提前编译，即其最终要执行的操作已经定了，唯一缺少的就是参数，其语义不会再受影响，这也是防御SQL注入的最佳手段 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
 &lt;dt&gt;ii. 检查数据类型&lt;/dt&gt;
 &lt;dd&gt;对于所需要的参数进行严格的类型/格式检查，可以从很大程度上防御SQL注入 (数据类型，邮箱格式，日期格式等) &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;

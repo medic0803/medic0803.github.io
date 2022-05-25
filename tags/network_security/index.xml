@@ -588,7 +588,7 @@ Deter -&amp;gt; Detect -&amp;gt; Deny -&amp;gt; Delay -&amp;gt; Defend &lt;!-- r
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;ARP spoofing attack&lt;/p&gt;
-&lt;p&gt;ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attack的，这样A在给B发frame的时候，就会发给attacker &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attacker的，这样A在给B发frame的时候，就会发给attacker &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-25_10-49-32_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -604,7 +604,7 @@ Deter -&amp;gt; Detect -&amp;gt; Deny -&amp;gt; Delay -&amp;gt; Defend &lt;!-- r
 &lt;li&gt;Attacker可以通过定期发送 ARP spoof packet (every ~40s) 来避免以上方法 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;Statick ARP table 静态ARP表 &lt;!-- raw HTML omitted --&gt;
+&lt;li&gt;Static ARP table 静态ARP表 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;每次启动加载到RAM中 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;没有ARP request主动发送 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -619,7 +619,7 @@ Deter -&amp;gt; Detect -&amp;gt; Deny -&amp;gt; Delay -&amp;gt; Defend &lt;!-- r
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Man-in-the-middle attack with ARP spoofing&lt;/p&gt;
-&lt;p&gt;通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容(attacker node 进而转发通信，因为它知道IP address所对应的正确的MAC address) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-25_10-53-55_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -629,9 +629,9 @@ Deter -&amp;gt; Detect -&amp;gt; Deny -&amp;gt; Delay -&amp;gt; Defend &lt;!-- r
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;MAC flooding&lt;/p&gt;
-&lt;p&gt;每个switch 会内置一个CAM (Content Addressable memory) 表，用于记录不同的MAC address所对应的port number &lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;每个switch 会内置一个 &lt;code&gt;CAM (Content Addressable memory)&lt;/code&gt; 表，用于记录不同的MAC address所对应的port number &lt;!-- raw HTML omitted --&gt;
 每当有frame 讲过switches, switch就会通过这个table 来实现转发 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而被迫广播，使attacker可以利用sniffer所监听到。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而 &lt;code&gt;被迫广播&lt;/code&gt; ，使attacker可以利用sniffer所监听到。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-25_11-04-54_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -645,7 +645,7 @@ Deter -&amp;gt; Detect -&amp;gt; Deny -&amp;gt; Delay -&amp;gt; Defend &lt;!-- r
 &lt;p&gt;DHCP是用来自动的给其他的用户分配IP地址以及其他相关配置的（网关，DNS服务器等）协议 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Protocol operations
 : 1.  Discovery &lt;!-- raw HTML omitted --&gt;
-client 广播DHCP Discovery message来寻找server &lt;!-- raw HTML omitted --&gt;
+-   &lt;code&gt;client&lt;/code&gt; 广播 &lt;code&gt;DHCP Discovery message&lt;/code&gt; 来寻找server &lt;!-- raw HTML omitted --&gt;
 2.  Offer &lt;!-- raw HTML omitted --&gt;
 server单播提供IP给client &lt;!-- raw HTML omitted --&gt;
 3.  Request &lt;!-- raw HTML omitted --&gt;
@@ -662,7 +662,7 @@ server确认client愿意接受并发送IP以及其他的配置信息 &lt;!-- raw
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;DHCP spoofing attack&lt;/p&gt;
-&lt;p&gt;DHCP spoofing 主要是通过向DHCP server发送大量的Spoofed DHCP request message来占用IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;DHCP spoofing 主要是通过向DHCP server发送大量的 &lt;code&gt;Spoofed DHCP request message&lt;/code&gt; 来 &lt;code&gt;占用&lt;/code&gt; IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;正常的DHCP request message： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-26_09-43-14_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
@@ -692,19 +692,19 @@ server确认client愿意接受并发送IP以及其他的配置信息 &lt;!-- raw
 &lt;li&gt;
 &lt;p&gt;ICMP&lt;/p&gt;
 &lt;p&gt;Ping
-: 提到ICMP协议，就不得不提到ping，ping就类似于一个声纳系统，通过向特定的电脑发送ICMP ECHO_REQUEST，来使他们通过返回ECHO_REPLY_REQUEST来验证是否可以通信 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: 提到ICMP协议，就不得不提到ping，ping就类似于一个声纳系统，通过向特定的电脑发送 &lt;code&gt;ICMP ECHO_REQUEST&lt;/code&gt; ，来使他们通过返回 &lt;code&gt;ECHO_REPLY_REQUEST&lt;/code&gt; 来验证是否可以通信 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;ICMP Smurfing&lt;/p&gt;
-&lt;p&gt;Attacker通过向一个局域网的广播域中发送大量的spoofed ICMP ECHO_REQUEST来诱导大量的clients发送 ICMP ECHO_REPLY_REQUEST到指定的一台client进而使其崩溃 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Attacker通过向一个局域网的广播域中发送大量的 &lt;code&gt;spoofed ICMP ECHO_REQUEST&lt;/code&gt; 来诱导大量的clients发送 &lt;code&gt;ICMP ECHO_REPLY_REQUEST&lt;/code&gt; 到指定的一台client进而使其崩溃 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-26_10-11-31_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Amplification
-: 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是Amplification,可以通过多层的amplifiers来实现巨大的DDoS流量 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是 &lt;code&gt;Amplification&lt;/code&gt; ,可以通过多层的amplifiers来实现巨大的DDoS流量 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-26_10-13-55_screenshot.png&#34; width=&#34;700px&#34;/&gt;
 &lt;/figure&gt;
  &amp;lt;br/&amp;gt;

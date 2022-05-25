@@ -9,7 +9,7 @@
 <meta property='og:description' content='Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-30T12:49:52&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-24T21:57:08&#43;01:00'/>
 <meta name="twitter:title" content="NSE Week 3: Spoofing, flooding and amplification">
 <meta name="twitter:description" content="Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -374,7 +374,7 @@ if (!doNotTrack) {
 <ul>
 <li>
 <p>ARP spoofing attack</p>
-<p>ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attack的，这样A在给B发frame的时候，就会发给attacker <!-- raw HTML omitted --></p>
+<p>ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attacker的，这样A在给B发frame的时候，就会发给attacker <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_10-49-32_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -390,7 +390,7 @@ if (!doNotTrack) {
 <li>Attacker可以通过定期发送 ARP spoof packet (every ~40s) 来避免以上方法 <!-- raw HTML omitted --></li>
 </ul>
 </li>
-<li>Statick ARP table 静态ARP表 <!-- raw HTML omitted -->
+<li>Static ARP table 静态ARP表 <!-- raw HTML omitted -->
 <ul>
 <li>每次启动加载到RAM中 <!-- raw HTML omitted --></li>
 <li>没有ARP request主动发送 <!-- raw HTML omitted --></li>
@@ -405,7 +405,7 @@ if (!doNotTrack) {
 <ul>
 <li>
 <p>Man-in-the-middle attack with ARP spoofing</p>
-<p>通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容 <!-- raw HTML omitted --></p>
+<p>通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容(attacker node 进而转发通信，因为它知道IP address所对应的正确的MAC address) <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_10-53-55_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -415,9 +415,9 @@ if (!doNotTrack) {
 <ul>
 <li>
 <p>MAC flooding</p>
-<p>每个switch 会内置一个CAM (Content Addressable memory) 表，用于记录不同的MAC address所对应的port number <!-- raw HTML omitted -->
+<p>每个switch 会内置一个 <code>CAM (Content Addressable memory)</code> 表，用于记录不同的MAC address所对应的port number <!-- raw HTML omitted -->
 每当有frame 讲过switches, switch就会通过这个table 来实现转发 <!-- raw HTML omitted --></p>
-<p>MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而被迫广播，使attacker可以利用sniffer所监听到。 <!-- raw HTML omitted --></p>
+<p>MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而 <code>被迫广播</code> ，使attacker可以利用sniffer所监听到。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_11-04-54_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -431,7 +431,7 @@ if (!doNotTrack) {
 <p>DHCP是用来自动的给其他的用户分配IP地址以及其他相关配置的（网关，DNS服务器等）协议 <!-- raw HTML omitted --></p>
 <p>Protocol operations
 : 1.  Discovery <!-- raw HTML omitted -->
-client 广播DHCP Discovery message来寻找server <!-- raw HTML omitted -->
+-   <code>client</code> 广播 <code>DHCP Discovery message</code> 来寻找server <!-- raw HTML omitted -->
 2.  Offer <!-- raw HTML omitted -->
 server单播提供IP给client <!-- raw HTML omitted -->
 3.  Request <!-- raw HTML omitted -->
@@ -448,7 +448,7 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <ul>
 <li>
 <p>DHCP spoofing attack</p>
-<p>DHCP spoofing 主要是通过向DHCP server发送大量的Spoofed DHCP request message来占用IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 <!-- raw HTML omitted --></p>
+<p>DHCP spoofing 主要是通过向DHCP server发送大量的 <code>Spoofed DHCP request message</code> 来 <code>占用</code> IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 <!-- raw HTML omitted --></p>
 <p>正常的DHCP request message： <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-43-14_screenshot.png" width="700px"/>
 </figure>
@@ -478,19 +478,19 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <li>
 <p>ICMP</p>
 <p>Ping
-: 提到ICMP协议，就不得不提到ping，ping就类似于一个声纳系统，通过向特定的电脑发送ICMP ECHO_REQUEST，来使他们通过返回ECHO_REPLY_REQUEST来验证是否可以通信 <!-- raw HTML omitted --></p>
+: 提到ICMP协议，就不得不提到ping，ping就类似于一个声纳系统，通过向特定的电脑发送 <code>ICMP ECHO_REQUEST</code> ，来使他们通过返回 <code>ECHO_REPLY_REQUEST</code> 来验证是否可以通信 <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>ICMP Smurfing</p>
-<p>Attacker通过向一个局域网的广播域中发送大量的spoofed ICMP ECHO_REQUEST来诱导大量的clients发送 ICMP ECHO_REPLY_REQUEST到指定的一台client进而使其崩溃 <!-- raw HTML omitted --></p>
+<p>Attacker通过向一个局域网的广播域中发送大量的 <code>spoofed ICMP ECHO_REQUEST</code> 来诱导大量的clients发送 <code>ICMP ECHO_REPLY_REQUEST</code> 到指定的一台client进而使其崩溃 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_10-11-31_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>Amplification
-: 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是Amplification,可以通过多层的amplifiers来实现巨大的DDoS流量 <!-- raw HTML omitted --></p>
+: 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是 <code>Amplification</code> ,可以通过多层的amplifiers来实现巨大的DDoS流量 <!-- raw HTML omitted --></p>
 <pre><code> <figure><img src="/ox-hugo/2022-04-26_10-13-55_screenshot.png" width="700px"/>
 </figure>
  &lt;br/&gt;
@@ -759,7 +759,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on Apr 30, 2022 12:49 BST
+            Last updated on May 24, 2022 21:57 BST
         </span>
     </section></footer>
 
