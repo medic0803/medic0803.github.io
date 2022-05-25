@@ -6,7 +6,149 @@
         <description>Recent content in course_notes on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 24 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/course_notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>SCT Topic 10: Advanced Strategies</title>
+        <link>https://ginkgo.org.cn/posts/sct_topic_10_advanced_strategies/</link>
+        <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/sct_topic_10_advanced_strategies/</guid>
+        <description>&lt;h2 id=&#34;sct-topic-10-advanced-strategies&#34;&gt;SCT Topic 10: Advanced Strategies&lt;/h2&gt;
+&lt;h3 id=&#34;stealthiness-strategies&#34;&gt;Stealthiness Strategies&lt;/h3&gt;
+&lt;p&gt;Before launch the attack, the attacker should check AV(anti-virus)/Filters detection, otherwise, their actions will leave some warnings or tracks in the target system &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Encoding (e.g., &lt;code&gt;msfencode&lt;/code&gt;, also use multiple at once), change the encoding of the file, the checking signature of malware analysis may not be triggered. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Transient malware, e.g., run only in memory &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Mimicry, simulate legitimate app process to escape from the anti-virus &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Packers, obfuscate malicious code, and unpack routine at runtime &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: Offline version of AVs offer less functionality &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;persistence-strategies&#34;&gt;Persistence Strategies&lt;/h3&gt;
+&lt;p&gt;Attackers also want to keep their malware running on target system &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Payloads in Metasploit (e.g, reverse shell, meterpreter) for further interactions &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Scheduled Tasks, launch everytime after users rebooting systems &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Backdoors, leave backdoor for further interaction and exploitation &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In BeEf &lt;!-- raw HTML omitted --&gt;
+Stored XSS will remain valid whenever the victims visits the page &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Possible to do some &amp;ldquo;privilege escalation&amp;rdquo; and &amp;ldquo;sandbox evasion&amp;rdquo; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;keep-up-to-date&#34;&gt;Keep up to date&lt;/h3&gt;
+&lt;p&gt;Keep track of what bad guys are doing &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Technical Reports &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;MITRE CVEs - &lt;a class=&#34;link&#34; href=&#34;https://cve.mitre.org/about/documents.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cve.mitre.org/about/documents.html&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Google Project Zero &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Exploit DB &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.reddit.com/r/netsec/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.reddit.com/r/netsec/&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;adversarial-machine-learning&#34;&gt;Adversarial Machine Learning&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;Definition of machine Learning&lt;/dt&gt;
+&lt;dd&gt;A computer program is said to learn from &lt;code&gt;experience E&lt;/code&gt; with respect to some &lt;code&gt;class of tasks T&lt;/code&gt; and &lt;code&gt;performance measure P&lt;/code&gt;, if its performance at tasks in T, as measured by P, improves with experience E &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Tom Mitchell, Machine Learning &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;machine-learning-for-security&#34;&gt;Machine Learning for Security&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;5 Phases of ML for Security&lt;/dt&gt;
+&lt;dd&gt;&lt;ol&gt;
+&lt;li&gt;Data Collection &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Pre-processing and Feature Engineering &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Model Selection and Training &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Testing and Evaluation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Evaluation against Time Evolution and Adversaries &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;machine-learning-algorithms-categories&#34;&gt;Machine Learning Algorithms Categories&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Classification: given a labeled dataset, find a model that separates instances into classes &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Regression: given some points, try to generalise and predict real-valued numbers &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Clustering: given an unlabeled dataset, try to group similar elements &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performance-metrics&#34;&gt;Performance metrics&lt;/h4&gt;
+&lt;p&gt;I used to confuse about the metrics used in ML, I think the difficult point is how to define the &lt;code&gt;Positive&lt;/code&gt; and &lt;code&gt;Negative&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;We assume we are doing a malware classification, thus our target is to determine where a sample is a malware or not? &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;If we decide one program is a malware, we called it &lt;code&gt;Positive&lt;/code&gt; result, otherwise, it is a &lt;code&gt;Negative&lt;/code&gt; result. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thus, a &lt;code&gt;True Positive&lt;/code&gt; means, we think a program is a malware, it is actually a real malware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;a &lt;code&gt;True Negative&lt;/code&gt; means, we think a program is a goodware, it is actually a goodware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;a &lt;code&gt;False Positive&lt;/code&gt; means, we think a program is a malware, but it is actually a goodware, which we also called &lt;code&gt;false alarm&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;a &lt;code&gt;False Negative&lt;/code&gt; means, we think a program is a goodware, but it is actually a malware &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Precision and Recall&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Precision&lt;/code&gt; = TP / (TP + FP), it reflects the machine learning algorithm&amp;rsquo;s performance on &amp;ldquo;How many times you are right?&amp;rdquo;, TP + FP indicates the total sample are labeled by ML as malware (positive) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Recall&lt;/code&gt; = TP / (TP + FN), it reflects &amp;ldquo;How many malware found by you&amp;rdquo;, TP + FN means all the actual malware within the dataset &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;F1-Score&lt;/code&gt; is defined as the &lt;code&gt;harmonic mean&lt;/code&gt; of Precision and Recall &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;F1-Score = 2 x (Precision x Recall) / (Precision + Recall) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Accuracy&lt;/code&gt;  = (TP + TN) / (TP + FP + TN + FN), indicates that all correct decision made by the ML module &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Is Accuracy a good metric in Security? &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Accuracy can be &lt;code&gt;misleading&lt;/code&gt; when datasets are very imbalanced &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;In a malware dataset, the ratio of goodware and malware could be like 1000 : 1, thus it is easily to find benign program than malware, the dataset can easily become 99% &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;evasion&#34;&gt;Evasion&lt;/h4&gt;
+&lt;p&gt;An attacker may try to &lt;code&gt;evade&lt;/code&gt; detection or &lt;code&gt;poison&lt;/code&gt; training data &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-24_15-03-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Spam Filtering&lt;/p&gt;
+&lt;p&gt;Features: presence/absence of words &lt;!-- raw HTML omitted --&gt;
+Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-24_15-04-56_screenshot.png&#34; width=&#34;700px&#34;/&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;adversarial-machine-learning-taxonomy&#34;&gt;Adversarial Machine Learning: Taxonomy&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Test-time Evasion &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Training-time Poisoning &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Inference Attacks &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Model Stealing &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Membership Inference &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Shadow Model Estimation &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>SCT Topic 9: Exploitation Phase &#43; Industry Guest Seminar</title>
         <link>https://ginkgo.org.cn/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/</link>
         <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate>
