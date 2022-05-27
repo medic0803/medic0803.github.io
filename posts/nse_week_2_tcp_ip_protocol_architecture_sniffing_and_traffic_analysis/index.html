@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产'><title>NSE Week 1: Module introduction, security concepts and security attacks</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 2: TCP/IP protocol architecture, sniffing and traffic analysis TCP/IP protocol architecture 什么是网络协议？ Protocol 就是一组相同通信层上的通信规则 主要的内容： Syntax：通信信息的格式 Semantics：如何控'><title>NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</title>
 
-<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 1: Module introduction, security concepts and security attacks'>
-<meta property='og:description' content='NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产'>
-<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis'>
+<meta property='og:description' content='NSE Week 2: TCP/IP protocol architecture, sniffing and traffic analysis TCP/IP protocol architecture 什么是网络协议？ Protocol 就是一组相同通信层上的通信规则 主要的内容： Syntax：通信信息的格式 Semantics：如何控'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-27T21:31:11&#43;01:00'/>
-<meta name="twitter:title" content="NSE Week 1: Module introduction, security concepts and security attacks">
-<meta name="twitter:description" content="NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-28T00:22:55&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis">
+<meta name="twitter:description" content="NSE Week 2: TCP/IP protocol architecture, sniffing and traffic analysis TCP/IP protocol architecture 什么是网络协议？ Protocol 就是一组相同通信层上的通信规则 主要的内容： Syntax：通信信息的格式 Semantics：如何控">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">NSE Week 1: Module introduction, security concepts and security attacks</a>
+            <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</a>
         </h2>
     
         
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    7 minute read
                 </time>
             </div>
         
@@ -275,327 +275,295 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="nse-week-1-module-introduction-security-concepts-and-security-attacks">NSE Week 1: Module introduction, security concepts and security attacks</h2>
-<h3 id="what-is-network-security">What is Network Security?</h3>
-<dl>
-<dt>Cyber security</dt>
-<dd>是关于个人和组织如何减少 cyber attack 的风险 <!-- raw HTML omitted --></dd>
-<dt>Network security</dt>
-<dd>是关于个人和组织如何减少网络攻击的风险 <!-- raw HTML omitted --></dd>
-</dl>
-<p>Risk 风险 : <!-- raw HTML omitted -->
-是关于漏洞利用从而对财产造成损失的可能性 <!-- raw HTML omitted --></p>
-<h3 id="security-concepts">Security Concepts</h3>
-<p>首先我们再来回顾一下Cyber security中，最重要的CIA的概念 <!-- raw HTML omitted --></p>
-<dl>
-<dt>Confidentiality</dt>
-<dd><ul>
-<li>确保保密的信息不暴露给未经授权的人员 <!-- raw HTML omitted --></li>
-<li>Loss of confidentiality = unauthorised disclosure of information <!-- raw HTML omitted --></li>
+    <h2 id="nse-week-2-tcp-ip-protocol-architecture-sniffing-and-traffic-analysis">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+<h3 id="tcp-ip-protocol-architecture">TCP/IP protocol architecture</h3>
+<h4 id="什么是网络协议">什么是网络协议？</h4>
+<p>Protocol 就是一组相同通信层上的通信规则 <!-- raw HTML omitted --></p>
+<p>主要的内容： <!-- raw HTML omitted --></p>
+<ul>
+<li>Syntax：通信信息的格式 <!-- raw HTML omitted --></li>
+<li>Semantics：如何控制信息以及错误 <!-- raw HTML omitted --></li>
+<li>Timing：传输以及数据交换的速度，以及次序 <!-- raw HTML omitted --></li>
 </ul>
-</dd>
-<dt>Integrity</dt>
-<dd><ul>
-<li>
-<p>确保信息和程序只会被授权的人员所修改与处理 <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Loss of integrity = the unauthorised modification or destruction of information <!-- raw HTML omitted --></p>
-</li>
-</ul>
-</dd>
-<dt>Availability</dt>
-<dd><ul>
-<li>
-<p>确保系统正常运行并且不会拒绝授权的用户的访问 <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Loss of availability = the destruction of access to information/system and the destruction of use of information/system <!-- raw HTML omitted --></p>
-</li>
-</ul>
-</dd>
-</dl>
-<p>CIA的重要性需要视情况而定，对于不同的资源/系统，我们需要指定不同的CIA的标准 <!-- raw HTML omitted --></p>
-<h4 id="more-properties-in-cyber-security">More properties in Cyber security</h4>
-<p><figure><img src="/ox-hugo/2022-05-26_16-22-20_screenshot.png" width="700px"/>
+<h4 id="tcp-ip-模型">TCP/IP 模型</h4>
+<p><figure><img src="/ox-hugo/2022-05-27_21-16-56_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<dl>
-<dt>Authentication</dt>
-<dd>确保每一个用户的真实身份都是他们所申明的一致 <!-- raw HTML omitted --></dd>
-<dt>Non-repudiation</dt>
-<dd>确保信息传输的双发不能否认他们接受或者发送过信息 <!-- raw HTML omitted --></dd>
-<dt>Code validation</dt>
-<dd>确保软硬件是健全的（sound），并且检查漏洞 <!-- raw HTML omitted --></dd>
-</dl>
-<h3 id="osi-security-architecture">OSI Security Architecture</h3>
-<p>接下来我们来介绍一下OSI的安全框架 <!-- raw HTML omitted --></p>
-<ol>
-<li>
-<p>Security attack
-: -   任何对组织的信息安全造成危害的行为都称为 security attack <!-- raw HTML omitted --></p>
+<p>每一个协议都作为Alice &amp; Bob在相同层上面的通信规则 <!-- raw HTML omitted --></p>
+<p>我们用一个例子来简单概述一下每一层的作用 <!-- raw HTML omitted --></p>
 <ul>
-<li>Passive or Active <!-- raw HTML omitted --></li>
+<li>比如Alice想要发一个快递给Bob，那么快递里的货物就是Application，是Bob需要使用的物品； <!-- raw HTML omitted --></li>
+<li>那么Transport layer就是是否需要给快递上保险，TCP就是上保险，UDP就是不上保险，如果东西贵重，那么就要TCP，如果丢了也没关系就用UDP <!-- raw HTML omitted --></li>
+<li>接下来快递发出来了，快递单上面要写地址，地址就是IP地址也就是Internet layer的header的双方的IP地址，xx省xx市xx小区这些就是一个个网络，Internet layer就负责进行routing路由，来找到发往这些区域的路径 <!-- raw HTML omitted --></li>
+<li>Network access就是邮编，在中国没有很大的体现，但是在英国，每一幢楼都对应了一个邮编，且是全英唯一的，也就是网络层的MAC地址 <!-- raw HTML omitted --></li>
+<li>最后Physical物理层就是用飞机，高铁，轮船等方式送货，也就对应了，光纤，双绞线这些传输方式 <!-- raw HTML omitted --></li>
 </ul>
-</li>
-<li>
-<p>Security mechanism
-: -   一个用来从security attack中检测，防止和恢复的机制 <!-- raw HTML omitted --></p>
-<ul>
-<li>例如流量检测，预防入侵 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Security service
-: -   一项用来保护组织中的数据处理系统的服务 <!-- raw HTML omitted --></p>
-<ul>
-<li>包含多中Security mechanisms来对抗security attacks <!-- raw HTML omitted --></li>
-</ul>
-</li>
-</ol>
-<p><figure><img src="/ox-hugo/2022-05-26_16-30-51_screenshot.png" width="700px"/>
+<p>接着我们用一个具体的HTTP通信的例子来描述一些细节 <!-- raw HTML omitted --></p>
+<p>HTTP是一个应用层的协议，那么通信的双方都将是应用层，而实际传输到对方应用层的应用上，就需要层层封装信息，然后由路上的路由器，交换机进行拆包之后一步步传递。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-24-21_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<h3 id="philosophy-taken-to-counterattacking">Philosophy taken to counterattacking</h3>
-<ol>
-<li>
-<p>Deter
-: -   组织入侵的发生（在其发生之前进行组织），即使用 <code>fencing 围栏</code>, <code>lighting 完全照明</code>, <code>signs 出入签名</code> 等方式对犯罪者进行被动威慑，从最开始就扼杀入侵的念头 <!-- raw HTML omitted --></p>
-<ul>
-<li>使攻击变得困难，让attacker主动放弃 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Detect
-: -   检测入侵的行为，例如 <code>CCTV 监控</code>, 用来监控和记录所有的入侵行为 <!-- raw HTML omitted --></p>
-<ul>
-<li>Intrusion detection software <!-- raw HTML omitted --></li>
-<li>Traffic analysis and machine learning to detect abnormities <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Deny
-: -   拒绝未经授权的访问，通过一些认证系统来主动拒绝入侵的行为，其中防火墙就属于 <code>Deny</code> <!-- raw HTML omitted --></p>
-<ul>
-<li>Authentication, authorisation, freshness <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Delay
-: -   延缓入侵的速度，通过设置障碍来延长入侵的时间，迫使入侵者放弃或者给予安全团队更多的时间 <!-- raw HTML omitted --></p>
-<ul>
-<li>增加密钥的长度 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Defend
-: -   主动地对入侵者进行打击，通过安全团队或者警方的行动来组织入侵 <!-- raw HTML omitted --></p>
-</li>
-</ol>
-<h3 id="security-mechanisms">Security Mechanisms</h3>
-<dl>
-<dt>Specific security mechanisms</dt>
-<dd><ul>
-<li>May be incorporated into the appropriate protocol layer <!-- raw HTML omitted --></li>
-<li>Provide some of the OSI security service: authentication, access control, data confidentiality, data integrity, and non-repudiation <!-- raw HTML omitted --></li>
-<li>Very much related to popular security properties <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-<dt>Non-specific security mechanisms</dt>
-<dd><ul>
-<li>Not specific to any particular OSI security service or protocol layer <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-</dl>
-<h3 id="cryptographic-techniques">Cryptographic Techniques</h3>
-<p>密码学提供了很多安全服务，例如加密，解密，数据完整性，认证交换，密码存储等服务 <!-- raw HTML omitted --></p>
-<h4 id="encipherment">Encipherment</h4>
-<p>加密通过将明文进行加密，从而来保证confidentiality <!-- raw HTML omitted --></p>
-<p>Two crytovariables in cryptographic funtions <!-- raw HTML omitted --></p>
-<ul>
-<li>The key 密钥 (can be both symmetric or asymmetric) <!-- raw HTML omitted --></li>
-<li>The initial vector (我们在密码学中讲过的随机数，用来参与加密的过程，比如在DES CBC中) <!-- raw HTML omitted --></li>
-</ul>
-<h4 id="cryptographic-protocols">Cryptographic Protocols</h4>
-<p>是通信的双方通过加密传递的信息来预防攻击 <!-- raw HTML omitted --></p>
-<dl>
-<dt>Possible attacks?</dt>
-<dd><ul>
-<li>Cyptoanalysis: recover the plaintext from ciphertext without knowing the key <!-- raw HTML omitted --></li>
-<li>Message/field insertion, deleteion and change (破坏完整性) <!-- raw HTML omitted --></li>
-<li>Relay: 对先前合法的密文重复利用 <!-- raw HTML omitted --></li>
-<li>Man-in-the-middle attack <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-<dt>Countermeasure</dt>
-<dd><ul>
-<li>
-<p>Countermeasures for cryptoanalysis <!-- raw HTML omitted --></p>
-<ul>
-<li>Longer keys (e.g., 2048 bits for RSA, used to be 256 bits) <!-- raw HTML omitted --></li>
-<li>舍弃弱密钥（比如全是0的或者全是1的） <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Countermeasures for message/field insertion, deletion and change <!-- raw HTML omitted --></p>
-<ul>
-<li>Integrity check (hash, MAC, digital signature) <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>Countermeasures for replay attack <!-- raw HTML omitted --></p>
-<ul>
-<li>
-<p>Provide freshness in protocol run <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Timestamp, sequence number, nounce <!-- raw HTML omitted --></p>
-</li>
-</ul>
-</li>
-<li>
-<p>Countermeasure for man-in-the-middle attack <!-- raw HTML omitted --></p>
-<ul>
-<li>
-<p><code>Cryptographic protocols</code> should be designed and verified <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Use formal methods to <code>evaluate</code> security properties of cryptographic protocols <!-- raw HTML omitted --></p>
-</li>
-</ul>
-</li>
-</ul>
-</dd>
-</dl>
-<h4 id="digital-signature">Digital Signature</h4>
-<p>主要通过将额外的bit附加在传输的数据上，从而让接收者可以验证数据的 Integrity <!-- raw HTML omitted --></p>
-<p>可以用来提供authentication, integrity, and non-repudiation,因为数字签名利用asymmetric非对称加密，使用发送方的private key进行加密，接收者则可以用public key来进行解密 <!-- raw HTML omitted --></p>
-<h4 id="authentication-exchange">Authentication Exchange</h4>
-<p>用于发送方和接收方双方互相确认身份 <!-- raw HTML omitted --></p>
-<p>常见的Authentication的方法： <!-- raw HTML omitted --></p>
-<ul>
-<li>Something you know, e.g., password <!-- raw HTML omitted --></li>
-<li>Something you are, e.g., fingerprint <!-- raw HTML omitted --></li>
-<li>Something you have, e.g., smart card, your phone <!-- raw HTML omitted --></li>
-<li>2-factor or multifactor authentication 双重/多重认证 <!-- raw HTML omitted --></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>如何选择身份认证的方法？</p>
-<ol>
-<li>
-<p>如果通信的双方彼此可以信任，同时通信是可靠的 <!-- raw HTML omitted --></p>
-<ul>
-<li>使用密码 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>如何通信的双方是可以信任的，但是通信不可靠 <!-- raw HTML omitted --></p>
-<ul>
-<li>使用密码以及加密协议 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>
-<p>如何什么都不可以信任 <!-- raw HTML omitted --></p>
-<ul>
-<li>使用密码，加密协议以及non-repudiation service <!-- raw HTML omitted --></li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>我们真的需要密码吗？</p>
-<p>剑桥大学发明了一种可携带的设备：<a class="link" href="http://mypico.org/"  target="_blank" rel="noopener"
-    >pico</a>,其存储了所有的credentials信息，并且通过一系列传感器，以及生物特征信息来防止丢失后的信息泄露。 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="other-security-mechanisms--x-dot-800">Other Security mechanisms (X.800)</h4>
-<ol>
-<li>Access control <!-- raw HTML omitted -->
-<ul>
-<li>只允许有限的可授权人员的访问 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Traffic padding <!-- raw HTML omitted -->
-<ul>
-<li>在数据流中加入一些bits，使流量分析受阻，从而保证了confidentiality保密性 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Notarisation 公证 <!-- raw HTML omitted -->
-<ul>
-<li>经过第三方来保证安全的信息传输 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Security audit trail <!-- raw HTML omitted -->
-<ul>
-<li>收集信息来进行安全审计 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Security recovery 数据恢复 <!-- raw HTML omitted --></li>
-<li>Economics <!-- raw HTML omitted -->
-<ul>
-<li>增加attack的成本，比如如果发邮件需要花钱，那垃圾邮件势必会减少 <!-- raw HTML omitted --></li>
-<li>又或者在Bitcoin当中，发起DDoS攻击就以花费大量的transaction fee <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Deception <!-- raw HTML omitted -->
-<ul>
-<li>通过暴露攻击者自己，例如使用蜜罐来获取攻击者的信息 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-</ol>
-<h3 id="jamming-sniffing-and-spoofing">Jamming, Sniffing and Spoofing</h3>
-<h4 id="jamming">Jamming</h4>
-<p>Jamming通过发出大量的noise来影响原本的通信，影响availability <!-- raw HTML omitted --></p>
-<p>例如屏蔽Wifi信号 <!-- raw HTML omitted --></p>
-<p>也可以用在合法的渠道上，比如用在考场或者需要阻断网络的地方 <!-- raw HTML omitted --></p>
-<h4 id="sniffing">Sniffing</h4>
-<p>Sniffing是来监听其他用户的信息 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-27-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>网关和路由器会根据IP header进行路由 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-28-33_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="sniffing">Sniffing</h3>
+<p>Sniffing 嗅探，attacker通过监听网络中的流量来获取他们想要的信息，甚至做出修改。 <!-- raw HTML omitted --></p>
+<p>当然也可以用于网络的debug和诊断。 <!-- raw HTML omitted --></p>
 <p>Network interface card (NIC 网卡)必须设置在 <code>promiscuous mode</code> 来获取所有的包 <!-- raw HTML omitted --></p>
 <p>可以用来 <!-- raw HTML omitted --></p>
 <ul>
 <li>偷听数据包中没有加密的信息 <!-- raw HTML omitted --></li>
 <li>捕捉信息进而使用relay attack <!-- raw HTML omitted --></li>
 </ul>
-<h4 id="spoofing">Spoofing</h4>
-<p>通过伪装来进行攻击，可以修改的内容 <!-- raw HTML omitted --></p>
+<h4 id="promiscuous-mode">Promiscuous mode</h4>
+<p>我们的网卡network interface card (NIC) 有两种模式： <!-- raw HTML omitted --></p>
 <ul>
-<li>Application layer: DNS address, e.g., an URL, an email address <!-- raw HTML omitted --></li>
-<li>Network layer: IP address <!-- raw HTML omitted --></li>
-<li>Link layer: MAC address <!-- raw HTML omitted --></li>
+<li>Promiscuous 不加选择的模式:获取所有网络中的数据包 <!-- raw HTML omitted --></li>
+<li>Non-promiscuous：丢弃所有不经过自己的数据包 <!-- raw HTML omitted --></li>
 </ul>
-<p>Spoofing的种类 <!-- raw HTML omitted --></p>
-<ul>
-<li>Email spoofing: phising <!-- raw HTML omitted --></li>
-<li>Text message spoofing: smishing <!-- raw HTML omitted --></li>
-<li>Call ID spoofing <!-- raw HTML omitted --></li>
-<li>URL spoofing: phishing website <!-- raw HTML omitted --></li>
-<li>DNS spoofing: cache poisoning <!-- raw HTML omitted --></li>
-<li>IP address spoofing: change the source address in an IP packet <!-- raw HTML omitted --></li>
-<li>MAC spoofing: change the MAC address of NIC <!-- raw HTML omitted --></li>
-</ul>
-<h3 id="model-of-network-security">Model of Network Security</h3>
-<p><figure><img src="/ox-hugo/2022-05-27_10-39-28_screenshot.png" width="700px"/>
+<p>如果要实现嗅探，就必须设置为 Promiscuous mode <!-- raw HTML omitted --></p>
+<p>同时我们必须处于Hubs或者WiFi的网络条件下，因为这样才能收到因为广播而接受到的所有数据包 <!-- raw HTML omitted --></p>
+<p>如交换机这种拥有单独的广播域的就不行，无法捕捉到信息 <!-- raw HTML omitted --></p>
+<h4 id="active-interception-port-mirroring">Active Interception - port mirroring</h4>
+<p><code>Port Mirroring</code> 也被称作  <code>SPAN (Switch Port Analyser)</code> <!-- raw HTML omitted --></p>
+<p>通过配置交换机，使其将一对port（或者整个VLAN）所交换的信息，拷贝一份传输到SPAN ports，进而加以分析利用 <!-- raw HTML omitted --></p>
+<p>好的用途：网络诊断，入侵检测分析 <!-- raw HTML omitted -->
+恶意的用途：当攻击者可以通过物理连接这台交换机，他们就可以看到所有的传输流量 <!-- raw HTML omitted --></p>
+<h4 id="active-interception-network-tapping">Active Interception: network tapping</h4>
+<p>Network tapping就是将原本直连的两台设备，连入TAP后，可以访问他们之间的通信，从而加以分析与利用 <!-- raw HTML omitted --></p>
+<p>TAP = Traffic Access Point or Test Access Point 是物理层的一个设备 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-44-56_screenshot.png" width="400px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<h3 id="cryptographic-protocol">Cryptographic protocol</h3>
-<p><figure><img src="/ox-hugo/2022-05-27_10-52-17_screenshot.png" width="700px"/>
+<p>原本的连接方式：直连 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-47-39_screenshot.png" width="400px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>A, B都有自己的symmetric key (K_A, K_B), 同时A想要生成一个共同的key并且分享给B <!-- raw HTML omitted --></p>
+<p>连在Network TAP上之后，就可以用Wireshark来进行监听了 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-48-10_screenshot.png" width="600px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>其具体的原理就是通过RJ45线上的引脚进行连接，Pins1 &amp; Pins2 用于转发数据;Pins3 &amp; Pins6 用于接收数据 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-50-50_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>TAP A 接口的Pins3 and Pins6 （接受数据）分别来与Host A &amp; Host B 的Pins1 和 Pins2 (传输数据）相连接，使HostA传输给HostB的数据都由TAP A所接受 <!-- raw HTML omitted --></p>
+<ul>
+<li>HostA_pins1 -&gt; TapA_pins3 -&gt; HostB_pins1 <!-- raw HTML omitted --></li>
+<li>HostA_pins2 -&gt; TapA_pins6 -&gt; HostB_pins2 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>TAP B 接口的Pins3 and Pins6 （接受数据）分别来与Host A &amp; Host B 的Pins3 和 Pins6（接收数据）相连接，使HostB传输给HostA的数据都由TAP B所接受 <!-- raw HTML omitted --></p>
+<ul>
+<li>HostA_pins3 -&gt; TapB_pins3 -&gt; HostB_pins3 <!-- raw HTML omitted --></li>
+<li>HostA_pins6 -&gt; TapB_pins6 -&gt; HostB_pins6 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<p>从而使TAP_A来接收所有发出的数据，TAP_B则会接收所有接收的数据，一切都会被捕捉 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_21-57-42_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>从而使所有AB之间的数据都可以被我们的分析软件所捕捉和利用 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-00-55_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>不过也可以使用Bypass mode绕过模式来停止复制转发 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-02-58_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="vampire-taps">Vampire taps</h4>
+<p>所谓的“顺着”网线，如下图所示，直接用RJ-45的线实现TAP,海底电缆也可以如此TAP <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-04-18_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="warxing">WarXing</h4>
+<p>使用多种设备进行捕捉 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-06-27_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="rouge-access-point">Rouge Access Point</h4>
+<p>Access point一般是用于创造WLAN供其他设备进行无线连接的设备，一般用于企业，因为其覆盖面积较广，与家用的无线路由器不同的是，其一般没有什么管理功能(e.g., Access control)，只是单纯为了连接 <!-- raw HTML omitted --></p>
+<p>那么Route Access Point就是一个attacker创造的伪装成合法的WiFi来引诱用户连接，从而可以获取用户之间的通信。一般来说attacker会模仿WFi的SSID以及BSSID来进行伪造 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-13-07_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="traffic-analysis">Traffic Analysis</h3>
+<h4 id="data-acquisition">Data Acquisition</h4>
+<p>经过Sniffing之后，我们收集了大量的数据，接下来我们就需要分析与理解这些数据: <!-- raw HTML omitted --></p>
+<p>Who is talking to whom about what? <!-- raw HTML omitted --></p>
+<h4 id="libpcap-library-of-packet-capture">Libpcap：Library of packet capture</h4>
+<p>Libpcap 就是用来分析获取数据的API <!-- raw HTML omitted --></p>
+<p>虽然名字中带有packet，实际上是用来capture frames，包括所有的数据链路层到应用层的数据 <!-- raw HTML omitted --></p>
+<p>Network sniffers可以分析捕捉的网络流量，并保存在 <code>.pcap</code> 文件当中 <!-- raw HTML omitted --></p>
+<p>其核心是BPF： <!-- raw HTML omitted --></p>
+<h4 id="bpf-berkeley-packet-filter">BPF, Berkeley packet filter</h4>
+<p>之前存在的问题：我们之前提到过，sniffer在网卡开启了 promiscuous mode之后，会捕获所有的包，但是其中充斥着大量的我们不想要的数据包，那么接下来进行分析的时候，我们就会花费大量的CPU资源在这些不想要的数据包上 <!-- raw HTML omitted --></p>
+<p>BPF解决了这个效率问题，通过： <!-- raw HTML omitted --></p>
 <ol>
-<li>A发送给K，用E_A加密的新key K_AB，同时指示这是A与B的共同Key <!-- raw HTML omitted --></li>
-<li>K返回给A 用E_B加密的共同Key K_AB以及标识这个Key是由ID_B加密的 <!-- raw HTML omitted --></li>
-<li>A将E_B(K_AB)以及加密的数据发送给B，B就可以用自己的E_B先解密，然后再用得到E_AB来解密数据 <!-- raw HTML omitted --></li>
+<li>在Buffer缓存指定的部分之前就进行过滤 <!-- raw HTML omitted --></li>
+<li>Filter可以由用户自定义 <!-- raw HTML omitted --></li>
+<li>比之前的packet capture tool快了100倍 <!-- raw HTML omitted --></li>
 </ol>
-<p><figure><img src="/ox-hugo/2022-05-27_10-52-42_screenshot.png" width="700px"/>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>BPF的实现</p>
+<p>主要由两个部分： <!-- raw HTML omitted --></p>
+<ul>
+<li>Network tap 用来sniffer获取数据 <!-- raw HTML omitted --></li>
+<li>Packet filter 用来对数据包进行提前过滤，越早越好 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-27_22-58-29_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>Attacker通过拦截并修改A发送给K的请求，从而可以获取K_AB的值，进而可以监听所有的请求 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>BPF filter model</p>
+<p>BPF的过滤器适用directed acyclic control flow graph <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_22-59-24_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>通过上图我们可以看到filter是如何通过各种用户自定义的条件来进行筛选，从而决定是buffer还是丢弃 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="tcpdump">Tcpdump</h4>
+<p>大家耳熟能详的工具Tcpdump就是基于BPF来进行开发的，其提供了强大的功能来进行数据包分析 <!-- raw HTML omitted --></p>
+<h4 id="wireshark">Wireshark</h4>
+<p>Wireshark则提供了更加利于使用的GUI界面 <!-- raw HTML omitted --></p>
+<h4 id="traffic-analysis">Traffic analysis</h4>
+<p>有三种traffic analysis的方法 <!-- raw HTML omitted --></p>
+<ul>
+<li>Protocol analysis: 分析数据包中的协议信息 <!-- raw HTML omitted --></li>
+<li>Packet analysis: 综合分析数据包中的多层协议 <!-- raw HTML omitted --></li>
+<li>Flow analysis: 分析一系列连贯的数据包：Flow <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Protocol analysis</p>
+<p>我们为什么要进行协议分析： <!-- raw HTML omitted --></p>
+<ol>
+<li>了解数据是如何传输的，以及其中协议需要设置的参数是如何的 <!-- raw HTML omitted --></li>
+<li>解析其中的信息 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Packet analysis 数据包分析</p>
+<p>我们为什么需要数据包分析 <!-- raw HTML omitted --></p>
+<ul>
+<li>通过一系列传输的数据包来观察协议 <!-- raw HTML omitted --></li>
+<li>使用数据包以及过滤器来识别感兴趣的数据包 <!-- raw HTML omitted --></li>
+</ul>
+<p>数据包分析需要做些什么？ <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>对于网络专家来说： <!-- raw HTML omitted --></p>
+<ul>
+<li>检测网络是否健康 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>对于安全专家来说： <!-- raw HTML omitted --></p>
+<ul>
+<li>被动的进行漏洞测试（被动地等着漏洞或者攻击出现） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>对于攻击者来说 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>被动的攻击工具 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>窃取信息（密码） <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>实现上和之前说的一样，我们分析的实质上是Frame，其作为链路层的数据封装形式，包含了所有向上的header,能够更好的反应更多的信息 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_23-11-14_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>用于分析的技术
+: -   Pattern matching <!-- raw HTML omitted -->
+-   通过匹配特定参数的值来分析检测特定的数据包，例如 if source IP address = foo <!-- raw HTML omitted -->
+-   Parsing protocol fields <!-- raw HTML omitted -->
+-   从不同layers的header中获取信息，例如Wireshark可以看到整一个IP header的信息 <!-- raw HTML omitted -->
+-   Packet filtering <!-- raw HTML omitted -->
+-   通过protocol来筛选想要分析的数据，比如只查看ICMP包的信息 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Flow analysis 流量分析</p>
+<p>流量分析顾名思义就是对于一组的数据包进行分析 <!-- raw HTML omitted --></p>
+<p>为什么我们要进行流量分析 <!-- raw HTML omitted --></p>
+<ul>
+<li>寻找特征流量（重复的通信） <!-- raw HTML omitted --></li>
+<li>单独隔离可疑的活动并且丢弃不相关的信息 <!-- raw HTML omitted --></li>
+<li>分析更高层的协议，比如HTTP，SSL <!-- raw HTML omitted --></li>
+<li>从流量提取整体数据（比如提取出整一个传输的二进制文件） <!-- raw HTML omitted --></li>
+</ul>
+<p>在Wireshark中我们可以选择HTTP/UDP/TCP Stream进行分析 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_23-17-04_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>其他流量分析技术 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>罗列通信以及流量 <!-- raw HTML omitted --></p>
+<ul>
+<li>可以根据特征信息对数据流进行分类提取 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>数据流导出 <!-- raw HTML omitted --></p>
+<ul>
+<li>导出之后在未来用作他用 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>文件以及数据挖掘 <!-- raw HTML omitted --></p>
+<ul>
+<li>从数据流分析中拼接挖掘出有用的文件以及信息 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>List conversations and flows <!-- raw HTML omitted --></p>
+<ul>
+<li>List all conversations and/or flows within a packet capture or only specific flows based on their characteristics <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Export a flow <!-- raw HTML omitted --></p>
+<ul>
+<li>Isolate a flow or multiple flows, and store the flow(s) of interest to disk for further analysis <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>File and data carving <!-- raw HTML omitted --></p>
+<ul>
+<li>Extract files or other data of interest from the reassembled flow <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
 
 </section>
 
@@ -631,7 +599,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on May 27, 2022 21:31 BST
+            Last updated on May 28, 2022 00:22 BST
         </span>
     </section></footer>
 
@@ -673,12 +641,12 @@ if (!doNotTrack) {
             
                 
 <article class="">
-    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
         </div>
     </a>
 </article>
@@ -906,35 +874,34 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#nse-week-1-module-introduction-security-concepts-and-security-attacks">NSE Week 1: Module introduction, security concepts and security attacks</a>
+    <li><a href="#nse-week-2-tcp-ip-protocol-architecture-sniffing-and-traffic-analysis">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</a>
       <ul>
-        <li><a href="#what-is-network-security">What is Network Security?</a></li>
-        <li><a href="#security-concepts">Security Concepts</a>
+        <li><a href="#tcp-ip-protocol-architecture">TCP/IP protocol architecture</a>
           <ul>
-            <li><a href="#more-properties-in-cyber-security">More properties in Cyber security</a></li>
+            <li><a href="#什么是网络协议">什么是网络协议？</a></li>
+            <li><a href="#tcp-ip-模型">TCP/IP 模型</a></li>
           </ul>
         </li>
-        <li><a href="#osi-security-architecture">OSI Security Architecture</a></li>
-        <li><a href="#philosophy-taken-to-counterattacking">Philosophy taken to counterattacking</a></li>
-        <li><a href="#security-mechanisms">Security Mechanisms</a></li>
-        <li><a href="#cryptographic-techniques">Cryptographic Techniques</a>
+        <li><a href="#sniffing">Sniffing</a>
           <ul>
-            <li><a href="#encipherment">Encipherment</a></li>
-            <li><a href="#cryptographic-protocols">Cryptographic Protocols</a></li>
-            <li><a href="#digital-signature">Digital Signature</a></li>
-            <li><a href="#authentication-exchange">Authentication Exchange</a></li>
-            <li><a href="#other-security-mechanisms--x-dot-800">Other Security mechanisms (X.800)</a></li>
+            <li><a href="#promiscuous-mode">Promiscuous mode</a></li>
+            <li><a href="#active-interception-port-mirroring">Active Interception - port mirroring</a></li>
+            <li><a href="#active-interception-network-tapping">Active Interception: network tapping</a></li>
+            <li><a href="#vampire-taps">Vampire taps</a></li>
+            <li><a href="#warxing">WarXing</a></li>
+            <li><a href="#rouge-access-point">Rouge Access Point</a></li>
           </ul>
         </li>
-        <li><a href="#jamming-sniffing-and-spoofing">Jamming, Sniffing and Spoofing</a>
+        <li><a href="#traffic-analysis">Traffic Analysis</a>
           <ul>
-            <li><a href="#jamming">Jamming</a></li>
-            <li><a href="#sniffing">Sniffing</a></li>
-            <li><a href="#spoofing">Spoofing</a></li>
+            <li><a href="#data-acquisition">Data Acquisition</a></li>
+            <li><a href="#libpcap-library-of-packet-capture">Libpcap：Library of packet capture</a></li>
+            <li><a href="#bpf-berkeley-packet-filter">BPF, Berkeley packet filter</a></li>
+            <li><a href="#tcpdump">Tcpdump</a></li>
+            <li><a href="#wireshark">Wireshark</a></li>
+            <li><a href="#traffic-analysis">Traffic analysis</a></li>
           </ul>
         </li>
-        <li><a href="#model-of-network-security">Model of Network Security</a></li>
-        <li><a href="#cryptographic-protocol">Cryptographic protocol</a></li>
       </ul>
     </li>
   </ul>
