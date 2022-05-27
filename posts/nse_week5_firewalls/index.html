@@ -9,7 +9,7 @@
 <meta property='og:description' content='NSE Week5: Firwalls How to protect edges of the Internet or Internal network? Local area networks (LANs), personal area networks (PANs), wireless local area networks (WLANs), 以及 wireless sensor networks (WSNs) 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week5_firewalls/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-01T13:05:51&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-27T21:06:33&#43;01:00'/>
 <meta name="twitter:title" content="NSE Week5: Firewalls">
 <meta name="twitter:description" content="NSE Week5: Firwalls How to protect edges of the Internet or Internal network? Local area networks (LANs), personal area networks (PANs), wireless local area networks (WLANs), 以及 wireless sensor networks (WSNs) 都属于Internet的最边缘，大多都是个人组织或者家庭所拥有的内部网络，我">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    10 minute read
+                    15 minute read
                 </time>
             </div>
         
@@ -290,33 +290,46 @@ if (!doNotTrack) {
 <li>House cleaning &lt;-&gt; Anti-malicious-software: 杀毒软件 <!-- raw HTML omitted --></li>
 </ul>
 <p>而我们今天要讲的，就是内网的第一道防线，防火墙。 <!-- raw HTML omitted --></p>
-<p>在正式介绍防火墙之前，我们最后再介绍一下针对边界攻击的防御理念：5Ds of Perimeter Security: <!-- raw HTML omitted -->
-Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted --></p>
+<p>在正式介绍防火墙之前，我们最后再介绍一下针对边界攻击的防御理念：5Ds of Perimeter Security: <!-- raw HTML omitted --></p>
+<p>Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>Deter
-: 组织入侵的发生，即使用 <code>fencing 围栏</code>, <code>lighting 完全照明</code>, <code>signs 出入签名</code> 等方式对犯罪者进行被动威慑，从最开始就扼杀入侵的念头 <!-- raw HTML omitted --></p>
+: -   组织入侵的发生（在其发生之前进行组织），即使用 <code>fencing 围栏</code>, <code>lighting 完全照明</code>, <code>signs 出入签名</code> 等方式对犯罪者进行被动威慑，从最开始就扼杀入侵的念头 <!-- raw HTML omitted --></p>
+<ul>
+<li>使攻击变得困难，让attacker主动放弃 <!-- raw HTML omitted --></li>
+</ul>
 </li>
 <li>
 <p>Detect
-: 检测入侵的行为，例如 <code>CCTV 监控</code>, 用来监控和记录所有的入侵行为 <!-- raw HTML omitted --></p>
+: -   检测入侵的行为，例如 <code>CCTV 监控</code>, 用来监控和记录所有的入侵行为 <!-- raw HTML omitted --></p>
+<ul>
+<li>Intrusion detection software <!-- raw HTML omitted --></li>
+<li>Traffic analysis and machine learning to detect abnormities <!-- raw HTML omitted --></li>
+</ul>
 </li>
 <li>
 <p>Deny
-: 拒绝危险的进入，通过一些认证系统来主动拒绝入侵的行为，其中防火墙就属于 <code>Deny</code> <!-- raw HTML omitted --></p>
+: -   拒绝未经授权的访问，通过一些认证系统来主动拒绝入侵的行为，其中防火墙就属于 <code>Deny</code> <!-- raw HTML omitted --></p>
+<ul>
+<li>Authentication, authorisation, freshness <!-- raw HTML omitted --></li>
+</ul>
 </li>
 <li>
 <p>Delay
-: 延缓入侵的速度，通过设置障碍来延长入侵的时间，迫使入侵者放弃或者给予安全团队更多的时间 <!-- raw HTML omitted --></p>
+: -   延缓入侵的速度，通过设置障碍来延长入侵的时间，迫使入侵者放弃或者给予安全团队更多的时间 <!-- raw HTML omitted --></p>
+<ul>
+<li>增加密钥的长度 <!-- raw HTML omitted --></li>
+</ul>
 </li>
 <li>
 <p>Defend
-: 主动地对入侵者进行打击，通过安全团队或者警方的行动来组织入侵 <!-- raw HTML omitted --></p>
+: -   主动地对入侵者进行打击，通过安全团队或者警方的行动来组织入侵 <!-- raw HTML omitted --></p>
 </li>
 </ol>
 <h3 id="what-is-a-firewall">What is a firewall?</h3>
 <p>什么是防火墙，它有什么作用呢？ <!-- raw HTML omitted --></p>
-<p>防火墙是一台主机或者一个网络服务，架设于内网和外部网络之间，用来： <!-- raw HTML omitted --></p>
+<p>防火墙是一台主机或者一个网络服务，架设于 <code>内网</code> 和 <code>外部网络</code> 之间，用来： <!-- raw HTML omitted --></p>
 <ol>
 <li>防止坏事发生 (内部泄露机密到外部，外部攻击内部系统) <!-- raw HTML omitted --></li>
 <li>同时使正常的行为不收到影响(员工正常访问外网交互) <!-- raw HTML omitted --></li>
@@ -353,14 +366,14 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <h4 id="防火墙的类型">防火墙的类型</h4>
 <dl>
 <dt>Positive filter</dt>
-<dd>主动过滤，白名单过滤，主允许符合规则的数据通过，其他都不可以通过 <!-- raw HTML omitted -->
+<dd>主动过滤，白名单过滤，只允许符合规则的数据通过，其他都不可以通过 <!-- raw HTML omitted -->
 <p>假设所有人都是坏人 <!-- raw HTML omitted --></p>
-<p>主动的，选定是好人的，允许其通过 <!-- raw HTML omitted --></p>
+<p>主动地选定谁是好人，允许其通过 <!-- raw HTML omitted --></p>
 </dd>
 <dt>Negative filter</dt>
 <dd>被动过滤，黑名单过滤，不允许不符合规则的数据通过，其他都可以通过 <!-- raw HTML omitted -->
 <p>假设所有人都是好人 <!-- raw HTML omitted --></p>
-<p>被动的，在发现了坏人之后，将其过滤 <!-- raw HTML omitted --></p>
+<p>被动地，在发现了坏人之后，将其过滤 <!-- raw HTML omitted --></p>
 </dd>
 </dl>
 <p>根据防火墙的类型，过滤的策略也会不一样: <!-- raw HTML omitted --></p>
@@ -382,8 +395,8 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>sneakernet</p>
-<p>球鞋网络，顾名思义就是使用物理媒介运输数据，而非通过网络，记得以前上计算机网络的时候，老师就提到过，在网络不稳定或者质量较差的时候，往往还是使用物理传输更为高校 <!-- raw HTML omitted --></p>
-<p>那么这种时候 <code>Firewall</code> 就完全失效了，因为其所针对的都是网络数据包 <!-- raw HTML omitted --></p>
+<p>球鞋网络，顾名思义就是使用物理媒介运输数据，而非通过网络，记得以前上计算机网络的时候，老师就提到过，在网络不稳定或者质量较差的时候，往往还是使用物理传输更为高效 <!-- raw HTML omitted --></p>
+<p>那么这种时候 <code>Firewall</code> 就完全失效了，因为其所针对的都是网络数据包，物理传输完全不在范畴之内 <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
@@ -397,15 +410,15 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 </li>
 </ul>
 <h3 id="packet-filtering-firewall">Packet filtering firewall</h3>
-<p>• What is a packet filtering firewall <!-- raw HTML omitted -->
-包过滤防火墙是最基础也是最普遍使用的防火墙，其作用在两种数据包上： <!-- raw HTML omitted --></p>
+<p>What is a packet filtering firewall? <!-- raw HTML omitted -->
+<code>基于数据包过滤的防火墙</code> 是最基础也是最普遍使用的防火墙，其作用在两种数据包上： <!-- raw HTML omitted --></p>
 <ol>
 <li>Ingress packets: 从外网到内网的数据包 <!-- raw HTML omitted --></li>
 <li>Egress packets: 从内网到外网的数据包 <!-- raw HTML omitted --></li>
 </ol>
-<p>同时也对应 <code>ingress filtering</code>, <code>egress filtering</code> 两种过滤手段 <!-- raw HTML omitted --></p>
-<p><code>Packet filtering firewall</code> 通过预设一系列的规则来决定是否让某一种数据包通过，而这些规则都是用来检测 <code>IP headers</code> 以及 <code>TCP headers</code>, 对于应用层所放入的payload一定都不感兴趣 <!-- raw HTML omitted --></p>
-<p><code>Packet filtering firewall</code> 也分成 <code>stateless filtering</code> 以及 <code>stateful filter</code> 主要的区别就在于应用的规则是否会审计网络连接的状态，即判断一个数据包的去留是否会参考之前的记录，也可以说是考虑了上下文 <!-- raw HTML omitted --></p>
+<p>同时也对应 <code>ingress filtering</code>, <code>egress filtering</code> 两种过滤手段： <!-- raw HTML omitted --></p>
+<p><code>Packet filtering firewall</code> 通过预设一系列的规则来决定是否让某一种数据包通过，而这些规则都是用来检测 <code>IP headers</code> 以及 <code>TCP headers</code>, 对于应用层所放入的payload一点都不感兴趣 <!-- raw HTML omitted --></p>
+<p><code>Packet filtering firewall</code> 也分成 <code>stateless filtering</code> 以及 <code>stateful filter</code>,主要的区别就在于应用的规则是否会审计网络连接的状态，即判断一个数据包的去留是否会参考之前的记录，也可以说是考虑了上下文 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_22-07-19_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -461,7 +474,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 : 除了前面提到那几个常见的匹配规则，还有一些内容可以实现更精确的过滤，根据firewall使用的不同的routers来决定 <!-- raw HTML omitted -->
 -   在入站时进行过滤 <!-- raw HTML omitted -->
 -   在出站时进行过滤 <!-- raw HTML omitted -->
--   在入站和出站同时践行过滤 <!-- raw HTML omitted -->
+-   在入站和出站同时进行过滤 <!-- raw HTML omitted -->
 -   检查数据包的其他控制区域 <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -479,20 +492,21 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <p>我们先来看这第一组规则 <!-- raw HTML omitted -->
 &rsquo; * &rsquo; = ANY <!-- raw HTML omitted --></p>
 <p>第一条
-: -   两个端口号都没有指定，说明这条规则没有方向（端口号的大小指示了客户端和服务端） <!-- raw HTML omitted -->
--   只指定了 <code>SPIGOT</code> 的IP地址，说明到SPIGOT的数据包和从SPIGOT来的数据包都会被禁止，也许是以前有过恶意行为，所以被整一个禁止了 <!-- raw HTML omitted --></p>
+: 所有与 <code>SPIGOT</code> 的通信都被禁止了 <!-- raw HTML omitted -->
+1.  两个端口号都没有指定，说明这条规则没有方向（端口号的大小指示了客户端和服务端） <!-- raw HTML omitted -->
+2.  只指定了 <code>SPIGOT</code> 的IP地址，说明到SPIGOT的数据包和从SPIGOT来的数据包都会被禁止，也许是以前有过恶意行为，所以被整一个禁止了 <!-- raw HTML omitted --></p>
 <p>第二条
-: -   指定了IP地址以及对应的端口号25， 是SMTP服务所对应的端口 <!-- raw HTML omitted -->
--   这里是允许内网的邮件系统收取邮件 <!-- raw HTML omitted --></p>
+: 所有内网开启的SMTP服务都允许被外网所连接 <!-- raw HTML omitted -->
+1.  指定了IP地址以及对应的端口号25， 是SMTP服务所对应的端口 <!-- raw HTML omitted -->
+2.  这里是允许内网的邮件系统收取邮件 <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>Rule set B</p>
-<p><figure><img src="/ox-hugo/2022-04-30_09-52-19_screenshot.png" width="700px"/>
-</figure>
- <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+默认丢弃所有的数据包 <!-- raw HTML omitted --></p>
 <ul>
 <li>这是一条默认丢弃规则，一般来说是放在最下面 <!-- raw HTML omitted --></li>
 <li>默认丢弃就是我们之前说的主动过滤，白名单过滤 <!-- raw HTML omitted --></li>
@@ -511,8 +525,8 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <li>与rule set A类似，这次是允许内网所有的主机向外发邮件 <!-- raw HTML omitted --></li>
 <li>但是存在两个漏洞 <!-- raw HTML omitted -->
 <ol>
-<li>外面的服务可以修改他们的端口号到25，这样就可以使泄密的数据绕过防火墙策略 <!-- raw HTML omitted --></li>
-<li>attacker也可以修改他们的客户端端口号，从而绕过防火墙策略实现入侵 <!-- raw HTML omitted --></li>
+<li>攻击者也可以修改他们服务端口号到25，这样就可以使泄密的数据绕过防火墙策略 <!-- raw HTML omitted --></li>
+<li>attacker也可以修改他们的客户端端口号到25，从而绕过防火墙策略实现入侵，连接内网的服务 <!-- raw HTML omitted --></li>
 </ol>
 </li>
 </ul>
@@ -555,7 +569,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <ol>
 <li>
 <p>Ingress packet 的source IP address 是内网的地址
-: 我们知道防火墙是建立在内网和外网之前的，因此 <code>Ingress packet</code> 只有可能是从外网的地址到内网的地址，这类不寻找的数据包通常都是被恶意修改的数据包 <!-- raw HTML omitted --></p>
+: 我们知道防火墙是建立在内网和外网之前的，因此 <code>Ingress packet</code> 只有可能是从外网的地址到内网的地址，这类不寻常的数据包通常都是被恶意修改的数据包 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>指定了路由器的数据包
@@ -611,7 +625,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <li>
 <p>Vulnerabilities</p>
 <ul>
-<li>无法检测出TCP/IP被修改过的数据 <!-- raw HTML omitted -->
+<li>无法检测出TCP/IP被修改过的数据，spoofing attack <!-- raw HTML omitted -->
 <ul>
 <li>无法应用更高层的审核机制，导致数据内容被修改后即可绕过规则 <!-- raw HTML omitted --></li>
 </ul>
@@ -701,7 +715,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <dt>Connection state</dt>
 <dd>当我们说连接的是，指的就是一个TCP连接的状态，是否已经建立（UDP不建立连接） <!-- raw HTML omitted --></dd>
 </dl>
-<p>所有这些建立的TCP连接都会存入 <code>state table</code>  <!-- raw HTML omitted --></p>
+<p>所有这些建立的TCP连接都会存入 <code>state table</code> (但如果保存了大量的连接，就会出现TCP SYN Flooding 这样的攻击) <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_21-33-38_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -711,7 +725,11 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 <p>How stateful firewall works?</p>
 <p>当有ingress或者egress的数据包通过的时候，firwall会查找 <code>state table</code> 来判断他们是否属于被记录的connection <!-- raw HTML omitted --></p>
 <p>如果属于一个连接，发行，并记录信息（比如TCP sequence number，可以用来防御 <code>TCP session hijacking</code> ） <!-- raw HTML omitted --></p>
-<p>如果不属于，再判断是否是一个TCP SYN packet which用于建立一个连接，如果是的话就新开一条记录用来记录这个新的连接，如果不是的话，那就丢弃 <!-- raw HTML omitted --></p>
+<p>如果不属于，再判断这是否是一个 <code>TCP SYN packet</code> 用来建立一个连接: <!-- raw HTML omitted --></p>
+<ul>
+<li>如果是的话就新开一条记录用来记录这个新的连接 <!-- raw HTML omitted --></li>
+<li>如果不是的话，那就丢弃 <!-- raw HTML omitted --></li>
+</ul>
 </li>
 </ul>
 <!-- raw HTML omitted -->
@@ -734,16 +752,151 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 </li>
 </ul>
 <h3 id="stateful-firwall-and-proxy-firewall">Stateful firwall and proxy firewall</h3>
-<h4 id="application-level-proxy-firewall">Application-level proxy firewall</h4>
 <h4 id="circuit-level-gateway-proxy-firewall">Circuit-level gateway/proxy firewall</h4>
+<p>Circuit-level gateway/proxy firewall 位于 <code>session layer</code> 会话层，根据网络模型的不同，有一些教材也有说是跑在 <code>Transport layer</code> 传输层的。 <!-- raw HTML omitted --></p>
+<p>也被称为 <code>circuit gateways</code>, <code>transparent proxy firewall</code> <!-- raw HTML omitted -->
+其主要的目标是对内外网想要建立的连接进行审核，通过 <code>packet filters</code> 与 <code>circuit gateways</code> 的结合可以构造起一个 <code>dynamic packet filter</code>  <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>如何实现连接的过滤呢？</p>
+<p>主要是通过 <code>relay/proxy</code> 连接，gateway会分别与 <code>server side</code> 以及 <code>client-side</code> 建立独立的连接 <!-- raw HTML omitted --></p>
+<p>在packet filter，无论是 <code>stateful</code> 或者是 <code>stateless</code> 中，服务端和客户端的连接都是直连的，而在 circuit-level gateway中实现的relay可以很好的隐藏server和client的信息，外网只能观察到gateway的IP地址，而不知道具体连接的内网设备的信息 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_15-27-07_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>上图就是当外网的client想要连接内网的服务，就会先与gateway建立连接，gateway会维护一个有效连接的表，如果连接是被允许的，那么就会继续建立连接，gateway会用公网IP地址与外网的client建立一个TCP连接，再与内网的设备用内网IP建立TCP连接，之后就不再过滤数据，只是做煎蛋的转发。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="application-level-proxy-firewall">Application-level proxy firewall</h4>
+<p><code>Application gateways</code>, also referred to as <code>application-level gateways (ALG)</code> or <code>proxy servers</code>, 是安装在指定设备上的软件包，像proxy一样，用来为内网用户处理来自外网的服务请求。 <!-- raw HTML omitted --></p>
+<p>ALG可以被配置为应用的特定特征进行过滤，例如MIME，或者SQL格式来决定数据包的payload是否合法。 <!-- raw HTML omitted --></p>
+<p>通过监测分析这些payload，ALG可以检测出恶意代码还有可疑的数据包，进而屏蔽可以的IP地址以及端口号，这些处理将会要求ALG服务器有大量的运算处理和存储的需求。 <!-- raw HTML omitted --></p>
+<p>ALG采用白名单的形式，需要为不同的applications配置不同的审核机制，否则就不能进行传输 <!-- raw HTML omitted -->
+If gateway does not implement the proxy code for a specific application, then the service is not supported and cannot be forwarded across the firewall <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>如何连接到ALG服务?</p>
+<ol>
+<li>用户使用TCP/IP应用来进行连接，例如Telnet/FTP <!-- raw HTML omitted --></li>
+<li>ALG会要求用户提供想要连接远程用户的名字 <!-- raw HTML omitted --></li>
+<li>用户提供有效的user ID以及相关的认证信息 <!-- raw HTML omitted --></li>
+<li>ALG会relay TCP segment来进行监测并转发 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ALG的优点</p>
+<ul>
+<li>相较于 <code>packet filtering firewalls</code> 更为安全 <!-- raw HTML omitted --></li>
+<li>只需要监测一小部分特定的应用即可 <!-- raw HTML omitted --></li>
+<li>更方便的记录日志以及监测应用层的payload <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>ALG的缺点</p>
+<ul>
+<li>每一个服务都需要进行proxy <!-- raw HTML omitted --></li>
+<li>需要大量的计算处理以及消耗大量的存储空间 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h3 id="bastion-hosts-and-gateways">Bastion hosts and Gateways</h3>
+<p>我们之前提到的 <code>Application gateway</code> 出于内外网之前充当转发的作用，但是相对的，ALG暴露在外网这种，因此我们需要对其提供更多的保护，一种就是 <code>Tursted Operating Systems (TOS)</code>, 还有一种就是我们本章将要提到的 <code>Bastion hosts</code> 堡垒机。 <!-- raw HTML omitted --></p>
+<p>Bastion hosts堡垒机将提供强大的防御措施，包括联合使用我们之前所提到过的 <code>application gateways</code>, <code>circuit gatways</code> 以及各种类型的firewalls，同时堡垒机安装了可以信任的操作系统TOS，只提供必要的程序功能，例如SSH, DNS, SMTP, authentication programs。 <!-- raw HTML omitted --></p>
+<p>Bastion上的Proxy必须满足以下条件 <!-- raw HTML omitted --></p>
+<ol>
+<li>Gateway software的开发必须使用小型的module，因为小型的module更加容易检查漏洞，并方便重复使用 <!-- raw HTML omitted --></li>
+<li>堡垒机必须对网络层的用户进行单独的身份认证，例如通过IP packet 中的 source IP address以及destination IP address，这将与更高层的验证分离开来进行身份认证 <!-- raw HTML omitted --></li>
+<li>堡垒机需要尽可能少得去连接内网的主机，这样一旦堡垒机出现问题，波及到的主机也会减少 <!-- raw HTML omitted --></li>
+<li>堡垒机需要记录所有的系统日志，包括TCP会话连接状态，这将帮助管理员发现问题 <!-- raw HTML omitted --></li>
+<li>所有跑在堡垒机上的代理服务都需要独立运行，一旦一个gateway发生问题，只需要单独关闭即可 <!-- raw HTML omitted --></li>
+<li>堡垒机应该避免将数据写入硬盘保存（只写入内存中？），避免恶意软件的写入 <!-- raw HTML omitted --></li>
+<li>堡垒机上运行的gateway软件不需要给予管理员权限 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="bastion-host-case-study">Bastion host case study</h4>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+AWS就是通过设置堡垒机以及其中的Gateway来对危险的SSH进行relay，避免暴露真正的Linux instance <!-- raw HTML omitted --></p>
 <h3 id="firewall-location-and-configuration">Firewall location and configuration</h3>
 <h4 id="personal-firewall">Personal firewall</h4>
+<p>个人防火墙的主要目的是控制用户电脑与外网的网络流量 <!-- raw HTML omitted --></p>
+<p>位置：通常是安装在个人电脑或者路由器上的软件包 <!-- raw HTML omitted --></p>
+<p>主要作用： <!-- raw HTML omitted --></p>
+<ul>
+<li>拒绝未经许可的外部访问 <!-- raw HTML omitted --></li>
+<li>监控出站流量来分析恶意软件的活动 <!-- raw HTML omitted --></li>
+</ul>
 <h4 id="host-based-firewall">Host-based firewall</h4>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+Host-based firewall其实与personal firewall十分相似，区别我觉得就是personal firewall一般是用在普通用户所使用的操作系统上的，而Host-based firewall则更多的是服务器上的使用，但特点都是一机一wall <!-- raw HTML omitted --></p>
+<p>而我们之前提到的用来分割内外网的firewall我们称为network-based firewall，区别就在于起作用域不一样 <!-- raw HTML omitted --></p>
+<p>位置：通常被安装在一个web服务器上 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Advantages</p>
+<ul>
+<li>可以根据主机的情况进行过滤规则的定制 <!-- raw HTML omitted --></li>
+<li>可以根据企业不同的安全政策进行定制 <!-- raw HTML omitted --></li>
+<li>可以防御内部以及外部的网络 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
 <h4 id="dmz-networks">DMZ networks</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>DMZ</p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+位于两个防火墙中间的子网我们称为Demilitarised Zones (DMZ 非军事化区域？), 其可以是物理的也可以是逻辑子王 <!-- raw HTML omitted --></p>
+<ul>
+<li>外部的firewall保护DMZ网络来自外网的威胁 <!-- raw HTML omitted -->
+<ul>
+<li>针对外网的连接 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>内部的firewall保护DMZ网络来自内部的威胁 <!-- raw HTML omitted -->
+<ul>
+<li>保护那些直接从DMZ网络中发出的攻击，例如worms, rootkit, bots <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<p>DMZ中还可以嵌套DMZ形成多层的DMZ，那么连接在最末端firewall的子网就是最安全的，相反，连接在最外侧的firewall就是最不安全的，因为他们只有一个firewall的保护，随着结构的增加和复杂化，安全系数也在提高，攻击者需要绕过一层层的过滤规则才能到达最末端的设备。 <!-- raw HTML omitted --></p>
+<p>通常来说，一些不需要特别强的保护的服务器电脑和其他设备会被放到DMZ网络中，他们起码可以避免暴露在外网当中。 <!-- raw HTML omitted --></p>
+<p>例如我们可以把WAF和负载均衡这些功能性的服务器给放置在DMZ网络中 <!-- raw HTML omitted --></p>
+<p>还有一些用于促进内外连接的服务器也会防止在DMZ中，例如企业网站，邮件以及DNS服务器 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-27_17-23-08_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
 <h4 id="distributed-firewalls">Distributed firewalls</h4>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+分布式的防火墙框架，将综合使用多种防火墙，比如单独的防火墙设备以及安装在各个server上的host-based firewall 以及 安装在各个用户系统上的 personal firewall <!-- raw HTML omitted --></p>
+<dl>
+<dt>Security monitoring</dt>
+<dd><ul>
+<li>日志记录 <!-- raw HTML omitted --></li>
+<li>防火墙统计数据 <!-- raw HTML omitted --></li>
+<li>对于单独的用户的监控 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
 <h4 id="cloud-firwalls">Cloud firwalls</h4>
 <p>Virtual private cloud (VPC) <!-- raw HTML omitted --></p>
-<h3 id="firewall-basing">Firewall basing</h3>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+<a class="link" href="https://docs.microsoft.com/en-us/azure/firewall/features"  target="_blank" rel="noopener"
+    >Azure Firewall</a> <!-- raw HTML omitted --></p>
+<h3 id="firewall-summary">Firewall summary</h3>
+<p><figure><img src="/ox-hugo/2022-05-27_16-26-23_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -779,7 +932,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
 
 
         <span>
-            Last updated on May 01, 2022 13:05 BST
+            Last updated on May 27, 2022 21:06 BST
         </span>
     </section></footer>
 
@@ -821,24 +974,24 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
             
                 
 <article class="">
-    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/posts/password_cracking/">
+    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">SCT Topic 8: Password Cracking</h2>
+            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
         </div>
     </a>
 </article>
@@ -1073,8 +1226,13 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
         </li>
         <li><a href="#stateful-firwall-and-proxy-firewall">Stateful firwall and proxy firewall</a>
           <ul>
-            <li><a href="#application-level-proxy-firewall">Application-level proxy firewall</a></li>
             <li><a href="#circuit-level-gateway-proxy-firewall">Circuit-level gateway/proxy firewall</a></li>
+            <li><a href="#application-level-proxy-firewall">Application-level proxy firewall</a></li>
+          </ul>
+        </li>
+        <li><a href="#bastion-hosts-and-gateways">Bastion hosts and Gateways</a>
+          <ul>
+            <li><a href="#bastion-host-case-study">Bastion host case study</a></li>
           </ul>
         </li>
         <li><a href="#firewall-location-and-configuration">Firewall location and configuration</a>
@@ -1086,7 +1244,7 @@ Deter -&gt; Detect -&gt; Deny -&gt; Delay -&gt; Defend <!-- raw HTML omitted -->
             <li><a href="#cloud-firwalls">Cloud firwalls</a></li>
           </ul>
         </li>
-        <li><a href="#firewall-basing">Firewall basing</a></li>
+        <li><a href="#firewall-summary">Firewall summary</a></li>
       </ul>
     </li>
   </ul>

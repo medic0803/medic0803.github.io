@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产'><title>NSE Week 1: Module introduction, security concepts and security attacks</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 1: Module introduction, security concepts and security attacks'>
+<meta property='og:description' content='NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-27T21:31:11&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 1: Module introduction, security concepts and security attacks">
+<meta name="twitter:description" content="NSE Week 1: Module introduction, security concepts and security attacks What is Network Security? Cyber security 是关于个人和组织如何减少 cyber attack 的风险 Network security 是关于个人和组织如何减少网络攻击的风险 Risk 风险 : 是关于漏洞利用从而对财产">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">NSE Week 1: Module introduction, security concepts and security attacks</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 26, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week-1-module-introduction-security-concepts-and-security-attacks">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+<h3 id="what-is-network-security">What is Network Security?</h3>
+<dl>
+<dt>Cyber security</dt>
+<dd>是关于个人和组织如何减少 cyber attack 的风险 <!-- raw HTML omitted --></dd>
+<dt>Network security</dt>
+<dd>是关于个人和组织如何减少网络攻击的风险 <!-- raw HTML omitted --></dd>
+</dl>
+<p>Risk 风险 : <!-- raw HTML omitted -->
+是关于漏洞利用从而对财产造成损失的可能性 <!-- raw HTML omitted --></p>
+<h3 id="security-concepts">Security Concepts</h3>
+<p>首先我们再来回顾一下Cyber security中，最重要的CIA的概念 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Confidentiality</dt>
+<dd><ul>
+<li>确保保密的信息不暴露给未经授权的人员 <!-- raw HTML omitted --></li>
+<li>Loss of confidentiality = unauthorised disclosure of information <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Integrity</dt>
+<dd><ul>
+<li>
+<p>确保信息和程序只会被授权的人员所修改与处理 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Loss of integrity = the unauthorised modification or destruction of information <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+<dt>Availability</dt>
+<dd><ul>
+<li>
+<p>确保系统正常运行并且不会拒绝授权的用户的访问 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Loss of availability = the destruction of access to information/system and the destruction of use of information/system <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>CIA的重要性需要视情况而定，对于不同的资源/系统，我们需要指定不同的CIA的标准 <!-- raw HTML omitted --></p>
+<h4 id="more-properties-in-cyber-security">More properties in Cyber security</h4>
+<p><figure><img src="/ox-hugo/2022-05-26_16-22-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<dl>
+<dt>Authentication</dt>
+<dd>确保每一个用户的真实身份都是他们所申明的一致 <!-- raw HTML omitted --></dd>
+<dt>Non-repudiation</dt>
+<dd>确保信息传输的双发不能否认他们接受或者发送过信息 <!-- raw HTML omitted --></dd>
+<dt>Code validation</dt>
+<dd>确保软硬件是健全的（sound），并且检查漏洞 <!-- raw HTML omitted --></dd>
+</dl>
+<h3 id="osi-security-architecture">OSI Security Architecture</h3>
+<p>接下来我们来介绍一下OSI的安全框架 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Security attack
+: -   任何对组织的信息安全造成危害的行为都称为 security attack <!-- raw HTML omitted --></p>
+<ul>
+<li>Passive or Active <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Security mechanism
+: -   一个用来从security attack中检测，防止和恢复的机制 <!-- raw HTML omitted --></p>
+<ul>
+<li>例如流量检测，预防入侵 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Security service
+: -   一项用来保护组织中的数据处理系统的服务 <!-- raw HTML omitted --></p>
+<ul>
+<li>包含多中Security mechanisms来对抗security attacks <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-26_16-30-51_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="philosophy-taken-to-counterattacking">Philosophy taken to counterattacking</h3>
+<ol>
+<li>
+<p>Deter
+: -   组织入侵的发生（在其发生之前进行组织），即使用 <code>fencing 围栏</code>, <code>lighting 完全照明</code>, <code>signs 出入签名</code> 等方式对犯罪者进行被动威慑，从最开始就扼杀入侵的念头 <!-- raw HTML omitted --></p>
+<ul>
+<li>使攻击变得困难，让attacker主动放弃 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Detect
+: -   检测入侵的行为，例如 <code>CCTV 监控</code>, 用来监控和记录所有的入侵行为 <!-- raw HTML omitted --></p>
+<ul>
+<li>Intrusion detection software <!-- raw HTML omitted --></li>
+<li>Traffic analysis and machine learning to detect abnormities <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Deny
+: -   拒绝未经授权的访问，通过一些认证系统来主动拒绝入侵的行为，其中防火墙就属于 <code>Deny</code> <!-- raw HTML omitted --></p>
+<ul>
+<li>Authentication, authorisation, freshness <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Delay
+: -   延缓入侵的速度，通过设置障碍来延长入侵的时间，迫使入侵者放弃或者给予安全团队更多的时间 <!-- raw HTML omitted --></p>
+<ul>
+<li>增加密钥的长度 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Defend
+: -   主动地对入侵者进行打击，通过安全团队或者警方的行动来组织入侵 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="security-mechanisms">Security Mechanisms</h3>
+<dl>
+<dt>Specific security mechanisms</dt>
+<dd><ul>
+<li>May be incorporated into the appropriate protocol layer <!-- raw HTML omitted --></li>
+<li>Provide some of the OSI security service: authentication, access control, data confidentiality, data integrity, and non-repudiation <!-- raw HTML omitted --></li>
+<li>Very much related to popular security properties <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Non-specific security mechanisms</dt>
+<dd><ul>
+<li>Not specific to any particular OSI security service or protocol layer <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="cryptographic-techniques">Cryptographic Techniques</h3>
+<p>密码学提供了很多安全服务，例如加密，解密，数据完整性，认证交换，密码存储等服务 <!-- raw HTML omitted --></p>
+<h4 id="encipherment">Encipherment</h4>
+<p>加密通过将明文进行加密，从而来保证confidentiality <!-- raw HTML omitted --></p>
+<p>Two crytovariables in cryptographic funtions <!-- raw HTML omitted --></p>
+<ul>
+<li>The key 密钥 (can be both symmetric or asymmetric) <!-- raw HTML omitted --></li>
+<li>The initial vector (我们在密码学中讲过的随机数，用来参与加密的过程，比如在DES CBC中) <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="cryptographic-protocols">Cryptographic Protocols</h4>
+<p>是通信的双方通过加密传递的信息来预防攻击 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Possible attacks?</dt>
+<dd><ul>
+<li>Cyptoanalysis: recover the plaintext from ciphertext without knowing the key <!-- raw HTML omitted --></li>
+<li>Message/field insertion, deleteion and change (破坏完整性) <!-- raw HTML omitted --></li>
+<li>Relay: 对先前合法的密文重复利用 <!-- raw HTML omitted --></li>
+<li>Man-in-the-middle attack <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Countermeasure</dt>
+<dd><ul>
+<li>
+<p>Countermeasures for cryptoanalysis <!-- raw HTML omitted --></p>
+<ul>
+<li>Longer keys (e.g., 2048 bits for RSA, used to be 256 bits) <!-- raw HTML omitted --></li>
+<li>舍弃弱密钥（比如全是0的或者全是1的） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Countermeasures for message/field insertion, deletion and change <!-- raw HTML omitted --></p>
+<ul>
+<li>Integrity check (hash, MAC, digital signature) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Countermeasures for replay attack <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Provide freshness in protocol run <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Timestamp, sequence number, nounce <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Countermeasure for man-in-the-middle attack <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p><code>Cryptographic protocols</code> should be designed and verified <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Use formal methods to <code>evaluate</code> security properties of cryptographic protocols <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<h4 id="digital-signature">Digital Signature</h4>
+<p>主要通过将额外的bit附加在传输的数据上，从而让接收者可以验证数据的 Integrity <!-- raw HTML omitted --></p>
+<p>可以用来提供authentication, integrity, and non-repudiation,因为数字签名利用asymmetric非对称加密，使用发送方的private key进行加密，接收者则可以用public key来进行解密 <!-- raw HTML omitted --></p>
+<h4 id="authentication-exchange">Authentication Exchange</h4>
+<p>用于发送方和接收方双方互相确认身份 <!-- raw HTML omitted --></p>
+<p>常见的Authentication的方法： <!-- raw HTML omitted --></p>
+<ul>
+<li>Something you know, e.g., password <!-- raw HTML omitted --></li>
+<li>Something you are, e.g., fingerprint <!-- raw HTML omitted --></li>
+<li>Something you have, e.g., smart card, your phone <!-- raw HTML omitted --></li>
+<li>2-factor or multifactor authentication 双重/多重认证 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>如何选择身份认证的方法？</p>
+<ol>
+<li>
+<p>如果通信的双方彼此可以信任，同时通信是可靠的 <!-- raw HTML omitted --></p>
+<ul>
+<li>使用密码 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>如何通信的双方是可以信任的，但是通信不可靠 <!-- raw HTML omitted --></p>
+<ul>
+<li>使用密码以及加密协议 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>如何什么都不可以信任 <!-- raw HTML omitted --></p>
+<ul>
+<li>使用密码，加密协议以及non-repudiation service <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>我们真的需要密码吗？</p>
+<p>剑桥大学发明了一种可携带的设备：<a class="link" href="http://mypico.org/"  target="_blank" rel="noopener"
+    >pico</a>,其存储了所有的credentials信息，并且通过一系列传感器，以及生物特征信息来防止丢失后的信息泄露。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="other-security-mechanisms--x-dot-800">Other Security mechanisms (X.800)</h4>
+<ol>
+<li>Access control <!-- raw HTML omitted -->
+<ul>
+<li>只允许有限的可授权人员的访问 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Traffic padding <!-- raw HTML omitted -->
+<ul>
+<li>在数据流中加入一些bits，使流量分析受阻，从而保证了confidentiality保密性 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Notarisation 公证 <!-- raw HTML omitted -->
+<ul>
+<li>经过第三方来保证安全的信息传输 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Security audit trail <!-- raw HTML omitted -->
+<ul>
+<li>收集信息来进行安全审计 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Security recovery 数据恢复 <!-- raw HTML omitted --></li>
+<li>Economics <!-- raw HTML omitted -->
+<ul>
+<li>增加attack的成本，比如如果发邮件需要花钱，那垃圾邮件势必会减少 <!-- raw HTML omitted --></li>
+<li>又或者在Bitcoin当中，发起DDoS攻击就以花费大量的transaction fee <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Deception <!-- raw HTML omitted -->
+<ul>
+<li>通过暴露攻击者自己，例如使用蜜罐来获取攻击者的信息 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h3 id="jamming-sniffing-and-spoofing">Jamming, Sniffing and Spoofing</h3>
+<h4 id="jamming">Jamming</h4>
+<p>Jamming通过发出大量的noise来影响原本的通信，影响availability <!-- raw HTML omitted --></p>
+<p>例如屏蔽Wifi信号 <!-- raw HTML omitted --></p>
+<p>也可以用在合法的渠道上，比如用在考场或者需要阻断网络的地方 <!-- raw HTML omitted --></p>
+<h4 id="sniffing">Sniffing</h4>
+<p>Sniffing是来监听其他用户的信息 <!-- raw HTML omitted --></p>
+<p>Network interface card (NIC 网卡)必须设置在 <code>promiscuous mode</code> 来获取所有的包 <!-- raw HTML omitted --></p>
+<p>可以用来 <!-- raw HTML omitted --></p>
+<ul>
+<li>偷听数据包中没有加密的信息 <!-- raw HTML omitted --></li>
+<li>捕捉信息进而使用relay attack <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="spoofing">Spoofing</h4>
+<p>通过伪装来进行攻击，可以修改的内容 <!-- raw HTML omitted --></p>
+<ul>
+<li>Application layer: DNS address, e.g., an URL, an email address <!-- raw HTML omitted --></li>
+<li>Network layer: IP address <!-- raw HTML omitted --></li>
+<li>Link layer: MAC address <!-- raw HTML omitted --></li>
+</ul>
+<p>Spoofing的种类 <!-- raw HTML omitted --></p>
+<ul>
+<li>Email spoofing: phising <!-- raw HTML omitted --></li>
+<li>Text message spoofing: smishing <!-- raw HTML omitted --></li>
+<li>Call ID spoofing <!-- raw HTML omitted --></li>
+<li>URL spoofing: phishing website <!-- raw HTML omitted --></li>
+<li>DNS spoofing: cache poisoning <!-- raw HTML omitted --></li>
+<li>IP address spoofing: change the source address in an IP packet <!-- raw HTML omitted --></li>
+<li>MAC spoofing: change the MAC address of NIC <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="model-of-network-security">Model of Network Security</h3>
+<p><figure><img src="/ox-hugo/2022-05-27_10-39-28_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="cryptographic-protocol">Cryptographic protocol</h3>
+<p><figure><img src="/ox-hugo/2022-05-27_10-52-17_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>A, B都有自己的symmetric key (K_A, K_B), 同时A想要生成一个共同的key并且分享给B <!-- raw HTML omitted --></p>
+<ol>
+<li>A发送给K，用E_A加密的新key K_AB，同时指示这是A与B的共同Key <!-- raw HTML omitted --></li>
+<li>K返回给A 用E_B加密的共同Key K_AB以及标识这个Key是由ID_B加密的 <!-- raw HTML omitted --></li>
+<li>A将E_B(K_AB)以及加密的数据发送给B，B就可以用自己的E_B先解密，然后再用得到E_AB来解密数据 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-27_10-52-42_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Attacker通过拦截并修改A发送给K的请求，从而可以获取K_AB的值，进而可以监听所有的请求 <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 27, 2022 21:31 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week5_firewalls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sct_topic_10_advanced_strategies/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT Topic 10: Advanced Strategies</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT Topic 9: Exploitation Phase &#43; Industry Guest Seminar</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sct_topic_5_professional_reporting_of_security_testing_findings/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT_Topic_5_Professional_Reporting_of_Security_Testing_Findings</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week-1-module-introduction-security-concepts-and-security-attacks">NSE Week 1: Module introduction, security concepts and security attacks</a>
+      <ul>
+        <li><a href="#what-is-network-security">What is Network Security?</a></li>
+        <li><a href="#security-concepts">Security Concepts</a>
+          <ul>
+            <li><a href="#more-properties-in-cyber-security">More properties in Cyber security</a></li>
+          </ul>
+        </li>
+        <li><a href="#osi-security-architecture">OSI Security Architecture</a></li>
+        <li><a href="#philosophy-taken-to-counterattacking">Philosophy taken to counterattacking</a></li>
+        <li><a href="#security-mechanisms">Security Mechanisms</a></li>
+        <li><a href="#cryptographic-techniques">Cryptographic Techniques</a>
+          <ul>
+            <li><a href="#encipherment">Encipherment</a></li>
+            <li><a href="#cryptographic-protocols">Cryptographic Protocols</a></li>
+            <li><a href="#digital-signature">Digital Signature</a></li>
+            <li><a href="#authentication-exchange">Authentication Exchange</a></li>
+            <li><a href="#other-security-mechanisms--x-dot-800">Other Security mechanisms (X.800)</a></li>
+          </ul>
+        </li>
+        <li><a href="#jamming-sniffing-and-spoofing">Jamming, Sniffing and Spoofing</a>
+          <ul>
+            <li><a href="#jamming">Jamming</a></li>
+            <li><a href="#sniffing">Sniffing</a></li>
+            <li><a href="#spoofing">Spoofing</a></li>
+          </ul>
+        </li>
+        <li><a href="#model-of-network-security">Model of Network Security</a></li>
+        <li><a href="#cryptographic-protocol">Cryptographic protocol</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

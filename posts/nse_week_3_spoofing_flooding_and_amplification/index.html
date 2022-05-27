@@ -9,7 +9,7 @@
 <meta property='og:description' content='Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-24T21:57:08&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-26T12:03:51&#43;01:00'/>
 <meta name="twitter:title" content="NSE Week 3: Spoofing, flooding and amplification">
 <meta name="twitter:description" content="Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -309,7 +309,7 @@ if (!doNotTrack) {
 <ol>
 <li>当有IP packet需要发出的时候，ARP就会被hardware driver 所调用 <!-- raw HTML omitted --></li>
 <li>首先获取IP destination address <!-- raw HTML omitted --></li>
-<li>然后在ARP本地的translation table 中查找是否有对应得IP address : MAC address entry <!-- raw HTML omitted -->
+<li>然后在ARP本地的 <code>translation table</code> 中查找是否有对应得IP address : MAC address entry <!-- raw HTML omitted -->
 <ul>
 <li>有的话，就把48-bits的MAC address发送给 hardware driver <!-- raw HTML omitted --></li>
 <li>没有的话，就准备发送ARP请求，填充相关信息 <!-- raw HTML omitted -->
@@ -332,7 +332,7 @@ if (!doNotTrack) {
 <p>ARP request message reception</p>
 <ol>
 <li>目标节点将会回复其所包含的MAC address, （如果通信的是其他网络的节点，那么此处寻找的就是网关的MAC address) <!-- raw HTML omitted --></li>
-<li>其他收到请求的节点会更新他们的translation table (IP address : MAC address entry) 然后丢弃这个包 <!-- raw HTML omitted --></li>
+<li>其他收到请求的节点会更新他们的 <code>translation table</code> (IP address : MAC address entry) 然后丢弃这个包 <!-- raw HTML omitted --></li>
 </ol>
 </li>
 </ul>
@@ -383,7 +383,7 @@ if (!doNotTrack) {
 <li>
 <p>countermeasure</p>
 <ul>
-<li>设置Arp cache 的过期时间expire <!-- raw HTML omitted --></li>
+<li>设置 <code>Arp cache</code> 的过期时间, expire <!-- raw HTML omitted --></li>
 <li>一些系统通过unicast 来更新cache 表，而不是像之前那样无状态的更新 <!-- raw HTML omitted --></li>
 <li>Against countermeasure <!-- raw HTML omitted -->
 <ul>
@@ -405,7 +405,7 @@ if (!doNotTrack) {
 <ul>
 <li>
 <p>Man-in-the-middle attack with ARP spoofing</p>
-<p>通过ARP spoofing污染两/多台电脑的ARP cache，使他们的通信destination都指向attacker，从而截取通信内容(attacker node 进而转发通信，因为它知道IP address所对应的正确的MAC address) <!-- raw HTML omitted --></p>
+<p>通过ARP spoofing 污染两/多台电脑的 <code>ARP cache</code> ，使他们的通信destination都指向attacker，从而截取通信内容(attacker node 进而转发通信，因为它知道IP address所对应的正确的MAC address) <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_10-53-55_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -416,7 +416,7 @@ if (!doNotTrack) {
 <li>
 <p>MAC flooding</p>
 <p>每个switch 会内置一个 <code>CAM (Content Addressable memory)</code> 表，用于记录不同的MAC address所对应的port number <!-- raw HTML omitted -->
-每当有frame 讲过switches, switch就会通过这个table 来实现转发 <!-- raw HTML omitted --></p>
+每当有frame 经过 switches, switch就会通过这个 table 来实现转发 <!-- raw HTML omitted --></p>
 <p>MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而 <code>被迫广播</code> ，使attacker可以利用sniffer所监听到。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_11-04-54_screenshot.png" width="700px"/>
 </figure>
@@ -504,7 +504,7 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <p>NTP</p>
 <ul>
 <li>Network time protocol <!-- raw HTML omitted --></li>
-<li>UPD protocol <!-- raw HTML omitted --></li>
+<li>UDP protocol <!-- raw HTML omitted --></li>
 <li>port 123 <!-- raw HTML omitted --></li>
 </ul>
 <p>NTP用来用来各个主机的时钟 <!-- raw HTML omitted --></p>
@@ -547,24 +547,29 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <tr>
 <th>Timestamp</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>T1</td>
 <td>09:00:00</td>
+<td>Client发出的时间</td>
 </tr>
 <tr>
 <td>T2</td>
 <td>10:00:01</td>
+<td>Server收到的时间</td>
 </tr>
 <tr>
 <td>T3</td>
 <td>10:00:02</td>
+<td>Server发出的时间</td>
 </tr>
 <tr>
 <td>T4</td>
 <td>09:00:03</td>
+<td>Client收到的时间</td>
 </tr>
 </tbody>
 </table></div>
@@ -579,7 +584,8 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <p>O2 = T3 - T4 = 59min <!-- raw HTML omitted --></p>
 <p>T2 = T1 + offset + delay/2 <!-- raw HTML omitted -->
 T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
-<p>因此Offset = (O1 + O2)/2 = [(T2 - T1 - delay/2) + (T3 - T4 + delay/2)] / 2 = 1 hour <!-- raw HTML omitted --></p>
+<p>因此Offset = (O1 + O2)/2 = [(T2 - T1 - delay/2) + (T3 - T4 + delay/2)] / 2 = 1 hour <!-- raw HTML omitted -->
+总之就是 <code>(=服务端的两个时间</code> - <code>客户端的两个时间 =)/2</code>  = offset <!-- raw HTML omitted --></p>
 </li>
 </ol>
 </li>
@@ -590,7 +596,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <ul>
 <li>
 <p>NTP amplification attack</p>
-<p>NTP amplification attack 依赖于利用公共可以访问的NTP server来发出NTP RESPONSE实现对victim host的DDoS攻击 <!-- raw HTML omitted --></p>
+<p>NTP amplification attack 依赖于利用公共可以访问的 <code>NTP server</code> 来发出NTP RESPONSE实现对victim host的DDoS攻击 <!-- raw HTML omitted --></p>
 <p>补充知识
 : NTP 服务支持管理员向NTP server查询其所管理同步的clients信息，NTP servers通过向client发送monlist命令来获得所有最近连接过的hosts的列表 <!-- raw HTML omitted --></p>
 <p>ntpd
@@ -650,7 +656,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <p>TCP 提供了可靠的点对点的基于连接的通信，如果说网络层的IP地址是提供了快递从揽货到送达的路径，那么传输层的TCP和UDP相当于是提供了传输路上的保险 <!-- raw HTML omitted --></p>
 </li>
 <li>
-<p>其可靠性主要是通过 <code>segment sequencing</code>, <code>re-trasmission</code> and =loss detection=来实现的 <!-- raw HTML omitted --></p>
+<p>其可靠性主要是通过 <code>segment sequencing</code>, <code>re-trasmission</code> and <code>loss detection</code> 来实现的 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>同时TCP提供了流量控制和拥塞管理的功能，只要是通过滑动窗口算法以及丢包检测实现的 <!-- raw HTML omitted --></p>
@@ -661,10 +667,11 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <li>
 <p>TCP connection</p>
 <p>每一个 <code>TCP connection</code> 的标识符就是： <!-- raw HTML omitted --></p>
-<ul>
-<li>Source IP address + port number, Destination IP address + port number <!-- raw HTML omitted --></li>
+<ol>
+<li>Source IP address + port number <!-- raw HTML omitted --></li>
+<li>Destination IP address + port number <!-- raw HTML omitted --></li>
 <li>其中Port number指代的就是所跑的服务所对应的number <!-- raw HTML omitted --></li>
-</ul>
+</ol>
 </li>
 </ul>
 <!-- raw HTML omitted -->
@@ -686,10 +693,10 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
  <!-- raw HTML omitted --></p>
 <p>然后看一个具体的例子 <!-- raw HTML omitted --></p>
 <ol>
-<li>Source首先发起第一次握手请求，名为 <code>SYN</code> 发出其所定义的一个sequence number为x <!-- raw HTML omitted --></li>
-<li>接着Destination返回第二次握手请求，名为 <code>SYN+ACK</code> ，将sequence number改为其所定义的值y，并将acknowledge number设为x+1 <!-- raw HTML omitted --></li>
-<li>最后Source发起第三次握手请求，名为 <code>ACK</code> , 返回acknowledgement number为y+1, 同时递增自己的 sequence number为x+1 <!-- raw HTML omitted --></li>
-<li>至此三次握手连接成功，接下来就可以正常的进行通信，并且Source 和 Destination将逐渐递增其自己的sequence number以及acknowledge number <!-- raw HTML omitted --></li>
+<li>Source首先发起第一次握手请求，名为 <code>SYN</code> 发出其所定义的一个sequence number为 <code>x</code> <!-- raw HTML omitted --></li>
+<li>接着Destination返回第二次握手请求，名为 <code>SYN+ACK</code> ，将sequence number改为其所定义的值 <code>y</code> ，并将acknowledge number设为 <code>x+1</code> <!-- raw HTML omitted --></li>
+<li>最后Source发起第三次握手请求，名为 <code>ACK</code> , 返回acknowledgement number为 <code>y+1</code> , 同时递增自己的 sequence number为 <code>x+1</code> <!-- raw HTML omitted --></li>
+<li>至此三次握手连接成功，接下来就可以正常的进行通信，并且Source 和 Destination 将逐渐递增其自己的 <code>sequence number</code> 以及 <code>acknowledge number</code> <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_10-35-28_screenshot.png" width="700px"/>
 </figure>
@@ -704,7 +711,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <p>TCP SYN flooding</p>
 <p>TCP SYN flooding attack本质上是一个DoS attack, 其目的是为了通过向目标服务器发送大量的无效 <code>SYN</code>, 来诱使服务器发送对等数量的 <code>SYN+ACK</code> 请求, 继而等待 <code>ACK</code> 请求回复，同时利用本地缓存这个连接，最终导致本地的缓存空间被占满。 <!-- raw HTML omitted --></p>
 <p>我们最后通过一个具体的例子来复现一下这个过程 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-04-27_10-48-13_screenshot.png" width="700px"/>
+<p><figure><img src="/ox-hugo/2022-04-27_10-48-13_screenshot.png"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <ol>
@@ -759,7 +766,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on May 24, 2022 21:57 BST
+            Last updated on May 26, 2022 12:03 BST
         </span>
     </section></footer>
 
@@ -801,24 +808,24 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
             
                 
 <article class="">
-    <a href="/posts/nse_week5_firewalls/">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">NSE Week5: Firewalls</h2>
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/posts/password_cracking/">
+    <a href="/posts/nse_week5_firewalls/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">SCT Topic 8: Password Cracking</h2>
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
         </div>
     </a>
 </article>
