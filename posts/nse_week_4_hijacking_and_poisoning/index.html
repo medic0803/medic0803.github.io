@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week4: Hijacking and poisoning TCP Session Hijacking What is Hijacking 劫持? 指的是劫取其他人的东西，特别是在运行的时候。 Hijacking 劫持与spoofing的不同点在于： Hijacking 是劫持一个已经存在的TCP连'><title>NSE Week4: Hijacking and poisoning</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_4_hijacking_and_poisoning/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week4: Hijacking and poisoning'>
+<meta property='og:description' content='NSE Week4: Hijacking and poisoning TCP Session Hijacking What is Hijacking 劫持? 指的是劫取其他人的东西，特别是在运行的时候。 Hijacking 劫持与spoofing的不同点在于： Hijacking 是劫持一个已经存在的TCP连'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_4_hijacking_and_poisoning/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-28T17:24:58&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week4: Hijacking and poisoning">
+<meta name="twitter:description" content="NSE Week4: Hijacking and poisoning TCP Session Hijacking What is Hijacking 劫持? 指的是劫取其他人的东西，特别是在运行的时候。 Hijacking 劫持与spoofing的不同点在于： Hijacking 是劫持一个已经存在的TCP连">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_4_hijacking_and_poisoning/">NSE Week4: Hijacking and poisoning</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 28, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week4-hijacking-and-poisoning">NSE Week4: Hijacking and poisoning</h2>
+<h3 id="tcp-session-hijacking">TCP Session Hijacking</h3>
+<h4 id="what-is-hijacking-劫持">What is Hijacking 劫持?</h4>
+<p>指的是劫取其他人的东西，特别是在运行的时候。 <!-- raw HTML omitted --></p>
+<p>Hijacking 劫持与spoofing的不同点在于： <!-- raw HTML omitted --></p>
+<ul>
+<li>Hijacking 是劫持一个已经存在的TCP连接 <!-- raw HTML omitted --></li>
+<li>而Spoffing则是通过修改IP header来发起新的连接进行欺骗 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Off-path v.s. On-path adversaries</p>
+<p>顾名思义，就是判断发起劫持的主机是否在连接的两台主机的路由上： <!-- raw HTML omitted --></p>
+<ul>
+<li>如果在路由上，那么就是On-path, 这种劫持更为强大，可以直接注入错误的信息，但是却很难扩大规模 <!-- raw HTML omitted --></li>
+<li>如果不在路由上，那么就是Off-path,这种劫持就无法直接注入错误的信息了 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="tcp-connection">TCP connection</h4>
+<p>如何唯一识别一个TCP连接呢？ <!-- raw HTML omitted -->
+(source IP address + port number) + (destination IP address + port number) <!-- raw HTML omitted --></p>
+<p>Port number就指示了双方所运行的应用层的应用 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP three-way handshake</p>
+<p><figure><img src="/ox-hugo/2022-05-28_10-22-56_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>通过不断增加Sequence number以及Acknowledgement number来实现握手，以及后续的通信 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>How does an attacker hijack a TCP session?</p>
+<p>攻击者需要构造一个TCP segment来满足sequence number &amp; acknowledgement number的回复 <!-- raw HTML omitted --></p>
+<p>那么需要的信息有 <!-- raw HTML omitted --></p>
+<ol>
+<li>Source IP address + port number (easy to get) <!-- raw HTML omitted --></li>
+<li>Destination IP address + port number (easy to get) <!-- raw HTML omitted --></li>
+<li>Sequence number (如果攻击者在路由上的话就不会很难，因为可以通过获取到的通信数据包来推测) <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-28_10-33-18_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Sequence number可以是捕捉到的数据包的sequence number + 1 亦或是+ n，只要n不要太大，接收者都会将这些数据包保存在buffer中，等待中间“未接收到”的数据包 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="tcp-on-path-connection-hijacking">TCP on-path connection hijacking</h4>
+<p>TCP on-path connection hijacking, attacker可以更方便的接收到通信的sequence number和acknowledgement number <!-- raw HTML omitted --></p>
+<p>只需要合理增加数字，就可以实现劫持，并发出恶意修改的数据： <!-- raw HTML omitted --></p>
+<ol>
+<li>嗅探数据包 <!-- raw HTML omitted --></li>
+<li>预测sequence number (client -&gt; server; server -&gt; client) <!-- raw HTML omitted --></li>
+<li>注入恶意数据 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-28_10-35-07_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_10-35-18_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="tcp-off-path-connection-hijacking">TCP off-path connection hijacking</h4>
+<p>由于攻击者的主机并不在连接的路由上，因此attacker没有办法获取任何当前连接的信息，因此其需要主动发起一个连接，然后在劫持这个连接，同时返回合法的sequence number,但这一次因为无法进行嗅探，只能进行猜测 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_10-39-24_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>How to guess the initial sequence number</p>
+<p>这里利用的就是一些操作系统没有使用规范的标准来实现TCP连接 <!-- raw HTML omitted --></p>
+<p>RFC 793 (TCP specification)
+:</p>
+<p>When new connections are created, an <code>initial sequence number (ISN)</code> generator is employed which selects a new <code>32 bit ISN</code>. The generator is bound to a 32 bit clock whose low order bit is incremented roughly every 4 microseconds. <!-- raw HTML omitted --></p>
+<p>Thus, the ISN cycles approximately <code>every 4.55 hours</code>. (4 microseconds x 2^32) <!-- raw HTML omitted --></p>
+<p>Since we assume that segments will stay in the network <code>no more than the Maximum Segment Lifetime</code> (MSL, defined as 2 minutes in RFC 793) and that the MSL is less than 4.55 hours we can reasonably assume that ISN’s will be <code>unique</code>. [i.e., sequence numbers should not repeat for at least 4.55 hours] <!-- raw HTML omitted --></p>
+<p>The purpose is to ensure undelivered packets from previous connection that arrive late do not overlap with current connection <!-- raw HTML omitted --></p>
+<p>总结：在RFC 793的标准下，sequence number的递增周期就是4.55 hours，这超出了最长的连接时间(2mins),因此无论怎么递增，都基本不会从头开始，可以将所有的sequence number看作是unique唯一的 <!-- raw HTML omitted --></p>
+<p>Unfortunately, BSD Unix TCP/IP stack did not adhere to these recommendations
+: -   The sequence number for BSD TCP/IP stacks increases by 128,000 every second and by 64,000 for every new TCP connection. <!-- raw HTML omitted -->
+-   Such a sequence is relatively easy to predict and can be much more readily exploited than one which follows the RFC standard <!-- raw HTML omitted --></p>
+<p>可是在BSD Unix中，却没有按照标准实现，而是变成了sequence number每秒增加128,000，每一个新的连接增加 64,000, 这放宽了预测的时间以及缩小了范围，使sequence number很容易被预测 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>TCP initial sequence number attack</p>
+<p><figure><img src="/ox-hugo/2022-05-28_10-46-15_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Attacker首先通过flooding使client无法正常工作，然后发起一个新的TCP连接给server，然后通过预测sequence number来伪装成client来进行通信 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="bgp-route-hijacking">BGP Route Hijacking</h3>
+<h4 id="bgp-and-as">BGP and AS</h4>
+<p>Border Gateway Procol 也被认为是最重要的Internet协议之一，因为其能够把多个ISPs组织在一起运作 <!-- raw HTML omitted --></p>
+<p>BGP是一个inter-Autonomous System (ASs) 路由协议（用于自治区内部的设备之前通信） <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_16-05-47_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<dl>
+<dt>Autonomous system (AS, 自治系统)</dt>
+<dd><ul>
+<li>AS是路由策略中的基本单位，由同一个组织的管理员所管理的所有网络都属于一个AS来作为路由协议的基础 <!-- raw HTML omitted --></li>
+<li>每一个AS内部都有很多设备相连，也会有很多的网络 <!-- raw HTML omitted --></li>
+<li>sometimes referred to as a <code>routing domain</code> <!-- raw HTML omitted --></li>
+<li><code>Autonomous System Number (ASN)</code>, 每一个AS都有一个，全球唯一 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h4 id="bgp-routing-table-and-cidr-prefix">BGP routing table and CIDR prefix</h4>
+<p>在BGP中，路由并不是直接指定如何到达一个IP地址，而是如何达到一个网段， Classless Inter-Domain Routing (CIDR) prefixes <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>CIDR prefix</p>
+<p>CIDR prefix就是subnet mask中含有1的数量 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+172.16.122.204/16 就位于172.16.0.0/16网段当中，前面16bits为network段，用来指示网段;后面为host段，用来指示具体的主机 <!-- raw HTML omitted -->
+CIDR prefix = 16 <!-- raw HTML omitted --></p>
+<p>BGP Routing table 由两部分组成一个entry (x, l)： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>x就是网段 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>l就是路由器的接口interface，指向下一跳的地址 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_16-12-24_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>BGP 的功能</p>
+<ol>
+<li>从周边的ASs中获取不同的网段的reachability <!-- raw HTML omitted -->
+<ul>
+<li>BGP允许所有的子网都能宣告自己的存在 <!-- raw HTML omitted --></li>
+<li>BGP接着会确保所有的路由器都能知道这个子网的存在 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>决定每一个路由器到达不同子网的最优路径 <!-- raw HTML omitted -->
+<ul>
+<li>Policy <!-- raw HTML omitted --></li>
+<li>Prefix reachability information <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>ASs使用最长掩码匹配机制（longest prefix matching）来选择路径 <!-- raw HTML omitted -->
+<ul>
+<li>例如当需要决定192.168.20.19的路由时，有两个子网需要选择 <!-- raw HTML omitted --></li>
+<li>192.168.20.16/28; 192.168.0.0/16 <!-- raw HTML omitted --></li>
+<li>选择192.168.20.16/28，因为其子网掩码长，更具体 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="bgp-route-advertisement-and-propagation">BGP route advertisement and propagation</h4>
+<p>接着我们具体展开来讲上面提到过的BGP的功能 <!-- raw HTML omitted --></p>
+<p>首先是宣告子网的功能 <!-- raw HTML omitted --></p>
+<p>例如下图，AS22394中有66.174.161.0/24这个子网，于是其开始向外宣告自己有这个子网 <!-- raw HTML omitted --></p>
+<p>然后按照相邻的顺序，AS6167首先收到了这个宣告，然后记录下来6167,22394这个顺序 <!-- raw HTML omitted --></p>
+<p>然后依次继续宣告，并不断记录次序，方便将来路由 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_16-22-21_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="ebgp-and-ibgp-connections">eBGP and iBGP connections</h4>
+<p>那么AS中也有很多的路由器属于不同的网络，他们之前也会交换子网的信息方便AS内部的路由，因此有内外两种BGP协议来进行路由 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>eBGP, external BGP (TCP),用于不同的AS之前的路由器之间的通信 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>iEBGP, internal BGP (TCP), 用于同一个AS中的路由器之间的通信 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_16-27-38_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h4 id="bgp-route-prefix-sub-prefix-hijacking">BGP route/prefix/sub-prefix hijacking</h4>
+<p>那么有信息交换，就有hijacking，本质上BGP的hijacking的目的就是通过宣告攻击者的AS能够到达目标子网，来诱使其他的AS将原本将要发送到目标子网的数据发送到攻击者的AS中来。其中也有两种不同的方式 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>BGP route/prefix hijacking</p>
+<p>一种是通过直接宣告目标子网在攻击者的AS中的错误信息来误导其他AS将数据发送过来 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>BGP sub-prefix hijacking</p>
+<p>就是利用我们之前提到的过的longest matching原则，通过加长子网掩码的长度，诱导AS选择更为确切的子网 <!-- raw HTML omitted -->
+例如目标子网为10.100.0.0/16，攻击者就宣告，10.100.0.0/24 来误导其他的AS <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="bgp-routing-blackhole-and-two-incidents">BGP routing blackhole and two incidents</h4>
+<p>How to create a routing blackhole? <!-- raw HTML omitted -->
+如果ASs开始宣告无法提供的子网，那么整一个Internet就会陷入混乱，因为数据包永远无法到达应该发送的位置，也收不到任何的回复 <!-- raw HTML omitted --></p>
+<h3 id="dns-cache-poisoning">DNS Cache Poisoning</h3>
+<h4 id="dns-and-dns-structure">DNS and DNS structure</h4>
+<p>Domain Name System, DNS <!-- raw HTML omitted --></p>
+<ul>
+<li>一个分布式的数据库用来存储DNS信息，从而完成一个DNS服务器架构 <!-- raw HTML omitted --></li>
+<li>一个应用层的协议来向所有主机提供数据库信息 <!-- raw HTML omitted --></li>
+</ul>
+<p>为什么我们需要DNS？ <!-- raw HTML omitted -->
+理由也很简单，好记！现在IPv4已经被用完了，取而代之的是更长的IPv6，如果每访问一个网站都需要记住IP地址就太麻烦了 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+DNS服务器采用树状结构 <!-- raw HTML omitted --></p>
+<p>全世界一共有13个root server <!-- raw HTML omitted --></p>
+<p>顶级域名Top level domain (TLD) <!-- raw HTML omitted --></p>
+<ul>
+<li>com,edu, org, net, gov .etc <!-- raw HTML omitted --></li>
+<li>cn, uk, de, eu, etc. <!-- raw HTML omitted --></li>
+</ul>
+<p>本博客目前的域名后缀后缀就是org.cn <!-- raw HTML omitted --></p>
+<h4 id="dns-name-resolution--iterative-and-recursive">DNS name resolution (iterative and recursive)</h4>
+<p>DNS主要的作用就是map <!-- raw HTML omitted --></p>
+<ul>
+<li>Domain names to IP addresses <!-- raw HTML omitted --></li>
+<li>IP addresses to Domain names <!-- raw HTML omitted --></li>
+</ul>
+<p>DNS resolver向 nameservers 进行mapping请求，一般我们将查询请求分为两种 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Iterative DNS query with caching 迭代查询</p>
+<p>顾名思义就是一个个DNS服务器查过来，一个查不到就下一个 <!-- raw HTML omitted --></p>
+<ol>
+<li>Local DNS server <!-- raw HTML omitted --></li>
+<li>root DNS server <!-- raw HTML omitted --></li>
+<li>Top level DNS server <!-- raw HTML omitted --></li>
+<li>Authoritative DNS server <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-28_16-57-23_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Recursive DNS query with caching 递归查询</p>
+<p>同样也是按次序查询，但是不同的地方在于，只有查到了才会原路返回给用户，否则就会继续将查询递交给下一个服务器 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_16-59-21_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>注：一般来说不会在实际中使用 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="dns-caching">DNS caching</h4>
+<p>Why we need DNS caching? <!-- raw HTML omitted -->
+通过缓存这些DNS的map信息来加速网页的访问 <!-- raw HTML omitted -->
+比如已经查到过一次谷歌的域名和IP地址的map之后，就存在本地的DNS server上，这样下一次就不用花这么多步骤再去查询了 <!-- raw HTML omitted --></p>
+<h4 id="dns-cache-poisoning-attack">DNS cache poisoning attack</h4>
+<p>那么这种偷懒的办法也就会遭到黑客的攻击，如果在DNS查询的过程中，黑客发送了伪造的DNS记录给本地的DNS server，那么既而被缓存在本地，造成长久的损害。 <!-- raw HTML omitted --></p>
+<p>同时还会给同一区域的其他设备造成危害，记得之前我们在SCT中提到过的 <code>Water holing attack</code> 就是利用了 <code>DNS cache poisoning attack</code>, 通过获取组织内最频繁访问的页面，就可以利用DNS poisoning来将那个网站改为黑客所构建的恶意网站，既而达到其攻击目的 <!-- raw HTML omitted --></p>
+<h4 id="how-dns-poisoning-attack-works">How DNS poisoning attack works？</h4>
+<p>那么具体是如何伪造的DNS query回复来使DNS server认为其是合法的查询结构并缓存的呢？ <!-- raw HTML omitted -->
+这里也有两种手段 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Query QID attack</p>
+<ul>
+<li>
+<p>每一个DNS query 都有一个唯一的 <code>QID</code> <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>DNS使用UDP进行通信 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>因此不存在连接的说法，只要能够选对正确的QID，就能成功代替真实的回复 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_17-07-58_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>RRSet attack</p>
+<p>每一个DNS query response 会包含一组记录集，Resource Record Sets, or RRSets <!-- raw HTML omitted --></p>
+<p>同时，这些记录集不只包含mapping的entry，还可以增加一些其他额外的信息，对未来的mapping有所“帮助” <!-- raw HTML omitted --></p>
+<p>比如在一次递归查询中，一般会包含域名的mapping可以在某一个服务器上获得之类的信息，黑客就可以选择篡改这个信息，直接改为mapping的信息，就可以达到其重定向的目的 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 28, 2022 17:24 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week5_firewalls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_3_spoofing_flooding_and_amplification/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 3: Spoofing, flooding and amplification</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sct_topic_10_advanced_strategies/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SCT Topic 10: Advanced Strategies</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week4-hijacking-and-poisoning">NSE Week4: Hijacking and poisoning</a>
+      <ul>
+        <li><a href="#tcp-session-hijacking">TCP Session Hijacking</a>
+          <ul>
+            <li><a href="#what-is-hijacking-劫持">What is Hijacking 劫持?</a></li>
+            <li><a href="#tcp-connection">TCP connection</a></li>
+            <li><a href="#tcp-on-path-connection-hijacking">TCP on-path connection hijacking</a></li>
+            <li><a href="#tcp-off-path-connection-hijacking">TCP off-path connection hijacking</a></li>
+          </ul>
+        </li>
+        <li><a href="#bgp-route-hijacking">BGP Route Hijacking</a>
+          <ul>
+            <li><a href="#bgp-and-as">BGP and AS</a></li>
+            <li><a href="#bgp-routing-table-and-cidr-prefix">BGP routing table and CIDR prefix</a></li>
+            <li><a href="#bgp-route-advertisement-and-propagation">BGP route advertisement and propagation</a></li>
+            <li><a href="#ebgp-and-ibgp-connections">eBGP and iBGP connections</a></li>
+            <li><a href="#bgp-route-prefix-sub-prefix-hijacking">BGP route/prefix/sub-prefix hijacking</a></li>
+            <li><a href="#bgp-routing-blackhole-and-two-incidents">BGP routing blackhole and two incidents</a></li>
+          </ul>
+        </li>
+        <li><a href="#dns-cache-poisoning">DNS Cache Poisoning</a>
+          <ul>
+            <li><a href="#dns-and-dns-structure">DNS and DNS structure</a></li>
+            <li><a href="#dns-name-resolution--iterative-and-recursive">DNS name resolution (iterative and recursive)</a></li>
+            <li><a href="#dns-caching">DNS caching</a></li>
+            <li><a href="#dns-cache-poisoning-attack">DNS cache poisoning attack</a></li>
+            <li><a href="#how-dns-poisoning-attack-works">How DNS poisoning attack works？</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

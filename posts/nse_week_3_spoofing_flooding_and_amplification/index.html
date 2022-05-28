@@ -9,7 +9,7 @@
 <meta property='og:description' content='Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-26T12:03:51&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-28T17:24:50&#43;01:00'/>
 <meta name="twitter:title" content="NSE Week 3: Spoofing, flooding and amplification">
 <meta name="twitter:description" content="Spoofing, flooding and amplification Spoofing ARP spoofing ARP Layer identifiers Routing是network communication中重要的一环，computer node在通信之前，需要知道自己在">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    8 minute read
+                    9 minute read
                 </time>
             </div>
         
@@ -731,6 +731,41 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 </ol>
 </li>
 </ul>
+<h3 id="mitigation">Mitigation</h3>
+<h4 id="mac-flooding-mitigation">MAC flooding mitigation</h4>
+<ul>
+<li>使用port security，限制从端口可以获取的MAC地址数量 <!-- raw HTML omitted --></li>
+<li>对安全的MAC地址进行长时间的使用（不可替代），只要这些地址还存在于第三层的设备的ARP table当中（例如路由器，表示信任路由器的安全措施） <!-- raw HTML omitted --></li>
+<li>使用AAA(Authentication, authorisation and accounting)服务器来验证所有MAC地址 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="dhcp-starvation-mitigation">DHCP starvation mitigation</h4>
+<ul>
+<li>使用Port security, 只有可以信任的端口所连接的DHCP请求才被允许通过 <!-- raw HTML omitted --></li>
+<li>DHCP snooping, 只接受信任的DHCP服务器所发送的配置 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="dhcp-spoofing-mitigation">DHCP spoofing mitigation</h4>
+<ul>
+<li>使用入侵检测系统，并审核数字签名来避免伪造的DHCP服务器 <!-- raw HTML omitted --></li>
+<li>DHCP snooping, 只接受信任的DHCP服务器所发送的配置 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="icmp-smurfing-mitigation">ICMP smurfing mitigation</h4>
+<ul>
+<li>单独配置每一个主机和路由器，拒接相应ICMP请求和广播信息 <!-- raw HTML omitted --></li>
+<li>配置路由器不要转发ICMP到广播域当中 <!-- raw HTML omitted --></li>
+<li>入站流量检查，拒绝伪造源地址的数据 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="ntp-amplification-ddos-mitigation">NTP amplification DDoS mitigation</h4>
+<ul>
+<li>禁止 <code>monlist</code> 的使用，一次来避免NTP返回非常大的信息 <!-- raw HTML omitted --></li>
+<li>入站流量检查，拒绝伪造源地址的数据 <!-- raw HTML omitted --></li>
+<li>Firewall <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="tcp-syn-flooding-attack-mitigation">TCP SYN flooding attack mitigation</h4>
+<ul>
+<li>使用防火墙来进行filtering，对那些很明显的spoofed的IP address进行丢弃 <!-- raw HTML omitted --></li>
+<li>减少SYN接受的时间，将那些黑客建立的半连接尽早关闭来防止崩溃 <!-- raw HTML omitted --></li>
+<li>使用防火墙对于TCP connection来进行审查 <!-- raw HTML omitted --></li>
+</ul>
 
 </section>
 
@@ -766,7 +801,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on May 26, 2022 12:03 BST
+            Last updated on May 28, 2022 17:24 BST
         </span>
     </section></footer>
 
@@ -844,24 +879,24 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
             
                 
 <article class="">
-    <a href="/posts/sct_topic_10_advanced_strategies/">
+    <a href="/posts/nse_week_4_hijacking_and_poisoning/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">SCT Topic 10: Advanced Strategies</h2>
+            <h2 class="article-title">NSE Week4: Hijacking and poisoning</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/posts/sct_topic-9_exploitation_phase_industry_guest_seminar/">
+    <a href="/posts/sct_topic_10_advanced_strategies/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">SCT Topic 9: Exploitation Phase &#43; Industry Guest Seminar</h2>
+            <h2 class="article-title">SCT Topic 10: Advanced Strategies</h2>
         </div>
     </a>
 </article>
@@ -1055,6 +1090,16 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
             <li><a href="#ntp-amplification-ddos-attack">NTP Amplification DDoS Attack</a></li>
             <li><a href="#botnet">Botnet</a></li>
             <li><a href="#tcp-syn-flooding">TCP SYN Flooding</a></li>
+          </ul>
+        </li>
+        <li><a href="#mitigation">Mitigation</a>
+          <ul>
+            <li><a href="#mac-flooding-mitigation">MAC flooding mitigation</a></li>
+            <li><a href="#dhcp-starvation-mitigation">DHCP starvation mitigation</a></li>
+            <li><a href="#dhcp-spoofing-mitigation">DHCP spoofing mitigation</a></li>
+            <li><a href="#icmp-smurfing-mitigation">ICMP smurfing mitigation</a></li>
+            <li><a href="#ntp-amplification-ddos-mitigation">NTP amplification DDoS mitigation</a></li>
+            <li><a href="#tcp-syn-flooding-attack-mitigation">TCP SYN flooding attack mitigation</a></li>
           </ul>
         </li>
       </ul>
