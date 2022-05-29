@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 7: Intrusion detection and prevention IDPS IDPS vs firewall Why we need Intrusion detection since we already have firewalls? IDS的主要目的是检测并报告任何网络中的入侵尝试 IDS是建立在firewall之后的，还记得我们之'><title>NSE Week 7: Intrusion detection and prevention</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_7_intrusion_detection_and_prevention/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 7: Intrusion detection and prevention'>
+<meta property='og:description' content='NSE Week 7: Intrusion detection and prevention IDPS IDPS vs firewall Why we need Intrusion detection since we already have firewalls? IDS的主要目的是检测并报告任何网络中的入侵尝试 IDS是建立在firewall之后的，还记得我们之'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_7_intrusion_detection_and_prevention/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-29T12:50:02&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 7: Intrusion detection and prevention">
+<meta name="twitter:description" content="NSE Week 7: Intrusion detection and prevention IDPS IDPS vs firewall Why we need Intrusion detection since we already have firewalls? IDS的主要目的是检测并报告任何网络中的入侵尝试 IDS是建立在firewall之后的，还记得我们之">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_7_intrusion_detection_and_prevention/">NSE Week 7: Intrusion detection and prevention</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 28, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week-7-intrusion-detection-and-prevention">NSE Week 7: Intrusion detection and prevention</h2>
+<h3 id="idps">IDPS</h3>
+<h4 id="idps-vs-firewall">IDPS vs firewall</h4>
+<p>Why we need Intrusion detection since we already have firewalls? <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>IDS的主要目的是检测并报告任何网络中的入侵尝试 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>IDS是建立在firewall之后的，还记得我们之前在firewall中提到的三层内网保护机制吗，IDS就作为街道巡逻来识别可疑的入侵者 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Firewall主要是将外敌抵御在城墙之外，而IDS就负责抓住潜伏进来的内鬼 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_20-58-30_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="three-classes-of-intruders">Three classes of intruders</h4>
+<dl>
+<dt>Masquerader 伪装者</dt>
+<dd>Masquerader是一个外部人员，没有任何权限来使用计算机，但是却通过外部手段进行渗透，操控了合法用户的账户，可以被看作是一个outsider <!-- raw HTML omitted --></dd>
+<dt>Misfeasor 渎职者</dt>
+<dd>Misfeasor是一个合法的用户，但是却做了超出其权限活着规定的事情，可以被看作是一个insider <!-- raw HTML omitted --></dd>
+<dt>Clanderstine user 秘密用户</dt>
+<dd>Clanderstine user通过获取获取系统的高级权限，进而破坏系统的防御措施，可以是insider活着outsider <!-- raw HTML omitted --></dd>
+</dl>
+<h4 id="idps-definitions">IDPS Definitions</h4>
+<dl>
+<dt>Intrusion</dt>
+<dd><ul>
+<li>未经授权的对于计算机资源的访问 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Intrusion detection</dt>
+<dd><ul>
+<li>检测对于系统活着网络未经授权的访问 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Intrusion detection system (IDS)</dt>
+<dd><ul>
+<li>
+<p>就像是网络中的杀毒软件 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>组成：sensors, alerts; 检测如前以及报告检测到的如前 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+<dt>Intrusion prevention system (IPS)</dt>
+<dd><ul>
+<li>IPS 就是一个IDS并且自动对检测到的入侵做出反馈的系统： <!-- raw HTML omitted -->
+<ul>
+<li>关闭入侵者的网络连接 <!-- raw HTML omitted --></li>
+<li>尝试反溯源入侵者 <!-- raw HTML omitted --></li>
+<li>对抗攻击 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<p>IDS与IPS配合使用，一般来说IDS在IPS的后面辅助其更好的加强安全 <!-- raw HTML omitted --></p>
+<h4 id="approaches-to-intrusion-detection">Approaches to intrusion detection</h4>
+<p>那我们具体应该如何识别一次入侵呢？ <!-- raw HTML omitted --></p>
+<ul>
+<li>最基础的方法就是密切监控所有合法用户的行为，一旦出现异常的行为，就很有可能是一次入侵 <!-- raw HTML omitted --></li>
+</ul>
+<p>但是入侵行为却和普通的行为有很大的重叠 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_21-12-17_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>因此检测很有可能会出现问题，我们用machine learning中曾经用过的概念来解释入侵检测 <!-- raw HTML omitted --></p>
+<p>前提：在这里，一次positive就表示，IDS识别了一次intrusion <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>False positive 就是表示一个授权的用户的正常行为被错误的认为是了入侵，检测条件较为宽松的IDS更容易检测到更多的入侵，但同时也会遭致很多的false alarms, completeness <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>False negative 就表示一次入侵没有被识别为入侵，检测条件如果较为单一，那么相对而言检测到的入侵会更加准确，但是却会遗漏很多的入侵，soundness <!-- raw HTML omitted --></p>
+</li>
+<li>
+<ul>
+<li>
+<p><strong>Reputation detection:</strong> -   观察主机是否与曾经行为不良的用户进行通信 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p><strong>Anomaly-based detection:</strong> -   首先定义系统内正常的行为，然后检测那些不正常的行为，一般使用机器学习来进行训练和识别 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p><strong>Misuse-based detection:</strong> -   预先定义不良的行为作为模版，然后用这些模版进行匹配检测 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="reputation-based">Reputation based</h4>
+<p>主要目的是为了观察主机是否与曾经行为不良的用户进行通信 <!-- raw HTML omitted --></p>
+<p>那么如何来判断这些不良的用户呢？ <!-- raw HTML omitted --></p>
+<p>一半了是基于OSINT，开源的情报以及一些私有的黑名单来进行筛选识别 <!-- raw HTML omitted --></p>
+<ul>
+<li>Malware Domain List (MDL) <!-- raw HTML omitted -->
+<ul>
+<li>Google Safe Browsing <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Spamhaus Block Lists <!-- raw HTML omitted --></li>
+<li>PhishTank <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="misuse-based">Misuse based</h4>
+<p>预先定义不良的行为作为模版，然后用这些模版进行匹配检测 <!-- raw HTML omitted --></p>
+<ul>
+<li>也被称为 signature detection,通过识别几个特定的signature来进行匹配检测 <!-- raw HTML omitted --></li>
+<li>依赖于恶意行为模型models of malicious behaviour <!-- raw HTML omitted --></li>
+<li>同样使用开源情报：Indicators of Compromise (IoC) &amp; Indicators of Attacks (IoA) <!-- raw HTML omitted --></li>
+<li>IoC/IoA/signature 就如同firewall中的blacklist一样，用来匹配那些恶意行为 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Indicators of Compromise (IoCs)</p>
+<p>IoC一般是作为取证数据，从日志或者文件中提取出来的恶意行为特诊 <!-- raw HTML omitted --></p>
+<ul>
+<li>可以被分为host-based或者是network-based <!-- raw HTML omitted --></li>
+<li>甚至可以是很复杂的shellcode <!-- raw HTML omitted --></li>
+<li>IoC主要关注点在已经发生过的入侵，从日志，文件等信息中来识别 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-28_21-31-06_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Indicators of Attacks (IoAs)
+: -   IoAs就关注于正在发生的入侵 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Misuse-based detection: pros and cons</p>
+<p>Misuse-based detection的例子： <!-- raw HTML omitted --></p>
+<p>(traffic source.ip = destination.ip) and (source.port=destination.port) <!-- raw HTML omitted --></p>
+<p>这就是一个很典型的异常行为的匹配与判断 <!-- raw HTML omitted --></p>
+<p>Advantages
+: 1.  较少的false alarms <!-- raw HTML omitted -->
+2.  每次的alerts都会有对应的解释（匹配了什么模型） <!-- raw HTML omitted -->
+3.  速度很快 <!-- raw HTML omitted -->
+4.  不惧怕evasion，因为是预先设定好的，不会更改 <!-- raw HTML omitted --></p>
+<p>Disadvantage
+: -   只能检测已知的攻击（APT，zero-day就束手无策了） <!-- raw HTML omitted --></p>
+<pre><code> -   需要不断更新换代 &lt;br/&gt;
+
+ -   对于over-stimulation attacks来说是错误的 &lt;br/&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="anomaly-based">Anomaly based</h4>
+<p>首先定义系统内正常的行为，然后检测那些不正常的行为，一般使用机器学习来进行训练和识别 <!-- raw HTML omitted --></p>
+<ul>
+<li>需要先收集一段时间的数据来定义正常的行为 <!-- raw HTML omitted --></li>
+<li>然后将统计测试的结果应用到检测用户的行为来判断是否合法 <!-- raw HTML omitted --></li>
+<li>阈（yù）值检测 Threshold detection：对各种时间的发生频率进行定义，查看是否出现异常 <!-- raw HTML omitted --></li>
+<li>基于账户 Profile based：为不同用户的行为进行记录统计，来观察每个用户行为的变化 <!-- raw HTML omitted -->
+<ul>
+<li>侧重于过去的行为，然后检测重大的变化 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>可以被认为是白名单检测，默认不信任所有的行为 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Statistical test</p>
+<ol>
+<li>Mean and standard deviation 平均值和标准差 <!-- raw HTML omitted -->
+<ul>
+<li>通过一段时间的数据来进行计算 <!-- raw HTML omitted --></li>
+<li>可以运用到很多参数上 <!-- raw HTML omitted --></li>
+<li>不适合单独在IDs上使用 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Multivariate calculation <!-- raw HTML omitted -->
+<ul>
+<li>用来决定几个变量之前的关系（例如处理时间，数据占用，登录频率等） <!-- raw HTML omitted --></li>
+<li>通过对于变量关系的分析可以更好的进行分类 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Markov process <!-- raw HTML omitted -->
+<ul>
+<li>Estimates transition probabilities among various states <!-- raw HTML omitted --></li>
+<li>Efficient in describing protocol run <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Time series model <!-- raw HTML omitted -->
+<ul>
+<li>根据时间次序进行计算 <!-- raw HTML omitted --></li>
+<li>可以用来检测一些活动进行的太快或者太慢 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Pros and Cons</p>
+<p>Advantages
+: 1.  可以检测那些从来没遇到过的攻击 <!-- raw HTML omitted -->
+2.  不需要主动去更新 <!-- raw HTML omitted --></p>
+<p>Disadvantage
+: 1.  很难进行配置以及需脸 <!-- raw HTML omitted -->
+2.  定义异常的行为为恶意的有时候也不完全准确 <!-- raw HTML omitted -->
+3.  会产生很多的 false alarms <!-- raw HTML omitted -->
+4.  消耗大量的资源 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="other-ids-classification">Other IDS classification</h4>
+<ol>
+<li>根据时间Timeliness: <!-- raw HTML omitted -->
+<ul>
+<li>Real-time（实时在线运行） <!-- raw HTML omitted --></li>
+<li>Non real-time (离线模式，定期进行) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>反应措施 Response type: <!-- raw HTML omitted -->
+<ul>
+<li>Passive (被动的，只有检测到了才会发出警告) <!-- raw HTML omitted --></li>
+<li>Active (主动封锁恶意的流量) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>State-dependency <!-- raw HTML omitted -->
+<ul>
+<li>Stateful analysis（结合上下文的） <!-- raw HTML omitted --></li>
+<li>Stateless analysis <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>System type: <!-- raw HTML omitted -->
+<ul>
+<li>软件 <!-- raw HTML omitted --></li>
+<li>硬件 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Topology 拓扑范围类型 <!-- raw HTML omitted -->
+<ul>
+<li>Host IDS (HIDS) <!-- raw HTML omitted --></li>
+<li>Network IDS (NIDS) <!-- raw HTML omitted --></li>
+<li>Distributed IDS (DIDS) <!-- raw HTML omitted -->
+<ul>
+<li>观察和检测整一个网络利用多种检测模式 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="hids-nids-dids">HIDS/NIDS/DIDS</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Host IDS (HIDS)</p>
+<p>专注于本机的数据 <!-- raw HTML omitted -->
+NIC网卡需要处于non-promiscuous mode,即不会接受与自己无关的数据包，进而缩小检测范围 <!-- raw HTML omitted --></p>
+<p>检测的范围: <!-- raw HTML omitted --></p>
+<ul>
+<li>Logs 日志 <!-- raw HTML omitted --></li>
+<li>System calls 系统指令 <!-- raw HTML omitted --></li>
+<li>Host activities 用户行为 <!-- raw HTML omitted --></li>
+</ul>
+<p>只关注本地服务 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Network IDS (NIDS)</p>
+<p>专注于网络内的所有主机 <!-- raw HTML omitted -->
+NIC开放promiscuous mode，接受所有的数据包 <!-- raw HTML omitted --></p>
+<p>通常会部署在： <!-- raw HTML omitted --></p>
+<ol>
+<li>choke points（firewall） <!-- raw HTML omitted --></li>
+<li>DMZ <!-- raw HTML omitted --></li>
+<li>Internal network <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<p>Traditional deployment
+: -   IDS设备连接在trunk points (e.g., firewall)上，来检测所有的网络流量，检测攻击，但没有防御手段 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_22-09-14_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Inline deployment
+:</p>
+<p>IDS设备直接与设备相连接，可以进行检测和防御，例如IPS <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-28_22-09-34_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Distributed IDS (DIDS)</p>
+<p>利用多个sensors（HIDS，NIDS）来收集数据，然后再汇总到中心的管理器上 <!-- raw HTML omitted --></p>
+<p>管理员综合分析所有的事件来进行分析判断 <!-- raw HTML omitted --></p>
+<p>会部署在专用的外部网络上，例如VPN <!-- raw HTML omitted --></p>
+<p>我们在CFC中就曾经遇见过类似的内容 <!-- raw HTML omitted --></p>
+<p>Security Information and Event Management就可以统一收集并管理所有的数据 <!-- raw HTML omitted --></p>
+<ul>
+<li>Host会在后台运行监控系统，然后将收集到的数据发送到中央的管理服务器上（外部网络，VPN） <!-- raw HTML omitted --></li>
+<li>中央的管理服务器收集所有的事件报告（从内网中），然后综合分析来入侵检测分析 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-28_22-15-14_screenshot.png" width="500px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>IDS是如何工作的</p>
+<ol>
+<li>
+<p>Input information 信息输入 <!-- raw HTML omitted --></p>
+<ul>
+<li>Application-specific information 应用数据 <!-- raw HTML omitted --></li>
+<li>Host-specific information: 本地日志，系统文件变化，系统命令调用 <!-- raw HTML omitted --></li>
+<li>Network specific information: 数据流量 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Intrusion detection policies <!-- raw HTML omitted --></p>
+<ul>
+<li>Known bad: blacklist 预定义的攻击模型 <!-- raw HTML omitted -->
+<ul>
+<li>Reputation-based detection <!-- raw HTML omitted --></li>
+<li>Signature-based/rule-based/misuse-based detection <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Known good: 报告任何异常情况 <!-- raw HTML omitted -->
+<ul>
+<li>Anomaly-based detection <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>入侵报告 <!-- raw HTML omitted --></p>
+<ul>
+<li>passive response (检测报告) <!-- raw HTML omitted --></li>
+<li>active response (主动封锁连接) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Alert data: IDS alerts <!-- raw HTML omitted --></li>
+<li>Log data: complete host logs <!-- raw HTML omitted --></li>
+<li>Statistical data: network stats <!-- raw HTML omitted --></li>
+<li>Session data: 5-tuple flows <!-- raw HTML omitted --></li>
+<li>Packet string data: e.g., HTTP headers <!-- raw HTML omitted --></li>
+<li>Full packet capture: PCAP files <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Packet capture: tcpdump, wireshark <!-- raw HTML omitted --></li>
+<li>Session data: netflow, IPFIX (Internet Protocol Flow Information Export) <!-- raw HTML omitted --></li>
+<li>Session string: URLsnarf <!-- raw HTML omitted --></li>
+<li>Logs: syslog <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="measuring-performance">Measuring performance</h4>
+<p><figure><img src="/ox-hugo/2022-05-28_22-22-33_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>True positive: 检测到的入侵是真的 <!-- raw HTML omitted --></li>
+<li>False positive: 检测到的入侵是假的 <!-- raw HTML omitted --></li>
+<li>True negative: 检测到的合法行为是真的 <!-- raw HTML omitted --></li>
+<li>False negative: 检测到的合法行为是假的，其实是入侵 <!-- raw HTML omitted --></li>
+</ul>
+<p>Sensitivity (True positive rate, probability of detection): measures the proportion of positives that are correctly identified <!-- raw HTML omitted --></p>
+<p>Specificity (True negative rate): measures the proportion of negatives that are correctly identified <!-- raw HTML omitted --></p>
+<p>Sensitivity = True positive rate = Precision = TP / (TP + FP) <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>it reflects the machine learning algorithm’s performance on “How many times you are right?”, TP + FP indicates the total sample are labeled by ML as malware (positive) <!-- raw HTML omitted --></p>
+<p>Recall = TP / (TP + FN), it reflects “How many malware found by you”, TP + FN means all the actual malware within the dataset <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>Specificity = True negative rate = TN / (TN + FP) <!-- raw HTML omitted --></p>
+<h4 id="base-rate-fallacy-基率谬误">Base-rate fallacy 基率谬误</h4>
+<p>指的是人们在考虑事件的概率的时候往往没有考虑全部的信息，而是选择那些个性化的信息而草率的出结论，以偏概全 <!-- raw HTML omitted --></p>
+<p>A &amp; B 是不同的事件 <!-- raw HTML omitted --></p>
+<ol>
+<li>P(A|B) 是一个条件概率，顾名思义，是在一定条件下，某一些时间发生的概率：当B发生的情况下，A发生的概率 <!-- raw HTML omitted --></li>
+<li>P(B|A) 是一个条件概率：当A发生的情况下，B发生的概率 <!-- raw HTML omitted --></li>
+<li>P(A) &amp; P(B) 是A &amp; B单独各自发生的概率 <!-- raw HTML omitted --></li>
+</ol>
+<p>Bayes&rsquo; theorem <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_11-45-35_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>根据贝叶斯定理，P(A|B) * P(B) = P(B|A) * P(A)就是A与B同时发生的概率 <!-- raw HTML omitted --></p>
+<p>可以有效的综合多个概率，从而得出一个更为可靠的综合概率 <!-- raw HTML omitted --></p>
+<p>我们假设： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>I 为入侵行为 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>¬I 为非入侵行为 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>A 为出现入侵警告事件 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>¬A 没有出现入侵警告事件 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>True positive rate or detection rate: P(A|I)，在入侵确实发生的情况下，发出警告的概率 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>False positive rate of false alarm rate: P(A|¬I)，在没有发生入侵的情况下，发出警告的概率 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>False negative rate: P(¬A|I) = 1 - P(A|I)，在入侵确实发生的情况下，没有发出警告的概率 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>True negative rate: P(¬A|¬I) = 1 - P(A|¬I)，在没有发生入侵的情况下，没有发出警告的概率 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>P(I|A): 在发出入侵警告事件的情况下，真的有入侵事件的概率 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>P(¬I|¬A): 在没有入侵警告事件的情况下，确实没有入侵的概率 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_11-59-40_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>我们假设一个网络管理员在过去的一年中，在每10,000个活动中能检测到1个真实的入侵，继续利用上面的事件，也就是： <!-- raw HTML omitted --></p>
+<ul>
+<li>P(I) = 1/10000 <!-- raw HTML omitted --></li>
+</ul>
+<p>同时这位网络管理对自己的工作十分骄傲，因为他从所有入侵中亲自发现了被检测系统遗漏的5%的入侵，也就是： <!-- raw HTML omitted --></p>
+<ul>
+<li>P(¬A|I) = 5% <!-- raw HTML omitted --></li>
+</ul>
+<p>但管理又对检测系统非常的不满，因为其不仅会遗漏入侵，还有3%的入侵警报事件是误报，也就是 <!-- raw HTML omitted --></p>
+<ul>
+<li>P(A|¬I) = 3% <!-- raw HTML omitted --></li>
+</ul>
+<p>如果我们要计算一个警告真的是入侵的概率，也就是P(I|A)，就可以套用上面的公式 <!-- raw HTML omitted -->
+P(I|A) = P(I) * P(A|I) / P(I) * P(A|I) +  P(¬I) * P(A|¬I)= ((0.0001 * 0.95) / ((0.0001 * 0.95)+(0.9999*0.03)) = 0.00315 &ndash;&gt; 0.32% <!-- raw HTML omitted --></p>
+<h3 id="honeypots">Honeypots</h3>
+<h4 id="honeypots-as-a-deception-technique">Honeypots as a deception technique</h4>
+<p>Why we need honeypots, since we already have firewalls and IDPS? <!-- raw HTML omitted -->
+Firewall和IDPS更多的是拦截和阻断攻击者的攻击，但是如果我们想更多的了解attacker，从而提前掌握潜在的威胁，那么我们就需要用到Honeypots，蜜罐，用来引诱攻击者暴露更多的信息： <!-- raw HTML omitted --></p>
+<dl>
+<dt>Honeypot 蜜罐</dt>
+<dd><ul>
+<li>是一个陷阱其实放置了检测以及反制手段来获取那些未经许可的访问的信息 <!-- raw HTML omitted --></li>
+<li>同时也作为诱饵，使攻击者原理重要的系统 <!-- raw HTML omitted --></li>
+<li>学习未知的攻击 <!-- raw HTML omitted --></li>
+<li>学习入侵者的行动模式 <!-- raw HTML omitted --></li>
+<li>从而更好的预测和抵抗未来的攻击 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<p>蜜罐没有实际的生产价值，其知识为了防范入侵 <!-- raw HTML omitted --></p>
+<ul>
+<li>里面充斥着一些伪装的信息，来引诱攻击者进行入侵 <!-- raw HTML omitted --></li>
+<li>因此合法的用户不会与其通信，那么所有的通信只会是扫描，入侵或者给农机 <!-- raw HTML omitted --></li>
+<li>进而我们可以收集攻击者的活动 <!-- raw HTML omitted --></li>
+<li>并部署一些看起来有价值的信息来诱导攻击者长时间的驻留的系统内，以便我们更好的手机信息 <!-- raw HTML omitted --></li>
+<li>尽量要让攻击者成功入侵，这样才能使他们驻留，并留下痕迹 <!-- raw HTML omitted --></li>
+<li>同时也不能太容易入侵，最好能让攻击者感到有挑战性 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="honeypots-deployment-and-classifications">Honeypots deployment and classifications</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Deployment</p>
+<p>蜜罐一般会被部署在DMZ上，当然也可以在边界路由器之外（指外网），或者内网也可以。 <!-- raw HTML omitted --></p>
+<p>进而部署虚拟的环境，同时营造出尽可能真实的系统环境，通过深度的监控来手机攻击者的信息 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Classification</p>
+<p>根据目的
+: -   Production honeypots 蜜罐产品 <!-- raw HTML omitted -->
+-   为企业的网络环境提供蜜罐产品 <!-- raw HTML omitted -->
+-   更容易部署和使用 <!-- raw HTML omitted -->
+-   在易用和信息收集量之间做取舍 <!-- raw HTML omitted -->
+-   Research honeypots 研究型蜜罐 <!-- raw HTML omitted -->
+-   提供更全面的攻击信息 <!-- raw HTML omitted -->
+-   更难部署，因为考虑到没有那么专业的开发力量来优化 <!-- raw HTML omitted -->
+-   通过更加全面地研究攻击，进而找到更好的解决方法 <!-- raw HTML omitted --></p>
+<p>根据互动的程度
+: -   提供较少互动的蜜罐 <!-- raw HTML omitted -->
+-   只模拟运行一小组服务和应用 <!-- raw HTML omitted -->
+-   不能被获取所有权限 <!-- raw HTML omitted -->
+-   攻击者的互动被限制 <!-- raw HTML omitted -->
+-   通常是用在产品型蜜罐上 <!-- raw HTML omitted -->
+-   优点：风险低，容易部署 <!-- raw HTML omitted -->
+-   缺点：收集到的信息较少，因为互动少 <!-- raw HTML omitted --></p>
+<pre><code> -   提供较多互动的蜜罐 &lt;br/&gt;
+     -   使用真实的操作系统和应用 &lt;br/&gt;
+     -   攻击者可以获得所有网络和系统的访问 &lt;br/&gt;
+     -   通常用在研究型蜜罐上 &lt;br/&gt;
+     -   优点：可以获取更多的信息 &lt;br/&gt;
+     -   缺点：较高的风险，并且维护的成本更高 &lt;br/&gt;
+</code></pre>
+<p>根据实现的方法
+: -   Physical honeypot 物理蜜罐 <!-- raw HTML omitted -->
+-   网络上连接的真实设备 <!-- raw HTML omitted -->
+-   Virtual honeypot 虚拟蜜罐 <!-- raw HTML omitted -->
+-   模拟主机进行互动 <!-- raw HTML omitted -->
+-   一个主机可以同时维护和运行多个虚拟蜜罐 <!-- raw HTML omitted -->
+-   通常可以提供更多的互动，因为虚拟环境更为安全 <!-- raw HTML omitted --></p>
+<p>根据互动的方向
+: -   Server honeypots 服务器蜜罐，开启服务 <!-- raw HTML omitted --></p>
+<pre><code> -   Client honeypots 客户端蜜罐，连接服务器的服务 &lt;br/&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="honeypots-phases">Honeypots phases</h4>
+<p>最好的方法： <!-- raw HTML omitted --></p>
+<ol>
+<li>较高的堡垒化网络 <!-- raw HTML omitted --></li>
+<li>每一个数据包都进行保存，便于分析学习 <!-- raw HTML omitted --></li>
+</ol>
+<p>Phases： <!-- raw HTML omitted --></p>
+<ol>
+<li>Data control <!-- raw HTML omitted --></li>
+<li>Data capture, 捕捉attacker所产生的各种data <!-- raw HTML omitted --></li>
+<li>Data analysis，分析这些data，学习攻击者的互动 <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Data control</p>
+<p>蜜罐通过与攻击者进行通信（via protocols）来诱导他们做出行动，留下踪迹 <!-- raw HTML omitted --></p>
+<ul>
+<li>Bandwidth throttling 宽带限流 <!-- raw HTML omitted -->
+<ul>
+<li>由ISP主动给网络服务降速，从而增加访问蜜罐消耗的时间成本，减少了对其他用户造成危害的时间 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Data capture</p>
+<p>蜜罐将会监控被记录所有攻击者在蜜罐上所进行的活动，进而集中存储 <!-- raw HTML omitted --></p>
+<ul>
+<li>Network activity <!-- raw HTML omitted --></li>
+<li>Application activity <!-- raw HTML omitted --></li>
+<li>System activity <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Data analysis</p>
+<p>蜜罐分析所有收集到的活动数据 <!-- raw HTML omitted --></p>
+<ol>
+<li>Human-driven analysis <!-- raw HTML omitted -->
+<ul>
+<li>tester或者researcher使用自动化工具来处理数据进行分析 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Machine-driven analysis <!-- raw HTML omitted -->
+<ul>
+<li>假设网络连接都是恶意的和异常的 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="case-study-catch-the-ratter">Case study: catch the ratter</h4>
+<p>RAT: remote administration tools <!-- raw HTML omitted --></p>
+<p>通过让攻击者利用RAT来获取全部虚拟机的权限来手机信息并研究他们的行为： <!-- raw HTML omitted --></p>
+<ul>
+<li>Capture audio from microphone <!-- raw HTML omitted --></li>
+<li>Capture video from webcam <!-- raw HTML omitted --></li>
+<li>Log keyboard input <!-- raw HTML omitted --></li>
+<li>Browse files on machine <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="honeytokens">Honeytokens</h4>
+<p>Honeytokens是一种蜜罐的形式，但是并不是计算机操作系统，但也许是一个： <!-- raw HTML omitted --></p>
+<ol>
+<li>不使用的邮箱地址 <!-- raw HTML omitted --></li>
+<li>虚假的数据库 <!-- raw HTML omitted --></li>
+</ol>
+<p>这些虚假的设备不再于使用，而在于被入侵和破坏 <!-- raw HTML omitted --></p>
+<p>比如在数据库中有一条虚假的信息，没有任何实际的价值，在生产过程中也不会访问这条数据，但是一旦被访问了，就表示有入侵发生了。 <!-- raw HTML omitted --></p>
+<p>这种方式更为简单易用，不需要部署复杂的蜜罐系统，也可以识别出攻击 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->&lt;2022-05-29 Sun 10:52&gt;<!-- raw HTML omitted --><!-- raw HTML omitted --> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 29, 2022 12:50 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_8_ip_security/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 8: IP security</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week5_firewalls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_4_hijacking_and_poisoning/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week4: Hijacking and poisoning</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week-7-intrusion-detection-and-prevention">NSE Week 7: Intrusion detection and prevention</a>
+      <ul>
+        <li><a href="#idps">IDPS</a>
+          <ul>
+            <li><a href="#idps-vs-firewall">IDPS vs firewall</a></li>
+            <li><a href="#three-classes-of-intruders">Three classes of intruders</a></li>
+            <li><a href="#idps-definitions">IDPS Definitions</a></li>
+            <li><a href="#approaches-to-intrusion-detection">Approaches to intrusion detection</a></li>
+            <li><a href="#reputation-based">Reputation based</a></li>
+            <li><a href="#misuse-based">Misuse based</a></li>
+            <li><a href="#anomaly-based">Anomaly based</a></li>
+            <li><a href="#other-ids-classification">Other IDS classification</a></li>
+            <li><a href="#hids-nids-dids">HIDS/NIDS/DIDS</a></li>
+            <li><a href="#measuring-performance">Measuring performance</a></li>
+            <li><a href="#base-rate-fallacy-基率谬误">Base-rate fallacy 基率谬误</a></li>
+          </ul>
+        </li>
+        <li><a href="#honeypots">Honeypots</a>
+          <ul>
+            <li><a href="#honeypots-as-a-deception-technique">Honeypots as a deception technique</a></li>
+            <li><a href="#honeypots-deployment-and-classifications">Honeypots deployment and classifications</a></li>
+            <li><a href="#honeypots-phases">Honeypots phases</a></li>
+            <li><a href="#case-study-catch-the-ratter">Case study: catch the ratter</a></li>
+            <li><a href="#honeytokens">Honeytokens</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

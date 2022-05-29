@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 8: IP security Internet security Why we need IP security, what the problems in existing TCP/IP protocols? 他们没有提供authentication或者confidentiality的功能，因此黑客可以snif'><title>NSE Week 8: IP security</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_8_ip_security/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 8: IP security'>
+<meta property='og:description' content='NSE Week 8: IP security Internet security Why we need IP security, what the problems in existing TCP/IP protocols? 他们没有提供authentication或者confidentiality的功能，因此黑客可以snif'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_8_ip_security/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-29T23:03:33&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 8: IP security">
+<meta name="twitter:description" content="NSE Week 8: IP security Internet security Why we need IP security, what the problems in existing TCP/IP protocols? 他们没有提供authentication或者confidentiality的功能，因此黑客可以snif">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_8_ip_security/">NSE Week 8: IP security</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 29, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week-8-ip-security">NSE Week 8: IP security</h2>
+<h3 id="internet-security">Internet security</h3>
+<p>Why we need IP security, what the problems in existing TCP/IP protocols? <!-- raw HTML omitted --></p>
+<p>他们没有提供authentication或者confidentiality的功能，因此黑客可以sniffing也可以spoofing <!-- raw HTML omitted --></p>
+<h3 id="ipsec">IPsec</h3>
+<p>IP security (IPsec)通过提供额外的IP header来增强安全，适用于IPv4 or IPv6 <!-- raw HTML omitted --></p>
+<p>通过在IP层实现这个安全措施，可以既保护那些已经在应用层做了安全措施的应用（例如看全邮件系统，SSL，Kerberos），也可以帮助那些没有安全措施的应用进行防护。 <!-- raw HTML omitted --></p>
+<p>IPsec提供了三种安全功能： <!-- raw HTML omitted --></p>
+<ol>
+<li>Authentication: 通过保证通信的双方的身份都经过了认证 <!-- raw HTML omitted --></li>
+<li>Confidentiality: 通过对payload数据的加密来防范未经授权的查看 <!-- raw HTML omitted --></li>
+<li>Key management: 安全的keys交换 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="implementation">Implementation</h4>
+<ul>
+<li>Operating systems: 对主机终端用户提供保护 <!-- raw HTML omitted --></li>
+<li>Security gateways: firewalls or routers, 比如实现VPN <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="application-应用">Application 应用</h4>
+<ol>
+<li>保护分公司内部之间的通信：公司可以在LAN或者WAN搭建VPN来减少对于private networks的依赖 <!-- raw HTML omitted --></li>
+<li>保护经过Internet的远程访问：终端用户可以利用IP sec协议来通过ISP来向公司网络发起关城访问请求 <!-- raw HTML omitted --></li>
+<li>保护组织之间的通信 <!-- raw HTML omitted --></li>
+<li>加强电子商务的安全性：通过对网络流量的加密来增强安全性 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="使用场景">使用场景</h4>
+<p>IPSec既可以安装在组织的网络设备上，例如router or firewall作为内外网的gate来对进出的数据进行加密和解密，也可以安装在主机终端上来保护其对外网的通信。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_15-19-24_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="benefits">Benefits</h4>
+<ol>
+<li>将IPSec部署在firewall &amp; router上的时候，可以减轻公司企业对于安全措施的繁重负担，只需要全部交给这些网络设备统一处理就好了 <!-- raw HTML omitted --></li>
+<li>并且firewall上的IPsec可以有效的防御绕过，因为外界来的流量都需要使用IPSec并且无处可逃 <!-- raw HTML omitted --></li>
+<li>IPSec位于传输层下面，因此对于应用来说是透明的 <!-- raw HTML omitted -->
+<ul>
+<li>不需要修改软件 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>对用户也是透明的，不过一般来说用户也不会察觉到IPSec的存在，一切都是默默进行的 <!-- raw HTML omitted --></li>
+<li>有需要的话也可以私用保护单独的用户 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="ipsec-standard">IPsec standard</h4>
+<p>IPsec 提供三种protocols来完成不同的任务 <!-- raw HTML omitted --></p>
+<ul>
+<li>Authentication Header (AH)：保护IP数据包的integrity and authenticity（但是不包括 confidentiality） <!-- raw HTML omitted --></li>
+<li>Encapsulating Security Payload (ESP)：保护confidentiality，也可以选择性的保护integrity <!-- raw HTML omitted --></li>
+<li>Internet Key Exchange Protocol (IKE): 提供密钥管理 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="ipsec-services">IPsec services</h4>
+<p><figure><img src="/ox-hugo/2022-05-29_15-27-10_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>IPsec可以通过选择实现不同的protocol来实现不同的services <!-- raw HTML omitted --></p>
+<h3 id="ipsec-policy">IPsec policy</h3>
+<p>IPsec policy主要是通过直接与IP packet进行互动，而具体的policy内容则需要访问两个数据库： <!-- raw HTML omitted --></p>
+<ol>
+<li>Security association database (SAD) <!-- raw HTML omitted --></li>
+<li>Security policy database (SPD) <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="security-association-database--sad">Security association database (SAD)</h3>
+<dl>
+<dt>Security association (SA)</dt>
+<dd><ul>
+<li>SA是一个SAD中的关键 <!-- raw HTML omitted --></li>
+<li>其是一个 <code>单向</code> 的概念，以为着一对通信的双方的单向行为需要单独的SA进行定义 <!-- raw HTML omitted --></li>
+<li>其中每一个SA由三个参数进行标识： <!-- raw HTML omitted -->
+<ol>
+<li>Security Parameters Index (SPI): 方便使用的系统来标识SA <!-- raw HTML omitted --></li>
+<li>IP Destination Address: 之前我们提到的“单向”就体现在此，通过destination address来进行标识 <!-- raw HTML omitted --></li>
+<li>Security Protocol Identifier: 标识选择AH还是ESP <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</dd>
+</dl>
+<p>所有SA的定义都会放在一个指定的Security Association Database中 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>AH <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>ESP <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Keys <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Key lifetimes <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Lifetime of security association <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Protocol mode (tunnel or transport) <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_16-27-03_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="security-policy-database--spd">Security policy database (SPD)</h3>
+<p>SPD主要定义了那些IP traffic将与那些SA进行配合使用（或者不使用），通常来说使用entry来进行记录： <!-- raw HTML omitted --></p>
+<ul>
+<li>a subset of IP traffic : an SA for that traffic <!-- raw HTML omitted --></li>
+</ul>
+<p>在复杂的环境中，也可以是多个的entries对应一个SA或者是多个SA需要应用在一个SPD entry上 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_16-29-21_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="ip-traffic-processing">IP traffic processing</h3>
+<p>IPsec是一个包一个包的执行过来的 <!-- raw HTML omitted --></p>
+<ul>
+<li>每个出站的IP packet在发出去之前都需要用IPsec进行处理 <!-- raw HTML omitted --></li>
+<li>每一个入站的包在收到之后都需要被IPsec进行处理，然后才能传达的更高层进行下一步处理(TCP/UDP) <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="outbound-packets">Outbound packets</h4>
+<p><figure><img src="/ox-hugo/2022-05-29_16-35-42_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>收到一个outbound packet之后，IPsec会从SPD中匹配entries <!-- raw HTML omitted --></li>
+<li>如果没有匹配上，那么就会直接被丢弃并产生错误信息 <!-- raw HTML omitted --></li>
+<li>如果匹配上了，那么就会决定packet的去处，可能是“丢弃”，也可能直接绕过IPsec（就是我们之前说的没有SA） <!-- raw HTML omitted --></li>
+<li>如果policy是PROTECT的话，就去SAD中寻找匹配的entry，如果没有找到的话， <code>IKE</code> 就会被调用来创造一个新的SA以及合适的密钥 <!-- raw HTML omitted --></li>
+<li>如果SAD中又匹配的entry，那么就会按照SA进行处理，最终发送出去 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="inbound-packets">Inbound Packets</h4>
+<p><figure><img src="/ox-hugo/2022-05-29_16-40-39_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>IPsec首先查看IP packet的header来决定着是一个不安全的IP packet还是已经有IPsec保护的（ESP or AH headers） <!-- raw HTML omitted --></li>
+<li>如果IP packet是不安全的，那么IPsec就会从SPD中寻找匹配的entry，如果第一个匹配到的policy是BYPASS，那么就直接发到TCP/UDP去处理了，如果是其他的，例如PROTECT or DISCARD或者没有匹配到，通通都丢弃，因为是不安全的 <!-- raw HTML omitted --></li>
+<li>如果是安全的IPSec包，那么就直接去SAD中找对应的entries以及SA，接着如果匹配到了，那就执行对应的操作(AH/ESP)，没有匹配到的话就直接丢弃 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="authentication-header--ah">Authentication Header (AH)</h3>
+<p>这一章中，我们具体来看一下AH的组成结构 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足够的信息来识别SA，其只提供 Integrity 的保障 <!-- raw HTML omitted --></p>
+<ol>
+<li>Security Parameters Index (SPI): 方便使用的系统来标识SA <!-- raw HTML omitted --></li>
+<li>IP Destination Address: 之前我们提到的“单向”就体现在此，通过destination address来进行标识 <!-- raw HTML omitted --></li>
+<li>Security Protocol Identifier: 标识选择AH还是ESP <!-- raw HTML omitted --></li>
+<li>Sequence number field会从1开始不断增加， <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="anti-relay-service">Anti-relay service</h4>
+<p>relay attack就是攻击者通过重复使用可以通过认证的数据包来进行绕过 <!-- raw HTML omitted --></p>
+<p>假设我们使用这样一个SA <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_16-27-03_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>发送者： <!-- raw HTML omitted --></p>
+<ol>
+<li>将sequence number计数器设置为0 <!-- raw HTML omitted --></li>
+<li>每一个packet的sequence number进行递增 <!-- raw HTML omitted --></li>
+<li>如果达到上限（2^32 - 1）,就结束当前这个SA，并重新开启一个SA和新的密钥进行加密 <!-- raw HTML omitted --></li>
+</ol>
+<p>接收者，设置一个 window size W (default = 64) <!-- raw HTML omitted --></p>
+<ol>
+<li>如果接收到一个数据包的sequence number落到window size中，并且 Integrity 检查也没有问题，就标记为valid <!-- raw HTML omitted --></li>
+<li>如果接收到一个数据包落在窗口右边（未来窗口的数据包），同时Integrity 检查也没有问题，标记为valid，同时窗口向右滑动 <!-- raw HTML omitted --></li>
+<li>如果接收到的数据包落在窗口左边（以前的数据包）或者认证失败，那么packet会被丢弃，同时记录该事件 <!-- raw HTML omitted --></li>
+</ol>
+<p>通过sequence number就可以有效判断数据包是否是以前的被攻击者用在现在的数据流上 <!-- raw HTML omitted --></p>
+<h4 id="ah-modes">AH modes</h4>
+<p>原始的TCP segment <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_17-47-21_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Transport mode</p>
+<ol>
+<li>
+<p>AH插入在IP header与TCP header之间 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>MAC (Message Authentication Code)会对整一个包进行认证 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>提供端对端的IPsec系统保护 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_17-46-59_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Tunnel mode</p>
+<ol>
+<li>整个原始数据包都会被进行验证，会有一个新的 <code>outer IP header</code> <!-- raw HTML omitted --></li>
+<li>inner(original) IP header中携带最终的 source/destination address <!-- raw HTML omitted --></li>
+<li>new outer header 同样也会收到保护，但是包含的是例如firewall/security gateway的地址 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-29_17-47-12_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="encapsulating-security-payload--esp">Encapsulating Security Payload (ESP)</h3>
+<p>ESP可以提供confidentiality, data origin authentication, connectionless integrity, an anti-replay service, and traffic flow confidentiality. <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-04-43_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>ESP header 指定了加密的算法以及authentication策略 <!-- raw HTML omitted --></p>
+<h4 id="esp-mode">ESP mode</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Transport Mode ESP</p>
+<p>Transport Mode ESP 一般端对端的安全通信上，可以对IP数据包进行加密和认证。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-09-38_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>对于IPv4数据包，IPsec一旦介入： <!-- raw HTML omitted -->
+<ol>
+<li>ESP header会插入IP header和TCP header之间 <!-- raw HTML omitted --></li>
+<li>同时ESP trailer (including Padding, Pad length, and Next Header fields) 将会被添加在IP packet的最后 <!-- raw HTML omitted --></li>
+<li>如果添加了认证的选项，那么在最后还会加上 <code>ESP Authentication Data</code>, 这时对前面所有内容的加密 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<p>这里补充一下Padding的作用，主要是当加密算法需要规定数量的bytes的时候，由于原来的内容不够bytes数，就需要添加一些内容来凑齐，这些就会放在ESP trailer里面 <!-- raw HTML omitted --></p>
+<ul>
+<li>对于IPv6的数据包： <!-- raw HTML omitted -->
+<ol>
+<li>在IPv6中，ESP会被当作是端对端的payload，因此无法被主动的路由，因此就需要附带上具体的路由在header上面 <!-- raw HTML omitted --></li>
+<li>hop-by-hop路由会被添加在Original IP header与ESP header之间 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-29_21-08-59_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-35-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>总的来说Transport mode的操作主要是： <!-- raw HTML omitted --></p>
+<ol>
+<li>传输的数据再加上ESP trailer中padding的数据和整一个Transport-layers segment (e.g., TCP segment)一起被加密并将原本的明文data换成是经过加密的数据。是否开启认证可以自由选择 <!-- raw HTML omitted --></li>
+<li>数据包被路由到destination，所有经过的路由器都会处理IP header中的内容，但是不需要也不能处理加密的密文 <!-- raw HTML omitted --></li>
+<li>destination node根据ESP header中的SPI选择SA来解密，并恢复原本的Transport-layers segment (e.g., TCP segment). <!-- raw HTML omitted --></li>
+</ol>
+<p>Transport mode的好处在于提供了统一的confidentiality，而不需要每一个application还需要实现自己的加密. <!-- raw HTML omitted --></p>
+<p>但是有一个缺点就是，路上的路由器还是可以对流量进行分析，这点无法阻止。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Tunnel mode ESP</p>
+<p>如下图就是Tunnel mode的一个使用场景，每个公司的内网通过tunnel mode 建立的VPN进行互相的通信，而完成不和Internet的路由上的任何其他主机或者设备进行交互。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-09-51_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>那么为了避免沿路的路由器对通信进行流量分析，Tunnel mode ESP将会加密整一个IP packet，然后将 <code>ESP header</code> 加在 <code>Original IP header</code> 前面 <!-- raw HTML omitted --></p>
+<p>由于Original IP header中包含目标地址以及routing的信息，因此一旦全部被加密之后，途径的路由器就无法处理这些数据包。因此就需要一个新的IP header，其中包含必要的信息，但是不能被进行流量分析 <!-- raw HTML omitted --></p>
+<p>同时，为了保护内网的主机，ESP会提供内网的边界设备，例如firewall or security gateway <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-09-20_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们来看一个具体的例子，看看一个外网的主机是如何通过Tunnel mode ESP来与内网主机进行通信的 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>构建一个安全的 <code>outer IP packet</code>: <!-- raw HTML omitted --></p>
+<ul>
+<li>首先构造一个original IP packet其中包含了内网用户的信息 <!-- raw HTML omitted --></li>
+<li>然后添加一个 <code>ESP header</code> <!-- raw HTML omitted --></li>
+<li>接着加上 <code>ESP trailer</code> 来padding上合适的信息用于加密算法，接着将原本的data以及 <code>ESP trailer</code> 加密，并在末尾添加上认证的信息  ESP authentication <!-- raw HTML omitted --></li>
+<li>最后再最前面加上一个新的 <code>new IP header</code> （如果是IPv6的话还要加上 <code>hop-by-hop options</code> ） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>接着这个 <code>outer packet</code> 将会被路由到目标的防火墙，途径的路由器只能处理最外面的新的IP header以及扩展的headers，但是无法处理中间加密的信息 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Destination firewall也会先处理外部的几个headers，之后便会根据 ESP header中的 <code>SPI</code> 信息查找对应的SA来进行解密，最终在内网中进行路由，传递到指定的主机上 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-29_21-36-13_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="combining-security-associations">Combining security associations</h3>
+<p>一般来说，一个SA只会实现AH or ESP其中一个protocol,无法都实现，但是我们之前提到过有一种用法是一个数据流对应很对个SAs来组成IPsec services, 这种很多SAs一起使用的就叫做 <code>security association bundle refers</code> <!-- raw HTML omitted --></p>
+<p>一般来说，综合的使用方法有两种： <!-- raw HTML omitted --></p>
+<ol>
+<li>Transport adjacency <!-- raw HTML omitted -->
+<ul>
+<li>将多种安全协议运用在用一种IP packet上而不挑用隧道 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Iterated tunneling: <!-- raw HTML omitted -->
+<ul>
+<li>将多层的安全协议运用在IP tunneling上 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h4 id="case-study">Case study</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Case 1</p>
+<p><figure><img src="/ox-hugo/2022-05-29_21-39-02_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>端对端的安全（通过交换密钥） <!-- raw HTML omitted --></p>
+<p>一般为内网的主机访问外网的服务器提供保护 <!-- raw HTML omitted --></p>
+<p>可能的组合 <!-- raw HTML omitted --></p>
+<ul>
+<li>AH in transport mode <!-- raw HTML omitted --></li>
+<li>ESP in transport mode <!-- raw HTML omitted --></li>
+<li>ESP followed by AH in transport model (an ESP SA inside an AH SA) <!-- raw HTML omitted --></li>
+<li>Any of the above inside an AH or ESP in tunnel mode <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Case 2</p>
+<p>只提供gateway (routers, firewall, etc.)之间的安全通信，主机不需要实现IPSec，因此在security gateway之后的网络中不提供任何保护 <!-- raw HTML omitted --></p>
+<p>VPN就是其中一种应用 <!-- raw HTML omitted --></p>
+<p>同时采用IP tunneling，可以用以下方式实现： <!-- raw HTML omitted --></p>
+<ol>
+<li>AH <!-- raw HTML omitted --></li>
+<li>ESP <!-- raw HTML omitted --></li>
+<li>ESP加上authentication选项（AH是没有的） <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-29_22-54-09_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Case 3</p>
+<p>Case3可以被看作是Case 1 加上Case2，即在Case2的IP tunneling所提供的 security gateways之间的保护的基础上，又加上了case1中的点对点的保护措施，通过提供端对端的SAs组合来实现内网中的保护 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-29_22-53-34_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Case 4</p>
+<p>使用场景一般是外网的主机需要访问在security gateway中所保护的内网中的主机 <!-- raw HTML omitted --></p>
+<ul>
+<li>远程主机会与security gateway之间建立 IP tunneling <!-- raw HTML omitted --></li>
+<li>同时security gateway也会与内网的主机建立SAs的保护 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-29_22-54-21_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 29, 2022 23:03 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_7_intrusion_detection_and_prevention/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 7: Intrusion detection and prevention</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week5_firewalls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week5: Firewalls</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_4_hijacking_and_poisoning/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week4: Hijacking and poisoning</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week-8-ip-security">NSE Week 8: IP security</a>
+      <ul>
+        <li><a href="#internet-security">Internet security</a></li>
+        <li><a href="#ipsec">IPsec</a>
+          <ul>
+            <li><a href="#implementation">Implementation</a></li>
+            <li><a href="#application-应用">Application 应用</a></li>
+            <li><a href="#使用场景">使用场景</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="#ipsec-standard">IPsec standard</a></li>
+            <li><a href="#ipsec-services">IPsec services</a></li>
+          </ul>
+        </li>
+        <li><a href="#ipsec-policy">IPsec policy</a></li>
+        <li><a href="#security-association-database--sad">Security association database (SAD)</a></li>
+        <li><a href="#security-policy-database--spd">Security policy database (SPD)</a></li>
+        <li><a href="#ip-traffic-processing">IP traffic processing</a>
+          <ul>
+            <li><a href="#outbound-packets">Outbound packets</a></li>
+            <li><a href="#inbound-packets">Inbound Packets</a></li>
+          </ul>
+        </li>
+        <li><a href="#authentication-header--ah">Authentication Header (AH)</a>
+          <ul>
+            <li><a href="#anti-relay-service">Anti-relay service</a></li>
+            <li><a href="#ah-modes">AH modes</a></li>
+          </ul>
+        </li>
+        <li><a href="#encapsulating-security-payload--esp">Encapsulating Security Payload (ESP)</a>
+          <ul>
+            <li><a href="#esp-mode">ESP mode</a></li>
+          </ul>
+        </li>
+        <li><a href="#combining-security-associations">Combining security associations</a>
+          <ul>
+            <li><a href="#case-study">Case study</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
