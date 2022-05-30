@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 9: IKE and SSL/TLS IKE (The Internet Key Exchange protocol) IKE不仅仅只是关于密钥，更多的关于SA (security associations): 协议的格式 加密或者哈希的算法 密钥 IKE十分的灵活，比如提供身份认证，并通'><title>NSE Week 9: IKE and SSL/TLS</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_9_ike_and_ssl_tls/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 9: IKE and SSL/TLS'>
+<meta property='og:description' content='NSE Week 9: IKE and SSL/TLS IKE (The Internet Key Exchange protocol) IKE不仅仅只是关于密钥，更多的关于SA (security associations): 协议的格式 加密或者哈希的算法 密钥 IKE十分的灵活，比如提供身份认证，并通'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_9_ike_and_ssl_tls/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-30T15:40:11&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 9: IKE and SSL/TLS">
+<meta name="twitter:description" content="NSE Week 9: IKE and SSL/TLS IKE (The Internet Key Exchange protocol) IKE不仅仅只是关于密钥，更多的关于SA (security associations): 协议的格式 加密或者哈希的算法 密钥 IKE十分的灵活，比如提供身份认证，并通">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_9_ike_and_ssl_tls/">NSE Week 9: IKE and SSL/TLS</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 30, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week-9-ike-and-ssl-tls">NSE Week 9: IKE and SSL/TLS</h2>
+<h3 id="ike--the-internet-key-exchange-protocol">IKE (The Internet Key Exchange protocol)</h3>
+<p>IKE不仅仅只是关于密钥，更多的关于SA (security associations): <!-- raw HTML omitted --></p>
+<ol>
+<li>协议的格式 <!-- raw HTML omitted --></li>
+<li>加密或者哈希的算法 <!-- raw HTML omitted --></li>
+<li>密钥 <!-- raw HTML omitted --></li>
+</ol>
+<p>IKE十分的灵活，比如提供身份认证，并通过多种pre-shared secrets来实现 <!-- raw HTML omitted --></p>
+<p>IKE又十分复杂，有很多的选项可以配置以及很多的子协议 <!-- raw HTML omitted --></p>
+<p>IKE结合了 <code>ISAKMP</code> 的数据包格式，以及 <code>OAKLEY</code> 的协议，这两个东西都基于  <code>Diffie-hellman protocol</code> <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_10-00-09_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="pfs">PFS</h4>
+<p>如果我们已经能安全的交换YA,YB了，为什么还要套在这个Diffie-Hellman里面用呢？ <!-- raw HTML omitted -->
+主要是为了实现PFS，perfect forward secrecy <!-- raw HTML omitted --></p>
+<dl>
+<dt>PFS,perfect forward secrecy</dt>
+<dd><ul>
+<li>为了确保协议做生成的临时key，session key不会因为用来产生这个session key所用到的key被破解了而导致session key也没破戒 <!-- raw HTML omitted --></li>
+<li>用来加密传输数据的key不能用作产生其他的key，这样就会产生连带效应，一个key被破解了，其所产生的key也会被破解 <!-- raw HTML omitted --></li>
+<li>同样的道理，如果产生当前的key需要通过其他keys来产生，那么那些key也不能用做其他key的产生 <!-- raw HTML omitted --></li>
+<li>也就是说一个key被破解了，只会影响用其所加密的数据，其他都不会收到影响 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<p>因此在具体实现的时候的一个小技巧就是，每个session key都是随机产生的，并且在session结束之后就销毁，这样就都不会影响了，同时也会给密码分析带来负担。 <!-- raw HTML omitted --></p>
+<h4 id="ike-protocol">IKE protocol</h4>
+<p>IKE可以为通信的双方来建立和维护SA <!-- raw HTML omitted --></p>
+<p>Typical key establishment protocol: 只有一个阶段，就是双方使用 <code>master keys</code> 来进行通信交换信息 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Master keys</dt>
+<dd><ol>
+<li>pre-shared secret (symmetric) keys <!-- raw HTML omitted --></li>
+<li>public encryption key (used only for encryption/decryption), 比如互相知道对方的public key，然后加密之后可以由对方的private key来进行解密 <!-- raw HTML omitted --></li>
+<li>public signature key （用来进行验证） <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+</dl>
+<p>IKE则有两个步骤： <!-- raw HTML omitted --></p>
+<ul>
+<li>Phase 1: 通信的双方线协商一个SA，关于使用什么加密或者哈希算法 <!-- raw HTML omitted --></li>
+<li>Phase 2: Phase 1中产生的SA会继续产生 &ldquo;child SAs&quot;来进行加密和验证未来的通信 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="ike-phase-1">IKE phase 1</h4>
+<p>IKE的第一个阶段主要的目的是要建立一个安全的channel来给Phase 2进行通信交流 <!-- raw HTML omitted --></p>
+<p>需要用到的概念有： <!-- raw HTML omitted --></p>
+<ol>
+<li>Cookies：用作初期的身份认证，推荐的实现方法是： <!-- raw HTML omitted -->
+<ul>
+<li>通过一些较快的hash，例如MD5，将UDP的IP source/destination address/ports 以及保存在本地的一个 <code>secret value</code> 进行hash <!-- raw HTML omitted --></li>
+<li>因为存在一个 <code>secret value</code> ，那么通过将自己生成的cookie发送给对方，再由对方发送回来，就可以进行验证，是否是自己曾经发出的内容 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Identifiers, ID: 用来标识通信的双方的身份，可以是： <!-- raw HTML omitted -->
+<ol>
+<li>IP address <!-- raw HTML omitted --></li>
+<li>Fully-qualified domain name <!-- raw HTML omitted --></li>
+<li>Certification <!-- raw HTML omitted --></li>
+<li>E-mail address <!-- raw HTML omitted --></li>
+<li>MAC address <!-- raw HTML omitted --></li>
+</ol>
+</li>
+<li>Authenticators: 用于验证消息的数据 <!-- raw HTML omitted --></li>
+</ol>
+<p>IKE Phase 1 提供两种模式 <!-- raw HTML omitted --></p>
+<ol>
+<li>Main mode <!-- raw HTML omitted -->
+<ul>
+<li>通过6条交换的信息来建立 <code>Initiator(I)</code> and <code>Responder(R)</code> 之间的安全channel <!-- raw HTML omitted --></li>
+<li>通过互相的配置协商来实现 <!-- raw HTML omitted -->
+<ol>
+<li><code>Identify protection</code> <!-- raw HTML omitted --></li>
+<li><code>Considerable flexibility</code> <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Aggressive mode <!-- raw HTML omitted -->
+<ul>
+<li>由于不提供保护因此能够更快的建立 <!-- raw HTML omitted --></li>
+<li>只需要3条信息的交换 <!-- raw HTML omitted --></li>
+<li><code>没有</code> 提供 <code>Identify protection</code> 只有public-key加密所带来的authentication <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p>根据选用的 authentication 方法的不同，每种模式都拥有4种变化 <!-- raw HTML omitted --></p>
+<ul>
+<li>Pre-shared key <!-- raw HTML omitted --></li>
+<li>Digital signatures <!-- raw HTML omitted --></li>
+<li>2 public-key variants <!-- raw HTML omitted --></li>
+</ul>
+<p>我们的重点会放在Main mode上 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_12-29-01_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>I会生成Cookie_I 以及ISA_I (ISAKMP SA)其中包含了提出的提议（加密和哈希算法） <!-- raw HTML omitted --></li>
+<li>R在收到之后，会考虑I提出的proposal然后选择使用什么算法：ISA_R,接着返回自己生成的Cookie <!-- raw HTML omitted --></li>
+</ol>
+<p>以下就是一个例子，I会提出建议，然后由R来选择，因此ISA_I &amp; ISA_R可能相同也可能不同，这将有R来决定 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_12-24-35_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>I收到R同意的条约之后，随机选择构建DH所需要的参数 g, p (g is the primitive root of p), <!-- raw HTML omitted -->
+<ul>
+<li>X = g^x mod p <!-- raw HTML omitted --></li>
+<li>接着附上一个nonce，用来防止relay attack，keep freshness <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>R收到I发来的cookie之后，先对自己的C_R进行重新计算并验证 <!-- raw HTML omitted -->
+<ul>
+<li>接着计算Y = g^y mod p <!-- raw HTML omitted --></li>
+<li>最后生成自己nonce N_R 返回给I <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>I收到R的Y之后，就可以用来计算 DH session key了，在此之前还会重新计算并验证自己的cookie C_I <!-- raw HTML omitted -->
+<ul>
+<li>接着会将自己的ID以及 previous data通过约定好的 authenticator 计算好并和ID一起用DH session key进行加密并返回给R <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>R验证了自己的Cookie C_R 之后也会将自己的ID_R以及authentication data用DH session key进行加密后返回给I，I验证了R的ID之后也就完成了phase1 <!-- raw HTML omitted --></li>
+</ol>
+<p>根据不同的authenticator也会有一些变种，但是步骤是不变的 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_12-35-03_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="ike-phase-2">IKE phase 2</h4>
+<p>IKE phase 2的通信会由之前在phase 1中达成的SA进行保护 <!-- raw HTML omitted --></p>
+<p>IKE phase 2的目的就是利用之前建立的安全的通信，开始交换协商真正需要用在通信中的SAs <!-- raw HTML omitted --></p>
+<p>phase 2也有两种mode <!-- raw HTML omitted --></p>
+<ol>
+<li>Quick mode <!-- raw HTML omitted -->
+<ul>
+<li>直接创造新的SAs (e.g., for ESP or AH) <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>New group mode <!-- raw HTML omitted -->
+<ul>
+<li>用来修改存在的SAs的参数 <!-- raw HTML omitted --></li>
+<li>不产生新的SAs <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p>我们主要关注Quick mode <!-- raw HTML omitted --></p>
+<p>如果被要求实现PFS，那么quick mode也会再次实现DH exchange <!-- raw HTML omitted --></p>
+<p>多个quick mode可以用不进行，并且会使用在phase1中用到过的ID <!-- raw HTML omitted --></p>
+<p>数据的加密会用到phase 1中的数据，用在phase 2中的新key <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_12-40-32_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>SPI就是用来标识新的SA的 SPI fields <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>k就是DH exchange所生成的session key <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>协商建立一个SA <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>生成IPsec key 用作将来ESP or AH 中 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-30_12-41-43_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们可以看到，这其实也是一个协商的过程，就是I发起倡议，然后还是由R来决定最终的SA是怎么样的 <!-- raw HTML omitted --></p>
+<p>另一个例子 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_12-45-51_screenshot.png" width="400px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>The second phase of the IKE protocol is done by three message exchanges. For the ﬁrst and second messages I1 and R1, the initiator I and the responder R exchange IPSec SAs (IP SecSAIand IP SecSAR),nonces NI and NR(for replay attack protection), optional D -H values gI and gR, and hashes of these values and message IDs (to prove liveliness), HashI1 and HashR1. <!-- raw HTML omitted --></p>
+<p>After the initiator sends one more hash (HashI2) using both NI and NR and the message ID as the third message, both parties will agree on the IPSec symmetric key for use during ESP or AH encapsulation. <!-- raw HTML omitted --></p>
+<p>为了更好的保护长久的VPN session, IPsec 提供了定期刷新IKE key以及IPSec keys的机制 <!-- raw HTML omitted --></p>
+<ul>
+<li>IKE key的刷新需要重新跑两个phase <!-- raw HTML omitted --></li>
+<li>但是刷新IPsec只需要跑phase 2即可 <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="ssl-tls">SSL/TLS</h3>
+<p>SSL/TLS是用来保护Transport layer传输层的安全的，通过提供confidentiality and integrity来防止通信被窃听和篡改 <!-- raw HTML omitted --></p>
+<p>目标是实现Confidentiality, integrity，有条件的话也可以实现authentication，通过单（双）向的认证channel来进行安全的通信，由public-key certificate所支持，因为是Transport layer上的安全，因此也可以被应用层的协议所利用，例如HTTP(S), SMTP, IMAP <!-- raw HTML omitted --></p>
+<p>SSL/TLS实现了两种协议 <!-- raw HTML omitted --></p>
+<h4 id="tls-handshake-protocol">TLS Handshake protocol</h4>
+<p>TLS Handshake protocol 通过初始化或者恢复之前的connection然后搭建一个安全的channel来进行通信 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_15-31-18_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Server certificate: B -&gt; A: certificate(B, K_B) <!-- raw HTML omitted --></li>
+</ol>
+<p>Certificate是由 <code>trusted third party</code> 来进行认证的，包含了B的identity以及B的public key <!-- raw HTML omitted --></p>
+<ol>
+<li>client exchange <!-- raw HTML omitted -->
+<ul>
+<li>client certificate (option) A -&gt; B: certificate (A, K_A) {PMS}_K_B <!-- raw HTML omitted --></li>
+<li>client key exchange A - &gt; B: {PMS}_K_B <!-- raw HTML omitted --></li>
+<li>certificate verify (option)   A-&gt; B:{hash(message)}{K_A}^-1 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p>PMS: pre-master secret是用来生成新的master key M的，M= PRF(PMS, Na, Nb), where PRF is <code>pseudo-random function</code> <!-- raw HTML omitted --></p>
+<p>Nonce信息可以是在hello信息中被确定的 <!-- raw HTML omitted -->
+最重要的就是两条消息就是 <!-- raw HTML omitted --></p>
+<ul>
+<li>Server certificate: B -&gt; A: certificate(B, K_B) <!-- raw HTML omitted --></li>
+<li>client key exchange A - &gt; B: {PMS}_K_B <!-- raw HTML omitted --></li>
+</ul>
+<p>simplest SSL do not provide authentication of sender’s identity (it has options to prove) <!-- raw HTML omitted --></p>
+<h4 id="tls-record-protocol">TLS Record Protocol</h4>
+<p>TLS Record protocol是用来通信交换数据的，主要描述了应用层发出的数据应该如何被压缩，用MAC进行认证以及payload要如何加密 <!-- raw HTML omitted --></p>
+<p>TLS Record Protocol 为每一个TLS connections提供了两种服务 <!-- raw HTML omitted --></p>
+<ol>
+<li>Confidentiality <!-- raw HTML omitted -->
+<ul>
+<li>由TLS Handshake protocol 所定义的密钥可以用来对TLS payload 进行加密 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Message Integrity <!-- raw HTML omitted -->
+<ul>
+<li>由TLS Handshake protocol 所定义的共享密钥（public key）可以用来组成MAC (message authentication code)来验证integrity <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-30_15-30-43_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="tls-connection-and-tls-session">TLS connection and TLS session</h4>
+<dl>
+<dt>TLS connection</dt>
+<dd><ol>
+<li>是一个短时间的概念transient <!-- raw HTML omitted --></li>
+<li>每一个connection会关联一个TLS session TLS会话 <!-- raw HTML omitted --></li>
+<li>connection是P2P的关系 <!-- raw HTML omitted --></li>
+<li>TLS connection 本质上是一个session内的安全流 a secure stream within a session <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>TLS session</dt>
+<dd><ol>
+<li>TLS session是一个长时间的概念，就算connection中断了，但是session依然存在 <!-- raw HTML omitted --></li>
+<li>其表示client and server之间进行安全通信的关系，协议，是一种类似Security association的东西 <!-- raw HTML omitted --></li>
+<li>TLS session 由TLS Handshake Protocol所创造，由client and security双发协商达成共识 <!-- raw HTML omitted --></li>
+<li>每一个TLS session中都有很多关于安全的参数，可以同时被很多connection共享 <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+</dl>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 30, 2022 15:40 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_10_privacy_and_anonymity/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 10: Privacy and anonymity</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_8_ip_security/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 8: IP security</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_7_intrusion_detection_and_prevention/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 7: Intrusion detection and prevention</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week-9-ike-and-ssl-tls">NSE Week 9: IKE and SSL/TLS</a>
+      <ul>
+        <li><a href="#ike--the-internet-key-exchange-protocol">IKE (The Internet Key Exchange protocol)</a>
+          <ul>
+            <li><a href="#pfs">PFS</a></li>
+            <li><a href="#ike-protocol">IKE protocol</a></li>
+            <li><a href="#ike-phase-1">IKE phase 1</a></li>
+            <li><a href="#ike-phase-2">IKE phase 2</a></li>
+          </ul>
+        </li>
+        <li><a href="#ssl-tls">SSL/TLS</a>
+          <ul>
+            <li><a href="#tls-handshake-protocol">TLS Handshake protocol</a></li>
+            <li><a href="#tls-record-protocol">TLS Record Protocol</a></li>
+            <li><a href="#tls-connection-and-tls-session">TLS connection and TLS session</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

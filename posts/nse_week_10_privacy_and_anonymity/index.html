@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='NSE Week 10: Privacy and anonymity Privacy and Anonymity Privacy is about you choosing what you let other people know which means keep confidentiality of information that you don&amp;rsquo;t want to share with others However, Anonymity is about conceal your identity, the confidentiality of your identity, no one know what you are doing. Privacy and anonymity on public networks However, the confidentiality of both the data you want to transmit'><title>NSE Week 10: Privacy and anonymity</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/nse_week_10_privacy_and_anonymity/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='NSE Week 10: Privacy and anonymity'>
+<meta property='og:description' content='NSE Week 10: Privacy and anonymity Privacy and Anonymity Privacy is about you choosing what you let other people know which means keep confidentiality of information that you don&amp;rsquo;t want to share with others However, Anonymity is about conceal your identity, the confidentiality of your identity, no one know what you are doing. Privacy and anonymity on public networks However, the confidentiality of both the data you want to transmit'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/nse_week_10_privacy_and_anonymity/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='network_security' /><meta property='article:published_time' content='2022-05-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-30T21:27:49&#43;01:00'/>
+<meta name="twitter:title" content="NSE Week 10: Privacy and anonymity">
+<meta name="twitter:description" content="NSE Week 10: Privacy and anonymity Privacy and Anonymity Privacy is about you choosing what you let other people know which means keep confidentiality of information that you don&amp;rsquo;t want to share with others However, Anonymity is about conceal your identity, the confidentiality of your identity, no one know what you are doing. Privacy and anonymity on public networks However, the confidentiality of both the data you want to transmit">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/course_notes/" >
+                course_notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/nse_week_10_privacy_and_anonymity/">NSE Week 10: Privacy and anonymity</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 30, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    9 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nse-week-10-privacy-and-anonymity">NSE Week 10: Privacy and anonymity</h2>
+<h3 id="privacy-and-anonymity">Privacy and Anonymity</h3>
+<p>Privacy is about you choosing what you let other people know which means keep confidentiality of information that you don&rsquo;t want to share with others <!-- raw HTML omitted --></p>
+<p>However, Anonymity is about conceal your identity, the confidentiality of your identity, no one know what you are doing. <!-- raw HTML omitted --></p>
+<h4 id="privacy-and-anonymity-on-public-networks">Privacy and anonymity on public networks</h4>
+<p>However, the confidentiality of both the data you want to transmit or your identity is exposed to Internet. <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Internet is designed as a public network <!-- raw HTML omitted --></p>
+<ul>
+<li>Devices in LAN can see your traffic <!-- raw HTML omitted --></li>
+<li>Intermediate routers can see all traffic that passes through them <!-- raw HTML omitted --></li>
+<li>Remember what we leanred in CIS? Email is actually a post card but not a letter, which means everyone could see the content on it with envelop protects <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>Routing information is public <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>IP packet will contain source and destination for routing <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>It is easy to figure out who is talking to whom <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Encryption <code>dose NOT</code> hide identities <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>encryption only happen on payload but not the routing information in header <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Even IPsec have to reveal the IP address of IPsec gateways <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>Why is anonymity so important? <!-- raw HTML omitted --></p>
+<ul>
+<li>packet headers exposes two ends of communication <!-- raw HTML omitted --></li>
+<li>packet routes can be tracked (traffic analysis) <!-- raw HTML omitted --></li>
+<li>encrypted payload is still visible (cryptanalysis) <!-- raw HTML omitted --></li>
+</ul>
+<p>Some applications: <!-- raw HTML omitted --></p>
+<ol>
+<li>Privacy <!-- raw HTML omitted -->
+<ul>
+<li>hide online transactions, web browsing <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Untraceable email <!-- raw HTML omitted -->
+<ul>
+<li>corporate whistle-blowers <!-- raw HTML omitted --></li>
+<li>political dissidents <!-- raw HTML omitted --></li>
+<li>confidential business negotiations <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Digital cash <!-- raw HTML omitted -->
+<ul>
+<li>unlinkable to buyer&rsquo;s identity <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Anonymous electronic voting (e-voting) <!-- raw HTML omitted --></li>
+<li>Censorship-resistant publishing <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="anonymity">Anonymity</h4>
+<p>Anonymity中最重要的一点：你只能在一群人中才能使自己匿名，即所有人都在一起发送，接收，做出同样的行动，才能隐藏个人的行为 <!-- raw HTML omitted --></p>
+<p>You are only anonymous within a group is your actions <!-- raw HTML omitted --></p>
+<p>You cannot be anonymous by yourself!!! <!-- raw HTML omitted --></p>
+<p>Anonymity由三个特性 <!-- raw HTML omitted --></p>
+<ol>
+<li>Anonymity <!-- raw HTML omitted -->
+<ul>
+<li>从茫茫多的活动中隐藏自己的活动，而不要显眼的被挑出来 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Unlinkability <!-- raw HTML omitted -->
+<ul>
+<li>无法将行动与个人联系起来 <!-- raw HTML omitted --></li>
+<li>比如发完邮件之后，发件人和邮件就没有关联了 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Unobservability <!-- raw HTML omitted -->
+<ul>
+<li>很难实现 <!-- raw HTML omitted --></li>
+<li>既别人无法意识到这件事情到底发生没有 <!-- raw HTML omitted --></li>
+<li>笔名就是一个简单的方法，用来隐藏自己的身份（用户名） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Attacks on anonymity?</p>
+<p>Passive traffic analysis
+: -   从网络活动中发现谁与谁在通信 <!-- raw HTML omitted -->
+-   为了隐藏自己的活动，每个人必须要还要处理别人的traffic，即每个人都在做一样的事情，分不清真正想要做这件事情的人是谁 <!-- raw HTML omitted --></p>
+<p>Active traffic analysis
+: -   注入数据包或者将signature注入数据流中进行进一步观察 <!-- raw HTML omitted --></p>
+<p>Compromise of network nodes
+: -   黑入网络中的节点，然后被动的收集数据 <!-- raw HTML omitted -->
+-   因此不能相信任意一个网络节点，被黑以后都是不明显的 <!-- raw HTML omitted --></p>
+<p>Proxy也可以用来进行匿名 <!-- raw HTML omitted --></p>
+<ol>
+<li>sender通过proxy改变了自己的信息，使原始的sender不会被找到 <!-- raw HTML omitted --></li>
+<li>receiver则通过广播或者多播发送给整一个匿名组用户，其中只有一个真正的接收者 <!-- raw HTML omitted --></li>
+</ol>
+<p>弱点在哪儿呢？ <!-- raw HTML omitted -->
+那就是Proxy知道一切的事情，如果proxy被黑客控制，那么一切都没有意义了 <!-- raw HTML omitted --></p>
+<p>我们也可以用cascaded proxy chains，mix networks来counter这个攻击 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cascaded proxies with encryption</p>
+<p>何谓cascaded proxies级联代理呢？就是我们通过多层的代理，每一层都proxy都拥有一个private key来进行解密，再传递给下一个proxy继续解密，只有最后一个proxy服务器知道最初始的数据，然后广播到匿名组里去 <!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+但是流量分析还是可以实现，因此我们需要mix networks <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="mix-networks">Mix networks</h3>
+<p>主要目的是为了建立一个匿名的channel <!-- raw HTML omitted --></p>
+<p>在垃圾邮件出现之前，大家都觉得匿名邮件是个好东西，从而衍生出了很多的remailers <!-- raw HTML omitted --></p>
+<p>Mix = Public-key cryptography + trusted re-mailer <!-- raw HTML omitted --></p>
+<ul>
+<li>Publick key就作为持久的假名，就类似于Bitcoin中的address <!-- raw HTML omitted --></li>
+<li>Untrusted communication medium: 被设计在一个攻击者可以 <!-- raw HTML omitted -->
+<ul>
+<li>获取所有的source/destination信息，以及所传递的信息 <!-- raw HTML omitted --></li>
+<li>可以修改注入删除所有的 messages <!-- raw HTML omitted --></li>
+<li>但是唯一做不到的事情就是不能找到这些信息之间的关系，cannot coorelate plaintext and ciphertext,也无法进行伪造（不知道如何加密） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="using-a-single-mix">Using a single Mix</h4>
+<p>我们用 <code>Mix</code> 代表一个邮件处理系统 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-17-03_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>A发出一条信息给Mix,使用mixer的public key进行加密，Mix会解密之后重新组装，然后发送给一个匿名组所有的用户，每一个用户所接受到的信息都是不同的 <!-- raw HTML omitted --></p>
+<p>攻击者可以看到所有的senders and receivers但是却不能将发送的消息和经由Mix重新组装后的消息所联系起来 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-17-11_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>其中r1, r0 这些内容是为了满足加密算法所需要的byte数而进行的padding <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Foiling traffic analysis: four requirements</p>
+<p>为了防止进行流量分析，mix还提供了四个要求 <!-- raw HTML omitted --></p>
+<ol>
+<li>Agents/mixes work with uniformly sized items 要求所有的信息都是同样格式的（比如所有的信息都被padded到相同的长度的block后加密） <!-- raw HTML omitted --></li>
+<li>Order of arrival hidden by outputting items in batches 通过批量输出信息到匿名组来隐藏顺序 <!-- raw HTML omitted --></li>
+<li>Repeated information must be blocked 不允许重复的信息，需要通过过滤器来筛查重复信息 <!-- raw HTML omitted --></li>
+<li>Sufficient traffic from a large anonymity set if required 需要大量的匿名组用户进行数据的发送 <!-- raw HTML omitted -->
+<ul>
+<li>太少的话就会削弱anonymity <!-- raw HTML omitted --></li>
+<li>可以让clients定期发送或者接受dummy messages假信息 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-05-30_17-23-22_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Generating receipts</p>
+<p>Mix同样可以用来生成receipt代表message被收到了 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-30-11_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>这里的 <code>c</code> 是很大的，我觉得应该就是为了保持相等的格式，可以用很多0来填充 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-32-29_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="mix-networks">Mix networks</h4>
+<p>我们已经看过了一个单独的Mix是如何工作的，其实和之前的proxy很类似，都存在一个缺点，就是一旦被攻击，那么所有信息都会暴露 <!-- raw HTML omitted --></p>
+<p>因此我们在这里采取同样的策略，即使用级联的Mix服务器相连来处理 <!-- raw HTML omitted --></p>
+<p>每一个Mix都属于不同的administrative domain，这里应该想说的是不属于同一个地方管辖，也就不会因为一个被黑入了，就会影响其他的servers <!-- raw HTML omitted --></p>
+<p>通过多个Mix server联合使用，只要还有一个server没有被黑入，那么通信就还是匿名的 <!-- raw HTML omitted --></p>
+<p>我们假设network中存在着多个Mix server，那么Alice就需要选择Mix-path来决定路经那几个server，然后使用对应的密钥进行加密再发送给Bob <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-36-58_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-37-07_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>Alice 根据Mix-path选择Mix server的public key对数据进行padding与加密 <!-- raw HTML omitted --></li>
+<li>每一个途径的Mix-server用自己的private key解密后再传达给下一个 <!-- raw HTML omitted --></li>
+<li>最终最后一个Mix server就和我们之前提到过的那样发送给匿名组 <!-- raw HTML omitted --></li>
+</ol>
+<p>那么既然最后一个Mix server又变成了single Mix-server中最简单的模式，难道被攻破之后不是毫无意义了吗？ <!-- raw HTML omitted --></p>
+<p>这里要注意的是，每一个Mix server也就是仅仅只能知道前一个Mix server的信息，发送方的信息根本已经无从知晓了 <!-- raw HTML omitted --></p>
+<h4 id="untraceable-return-addresses">Untraceable return addresses</h4>
+<p>如何匿名发送回复消息表示信息收到了呢？ <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Single Mix case (with key pk_mix1): <!-- raw HTML omitted --></p>
+<ul>
+<li>发送方在自己的数据里包含 return address: {r1, A_x}_pk_mix1, pk_x <!-- raw HTML omitted -->
+<ul>
+<li>r1, random string, can be used as a shared key <!-- raw HTML omitted --></li>
+<li>pk_x, a fresh public key <!-- raw HTML omitted --></li>
+<li>Ax 真实的地址 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>接受者回复： {r1, A_x}_pk_mix1, {r0, M&rsquo;}pk_x <!-- raw HTML omitted -->
+<ul>
+<li>通过 fresh public key对数据进行加密 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Mix解密之后得知真实的地址是Ax，然后回复给A <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>级联的Mix servers的处理方式 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-50-57_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>同样的办法，A会附带自己的地址以及一个pk_x,然后B在回复的时候会一层层根据选择的Mix-path上的Mix server的public key进行层层加密后返回 <!-- raw HTML omitted --></p>
+<h4 id="mix-networks-attacks">Mix networks: attacks</h4>
+<ol>
+<li>Tracing a message <!-- raw HTML omitted --></li>
+</ol>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+因为存在大量的dummy messages假消息而不可被追踪 <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>Replay attack, 用重复的messsage进行攻击 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_17-52-47_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>但是每一个 Mix server 中都有一个重复信息的过滤器，也不可能发生 <!-- raw HTML omitted --></p>
+<h4 id="mix-networks-n-1-attack">Mix networks: n-1 attack</h4>
+<p>n-1 attack 是一种active attack, attacker 通过flooding一个node，使一个node上大部分的数据都是其做知晓的，那么剩下来的内容就很容易进行分析了 <!-- raw HTML omitted --></p>
+<p>如何进行防御呢？ <!-- raw HTML omitted -->
+使用Hearbeat message: <!-- raw HTML omitted --></p>
+<ol>
+<li>每一个Mix server都会检测自己的网络环境，然后观察发出的消息收到的回复情况，我们称为heartbeat messages心跳 <!-- raw HTML omitted --></li>
+<li>当Mix server收到了flooding attack其无法判断哪些流量是好的还是攻击者的流量，但是通过对于 heatbeat message在这些流量的比例的判断，来主动增加网络流量中的dummy message从而与flooding数据包进行抗衡，增加匿名性 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="mix-networks-advantages">Mix networks: advantages</h4>
+<ol>
+<li>匿名化的程度非常高 <!-- raw HTML omitted -->
+<ul>
+<li>Mix input and output 之间无法被联系起来 <!-- raw HTML omitted --></li>
+<li>只要有一个Mix server没有被入侵就还能保证匿名性 <!-- raw HTML omitted --></li>
+<li>只要有足够多的dummy traffic, anonymity set就是整一个网络 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>新的密码学的实践 <!-- raw HTML omitted -->
+<ul>
+<li>连receiver都可以不知道sender是谁 <!-- raw HTML omitted --></li>
+<li>同时这封匿名的邮件是可以被certified的，可以由receiver以及路上的每一个Mix进行签名 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h4 id="mix-networks-disadvantages">Mix networks: disadvantages</h4>
+<ol>
+<li>级联的 Mix server意味着每一个server上都要进行大量的加密解密结算，非常消耗资源 <!-- raw HTML omitted --></li>
+<li>延迟非常高，email还可以接受，但是网页浏览就没办法了 <!-- raw HTML omitted --></li>
+<li>Dummy message的开销很大 <!-- raw HTML omitted --></li>
+<li>如何搭建一个低延迟的匿名环境是一个挑战 <!-- raw HTML omitted -->
+<ul>
+<li>Use public-key cryptography to establish a “circuit” with pairwise symmetric keys between hops on the circuit. <!-- raw HTML omitted --></li>
+<li>Then use symmetric decryption and re-encryption to move data messages along the established circuits. <!-- raw HTML omitted --></li>
+<li>Each node behaves like a mix; anonymity is preserved even if some nodes are compromised <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h3 id="dining-cryptographers">Dining cryptographers</h3>
+<p>三个的密码学家在一起吃晚饭，吃完饭之后需要结账，他们有两个选择，一是报销让NSA付钱，要么他们中的一个付钱，但是付钱的那个人不希望其他两个人知道（别问万一两个人都想付钱怎么办233），他们相出了一个办法可以让这一切成立 <!-- raw HTML omitted --></p>
+<ol>
+<li>每个密码学家都抛一枚硬币，并向其左边的邻居展示 <!-- raw HTML omitted -->
+<ul>
+<li>因此每个密码学都能看到两枚硬币，他自己的和他右边的邻居的 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>每个密码学家需要宣称两枚硬币是否相同 <!-- raw HTML omitted -->
+<ul>
+<li>付钱的那位密码学家会撒谎（说反话） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>那么如果说“相同的”是单数 =&gt; NSA报销 <!-- raw HTML omitted -->
+<ul>
+<li>如果是偶数，他们其中一个人付钱了 <!-- raw HTML omitted --></li>
+<li>但是其他人不知道谁付钱了 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<h4 id="three-person-dc-protocol">Three-person DC protocol</h4>
+<ol>
+<li>假设三位密码学家：C1, C2, C3投掷了硬币，其结果为bi <!-- raw HTML omitted --></li>
+<li>每位密码学家都与左边的邻居共享了自己的信息 <!-- raw HTML omitted --></li>
+<li>每位密码学家都将自己所看到的两枚硬币的情况进行计算di = bi XOR bi-1 <!-- raw HTML omitted -->
+<ul>
+<li>bi表示密码学家自己的硬币 <!-- raw HTML omitted --></li>
+<li>bi-1表示右边邻居的情况 <!-- raw HTML omitted --></li>
+<li>要注意的是d0 = d3 and b0 = b3因为绕了一圈了 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>如果没有付钱，那就直接宣称计算的结果di,如果付钱了，那就宣称di XOR 1 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="proof">Proof</h4>
+<p>我们假设有三位密码学家所宣称的值为：A1, A2, A3 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>如果没付钱了，那么Ai = di <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>如果付钱， Ai = di XOR 1 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_20-45-57_screenshot.png" width="300px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>如果没有一个人付钱，那么所有宣称的数值计算后应该得出0，否则则为1 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-30_20-46-59_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>同时，如果有人付钱了，一个没有付钱的密码学家是无法得知是其他两人中的谁付的 <!-- raw HTML omitted --></p>
+<p>同样的情况可以运用到多个用户身上，每个用户都生成一个随机的bit发送给左边的邻居，每个人都有两个bits来进行计算 <!-- raw HTML omitted --></p>
+<ul>
+<li>每个人都宣称自己进行XOR计算的结果 <!-- raw HTML omitted --></li>
+<li>只有发送者会多XOR一个想要发送的数据中的bit <!-- raw HTML omitted --></li>
+<li>这样就可以综合所有的结果并得到0/1也就是message bit <!-- raw HTML omitted --></li>
+</ul>
+<p>但是现实中很难实现，因为首先需要很大的匿名组，然后还有每个用户都做随机数然后再计算，很复杂 <!-- raw HTML omitted --></p>
+<p>安全性确实很强，就算有很强大的算力也无法得知发送者是谁。 <!-- raw HTML omitted --></p>
+<p>同时也会因为通信channel被干扰而出现错误，同时匿名组中的成员如果撒谎了也会导致通信失败 <!-- raw HTML omitted --></p>
+<h3 id="onion-routing">Onion routing</h3>
+<p>发送者随机地选择途径路由器的次序 <!-- raw HTML omitted --></p>
+<ul>
+<li>我们假设有一些路由器是诚实的，但是有一些被黑客所控制了 <!-- raw HTML omitted --></li>
+<li>发送者主动的控制路径的长度 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-05-30_21-06-06_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>发送者将数据根据选择的路径用每个路由器的public key加密好，并内置一个symmetric key来对后续的内容进行加密 <!-- raw HTML omitted --></li>
+<li>同时每个路由器只能获取到前一个router的identity,使其无法溯源 <!-- raw HTML omitted --></li>
+</ol>
+<p>Tor (the onion router)就是这么进行匿名通信的 <!-- raw HTML omitted --></p>
+<p>Set up Onion service sot that it&rsquo;s reachable by clients <!-- raw HTML omitted --></p>
+<ol>
+<li>发送者首先先与一台路由器交换symmetric session key <!-- raw HTML omitted --></li>
+<li>然后用这台路由器作为代理与新的路由器交换symmetric session key，不断反复，直到到达目标地址 <!-- raw HTML omitted --></li>
+<li>然后就利用建立的Tor circuit进行通信，每个途径的onion router都会单独加密解密 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="location-hidden-servers">Location hidden servers</h3>
+<p>Goal: <!-- raw HTML omitted --></p>
+<ol>
+<li>将服务器部署在Internet上并且告知其他用户可以访问，但是不能让别人知道这台服务器在哪儿和是谁在运行 <!-- raw HTML omitted --></li>
+<li>随处可以访问 <!-- raw HTML omitted --></li>
+<li>不会被审查 <!-- raw HTML omitted --></li>
+<li>能够在DoS attack中存活 <!-- raw HTML omitted --></li>
+<li>找不到物理服务器 <!-- raw HTML omitted --></li>
+</ol>
+<p><a class="link" href="https://community.torproject.org/onion-services/overview/"  target="_blank" rel="noopener"
+    >https://community.torproject.org/onion-services/overview/</a> <!-- raw HTML omitted --></p>
+<h3 id="privacy">Privacy</h3>
+<p><code>A privacy policy</code> specifies how data may be used, under which condition, and what obligations this entails. <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/network_security/">network_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 30, 2022 21:27 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/nse_week_9_ike_and_ssl_tls/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 9: IKE and SSL/TLS</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_8_ip_security/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 8: IP security</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_7_intrusion_detection_and_prevention/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 7: Intrusion detection and prevention</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_1_module_introduction_security_concepts_and_security_attacks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 1: Module introduction, security concepts and security attacks</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/nse_week_2_tcp_ip_protocol_architecture_sniffing_and_traffic_analysis/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NSE Week 2:  TCP/IP protocol architecture, sniffing and traffic analysis</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nse-week-10-privacy-and-anonymity">NSE Week 10: Privacy and anonymity</a>
+      <ul>
+        <li><a href="#privacy-and-anonymity">Privacy and Anonymity</a>
+          <ul>
+            <li><a href="#privacy-and-anonymity-on-public-networks">Privacy and anonymity on public networks</a></li>
+            <li><a href="#anonymity">Anonymity</a></li>
+          </ul>
+        </li>
+        <li><a href="#mix-networks">Mix networks</a>
+          <ul>
+            <li><a href="#using-a-single-mix">Using a single Mix</a></li>
+            <li><a href="#mix-networks">Mix networks</a></li>
+            <li><a href="#untraceable-return-addresses">Untraceable return addresses</a></li>
+            <li><a href="#mix-networks-attacks">Mix networks: attacks</a></li>
+            <li><a href="#mix-networks-n-1-attack">Mix networks: n-1 attack</a></li>
+            <li><a href="#mix-networks-advantages">Mix networks: advantages</a></li>
+            <li><a href="#mix-networks-disadvantages">Mix networks: disadvantages</a></li>
+          </ul>
+        </li>
+        <li><a href="#dining-cryptographers">Dining cryptographers</a>
+          <ul>
+            <li><a href="#three-person-dc-protocol">Three-person DC protocol</a></li>
+            <li><a href="#proof">Proof</a></li>
+          </ul>
+        </li>
+        <li><a href="#onion-routing">Onion routing</a></li>
+        <li><a href="#location-hidden-servers">Location hidden servers</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

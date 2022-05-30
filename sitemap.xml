@@ -3,24 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/course_notes/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/network_security/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/posts/nse_week_8_ip_security/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <loc>https://ginkgo.org.cn/posts/nse_week_10_privacy_and_anonymity/</loc>
+    <lastmod>2022-05-30T21:27:49+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/nse_week_9_ike_and_ssl_tls/</loc>
+    <lastmod>2022-05-30T15:40:11+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-05-29T23:03:33+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/nse_week_8_ip_security/</loc>
     <lastmod>2022-05-29T23:03:33+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/nse_week_7_intrusion_detection_and_prevention/</loc>
@@ -156,7 +162,7 @@
     <lastmod>2022-05-13T09:28:22+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/nse_week_3_spoofing_flooding_and_amplification/</loc>
-    <lastmod>2022-05-28T17:24:50+01:00</lastmod>
+    <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/sqli/</loc>
     <lastmod>2022-05-24T17:23:28+01:00</lastmod>
