@@ -39,6 +39,30 @@
         <description></description>
         </item>
         <item>
+        <title>web_security</title>
+        <link>https://ginkgo.org.cn/tags/web_security/</link>
+        <pubDate>Thu, 09 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/web_security/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ctf</title>
+        <link>https://ginkgo.org.cn/tags/ctf/</link>
+        <pubDate>Sun, 05 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/ctf/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>mysql</title>
+        <link>https://ginkgo.org.cn/tags/mysql/</link>
+        <pubDate>Sun, 05 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/mysql/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>network_security</title>
         <link>https://ginkgo.org.cn/tags/network_security/</link>
         <pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
@@ -52,14 +76,6 @@
         <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/security_testing/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>ctf</title>
-        <link>https://ginkgo.org.cn/tags/ctf/</link>
-        <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://ginkgo.org.cn/tags/ctf/</guid>
         <description></description>
         </item>
         <item>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提'><title>Mysql中的“奇技淫巧”</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/mysql_tricks/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mysql中的“奇技淫巧”'>
+<meta property='og:description' content='Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/mysql_tricks/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='mysql' /><meta property='article:tag' content='ctf' /><meta property='article:published_time' content='2022-06-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-15T15:31:59&#43;01:00'/>
+<meta name="twitter:title" content="Mysql中的“奇技淫巧”">
+<meta name="twitter:description" content="Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/mysql_tricks/">Mysql中的“奇技淫巧”</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 05, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mysql中的-奇技淫巧">Mysql中的“奇技淫巧”</h2>
+<h3 id="mysql中show语法使用总结">MySQL中show语法使用总结</h3>
+<p><a class="link" href="https://www.cnblogs.com/saneri/p/6963583.html"  target="_blank" rel="noopener"
+    >https://www.cnblogs.com/saneri/p/6963583.html</a> <!-- raw HTML omitted --></p>
+<p>我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提供了很多对于其他信息的查询，这样的语句可以用于例如堆叠注入的地方。 <!-- raw HTML omitted --></p>
+<p>show命令就可以显示很多的metadata的信息 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-05_10-12-56_screenshot.png"
+         alt="Figure 1: help show: https://dev.mysql.com/doc/refman/5.7/en/show.html" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->help show: <a class="link" href="https://dev.mysql.com/doc/refman/5.7/en/show.html"  target="_blank" rel="noopener"
+    >https://dev.mysql.com/doc/refman/5.7/en/show.html</a></p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>帮助查看： <!-- raw HTML omitted --></p>
+<p>mysql&gt; help show <!-- raw HTML omitted -->
+mysql&gt; help SHOW TABLE; <!-- raw HTML omitted -->
+mysql&gt; help SHOW WARNINGS <!-- raw HTML omitted --></p>
+<p>1.显示mysql中所有数据库的名称. <!-- raw HTML omitted --></p>
+<p>mysql&gt;show databases; <!-- raw HTML omitted --></p>
+<p>2.显示当前数据库中所有表的名称 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show tables; <!-- raw HTML omitted -->
+或 <!-- raw HTML omitted -->
+mysql&gt;show tables from database_name; <!-- raw HTML omitted --></p>
+<p>3.显示表中列名称 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show columns from database_name.table_name; <!-- raw HTML omitted --></p>
+<p>4.查看某MySQL用户的使用权限 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show grants for user_name; <!-- raw HTML omitted --></p>
+<p>5.显示create database 语句是否能够创建指定的数据库,并可以查看到创建库语句的SQL信息。 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show create database database_name; <!-- raw HTML omitted --></p>
+<p>6.显示create table 语句是否能够创建指定的数据表,并可以查看到表创建语句的SQL信息。 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show create table table_name; <!-- raw HTML omitted --></p>
+<p>7.显示安装以后可用的存储引擎和默认引擎。 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show engines; <!-- raw HTML omitted --></p>
+<p>8.显示最后一个执行的语句所产生的错误、警告和通知 <!-- raw HTML omitted --></p>
+<p>mysql&gt; show warnings; <!-- raw HTML omitted --></p>
+<p>9.只显示最后一个执行语句所产生的错误 <!-- raw HTML omitted --></p>
+<p>mysql&gt;show errors; <!-- raw HTML omitted --></p>
+<p>10.显示系统中正在运行的所有进程，也就是当前正在执行的查询. <!-- raw HTML omitted --></p>
+<p>mysql&gt; show processlist\G <!-- raw HTML omitted --></p>
+<p>11.查看所有存储过程。 <!-- raw HTML omitted --></p>
+<p>mysql&gt; show procedure status; <!-- raw HTML omitted --></p>
+<p>12.查看某个存储过程内容 <!-- raw HTML omitted --></p>
+<p>show create procedure 存储过程名称; <!-- raw HTML omitted --></p>
+<p>13.查看函数的内容. <!-- raw HTML omitted --></p>
+<p>show create function func_name; <!-- raw HTML omitted --></p>
+<h3 id="预编译语句-prepare-statement">预编译语句 Prepare statement</h3>
+<p>Syntax: <!-- raw HTML omitted -->
+PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
+<p><code>PREPARE</code> 语句会把一个SQL语句赋值给一个变量名stmt_name用于后面的引用。 <!-- raw HTML omitted --></p>
+<p>预编译语句会被 <code>EXECUTE</code> 执行，然后被 <code>DEALLOCATE PREPARE</code> 释放 <!-- raw HTML omitted --></p>
+<p>以下是一个使用预编译语句的例子，使用&rsquo;?&lsquo;来占位，然后通过 <code>SET</code> 来赋值再结合在一起使用，最后用 <code>DEALLOCATE PREPARE</code> 来释放 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">PREPARE</span><span class="w"> </span><span class="n">stmt1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">EXECUTE</span><span class="w"> </span><span class="n">stmt1</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">hypotenuse</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">          </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DEALLOCATE</span><span class="w"> </span><span class="k">PREPARE</span><span class="w"> </span><span class="n">stmt1</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="index-索引">Index 索引</h3>
+<p>参考： <!-- raw HTML omitted -->
+<a class="link" href="https://blog.csdn.net/wangfeijiu/article/details/113409719"  target="_blank" rel="noopener"
+    >一文搞懂MySQL索引（清晰明了）</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://blog.csdn.net/u013308490/article/details/83001060"  target="_blank" rel="noopener"
+    >MySQL索引实现原理分析</a> <!-- raw HTML omitted --></p>
+<h4 id="basic-基础概念">Basic 基础概念</h4>
+<p>Index，索引，是Mysql数据库中一个用来提高表内查询速度的数据结构。 <!-- raw HTML omitted --></p>
+<p>如果没有Index，那么当我们想要从一个有一万条记录的表中找到我们想要的一列时，最坏的情况就是要遍历一万条数据才能发现匹配的，但是如果是有Index的话，就可以像字典一样，提前找到其位置，然后快速得到，Index的使用极大的提升了Mysql的查询速度和效率 <!-- raw HTML omitted --></p>
+<p>Index的使用将极大的帮助SELECT语句，但是会降低INSERT and UPDATE的速度，因为对于table的变动还需要更新index的信息 <!-- raw HTML omitted --></p>
+<p>我在学习的时候有Index的概念的时候还是没有跳脱出之前增删改查的语法的使用，一直在找资料想看看Index具体要怎么和查询一起使用，慢慢开始理解之后才突然意识到Index的创建其实就是一种字典索引的建立，只要创建了合适的索引，那么再下一次进行select语句的时候，Index就会自动加速本次查询，也就是我想找的如何使用Index的答案。 <!-- raw HTML omitted --></p>
+<p>接着我就看到了W3schools给的解释，就非常清晰了：The users cannot see the indexes, they are just used to speed up searches/queries :) <!-- raw HTML omitted --></p>
+<p>接下来我们就来看看具体要如何创建Index <!-- raw HTML omitted --></p>
+<h4 id="index的语法">Index的语法</h4>
+<p>创建一个最基本的Index，允许存在重复的值 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w"> 
+</span></span></span></code></pre></div><p>例子 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_lastname</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="n">Persons</span><span class="w"> </span><span class="p">(</span><span class="n">LastName</span><span class="p">);</span><span class="w"> 
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_pname</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="n">Persons</span><span class="w"> </span><span class="p">(</span><span class="n">LastName</span><span class="p">,</span><span class="w"> </span><span class="n">FirstName</span><span class="p">);</span><span class="w"> 
+</span></span></span></code></pre></div><p>创建一个唯一的Index，不允许重复的值 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w"> 
+</span></span></span></code></pre></div><p>通过修改表结构来添加索引 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">indexName</span><span class="p">(</span><span class="n">columnName</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p>如果是CHAR，VARCHAR类型，length可以小于字段实际长度；如果是BLOB和TEXT类型，必须指定length。 <!-- raw HTML omitted --></p>
+<p>创建表的时候直接指定INDEX <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">username</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INDEX</span><span class="w"> </span><span class="p">[</span><span class="n">indexName</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">(</span><span class="k">length</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>删除索引 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">[</span><span class="n">indexName</span><span class="p">]</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span><span class="w"> 
+</span></span></span></code></pre></div><h4 id="index使用的准则与场景">Index使用的准则与场景</h4>
+<p>之前我们提到了Index本质是一个数据结构，那么作为一个数据结构来存储大量的数据，势必也需要占用物理磁盘，那么如何合理的利用索引来加速查询的同时又减少开销呢？ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>应当创建索引的列</p>
+<ul>
+<li>在 <code>经常需要搜索的列</code> 上，可以加快搜索的速度 <!-- raw HTML omitted --></li>
+<li>在作为 <code>主键的列</code> 上，强制该列的唯一性和组织表中数据的排列结构 <!-- raw HTML omitted --></li>
+<li>在经常用在 <code>连接（JOIN）的列</code> 上，这些列主要是 <code>外键</code> ，可以加快连接的速度 <!-- raw HTML omitted --></li>
+<li>在经常需要 <code>根据范围</code> （&lt;，&lt;=，=，&gt;，&gt;=，BETWEEN，IN）进行搜索的列上创建索引，因为 <code>索引已经排序</code> ，其指定的范围是连续的 <!-- raw HTML omitted --></li>
+<li>在经常需要 <code>排序</code> （order by）的列上创建索引，因为索引已经排序，这样查询可以利用索引的排序，加快排序查询时间； <!-- raw HTML omitted --></li>
+<li>在经常使用在 <code>WHERE子句中的列</code> 上面创建索引，加快条件的判断速度。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>不该创建索引的列</p>
+<ul>
+<li>对于那些在查询中 <code>很少使用或者参考reference的列</code> 不应该创建索引。 <!-- raw HTML omitted -->
+<ul>
+<li>若列很少使用到，因此有索引或者无索引，并不能提高查询速度。相反，由于增加了索引，反而降低了系统的维护速度和增大了空间需求。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>对于那些只有 <code>很少数据值</code> 或者 <code>重复值多的列</code> 也不应该增加索引。 <!-- raw HTML omitted -->
+<ul>
+<li>这些列的取值很少，例如人事表的性别列，在查询的结果中，结果集的数据行占了表中数据行的很大比例，即需要在表中搜索的数据行的比例很大。增加索引，并不能明显加快检索速度。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>对于那些定义为 <code>text, image和bit</code> 数据类型的列不应该增加索引。 <!-- raw HTML omitted -->
+<ul>
+<li>这些列的数据量要么相当大，要么取值很少。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>当该列 <code>修改(Insert, Update)性能要求远远高于检索(Select)性能</code> 时，不应该创建索引。（修改性能和检索性能是互相矛盾的） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<h4 id="index的实现原理">Index的实现原理</h4>
+<p>那么Index究竟使用了什么数据结构来进行存储进而加快了检索速度呢？ <!-- raw HTML omitted --></p>
+<p>我们以常见的InnoDB来举例，其使用的是B+Tree来进行索引结构，将原本需要对所有的记录依次匹配记录的方式变为了通过树来进行二元判断逐渐缩小范围 <!-- raw HTML omitted --></p>
+<p>B+Tree的特点是其本身在叶节点就会存储完整的数据记录，因此我们可以说，索引所存储的文件，就是数据表其本身，以及： <!-- raw HTML omitted --></p>
+<ul>
+<li>所有关键字都出现在叶子结点的链表中，且链表中的关键字恰好是有序的； <!-- raw HTML omitted --></li>
+<li>不可能在非叶子结点命中； <!-- raw HTML omitted --></li>
+<li>非叶子结点相当于是叶子结点的索引，叶子结点相当于是存储（关键字）数据的数据层； <!-- raw HTML omitted --></li>
+<li>每一个叶子节点都包含指向下一个叶子节点的指针，从而方便叶子节点的范围遍历。 <!-- raw HTML omitted --></li>
+<li>更适合文件索引系统 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-06-05_22-45-59_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>具体的分类与实现方法我们放在下面讲，这里先有一个基本的认识 <!-- raw HTML omitted --></p>
+<h4 id="index的分类">Index的分类</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>逻辑分类</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>按功能划分</p>
+<ol>
+<li>
+<p>主键索引：将一张表的主键列设为索引，特点是一张表只能有一个主键索引，不允许重复，也不允许为NULL <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">column_list</span><span class="p">);</span><span class="w"> 
+</span></span></span></code></pre></div><p>反过来说，一个有主键的数据表的存储形式就是一个主键索引的文件 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>唯一索引：被索引的列的值不允许重复，但允许为NULL，一张表可以创建多个唯一索引；同时，如果是组合索引，列值的组合也必须唯一 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">或者</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">column_list</span><span class="p">);</span><span class="w"> 
+</span></span></span></code></pre></div></li>
+<li>
+<p>普通索引：一张表可以创建多个普通索引，一个普通索引可以包含多个字段，允许数据重复，允许NULL值插入 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">或者</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>
+<p>全文索引：查找文本中的关键词，主要用于全文内容的检索 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>按被索引的列数划分</p>
+<ol>
+<li>单例索引：一个索引只包含一个列，一个表可以创建多个单例索引 <!-- raw HTML omitted --></li>
+<li>组合/联合索引：一个组合索引包含两个或两个以上的列组合成为索引检索的对象。 <!-- raw HTML omitted -->
+<ul>
+<li>
+<p>其满足“最左前缀”原则，即使用where时条件要按照建立所以的字段的排列方式设置才能使索引生效 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-05_22-28-16_screenshot.png"
+         alt="Figure 3: 联合索引：将几个列的值组合起来进行索引" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->联合索引：将几个列的值组合起来进行索引</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>物理分类</p>
+<p>物理分类主要通过实现Index实例的方法氛围聚簇索引和非聚簇索引（也叫辅助索引或者耳机索引），那么主要的区别就是 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Clustered Index 聚簇索引</p>
+<p>其主要特点就是，数据的存储与索引是放在一起的，索引完成之后，数据也随之被找到。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-05_22-17-25_screenshot.png"
+         alt="Figure 4: B&#43;Tree" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->B+Tree</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>非聚簇索引</p>
+<p>数据和索引是分开的，其B+Tree叶子结点存放的是真正数据的地址而非数据的内容 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-05_22-33-07_screenshot.png"
+         alt="Figure 5: 辅助索引：数据与索引分开" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->辅助索引：数据与索引分开</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="index-pros-and-cons">Index: pros &amp; cons</h4>
+<p>减少了服务器扫描的数据量，大大加快了数据的检索速度 <!-- raw HTML omitted -->
+主要优点： <!-- raw HTML omitted --></p>
+<ul>
+<li>索引大大减小了服务器需要扫描的数据量，从而大大加快数据的检索速度，这也是创建索引的最主要的原因。 <!-- raw HTML omitted --></li>
+<li>可以加速表和表之间的连接，特别是在实现数据的参考完整性方面特别有意义。 <!-- raw HTML omitted --></li>
+<li>在使用分组和排序子句进行数据检索时，同样可以显著减少查询中分组和排序的时间。 <!-- raw HTML omitted --></li>
+<li>通过使用索引，可以在查询的过程中，使用优化隐藏器，提高系统的性能。 <!-- raw HTML omitted --></li>
+</ul>
+<p>主要缺点： <!-- raw HTML omitted --></p>
+<ul>
+<li>创建索引和维护索引要耗费时间，这种时间随着数据量的增加而增加 <!-- raw HTML omitted --></li>
+<li>索引需要占物理空间，除了数据表占用数据空间之外，每一个索引还要占用一定的物理空间，如果需要建立聚簇索引，那么需要占用的空间会更大 <!-- raw HTML omitted --></li>
+<li>对表中的数据进行增、删、改的时候，索引也要动态的维护，这就降低了整数的维护速度 <!-- raw HTML omitted --></li>
+<li>如果某个数据列包含许多重复的内容，为它建立索引就没有太大的实际效果。 <!-- raw HTML omitted --></li>
+<li>对于非常小的表，大部分情况下简单的全表扫描更高效； <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="mysql中key--primary-key-unique-key--v-dot-s-dot-index的区别">Mysql中key(primary key, unique key) v.s. index的区别</h4>
+<p>我们在优化Mysql的时候，经常会看到key与index的连用或者替换，这同样也是我非常的困扰，我们今天就来好好理一理，到底如果来使用这两个名词 <!-- raw HTML omitted --></p>
+<dl>
+<dt>key</dt>
+<dd>key包含两层含义 <!-- raw HTML omitted -->
+<ol>
+<li>约束，表示对于列的一些特殊的要求 <!-- raw HTML omitted --></li>
+<li>索引，当我们将一列设置为key时，其自动就会创建一个Index（可用show index from table_name;进行查询） <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>primary key</dt>
+<dd><ol>
+<li>约束：列的值唯一,非空，唯一标识 <!-- raw HTML omitted --></li>
+<li>为这个主键列（这个key）建立一个主键索引（InnoDB中就会在叶子节点存储记录的真实数据） <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>unique key</dt>
+<dd><ol>
+<li>约束：保证列值的唯一性 <!-- raw HTML omitted --></li>
+<li>为这个列建立一个唯一索引 <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>foreign key</dt>
+<dd><ol>
+<li>
+<p>约束：外键的约束，规范数据的引用完整性 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>为这个外键建立一个普通索引 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</dd>
+</dl>
+<p><figure><img src="/ox-hugo/2022-06-05_22-57-41_screenshot.png" width="700px"/>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="explain-分析sql查询语句">EXPLAIN: 分析SQL查询语句</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="err">{</span><span class="k">EXPLAIN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESCRIBE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESC</span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tbl_name</span><span class="w"> </span><span class="p">[</span><span class="n">col_name</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wild</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">{</span><span class="k">EXPLAIN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESCRIBE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESC</span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="n">explain_type</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">{</span><span class="n">explainable_stmt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">CONNECTION</span><span class="w"> </span><span class="n">connection_id</span><span class="err">}</span><span class="w">
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-05_23-04-38_screenshot.png"
+         alt="Figure 7: explain example" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->explain example</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>具体可以参考官网对于每一列内容的介绍，explain的目的可以帮助分析一条select语句具体是如何进行查询的，包括对于引用，索引的使用 <!-- raw HTML omitted --></p>
+<h3 id="handler-句柄">Handler 句柄</h3>
+<p>参考： <!-- raw HTML omitted -->
+<a class="link" href="https://blog.csdn.net/qq_43427482/article/details/109898934"  target="_blank" rel="noopener"
+    >【MySQL】MySQL 之 handler 的详细使用及说明</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://dev.mysql.com/doc/refman/8.0/en/handler.html"  target="_blank" rel="noopener"
+    >13.2.4 HANDLER Statement</a> <!-- raw HTML omitted --></p>
+<p><code>HANDLER</code> 语句提供了直接访问table storage engine的接口，适用于InnoDB and MyISAM 表 <!-- raw HTML omitted --></p>
+<p><code>HANDLER ... OPEN</code> 语句可以打开一个table，并通过接下来的 <code>HANDLER ... READ</code> 语句来进行访问，一旦打开后就开启了一个独立的会话，并且不会被其他的会话共享直到 <code>HANDLER ... CLOSE</code> 之前都不会消失 <!-- raw HTML omitted --></p>
+<p>Basic Syntax, 基础语法： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">打开一张表，并且可以选择</span><span class="k">alias</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">OPEN</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="k">AS</span><span class="p">]</span><span class="w"> </span><span class="k">alias</span><span class="p">]</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="w"> </span><span class="err">查看表所创建的索引来检索反过来查看</span><span class="n">table的内容</span><span class="err">，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">value2</span><span class="p">,...)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">where_condition</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="k">LIMIT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="mi">2</span><span class="p">.</span><span class="w"> </span><span class="err">同时也可以用</span><span class="k">FIRST</span><span class="p">,</span><span class="w"> </span><span class="k">NEXT</span><span class="p">,</span><span class="w"> </span><span class="n">PREV</span><span class="p">,</span><span class="w"> </span><span class="n">LAST来辅助索引进行遍历</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="k">FIRST</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">NEXT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PREV</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">LAST</span><span class="w"> </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">where_condition</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="k">LIMIT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span><span class="w"> </span><span class="err">不通过索引来查看表（速度变慢，检索的形式也变少了）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="k">FIRST</span><span class="p">:</span><span class="w"> </span><span class="err">获取句柄的第一行</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="k">NEXT</span><span class="p">:</span><span class="w"> </span><span class="err">依次获取其他行（当然也可以在获取句柄后直接使用获取第一行）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">最后一行执行之后再执行</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="k">NEXT</span><span class="w"> </span><span class="err">会返回一个空的结果</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">READ</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="k">FIRST</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">NEXT</span><span class="w"> </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">where_condition</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="k">LIMIT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">CLOSE</span><span class="w">
+</span></span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/web_security/">web_security</a>
+        
+            <a href="/tags/mysql/">mysql</a>
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jun 15, 2022 15:31 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_query_string_parser/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/lrfi_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Local/Remote File Inclusion 文件包含漏洞</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_serialize_unserialize/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 序列化与反序列化</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：基础</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_file_rw/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：文件读写</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mysql中的-奇技淫巧">Mysql中的“奇技淫巧”</a>
+      <ul>
+        <li><a href="#mysql中show语法使用总结">MySQL中show语法使用总结</a></li>
+        <li><a href="#预编译语句-prepare-statement">预编译语句 Prepare statement</a></li>
+        <li><a href="#index-索引">Index 索引</a>
+          <ul>
+            <li><a href="#basic-基础概念">Basic 基础概念</a></li>
+            <li><a href="#index的语法">Index的语法</a></li>
+            <li><a href="#index使用的准则与场景">Index使用的准则与场景</a></li>
+            <li><a href="#index的实现原理">Index的实现原理</a></li>
+            <li><a href="#index的分类">Index的分类</a></li>
+            <li><a href="#index-pros-and-cons">Index: pros &amp; cons</a></li>
+            <li><a href="#mysql中key--primary-key-unique-key--v-dot-s-dot-index的区别">Mysql中key(primary key, unique key) v.s. index的区别</a></li>
+          </ul>
+        </li>
+        <li><a href="#explain-分析sql查询语句">EXPLAIN: 分析SQL查询语句</a></li>
+        <li><a href="#handler-句柄">Handler 句柄</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
