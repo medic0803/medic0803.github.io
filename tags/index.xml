@@ -6,7 +6,39 @@
         <description>Recent content in Tags on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Mon, 30 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 14 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>magic_functions</title>
+        <link>https://ginkgo.org.cn/tags/magic_functions/</link>
+        <pubDate>Tue, 14 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/magic_functions/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>php</title>
+        <link>https://ginkgo.org.cn/tags/php/</link>
+        <pubDate>Tue, 14 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/php/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>serialize</title>
+        <link>https://ginkgo.org.cn/tags/serialize/</link>
+        <pubDate>Tue, 14 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/serialize/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>unserialize</title>
+        <link>https://ginkgo.org.cn/tags/unserialize/</link>
+        <pubDate>Tue, 14 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/unserialize/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>network_security</title>
         <link>https://ginkgo.org.cn/tags/network_security/</link>
         <pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
@@ -116,14 +148,6 @@
         <pubDate>Sun, 24 Apr 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/sqli/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>php</title>
-        <link>https://ginkgo.org.cn/tags/php/</link>
-        <pubDate>Sat, 02 Apr 2022 00:00:00 +0100</pubDate>
-        
-        <guid>https://ginkgo.org.cn/tags/php/</guid>
         <description></description>
         </item>
         <item>

