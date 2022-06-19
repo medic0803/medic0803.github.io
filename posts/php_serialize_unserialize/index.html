@@ -9,7 +9,7 @@
 <meta property='og:description' content='PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/php_serialize_unserialize/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='serialize' /><meta property='article:tag' content='unserialize' /><meta property='article:tag' content='magic_functions' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-15T15:32:27&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='serialize' /><meta property='article:tag' content='unserialize' /><meta property='article:tag' content='magic_functions' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-19T16:39:00&#43;01:00'/>
 <meta name="twitter:title" content="PHP 序列化与反序列化">
 <meta name="twitter:description" content="PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -317,7 +317,7 @@ if (!doNotTrack) {
 </li>
 </ul>
 <p>我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 <code>Access Modifiers, 访问控制修饰符</code> 的不同而有不同的表示方法 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span><span class="p">(</span><span class="nx">公有</span><span class="p">)</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span><span class="p">(</span><span class="nx">公有</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="p">(</span><span class="nx">受保护</span><span class="p">)</span>     <span class="c1">// %00*%00属性名
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">private</span><span class="p">(</span><span class="nx">私有的</span><span class="p">)</span>       <span class="c1">// %00类名%00属性名
 </span></span></span></code></pre></div><p>protected属性被序列化的时候属性值会变成 <code>%00*%00属性名</code> <!-- raw HTML omitted -->
@@ -357,8 +357,8 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__destruct</span><span class="p">()</span>    <span class="c1">#当一个对象没有后续被引用时，被调用（注意说销毁并不准确），当一个对象的
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__toString</span><span class="p">()</span>    <span class="c1">#当一个对象被当作一个字符串使用时被调用
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__invoke</span><span class="p">()</span>      <span class="c1">#当脚本尝试将对象调用为函数时触发
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__sleep</span><span class="p">()</span>       <span class="c1">#serialize()时会自动调用   
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__wakeup</span><span class="p">()</span>      <span class="c1">#unserialize()时会自动调用   
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__sleep</span><span class="p">()</span>       <span class="c1">#serialize()时会自动调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__wakeup</span><span class="p">()</span>      <span class="c1">#unserialize()时会自动调用
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__call</span><span class="p">()</span>        <span class="c1">#当调用对象中不存在的方法会自动调用该方法。
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__get</span><span class="p">()</span>         <span class="c1">#在调用私有属性的时候会自动执行
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__set</span><span class="p">()</span>         <span class="c1">#用于将数据写入不可访问的属性（根据Access modifilers来判断,e.g., protected, private）
@@ -570,7 +570,29 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 <p><code>unserialize() -&gt; __wakeup() -&gt; evaluate() -&gt; eval()</code> <!-- raw HTML omitted --></p>
 <p>就是一条POP链，我们就是要找到这样一条函数调用链，最终执行输入的恶意代码 <!-- raw HTML omitted --></p>
 <p>以上就是全部的基础知识的信息，之后我们就可以通过具体的题目来进行进一步的巩固和拓展（应该会新开一篇文章来记录） <!-- raw HTML omitted --></p>
-<h3 id="reference">Reference</h3>
+<h3 id="常用技巧">常用技巧</h3>
+<h4 id="绕过魔术方法">绕过魔术方法</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>__wakeup()</p>
+<p>在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行 <!-- raw HTML omitted --></p>
+<p>例如 <!-- raw HTML omitted --></p>
+<p>O:4:&ldquo;Name&rdquo;:2:{s:14:&ldquo;�Name�username&rdquo;;s:5:&ldquo;admin&rdquo;;s:14:&ldquo;�Name�password&rdquo;;i:100;} <!-- raw HTML omitted --></p>
+<p>👇 <!-- raw HTML omitted --></p>
+<p>O:4:&ldquo;Name&rdquo;:3:{s:14:&ldquo;�Name�username&rdquo;;s:5:&ldquo;admin&rdquo;;s:14:&ldquo;�Name�password&rdquo;;i:100;} <!-- raw HTML omitted --></p>
+<p>这个情况下就会绕过 __wakeup() 执行 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="配合php伪协议">配合PHP伪协议</h4>
+<p>使用 <code>glob://</code> 伪协议来查找特定的文件路径（同时可以配合测信道攻击使用） <!-- raw HTML omitted --></p>
+<h4 id="序列化">序列化</h4>
+<p>通过将字符串标识符 <code>s</code> 修改成 <code>S</code> 便可以解释十六进制字符，从而进行绕过 <!-- raw HTML omitted --></p>
+<h4 id="属性赋值">属性赋值</h4>
+<p>可以通过浅copy来为受限的属性赋值 <!-- raw HTML omitted --></p>
+<p>例如以下代码，就将 <code>$a-&gt;user</code> 作为引用传递给 <code>$a-&gt;name</code> 从而保持两个值的一致，即使 <code>$a-&gt;name</code> 被修改或者过滤，但是通过 <code>$a-&gt;user</code> 依然可以对其进行修改 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">user</span><span class="p">;</span>
+</span></span></code></pre></div><h3 id="reference">Reference</h3>
 <p><a class="link" href="https://www.php.net/manual/en/function.serialize.php"  target="_blank" rel="noopener"
     >serialize:php.net</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://www.php.net/manual/en/language.oop5.magic.php#object.sleep"  target="_blank" rel="noopener"
@@ -636,7 +658,7 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 
 
         <span>
-            Last updated on Jun 15, 2022 15:32 BST
+            Last updated on Jun 19, 2022 16:39 BST
         </span>
     </section></footer>
 
@@ -702,6 +724,18 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
             
                 
 <article class="">
+    <a href="/posts/php_unserialize_examples/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 反序列化实例练习</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
     <a href="/posts/mysql_tricks/">
         
         
@@ -720,18 +754,6 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 
         <div class="article-details">
             <h2 class="article-title">Local/Remote File Inclusion 文件包含漏洞</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/sql_injection_basic/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">SQL注入：基础</h2>
         </div>
     </a>
 </article>
@@ -918,6 +940,14 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
         <li><a href="#unserialize-反序列化">Unserialize 反序列化</a></li>
         <li><a href="#magic-methods-魔术方法">Magic Methods 魔术方法</a></li>
         <li><a href="#property-oriented-programming--pop--面向属性编程">Property Oriented Programming (POP) 面向属性编程</a></li>
+        <li><a href="#常用技巧">常用技巧</a>
+          <ul>
+            <li><a href="#绕过魔术方法">绕过魔术方法</a></li>
+            <li><a href="#配合php伪协议">配合PHP伪协议</a></li>
+            <li><a href="#序列化">序列化</a></li>
+            <li><a href="#属性赋值">属性赋值</a></li>
+          </ul>
+        </li>
         <li><a href="#reference">Reference</a></li>
       </ul>
     </li>

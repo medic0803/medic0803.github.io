@@ -54,7 +54,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 &lt;code&gt;Access Modifiers, 访问控制修饰符&lt;/code&gt; 的不同而有不同的表示方法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;公有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;公有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;protected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;受保护&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;     &lt;span class=&#34;c1&#34;&gt;// %00*%00属性名
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;私有的&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;// %00类名%00属性名
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;protected属性被序列化的时候属性值会变成 &lt;code&gt;%00*%00属性名&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;
@@ -94,8 +94,8 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__destruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;#当一个对象没有后续被引用时，被调用（注意说销毁并不准确），当一个对象的
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__toString&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;#当一个对象被当作一个字符串使用时被调用
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__invoke&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#当脚本尝试将对象调用为函数时触发
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;#serialize()时会自动调用   
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__wakeup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#unserialize()时会自动调用   
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;#serialize()时会自动调用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__wakeup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#unserialize()时会自动调用
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;        &lt;span class=&#34;c1&#34;&gt;#当调用对象中不存在的方法会自动调用该方法。
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;         &lt;span class=&#34;c1&#34;&gt;#在调用私有属性的时候会自动执行
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;         &lt;span class=&#34;c1&#34;&gt;#用于将数据写入不可访问的属性（根据Access modifilers来判断,e.g., protected, private）
@@ -307,7 +307,29 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;p&gt;&lt;code&gt;unserialize() -&amp;gt; __wakeup() -&amp;gt; evaluate() -&amp;gt; eval()&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;就是一条POP链，我们就是要找到这样一条函数调用链，最终执行输入的恶意代码 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;以上就是全部的基础知识的信息，之后我们就可以通过具体的题目来进行进一步的巩固和拓展（应该会新开一篇文章来记录） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;h3 id=&#34;常用技巧&#34;&gt;常用技巧&lt;/h3&gt;
+&lt;h4 id=&#34;绕过魔术方法&#34;&gt;绕过魔术方法&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;__wakeup()&lt;/p&gt;
+&lt;p&gt;在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;例如 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;O:4:&amp;ldquo;Name&amp;rdquo;:2:{s:14:&amp;ldquo;�Name�username&amp;rdquo;;s:5:&amp;ldquo;admin&amp;rdquo;;s:14:&amp;ldquo;�Name�password&amp;rdquo;;i:100;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;👇 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;O:4:&amp;ldquo;Name&amp;rdquo;:3:{s:14:&amp;ldquo;�Name�username&amp;rdquo;;s:5:&amp;ldquo;admin&amp;rdquo;;s:14:&amp;ldquo;�Name�password&amp;rdquo;;i:100;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这个情况下就会绕过 __wakeup() 执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;配合php伪协议&#34;&gt;配合PHP伪协议&lt;/h4&gt;
+&lt;p&gt;使用 &lt;code&gt;glob://&lt;/code&gt; 伪协议来查找特定的文件路径（同时可以配合测信道攻击使用） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;序列化&#34;&gt;序列化&lt;/h4&gt;
+&lt;p&gt;通过将字符串标识符 &lt;code&gt;s&lt;/code&gt; 修改成 &lt;code&gt;S&lt;/code&gt; 便可以解释十六进制字符，从而进行绕过 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;属性赋值&#34;&gt;属性赋值&lt;/h4&gt;
+&lt;p&gt;可以通过浅copy来为受限的属性赋值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;例如以下代码，就将 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 作为引用传递给 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 从而保持两个值的一致，即使 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 被修改或者过滤，但是通过 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 依然可以对其进行修改 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/en/function.serialize.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;serialize:php.net&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/en/language.oop5.magic.php#object.sleep&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
