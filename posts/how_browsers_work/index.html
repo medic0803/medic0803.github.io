@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='浏览器是如何工作的？ 本文内容主要来源于：Populating the page: how browsers work，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文'><title>浏览器是如何工作的？</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/how_browsers_work/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='浏览器是如何工作的？'>
+<meta property='og:description' content='浏览器是如何工作的？ 本文内容主要来源于：Populating the page: how browsers work，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/how_browsers_work/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:tag' content='browser' /><meta property='article:tag' content='firefox' /><meta property='article:published_time' content='2022-06-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-26T16:21:37&#43;01:00'/>
+<meta name="twitter:title" content="浏览器是如何工作的？">
+<meta name="twitter:description" content="浏览器是如何工作的？ 本文内容主要来源于：Populating the page: how browsers work，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" >
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/how_browsers_work/">浏览器是如何工作的？</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 24, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="浏览器是如何工作的">浏览器是如何工作的？</h2>
+<p>本文内容主要来源于：<a class="link" href="https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work#see_also"  target="_blank" rel="noopener"
+    >Populating the page: how browsers work</a>，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文的官方文档，会得到更全面的信息以及拓展资源 <!-- raw HTML omitted --></p>
+<p>快速响应的网站可以为用户提供更好的用户体验，这意味着网站的内容可以:1)快速的被加载，并且可以 2)进行流畅的互动。 <!-- raw HTML omitted --></p>
+<p>那么要实现这两个需求，我们就需要考虑Latency加载等待时间，以及认识到浏览器其实在大多数情况下是单线程工作的 <!-- raw HTML omitted --></p>
+<p>Latency, 时延，是我们实现快速响应的主要阻力，为了实现快速响应，降低时延，开发者需要尽可能快的发送请求。 <!-- raw HTML omitted --></p>
+<p>在大部分情况下，浏览器都是单线程在工作的，那么我们为了让网站可以流畅的访问，主要的目标就是保证浏览器的主线程在完成浏览器运行的大部分工作的同时，还有余力来处理用户的交互，那么开发者需要认识到这一点，并且尽量降低主线程所分配到的任务，从而使网页的渲染以及用户的交互更为流畅。 <!-- raw HTML omitted --></p>
+<h3 id="navigation-导航">Navigation 导航</h3>
+<p><code>导航</code> 是加载网页的第一步，导航发生在当用户通过将URL输入地址栏；点击链接；提交表单以及类似的这样的操作 <!-- raw HTML omitted --></p>
+<p>减少在导航上的时间也是优化网页性能的一个重要目标，阻力来源于时延和带宽 <!-- raw HTML omitted --></p>
+<h4 id="dns-lookup-dns-查询">DNS Lookup DNS 查询</h4>
+<p>对于网页的导航始于找到资源的位置，也就是通过URL来定位资源，比如我们要访问 <code>https://example.com</code>, 其对应的IP地址是 <code>93.184.216.34</code>, 上面存放着的对应的HTML资源，但是我们的浏览器此时还没有访问过这个网页，因此第一步要做的事情就是DNS lookup <!-- raw HTML omitted --></p>
+<p>通过DNS查询，name server最终会返回给浏览器域名所对应的IP地址，进而将其缓存以加速未来的访问速度。 <!-- raw HTML omitted --></p>
+<p>那么我们具体到网页上来，DNS查询不只发生在主页面的HTML的获取上，还需要对HTML上所引用的资源逐一进行导航和DNS查询，这就需要开发者对此进行优化，特别是对于移动端用户，每一次DNS查询都意味着需要通过信号塔来访问授权的DNS server,那么根据信号塔的距离就会产生一定的时延 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-24_11-03-19_screenshot.png"
+         alt="Figure 1: DNS lookup on Mobile devices" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->DNS lookup on Mobile devices</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="tcp-handshake">TCP Handshake</h4>
+<p>经过DNS查询，我们现在已经拿到了目标网页资源所处的IP地址了，接下来就要进行TCP三次握手来进行连接。 <!-- raw HTML omitted --></p>
+<p>通过&quot;SYN, SYN-ACK, ACK&quot; 的三条TCP信息来建立TCP连接。 <!-- raw HTML omitted --></p>
+<h4 id="tls-negotiation">TLS Negotiation</h4>
+<p>同时，为了保证安全，我们提倡使用HTTPS协议，其要求在进行基本的TCP三次握手之后，还需要进行进一步的“握手”，来建立安全连接，也就是TLS Negotiation <!-- raw HTML omitted --></p>
+<p>这将要求额外的5条信息，用来对client以及server进行相互认证，并且确认解码的密钥，来保证数据的保密性 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-24_11-04-40_screenshot.png"
+         alt="Figure 2: TLS Negotiation" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->TLS Negotiation</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="response-响应">Response 响应</h3>
+<p>现在浏览器已经和服务器建立了安全的TCP连接了，这时浏览器就会发送一个初始的 <code>HTTP GET request</code> 来请求网页资源，这通常是一个HTML文件，服务器收到了请求，接着返回对应的HTTP headers以及HTML文件的内容 <!-- raw HTML omitted --></p>
+<p>例如： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!doctype HTML&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My simple page<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myscript.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;heading&#34;</span><span class="p">&gt;</span>My Page<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>A paragraph with a <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://example.com/about&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myimage.jpg&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;image description&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;anotherscript.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p><code>Time to First Byte (TTFB)</code> 表示从用户发出请求（点击连接）到收到第一个HTML的数据包的时间，通常第一块信息的大小是14KB的数据 <!-- raw HTML omitted --></p>
+<p>下面我们会解释为什么第一块信息是14KB的。 <!-- raw HTML omitted --></p>
+<h4 id="congestion-control-tcp-slow-start-14-kb-rule-tcp慢启动">Congestion control: TCP Slow Start /14 KB rule TCP慢启动</h4>
+<p>现在已经建立了安全的连接，接下来服务器将会根据用户的请求返回对应的数据，但是传输的速度（单位时间内传输的数据）并不是从一开始就达到最优的速度的，而是慢慢增加的，为的是防止  <code>网络拥塞</code> 。 <!-- raw HTML omitted --></p>
+<p>网络拥塞：网络拥塞就是一个网络节点需要处理大于他们能力的数据时，网络的性能就会变化，也就会发生拥塞，例如路由器或者用户的设备对于接收到的数据的处理速度跟不上接收速度，那么设备的缓存就会被占满，再接收到的数据就会被丢弃，导致网络性能下降。 <!-- raw HTML omitted --></p>
+<p>在网络层就会发生丢包的现象，而主要的拥塞控制就发生在传输层上 <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://developer.mozilla.org/en-US/docs/Glossary/TCP_slow_start"  target="_blank" rel="noopener"
+    >TCP慢启动</a>就是一个用来检测数据传输可使用的带宽，同时平衡网络连接速度的算法，其通过逐渐增加数据传输速度来找到最好的传输速度，从而防止 <code>网络堵塞</code> 的发生。 <!-- raw HTML omitted --></p>
+<p>在讲解算法的具体流程之前，我们需要先了解一些相关概念 <!-- raw HTML omitted --></p>
+<dl>
+<dt>congestion window (cwnd)</dt>
+<dd>拥塞窗口，发送方的设置，表示在收到接收方ACK之前，发送方最大允许传输的数据大小 <!-- raw HTML omitted --></dd>
+<dt>slow start threshold (ssthresh)</dt>
+<dd>来设定慢启动算法使用的阈值 <!-- raw HTML omitted --></dd>
+<dt>Round-Trip Time (RTT)</dt>
+<dd>往返时延，表示从发送方发出数据开始，到发送发收到来自接收方的ACK，所经历的所有时延 <!-- raw HTML omitted --></dd>
+<dt><a class="link" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit"  target="_blank" rel="noopener"
+    >Maximum Transmission Unit (MTU)</a></dt>
+<dd>MTU是可以在网络层可以通信的最大PDU的大小，其应用于网络层，单位一般用字节来设定 <!-- raw HTML omitted -->
+<p>在以太网中，最大的frame为1518 bytes，其中18bytes是overhead（headers和检查值），MTU的值就是1500 bytes <!-- raw HTML omitted --></p>
+</dd>
+<dt><a class="link" href="https://en.wikipedia.org/wiki/Protocol_data_unit"  target="_blank" rel="noopener"
+    >Protocol data unit (PDU)</a></dt>
+<dd>PDU 是同一层的通信协议之间通信的最小信息单位，例如在OSI模型中： <!-- raw HTML omitted -->
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>PDU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Layer 4: Transport Layer</td>
+<td>segment(TCP)/datagram(UDP)</td>
+</tr>
+<tr>
+<td>The Layer 3: Network Layer</td>
+<td>packet</td>
+</tr>
+<tr>
+<td>The Layer 2: Data link layer</td>
+<td>frame</td>
+</tr>
+<tr>
+<td>The Layer 1: Physical layer</td>
+<td>bit, or more generally, symbol</td>
+</tr>
+</tbody>
+</table></div>
+</dd>
+<dt>Maximum Segment Size (MSS)</dt>
+<dd>最大TCP segment的大小，是TCP的一个参数 <!-- raw HTML omitted -->
+<p>根据定义，我们可以得出：一个TCP segment的payload &lt; MSS &lt; MTU <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<p>cwnd &lt; ssthresh，慢启动算法 <!-- raw HTML omitted --></p>
+<ol>
+<li>当一个新的连接建立之后，发送方将初始化 cwnd = 1（2013年的RFC6928规定一个cwnd表示10个TCP segment） <!-- raw HTML omitted --></li>
+<li>每过一个RTT，即收到ACK之后，cwnd = cwnd * 2，呈指数增长 <!-- raw HTML omitted --></li>
+</ol>
+<p>cwnd = sshtresh 慢启动与拥塞避免算法都可 <!-- raw HTML omitted -->
+cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increase/multiplicative decrease, AIMD算法（加法增加乘法减小算法） <!-- raw HTML omitted --></p>
+<ol>
+<li>在cwnd大于sshtresh之后，每当发送方收到一个ACK之后，++cwnd;呈线性上升，这就是  <code>加法增加</code>  <!-- raw HTML omitted --></li>
+<li>一旦出现网络拥塞，就进行 <code>乘法减小</code> 即将 sshtresh = cwnd/2； cwnd = 1 <!-- raw HTML omitted --></li>
+<li>接着切换到慢启动算法重新开始 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-06-25_15-34-25_screenshot.png"
+         alt="Figure 3: TCP Slow start &amp;amp; AIMD" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->TCP Slow start &amp; AIMD</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="parsing-解析">Parsing 解析</h3>
+<p>当浏览器收到了第一块数据，它就会直接开始解析收到的信息，第一步就是将接收到的数据转换为 <code>DOM</code> &amp; <code>CSSOM</code>, 这两个结构是渲染器用来绘制网页的 <!-- raw HTML omitted --></p>
+<p><code>DOM</code>, Document Object Model, 是一个用来将XML或者HTML转换为树结构的跨平台，独立于语言的API，可以通过JS调用API来进行修改。 <!-- raw HTML omitted --></p>
+<p>即使请求的HTML文件大于14KB，浏览器仍然会直接尝试解析并渲染第一块14KB的数据，这也就是为什么开发者在做web性能优化的时候，需要将CSS以及HTML控制在14KB之内，以此来保障网页能够成功进行初级渲染。 <!-- raw HTML omitted --></p>
+<p>一个TCP packet最大可以达到1500 bytes，同时其中有40 bytes需要别用作TCP协议（TCP headers），那么也就剩下1460 bytes来承载实际的数据，那么十个TCP packets就是14,600 bytes也就是大约14KB的数据（慢启动一般会从十个TCP数据包开始传输）：<a class="link" href="https://www.tunetheweb.com/blog/critical-resources-and-the-first-14kb/"  target="_blank" rel="noopener"
+    >Critical Resources and the First 14 KB - A Review</a> <!-- raw HTML omitted --></p>
+<p>接下来我们就会介绍 <code>关键渲染</code> 路径的五个步骤，即浏览器如何将HTML，CSS以及JS转换成屏幕的像素 <!-- raw HTML omitted --></p>
+<h4 id="building-the-dom-tree-构建dom">Building the DOM tree 构建DOM</h4>
+<p>第一步就是处理HTML标签从而构造DOM树。 <!-- raw HTML omitted --></p>
+<p>HTML的解析涉及到 <code>tokenisation</code> 以及树的构造 <!-- raw HTML omitted --></p>
+<p>我们可以观察下图来看到DOM是如何同通过HTML标签来构造树的： <!-- raw HTML omitted --></p>
+<p><code>&lt;html&gt;</code> 是第一个标签，也就是DOM tree的根节点，其他的标签就作为子节点根据对应的结构进行组合 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-25_15-58-58_screenshot.png"
+         alt="Figure 4: DOM tree" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->DOM tree</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>在解析HTML标签的过程中，如果遇到non-blocking非阻塞（渲染）的资源，例如图片，浏览器会请求这些资源，并继续进行解析 <!-- raw HTML omitted --></p>
+<p>但是当碰到 &lt;script&gt; 标签，特别是那些不是 <code>async(异步)</code> 的脚本标签，这将使渲染以及解析都停止，这将对性能产生影响 <!-- raw HTML omitted --></p>
+<h4 id="preload-scanner-预加载扫描器">Preload scanner 预加载扫描器</h4>
+<p>当浏览器在构建DOM tree时，Preload scanner就会占据主线程，并同步开始请求高优先级的资源，以此保证解析不会卡在这些资源的获取上，例如CSS, JS, images, web fonts。 <!-- raw HTML omitted --></p>
+<p>例如下列标签就会在HTML解析的过程中，被preload scanner 所请求获取 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myscript.js&#34;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myimage.jpg&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;image description&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;anotherscript.js&#34;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h4 id="building-the-cssom">Building the CSSOM</h4>
+<p>第二步就是构建CSSOM树，CSSOM树与DOM类似，只不过处理的是CSS而非HTML，通过将CSS规则以及CSS selectors所制定的关系结构转换为一个树的结构 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-26_10-05-58_screenshot.png"
+         alt="Figure 5: CSSOM" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->CSSOM</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="other-processes">Other Processes</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>JavaScript Compilation</p>
+<p>当CSS在被解析并构建CSSOM的同时，JS文件也在被下载，解释，编译，解析以及执行，这些脚本会被解析并存入 <a class="link" href="https://en.wikipedia.org/wiki/Abstract_syntax_tree"  target="_blank" rel="noopener"
+    >Abstract syntax tree，抽象语法树</a> <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-26_10-03-47_screenshot.png"
+         alt="Figure 6: AST" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->AST</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Building the Accessibility Tree 构建辅助功能树</p>
+<p>浏览器还会构建 <code>accessiblity tree</code> 来辅助设备来解析和解释内容，accessibility object model (AOM) 拥有与DOM类似的语法结构，AOM一般来说是无法访问的。 <!-- raw HTML omitted --></p>
+<p>在AOM被构建之前，所有的内容都是无法被屏幕阅读器所访问的 <!-- raw HTML omitted --></p>
+<p>那到底什么是Accessibility辅助功能，它有什么作用呢，相信大家都在浏览器的开发者工具里看到过这个功能，甚至在电脑，手机都有看到过这个功能，大概看起来是一个方便disable来使用电子设备的功能，但是我们平时却很少使用。 <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://developer.mozilla.org/en-US/docs/Web/Accessibility"  target="_blank" rel="noopener"
+    >Accessibility</a> 的目标是使尽可能多的人能够更好的访问网页，不仅仅是有障碍的人士，同时也帮助那些使用移动端设备或者网速很慢的用户群体。 <!-- raw HTML omitted --></p>
+<p>Firefox内置了Accessibility APIs来对网页的内容进行解析，分析不同的元素的功能与角色，从而并构造AOM，同时根据一些网页设计的标准来判断开发是否规范，例如HTML标签是否使用得当，文字的大小，比例，颜色，对比度等内容是否适合与不同的设备，对视力有障碍的人士是否友好。 <!-- raw HTML omitted --></p>
+<p>Firefox官方的一个<a class="link" href="https://youtu.be/7mqqgIxX_NU"  target="_blank" rel="noopener"
+    >视频</a>展示了一个很好的例子，对于一个网页的内容，普通人可以进行正常的阅读，但是当这个内容在视力有障碍的人士使用工具进行朗读的时候，也许就会出现问题，这也体现了Accessibility的作用 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="render-渲染">Render 渲染</h3>
+<p>渲染的步骤包括计算样式（style），计算布局（layout），最后绘制（paint），在一些情况下还包含了合成。 <!-- raw HTML omitted --></p>
+<h4 id="style">Style</h4>
+<p>关键渲染路径的第三步就是将DOM以及CSSOM结合到render tree渲染树/ computed style tree 计算得到的样式树中： <!-- raw HTML omitted --></p>
+<p>对于每一个DOM树中的可视节点，都会将CSSOM中对应的样式与其配套 <!-- raw HTML omitted --></p>
+<h4 id="layout">Layout</h4>
+<p>在确定了每一个节点的样式完成渲染树之后，第四步就是要考虑如何对所有的这些元素进行排列，通过从渲染树的根开始便利，对每个节点的几何信息进行计算，例如宽度和高度，以及在页面中的位置 <!-- raw HTML omitted --></p>
+<p>第一次对于位置以及大小的计算我们成为 layout, 当我们再次确定页面中一些资源的大小例如图片加载完成之后，重新进行计算叫做 reflows 回流 <!-- raw HTML omitted --></p>
+<h4 id="paint">Paint</h4>
+<p>关键渲染路径的最后一步就是Paint绘制，就是要将所有的可视的内容都绘制到屏幕上去，包括文字，颜色，间距，阴影以及可以替换的元素，例如按钮（按下去的图片）以及图片。 <!-- raw HTML omitted --></p>
+<p>为了保证页面能够流畅的滚动以及动画效果，Paint将占据主线程来进行绘制，为了确保绘制的速度，屏幕上的绘图通常会被分解称数层来进行，那么同时也就需要进行合成。 <!-- raw HTML omitted --></p>
+<p>绘制会讲layout tree 中的元素分成多层，将内容提升到GPU可以提高绘制和宠幸绘制的性能：有一些特定的属性和元素可以组成一个层（例如&lt;video&gt;, &lt;canvas&gt;）；CSS属性为opacity、3D transform、 will-change的元素，也可以组成单独的层来进行绘制，不过这也意味着需要消耗更多的内存，注意不能过度使用 <!-- raw HTML omitted --></p>
+<h4 id="compositing-合成">Compositing 合成</h4>
+<p>那么在Paint的过程中分层进行之后，就需要对所有的层进行合成，相互重叠，保证它们以正常的顺序绘制到屏幕上，显示正常的内容。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/Critical_rendering_path.png"
+         alt="Figure 7: Critical rendering path" width="900px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->Critical rendering path</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="interactivity-交互">Interactivity 交互</h3>
+<p>主线程绘制页面的任务完成并不代表一切都准备就绪，还需要加载JavaScript脚本（比如onload属性就是等待给定的资源加载完成时触发），那么在加载JS的过程中，记得我们的浏览器大部分还是一个单线程，因此就无法进行滚动、触摸或者其他的交互 <!-- raw HTML omitted --></p>
+<p>我们用 <code>Time to Interactive (TTI)</code> 来衡量从第一个请求所触发DNNS查询开始到页面可以正常教务所使用的时间，页面需要在50ms，如果此时主线程还在解析，编译和执行JS就会导致页面不不能相应用户的交互，这就是需要调整的地方。 <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work#see_also"  target="_blank" rel="noopener"
+    >Populating the page: how browsers work</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work#%E8%A7%A3%E6%9E%90"  target="_blank" rel="noopener"
+    >渲染页面：浏览器的工作原理</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.tunetheweb.com/blog/critical-resources-and-the-first-14kb/"  target="_blank" rel="noopener"
+    >Critical Resources and the First 14 KB - A Review</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://juejin.cn/post/6844904006658031629"  target="_blank" rel="noopener"
+    >关于首屏html应限制在14kb内的探究</a>  <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://blog.csdn.net/m0_37962600/article/details/79993310"  target="_blank" rel="noopener"
+    >详解TCP中的拥塞控制</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility"  target="_blank" rel="noopener"
+    >What is accessibility?</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/"  target="_blank" rel="noopener"
+    >Accessibility Inspector</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/web/">web</a>
+        
+            <a href="/tags/browser/">browser</a>
+        
+            <a href="/tags/firefox/">firefox</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jun 26, 2022 16:21 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/uri_url_urn/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">URI &amp; URL &amp; URN 的关系</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#浏览器是如何工作的">浏览器是如何工作的？</a>
+      <ul>
+        <li><a href="#navigation-导航">Navigation 导航</a>
+          <ul>
+            <li><a href="#dns-lookup-dns-查询">DNS Lookup DNS 查询</a></li>
+            <li><a href="#tcp-handshake">TCP Handshake</a></li>
+            <li><a href="#tls-negotiation">TLS Negotiation</a></li>
+          </ul>
+        </li>
+        <li><a href="#response-响应">Response 响应</a>
+          <ul>
+            <li><a href="#congestion-control-tcp-slow-start-14-kb-rule-tcp慢启动">Congestion control: TCP Slow Start /14 KB rule TCP慢启动</a></li>
+          </ul>
+        </li>
+        <li><a href="#parsing-解析">Parsing 解析</a>
+          <ul>
+            <li><a href="#building-the-dom-tree-构建dom">Building the DOM tree 构建DOM</a></li>
+            <li><a href="#preload-scanner-预加载扫描器">Preload scanner 预加载扫描器</a></li>
+            <li><a href="#building-the-cssom">Building the CSSOM</a></li>
+            <li><a href="#other-processes">Other Processes</a></li>
+          </ul>
+        </li>
+        <li><a href="#render-渲染">Render 渲染</a>
+          <ul>
+            <li><a href="#style">Style</a></li>
+            <li><a href="#layout">Layout</a></li>
+            <li><a href="#paint">Paint</a></li>
+            <li><a href="#compositing-合成">Compositing 合成</a></li>
+          </ul>
+        </li>
+        <li><a href="#interactivity-交互">Interactivity 交互</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
