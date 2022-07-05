@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给'><title>Server Side Template Injection (SSTI) 模板注入：基础知识</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/ssti_basic/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Server Side Template Injection (SSTI) 模板注入：基础知识'>
+<meta property='og:description' content='Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/ssti_basic/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-06-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-02T12:58:32&#43;01:00'/>
+<meta name="twitter:title" content="Server Side Template Injection (SSTI) 模板注入：基础知识">
+<meta name="twitter:description" content="Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf/" >
+                CTF
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/ssti_basic/">Server Side Template Injection (SSTI) 模板注入：基础知识</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 23, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="server-side-template-injection--ssti--模板注入-基础知识">Server Side Template Injection (SSTI) 模板注入：基础知识</h2>
+<h3 id="模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</h3>
+<p><a class="link" href="https://en.wikipedia.org/wiki/Template_processor"  target="_blank" rel="noopener"
+    >Template processor</a> (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给的定义是一个将数据和模板组合形成文档的软件。 <!-- raw HTML omitted --></p>
+<p>模板引擎的输入一般是用template language 模板语言写的模板，以及需要替换模板中占位内容的真实数据，经过模板引擎的解析之后，最后的输出就是数据与模板结合的文档，网页或者源代码。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-02_10-50-05_screenshot.png"
+         alt="Figure 1: Template processor" width="200px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Template processor</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们可以拿Powerpoint的Design Ideas功能来做一个例子，我认为这本质上也是一种模版引擎，我们只需要输入文字和每一张slide的内容，Powerpoint自动会生成排版来呈现这些数据 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-02_08-46-59_screenshot.png"
+         alt="Figure 2: Powerpoint: Design Ideas" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Powerpoint: Design Ideas</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们在Web开发中所用到的模板应该具体到 <a class="link" href="https://en.wikipedia.org/wiki/Web_template_system"  target="_blank" rel="noopener"
+    >Web template system</a> 网页模板系统，这是运用在网页开发中的模板引擎，网页开发者可以利用其将 <code>数据与页面分开</code> ，通过将静态的页面与动态获取的数据进行结合生成新的HTML文件（根据浏览器发出的请求参数，例如一次搜索），提高了开发效率，也使代码重用变得更加容易 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-06-26_22-47-02_screenshot.png"
+         alt="Figure 3: Web template system" width="200px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->Web template system</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>模板引擎的主要思想就是要将  <code>用户界面</code> 与 <code>业务数据</code> 的内容分离，比如在我们提到的Powerpoint的例子中，用户只需要思考每个页面上需要展示什么数据即可，排版布局就交给了软件本身。 <!-- raw HTML omitted --></p>
+<p>同样的，在网页模板系统中，我们可以说将前后端的工作进一步分离开来，前端可以可以更专注于页面布局，业务逻辑的设计上，而后端可以专注于数据的处理 <!-- raw HTML omitted --></p>
+<p>在传统的网页开发中，为了展示数据，需要如下将JS代码与HTML拼接在一起，存在的问题就是拼接很容易出错，同时一旦出错或者需要修改，那么就需要前后端一起进行修改，代码不易维护。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">html</span> <span class="o">+=</span> <span class="s1">&#39;&lt;!DOCTYPE html&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">         &lt;html lang=&#34;en&#34;&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;head&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;meta charset=&#34;UTF-8&#34;&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;title&gt;&#39;</span><span class="o">+</span> <span class="nx">title</span> <span class="o">+</span><span class="s1">&#39;&lt;/title&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/head&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;body&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;h1 οnclick=&#34;sayHi(&#39;</span><span class="o">+</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;)&#34;&gt;你好,&#39;</span><span class="o">+</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39; 我今年 &#39;</span><span class="o">+</span><span class="nx">age</span><span class="o">+</span><span class="s1">&#39;岁&lt;/h1&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;ul&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &lt;li title=&#34;&#39;</span><span class="o">+</span><span class="nx">hobbies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;&#34;&gt;&#39;</span><span class="o">+</span><span class="nx">hobbies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;&lt;/li&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &lt;/ul&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/body&gt;\
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>使用模板引擎就可以很好的解决这个问题，前端开发者可以专注于开发模版，即网页的布局与框架，同时留下数据部分，等待填充 <!-- raw HTML omitted --></p>
+<p>template.html <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Webpage<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Hello, <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        {{ name }}
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>twig_render.php <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">require_once</span><span class="p">(</span><span class="s1">&#39;../../../../PHP_Resources/vendor/autoload.php&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\FilesystemLoader</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;template.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>接着访问twig_render.php即可 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-02_10-14-22_screenshot.png"
+         alt="Figure 4: 访问 twig_render.php" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->访问 twig_render.php</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>包括现在比较成熟的框架例如VUE等，我觉得也是利用了模板引擎的思想，尽量使前后端的工作分离，同时又方便了协作 <!-- raw HTML omitted --></p>
+<h3 id="ssti-模板注入">SSTI 模板注入</h3>
+<p>SSTI 模板注入是一种Web注入漏洞，其产生的原因本质上是对于用户的输入没有做全面的审核，导致了 <code>模板</code> 拼接了用户输入的 <code>模板语言</code> 代码，进而被模板引擎所执行，从而引发敏感信息泄露，远程代码执行等问题 <!-- raw HTML omitted --></p>
+<p>Web应用可以使用模板系统来动态的显示一些信息，比如下面的例子就是可以动态的显示用户的姓 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s2">&#34;Dear {first_name},&#34;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span> 
+</span></span></code></pre></div><p>一切看起来都没有问题 <!-- raw HTML omitted --></p>
+<p>但是如果我们允许用户进行输入，就会引发风险，我们这里不再是简单的使用一个值了，而是引入了一个用户输入 <code>$_GET['custom_email']</code> 进行拼接 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;custom_email&#39;</span><span class="p">],</span>  <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="mi">7</span><span class="o">*</span><span class="mi">7</span><span class="p">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">49</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="nx">self</span><span class="p">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">Object</span> <span class="nx">of</span> <span class="k">class</span> <span class="nc">__TwigTemplate_7ae62e582f8a35e5ea6cc639800ecf15b96c0d6f78db3538221c1145580ca4a5</span> <span class="nx">could</span> <span class="k">not</span> <span class="nx">be</span> <span class="nx">converted</span> <span class="nx">to</span> <span class="nx">string</span>
+</span></span></code></pre></div><p>如果是在黑盒的条件下，我们很容易测试出来XSS，但是这往往就会让我们忽略了模板引擎的存在，并且与XSS不同的是，模板注入可以直接对服务器造成危害 <!-- raw HTML omitted --></p>
+<h3 id="模板注入的方法">模板注入的方法</h3>
+<p>我们根据 <code>James Kettle</code> 所提供的模板注入流程来进行介绍 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-02_11-18-43_screenshot.png"
+         alt="Figure 5: Template Injection methodology" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->Template Injection methodology</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="detect">Detect</h4>
+<ol>
+<li>Plaintext context 纯文本的上下文 <!-- raw HTML omitted --></li>
+</ol>
+<p>大部分模板语言都提供纯文本的输入，可以直接看到反馈的结果 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">smarty=Hello {user.name}
+</span></span><span class="line"><span class="cl">Hello user1 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">freemarker=Hello ${username}
+</span></span><span class="line"><span class="cl">Hello newuser 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">any=&lt;b&gt;Hello&lt;/b&gt;
+</span></span><span class="line"><span class="cl">&lt;b&gt;Hello&lt;b&gt; 
+</span></span></code></pre></div><ol>
+<li>Code context 代码上下文 <!-- raw HTML omitted --></li>
+</ol>
+<p>我们通过输入一些代码片段来观察返回的内容是否显示了我们想要得到的拼接结果 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">personal_greeting=username
+</span></span><span class="line"><span class="cl">Hello user01
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">personal_greeting=username&lt;tag&gt;
+</span></span><span class="line"><span class="cl">Hello 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">personal_greeting=username}}&lt;tag&gt;
+</span></span><span class="line"><span class="cl">Hello user01 &lt;tag&gt; 
+</span></span></code></pre></div><h4 id="identify">Identify</h4>
+<p>在成功检测到了模板引擎的存在之后，下一步就是要确定哪一种引擎被使用了，我们可以根据不同的语法来进行输入并观察返回的结果 <!-- raw HTML omitted --></p>
+<p>James Kettle 为我们提供了这张决策树，绿色表示成功识别，红色代表失败需要进一步尝试 <!-- raw HTML omitted --></p>
+<p>例如当我们在尝试 <code>{{7 * 7'}}</code> 时，如果返回49那么就是Twig,如果是 7777777 就是 Jinja2 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-02_11-22-28_screenshot.png"
+         alt="Figure 6: 模板识别" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->模板识别</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="exploit">Exploit</h4>
+<p>接着我们就要尝试利用这些模板引擎 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Read</p>
+<p>在我们识别成功之后，下一步就是非常关键的阅读文档阶段，只有了解了模板语言之后我们才能找到利用的方法: <!-- raw HTML omitted --></p>
+<ul>
+<li>基础的语法 <!-- raw HTML omitted --></li>
+<li>查看有关安全的相关章节，我们可以假设一些开发者并没有关注这些容易出现问题的点 <!-- raw HTML omitted --></li>
+<li>内置的方法，函数，过滤器以及变量，比如查看内置的函数的源码，是否有出现危险函数的使用，从而进一步引发远程代码执行？ <!-- raw HTML omitted --></li>
+<li>查看插件或者扩展，特别是那些默认开启的内容 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Explore</p>
+<p>下一步就是关注模板引擎运行环境，通常这些模板引擎会提供一些全局变量或者实例对象，这些实例中往往就存在一些敏感信息或者危险的函数可以被调用 <!-- raw HTML omitted --></p>
+<p>如果没有这样的内置对象可以为我们所用，也可以通过fuzz寻找可能的变量名，比如<a class="link" href="https://github.com/danielmiessler/SecLists/blob/25d4ac447efb9e50b640649f1a09023e280e5c9c/Discovery/Web-Content/burp-parameter-names.txt"  target="_blank" rel="noopener"
+    >SecLists</a> <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Attack</p>
+<p>在经过以上两步的信息获取之后，最后就是要用所有可以利用的资源来组合进行攻击，尝试造成一些常见的攻击，比如非法对象创建，敏感信息泄露，远程文件包含，webshell，提权等 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://en.wikipedia.org/wiki/Template_processor"  target="_blank" rel="noopener"
+    >Template processor</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://gosecure.github.io/template-injection-workshop"  target="_blank" rel="noopener"
+    >Template Injection in Action</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://blog.csdn.net/m0_51945027/article/details/116491279"  target="_blank" rel="noopener"
+    >什么是模板引擎？</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://blog.csdn.net/m0_61607810/article/details/121568121"  target="_blank" rel="noopener"
+    >模板引擎？看这一篇就懂了</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://t.csdn.cn/wjnlv"  target="_blank" rel="noopener"
+    >一、模板引擎有什么用？</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://portswigger.net/research/server-side-template-injection"  target="_blank" rel="noopener"
+    >Server-Side Template Injection</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ssti/">ssti</a>
+        
+            <a href="/tags/web_security/">web_security</a>
+        
+            <a href="/tags/template_engine/">template_engine</a>
+        
+            <a href="/tags/server_side/">server_side</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jul 02, 2022 12:58 BST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/ssti_twig/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SSTI 模板注入: Twig (PHP)</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_query_string_parser/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP特性绕过技巧</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/mysql_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Mysql中的“奇技淫巧”</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_serialize_unserialize/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP 序列化与反序列化</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#server-side-template-injection--ssti--模板注入-基础知识">Server Side Template Injection (SSTI) 模板注入：基础知识</a>
+      <ul>
+        <li><a href="#模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</a></li>
+        <li><a href="#ssti-模板注入">SSTI 模板注入</a></li>
+        <li><a href="#模板注入的方法">模板注入的方法</a>
+          <ul>
+            <li><a href="#detect">Detect</a></li>
+            <li><a href="#identify">Identify</a></li>
+            <li><a href="#exploit">Exploit</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
