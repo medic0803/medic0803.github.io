@@ -119,7 +119,7 @@ Stored XSS will remain valid whenever the victims visits the page &lt;!-- raw HT
 &lt;p&gt;Features: presence/absence of words &lt;!-- raw HTML omitted --&gt;
 Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-24_15-04-56_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -272,7 +272,7 @@ Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&
 &lt;p&gt;it is a &lt;code&gt;Command injection&lt;/code&gt; vulnerability, due to insufficient parameter filtering during conversion of file formats &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;ImageMagick delegates some tasks to other services, such as wget, but it does not check the parameters which leave space for command injection &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-18-58_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -281,7 +281,7 @@ Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&
 &lt;li&gt;
 &lt;p&gt;File Deletion&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_17-19-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -373,7 +373,7 @@ Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&
 &lt;p&gt;Initial reconnaissance phase&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nmap -O -vv 172.17.0.2
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-36-30_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -385,7 +385,7 @@ Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&
 &lt;li&gt;
 &lt;p&gt;search vsftpd exploits module &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-37-03_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -394,13 +394,13 @@ Attacks: bad word obfuscation / good word insertion &lt;!-- raw HTML omitted --&
 &lt;li&gt;show options &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-38-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;set rhost and run &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-23_23-39-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -945,7 +945,7 @@ Burp拦截请求后可以直接修改 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;验证Shellshock的方法&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-22_11-40-34_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;env &lt;span class=&#34;nv&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;() { :;}; echo vulnerable&amp;#39;&lt;/span&gt; bash -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;echo this is a test&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
@@ -1211,28 +1211,28 @@ We find the hashed text &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; in /
 &lt;p&gt;Step 1
 We use the reduction function &lt;code&gt;R3&lt;/code&gt; on &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 2
 Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &amp;ldquo;linux23&amp;rdquo; as the result.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 3
 Find the match&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 4
 Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &amp;ldquo;re3xes&amp;rdquo;.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1242,7 +1242,7 @@ Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the redu
 &lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column.
 &lt;p&gt;If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/dd&gt;
 &lt;/dl&gt;

@@ -405,7 +405,7 @@ if (!doNotTrack) {
 <p>WiFi</p>
 <p>WiFi之前的数据共享没办法集中到Firewall进行管理 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_11-24-28_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -487,7 +487,7 @@ if (!doNotTrack) {
 <li>
 <p>Rule set A</p>
 <p><figure><img src="/ox-hugo/2022-04-29_22-39-21_screenshot.png" width="700px"/>
-</figure>
+            </figure>
  <!-- raw HTML omitted --></p>
 <p>我们先来看这第一组规则 <!-- raw HTML omitted -->
 &rsquo; * &rsquo; = ANY <!-- raw HTML omitted --></p>
@@ -519,7 +519,7 @@ if (!doNotTrack) {
 <li>
 <p>Rule set C</p>
 <p><figure><img src="/ox-hugo/2022-04-30_09-53-39_screenshot.png" width="700px"/>
-</figure>
+            </figure>
  <!-- raw HTML omitted --></p>
 <ul>
 <li>与rule set A类似，这次是允许内网所有的主机向外发邮件 <!-- raw HTML omitted --></li>
@@ -537,7 +537,7 @@ if (!doNotTrack) {
 <li>
 <p>Rule set D</p>
 <p><figure><img src="/ox-hugo/2022-04-30_09-55-57_screenshot.png" width="700px"/>
-</figure>
+            </figure>
  <!-- raw HTML omitted --></p>
 <p>与之前三条不同的是，Rule set D多了flags的信息，主要运用于TCP的连接的判断 <!-- raw HTML omitted --></p>
 <ul>
@@ -551,7 +551,7 @@ if (!doNotTrack) {
 <li>
 <p>Rule set E</p>
 <p><figure><img src="/ox-hugo/2022-04-30_09-58-55_screenshot.png" width="700px"/>
-</figure>
+            </figure>
  <!-- raw HTML omitted --></p>
 <ul>
 <li>第一条，允许内网的主机向外发送数据 <!-- raw HTML omitted --></li>
@@ -692,7 +692,7 @@ if (!doNotTrack) {
 </ul>
 <p>还记得我们之前的送快递的例子吗，我们说传输层是上保险，IP地址是送货地址，网络层是找送货的地图，MAC地址是邮编，物理层是送货，那么这个端口号就是写的名字，表明是什么服务传输数据给什么服务 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_21-04-52_screenshot.png" width="400px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <p>从中，我们又看出了一些 <code>stateless filtering</code> 的局限，用户的端口号千变万化，那么就会设置一下较为宽松的规则，从而引发漏洞 <!-- raw HTML omitted --></p>
 </li>
@@ -703,7 +703,7 @@ if (!doNotTrack) {
 <p>How to block an entire subnet?</p>
 <p>Use subnet address with CIDR prefix or subnet masks，使用子网划分的后缀 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_22-09-37_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -763,7 +763,7 @@ if (!doNotTrack) {
 <p>主要是通过 <code>relay/proxy</code> 连接，gateway会分别与 <code>server side</code> 以及 <code>client-side</code> 建立独立的连接 <!-- raw HTML omitted --></p>
 <p>在packet filter，无论是 <code>stateful</code> 或者是 <code>stateless</code> 中，服务端和客户端的连接都是直连的，而在 circuit-level gateway中实现的relay可以很好的隐藏server和client的信息，外网只能观察到gateway的IP地址，而不知道具体连接的内网设备的信息 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-27_15-27-07_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>上图就是当外网的client想要连接内网的服务，就会先与gateway建立连接，gateway会维护一个有效连接的表，如果连接是被允许的，那么就会继续建立连接，gateway会用公网IP地址与外网的client建立一个TCP连接，再与内网的设备用内网IP建立TCP连接，之后就不再过滤数据，只是做煎蛋的转发。 <!-- raw HTML omitted --></p>
 </li>
@@ -872,7 +872,7 @@ Host-based firewall其实与personal firewall十分相似，区别我觉得就�
 <p>例如我们可以把WAF和负载均衡这些功能性的服务器给放置在DMZ网络中 <!-- raw HTML omitted --></p>
 <p>还有一些用于促进内外连接的服务器也会防止在DMZ中，例如企业网站，邮件以及DNS服务器 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-27_17-23-08_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -932,7 +932,7 @@ Host-based firewall其实与personal firewall十分相似，区别我觉得就�
 
 
         <span>
-            Last updated on May 27, 2022 21:06 BST
+            Last updated on May 27, 2022 21:06 &#43;0100
         </span>
     </section></footer>
 

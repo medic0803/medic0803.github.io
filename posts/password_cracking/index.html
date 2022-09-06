@@ -3,30 +3,30 @@
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
- Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What were the consequences?
- If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'><title>SCT Topic 8: Password Cracking</title>
+What were the consequences?
+If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'><title>SCT Topic 8: Password Cracking</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/password_cracking/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SCT Topic 8: Password Cracking'>
 <meta property='og:description' content='SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
- Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What were the consequences?
- If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'>
+What were the consequences?
+If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/password_cracking/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='cryptanalysis' /><meta property='article:tag' content='password_cracking' /><meta property='article:tag' content='rainbow_table_attacks' /><meta property='article:tag' content='security_testing' /><meta property='article:published_time' content='2022-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-26T10:11:52&#43;01:00'/>
 <meta name="twitter:title" content="SCT Topic 8: Password Cracking">
 <meta name="twitter:description" content="SCT Topic 8: Password Cracking Case Study: Adobe Password Leak If you are familiar with how online service store users&amp;rsquo;s password, let me ask you:
 How Should You Do?
- Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
+Yes, we will use hash algorithm, salt and store the hashed password and salt, which actively avoid the exposion of plaintext password and brute force.
 But how Adobe Did It?
- What were the consequences?
- If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.">
+What were the consequences?
+If you get the master key, literally you own all &amp;ldquo;encrypted passwords&amp;rdquo; If two users choose same password, their encrypted ciphertext are same, consequently, frequently analysis would help hacker to find out the details of encryption process.">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -460,28 +460,28 @@ We find the hashed text <code>&quot;re3xes&quot;</code> in /etc/shadow directory
 <p>Step 1
 We use the reduction function <code>R3</code> on <code>&quot;re3xes&quot;</code> (start from last reduction function) and see if the result &ldquo;rambo&rdquo; is in the last column of the rainbow table. In this example it is not.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-39-37_screenshot.png" width="700px"/>
-</figure>
+    </figure>
 
 </li>
 <li>
 <p>Step 2
 Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &ldquo;linux23&rdquo; as the result.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-50-07_screenshot.png" width="700px"/>
-</figure>
+    </figure>
 
 </li>
 <li>
 <p>Step 3
 Find the match</p>
 <figure><img src="/ox-hugo/2022-03-19_16-50-29_screenshot.png" width="700px"/>
-</figure>
+    </figure>
 
 </li>
 <li>
 <p>Step 4
 Start with matched plaintext column &ldquo;passwd&rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &ldquo;re3xes&rdquo;.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-51-59_screenshot.png" width="700px"/>
-</figure>
+    </figure>
 
 </li>
 </ul>
@@ -491,7 +491,7 @@ Start with matched plaintext column &ldquo;passwd&rdquo; and do the reductions t
 <dd>We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column.
 <p>If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.</p>
 <figure><img src="/ox-hugo/2022-03-19_16-43-11_screenshot.png" width="700px"/>
-</figure>
+    </figure>
 
 </dd>
 </dl>
@@ -692,7 +692,7 @@ By analyse time taken by the cryptographic algorithm implementation operation, t
 
 
         <span>
-            Last updated on May 26, 2022 10:11 BST
+            Last updated on May 26, 2022 10:11 &#43;0100
         </span>
     </section></footer>
 

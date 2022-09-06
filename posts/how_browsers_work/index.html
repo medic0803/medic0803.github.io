@@ -442,10 +442,10 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <p>当CSS在被解析并构建CSSOM的同时，JS文件也在被下载，解释，编译，解析以及执行，这些脚本会被解析并存入 <a class="link" href="https://en.wikipedia.org/wiki/Abstract_syntax_tree"  target="_blank" rel="noopener"
     >Abstract syntax tree，抽象语法树</a> <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-26_10-03-47_screenshot.png"
-         alt="Figure 6: AST" width="500px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->AST</p>
-        </figcaption>
-</figure>
+             alt="Figure 6: AST" width="500px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->AST</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -518,10 +518,10 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 </span></span></code></pre></div><p>head中过所加载的脚本文件为 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am the script&#39;</span><span class="p">);</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/Screen%20Recording%202022-06-27%20at%2015.52.16.gif"
-         alt="Figure 8: Load and execute script before render" width="400px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->Load and execute script before render</p>
-        </figcaption>
-</figure>
+             alt="Figure 8: Load and execute script before render" width="400px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->Load and execute script before render</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>我们可以观察到，根据html文档的顺序，浏览器会先加载JS脚本，并且在脚本加载完毕之后直接执行，也就是跳出提示框，接着才能重现回来解析HTML并且渲染最终body的内容 <!-- raw HTML omitted --></p>
 <p>很显然，这种中断不是用户所想要看到的，因此开发者应该合理的使用 <code>&lt;script&gt;</code> 标签中的 defer &amp; async 属性来调整脚本的下载和执行的顺序，使其不会阻塞页面的加载 <!-- raw HTML omitted --></p>
@@ -559,10 +559,10 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;defer2&#39;</span><span class="p">)</span>
 </span></span></code></pre></div><p>我们可以观察到html一共有4个脚本，全部都打上了defer属性，但是其中只有 <code>defer1.js</code> &amp; <code>defer2.js</code> 两个文件是外联的，因此我们可以观察脚本执行的顺序，首先内联的脚本会在解析body中的内容之前就被加载与执行，defer1.js &amp; defer2.js会在DOMContentLoaded &amp; Load事件之前执行 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-27_16-49-11_screenshot.png"
-         alt="Figure 9: 内联脚本使用defer" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 9: <!-- raw HTML omitted -->内联脚本使用defer</p>
-        </figcaption>
-</figure>
+             alt="Figure 9: 内联脚本使用defer" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 9: <!-- raw HTML omitted -->内联脚本使用defer</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>async: 异步下载脚本文件，下载完毕之后立即解释执行代码，是HTML5新增的属性
 : -   只适用于外联脚本文件，于defer一致 <!-- raw HTML omitted -->
@@ -604,22 +604,22 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <li>async外联脚本之前的执行顺序不确定 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-06-27_16-58-39_screenshot.png"
-         alt="Figure 10: 在DOMContentLoaded之后执行" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->在DOMContentLoaded之后执行</p>
-        </figcaption>
-</figure>
+             alt="Figure 10: 在DOMContentLoaded之后执行" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->在DOMContentLoaded之后执行</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-27_16-59-05_screenshot.png"
-         alt="Figure 11: 在DOMContentLoaded之前执行" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->在DOMContentLoaded之前执行</p>
-        </figcaption>
-</figure>
+             alt="Figure 11: 在DOMContentLoaded之前执行" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->在DOMContentLoaded之前执行</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-27_17-03-13_screenshot.png"
-         alt="Figure 12: async外联脚本的执行顺序不确定" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->async外联脚本的执行顺序不确定</p>
-        </figcaption>
-</figure>
+             alt="Figure 12: async外联脚本的执行顺序不确定" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->async外联脚本的执行顺序不确定</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>下面的图很好的总结了内联，以及两种外联脚本的加载与执行的顺序以及与HTML解析的关系： <!-- raw HTML omitted --></p>
 <ol>
@@ -628,10 +628,10 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <li>async外联脚本会开启新的线程去加载，不会中断HTML的解析，但是加载完成之后立即执行，此时会中断HTML的解析 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="../../../Documents/OrgNotes/OrgImages/%e6%b5%8f%e8%a7%88%e5%99%a8%e6%98%af%e5%a6%82%e4%bd%95%e5%b7%a5%e4%bd%9c%e7%9a%84%ef%bc%9f/2022-06-27_17-04-08_screenshot.png"
-         alt="Figure 13: normal, defer, async脚本加载执行的过程" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 13: <!-- raw HTML omitted -->normal, defer, async脚本加载执行的过程</p>
-        </figcaption>
-</figure>
+             alt="Figure 13: normal, defer, async脚本加载执行的过程" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 13: <!-- raw HTML omitted -->normal, defer, async脚本加载执行的过程</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>综上所述，我们知道了 <code>defer</code> &amp; <code>async</code> 属性都可以防治外联脚本的加载阻碍页面的渲染，如果外联脚本之间没有依赖以及顺序关系，可以使用async，反之则可以使用async。如果不想使用这两个属性，直接将所有的脚本放在 <code>&lt;/body&gt;</code> 也就是HTML页面内容结束之前，也可以达到相同的效果。 <!-- raw HTML omitted --></p>
 </li>
@@ -738,16 +738,16 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <li>高级渲染：请求URL，加载并执行JS脚本渲染页面，爬取渲染后的内容 <!-- raw HTML omitted --></li>
 </ul>
 <p><figure><img src="/ox-hugo/2022-06-29_21-15-41_screenshot.png"
-         alt="Figure 14: CSR 客户端渲染流程 1" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 14: <!-- raw HTML omitted -->CSR 客户端渲染流程 1</p>
-        </figcaption>
-</figure>
+             alt="Figure 14: CSR 客户端渲染流程 1" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 14: <!-- raw HTML omitted -->CSR 客户端渲染流程 1</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-29_21-15-18_screenshot.png"
-         alt="Figure 15: CSR 客户端渲染流程 2" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 15: <!-- raw HTML omitted -->CSR 客户端渲染流程 2</p>
-        </figcaption>
-</figure>
+             alt="Figure 15: CSR 客户端渲染流程 2" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 15: <!-- raw HTML omitted -->CSR 客户端渲染流程 2</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -757,16 +757,16 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 <p>服务端渲染 SSR (Server Side Render)</p>
 <p>SSR较于CSR，最大的区别就是其在服务端就先对页面进行渲染，每次当用户请求访问一个页面的时候，都会向服务器发送请求，并动态渲染完成页面（结合HTML，CSS以及CS）后再传回给浏览器，因此相应的时间势必会加长。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-29_21-31-19_screenshot.png"
-         alt="Figure 16: SSR 服务端渲染流程 1" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 16: <!-- raw HTML omitted -->SSR 服务端渲染流程 1</p>
-        </figcaption>
-</figure>
+             alt="Figure 16: SSR 服务端渲染流程 1" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 16: <!-- raw HTML omitted -->SSR 服务端渲染流程 1</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-29_21-32-09_screenshot.png"
-         alt="Figure 17: SSR 服务端渲染流程 2" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 17: <!-- raw HTML omitted -->SSR 服务端渲染流程 2</p>
-        </figcaption>
-</figure>
+             alt="Figure 17: SSR 服务端渲染流程 2" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 17: <!-- raw HTML omitted -->SSR 服务端渲染流程 2</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <div class="table-wrapper"><table>
 <thead>
@@ -814,16 +814,16 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 </tbody>
 </table></div>
 <p><figure><img src="/ox-hugo/2022-06-29_21-42-13_screenshot.png"
-         alt="Figure 18: SSR 静态页面生成流程 1" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 18: <!-- raw HTML omitted -->SSR 静态页面生成流程 1</p>
-        </figcaption>
-</figure>
+             alt="Figure 18: SSR 静态页面生成流程 1" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 18: <!-- raw HTML omitted -->SSR 静态页面生成流程 1</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-29_21-42-37_screenshot.png"
-         alt="Figure 19: SSR 静态页面生成流程 2" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 19: <!-- raw HTML omitted -->SSR 静态页面生成流程 2</p>
-        </figcaption>
-</figure>
+             alt="Figure 19: SSR 静态页面生成流程 2" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 19: <!-- raw HTML omitted -->SSR 静态页面生成流程 2</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -891,7 +891,7 @@ cwnd &gt; sshtresh，改用拥塞避免算法,我们这里介绍 Additive increa
 
 
         <span>
-            Last updated on Jul 02, 2022 12:39 BST
+            Last updated on Jul 02, 2022 12:39 &#43;0100
         </span>
     </section></footer>
 

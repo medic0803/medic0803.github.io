@@ -182,28 +182,28 @@ We find the hashed text &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; in /
 &lt;p&gt;Step 1
 We use the reduction function &lt;code&gt;R3&lt;/code&gt; on &lt;code&gt;&amp;quot;re3xes&amp;quot;&lt;/code&gt; (start from last reduction function) and see if the result &amp;ldquo;rambo&amp;rdquo; is in the last column of the rainbow table. In this example it is not.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-39-37_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 2
 Next, try two rounds of reduction function, use reductions R2 and R3 and obtain &amp;ldquo;linux23&amp;rdquo; as the result.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-07_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 3
 Find the match&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-50-29_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Step 4
 Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the reductions to reach plaintext which will hashed to given hashed text &amp;ldquo;re3xes&amp;rdquo;.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-51-59_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -213,7 +213,7 @@ Start with matched plaintext column &amp;ldquo;passwd&amp;rdquo; and do the redu
 &lt;dd&gt;We assume that the given hashed text are contained in the chains of a row in the rainbow table, and use a sequence of reduction functions and hash function to see if it could reach the last column.
 &lt;p&gt;If there is match, then we could locate the row of first (green) column and begin to reproduce the chains and get the plaintext.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-19_16-43-11_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/dd&gt;
 &lt;/dl&gt;

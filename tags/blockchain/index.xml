@@ -799,7 +799,7 @@ MZM = M3 + 所有货币市场基金。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;– Speculation reasons &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;• to buy and sell tokens. 购买和出售代币（用来获取代币） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-15_17-42-31_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1452,7 +1452,7 @@ MZM = M3 + 所有货币市场基金。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们在之前的章节中就介绍过，coinbase transaction就是一条特殊的transaction，由miner所创建，包含在新的candidate block当中，作为新的block挖掘的奖励，奖励的数值每四年减半，这些都需要miner自行计算并构造coinbase transaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们可以观察一下以下的transaction和之前我们在第六章中见过的有什么区别，主要是在inputs这一块，没有再指向一个特定的UTXO,而是一个coinbase &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_11-49-53_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;通过下图我们也可以比较普通的transaction与coinbase transaction的区别 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;
@@ -1468,7 +1468,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;p&gt;在开始mining工作之前，miner需要先构造好这样一个block header然后，填好出了Nonce之外的所有fields，最后的mining的目标就是找到一个特定的nonce，使构成的block hash小于target的值，一个mining node需要尝试十亿或者数万亿的nonce才能找到一个符合条件的。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;关于target的介绍我们会放到后面，我们可以先将其当作是一个需要解决的puzzle,而mining的目的就是解决这个puzzle &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-13_11-59-20_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1630,7 +1630,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;li&gt;
 &lt;p&gt;merkle tree root, 用来总结当前block的所有transaction &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-12_10-39-38_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -1700,7 +1700,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;p&gt;Bitcoin value发送到新的拥有者的地址，同时一部分找零回到原有者的地址 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Transaction as double-entry bookkeeping &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-21_10-55-13_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Change&lt;/dt&gt;
@@ -1718,7 +1718,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;dt&gt;Transaction chains&lt;/dt&gt;
 &lt;dd&gt;所有当前拥有者所拥有的bitcoin value 均来自于上一次 transaction的 output，这些 bitcoin value将会作为下一次 transaction 的 input &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-21_10-54-39_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
@@ -1729,7 +1729,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;p&gt;Most common transaction&lt;/p&gt;
 &lt;p&gt;最普通的 transaction，input的value 大于output，因此一部分转交给新的owner，一部分找零返回原来的地址 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-21_10-56-43_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1739,7 +1739,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;p&gt;Transaction aggregating funds&lt;/p&gt;
 &lt;p&gt;当有很多“零钱”的时候，凑齐（aggregate）很多的inputs转交给新的owner &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-21_10-57-21_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1749,7 +1749,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;p&gt;Transaction distributing funds&lt;/p&gt;
 &lt;p&gt;一份或多份inputs需要转交给多个owners，例如发工资(payroll) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-21_10-58-21_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1957,7 +1957,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) &lt;!-- raw HTML omitted --&
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Fees = Sum(Inputs) – Sum(Outputs)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就如下图的一次transaction一样，我们可以看到右侧的outputs中，综合为0.995 BTC，也就是扣除了transaction fee之后的结果 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-11_22-57-13_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;

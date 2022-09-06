@@ -9,7 +9,7 @@
 <meta property='og:description' content='PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/php_serialize_unserialize/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='serialize' /><meta property='article:tag' content='unserialize' /><meta property='article:tag' content='magic_functions' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-19T16:39:00&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='serialize' /><meta property='article:tag' content='unserialize' /><meta property='article:tag' content='magic_functions' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-10T23:45:50&#43;01:00'/>
 <meta name="twitter:title" content="PHP 序列化与反序列化">
 <meta name="twitter:description" content="PHP 序列化与反序列化 PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -219,7 +219,7 @@ if (!doNotTrack) {
     <header class="article-category">
         
             <a href="/categories/ctf/" >
-                CTF
+                ctf
             </a>
         
     </header>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    7 minute read
+                    11 minute read
                 </time>
             </div>
         
@@ -316,8 +316,72 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
+<p>接下来我们根据一篇古老文章来具体了解一下对象中的属性的序列化格式：<a class="link" href="https://www.neatstudio.com/show-161-1.shtml"  target="_blank" rel="noopener"
+    >PHP 序列化（serialize）格式详解</a> <!-- raw HTML omitted --></p>
+<ul>
+<li>a - array <!-- raw HTML omitted --></li>
+<li>b - boolean <!-- raw HTML omitted --></li>
+<li>d - double <!-- raw HTML omitted --></li>
+<li>i - integer <!-- raw HTML omitted --></li>
+<li>o - common object <!-- raw HTML omitted --></li>
+<li>r - reference <!-- raw HTML omitted --></li>
+<li>s - non-escaped binary string <!-- raw HTML omitted --></li>
+<li>S - escaped binary string <!-- raw HTML omitted --></li>
+<li>C - custom object <!-- raw HTML omitted --></li>
+<li>O - class <!-- raw HTML omitted --></li>
+<li>N - null <!-- raw HTML omitted --></li>
+<li>R - pointer reference <!-- raw HTML omitted --></li>
+<li>U - unicode string <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="null的序列化">NULL的序列化</h4>
+<p>N; <!-- raw HTML omitted --></p>
+<h4 id="boolean">boolean</h4>
+<p>b:&lt;digit&gt;; <!-- raw HTML omitted --></p>
+<p>&lt;digit&gt; = [&lsquo;0&rsquo;, &lsquo;1&rsquo;], 当boolean型数据为false时，序列化后的成员值为0 <!-- raw HTML omitted --></p>
+<h4 id="integer">integer</h4>
+<p>i:&lt;number&gt;; <!-- raw HTML omitted -->
+&lt;number&gt;的取值范围为：-2147483648 到 2147483647，允许有符号，如果超过范围，就会被序列化为浮点数而不是整型，并且反序列化后也无法得到原来的数值 <!-- raw HTML omitted --></p>
+<h4 id="double">double</h4>
+<p>d:&lt;number&gt;; <!-- raw HTML omitted --></p>
+<p>&lt;number&gt;为浮点数，其范围为PHP中浮点数的范围一样大,并且可以表示为整型、浮点数型以及科学计数法 <!-- raw HTML omitted --></p>
+<p>如果值为正/负无穷大，那么会被会被表示为INF/-INF，如果超过能表示的最小精度或者非数（NAN）的情况，就会返回0 <!-- raw HTML omitted --></p>
+<h4 id="string">string</h4>
+<p>s:&lt;length&gt;:&quot;&lt;value&gt;&quot;; <!-- raw HTML omitted --></p>
+<p>S:&lt;length&gt;:&quot;&lt;value&gt;&quot;; <!-- raw HTML omitted --></p>
+<ul>
+<li>&lt;length&gt;是&lt;value&gt;的长度，是非负整数，允许带有正号（+） <!-- raw HTML omitted --></li>
+<li>&lt;value&gt;表示字符串值，其范围与 ASCII 相对应，没有转义字符 <!-- raw HTML omitted --></li>
+<li>s表示普通的使用方法 <!-- raw HTML omitted --></li>
+<li>S表示可以在字符串值中加入ASCII转义编码（从而进行绕过），编码的方式为 <!-- raw HTML omitted -->
+<ul>
+<li>对于ASCII码小于128的字符（不包括 &lsquo;\&rsquo;）,按照单个字节直接写入 <!-- raw HTML omitted --></li>
+<li>对于ASCII码在128~255的字符和 &lsquo;\&rsquo; 字符，需要将其ASCII码值转化为16进制编码的字符串，以&rsquo;\&lsquo;作为开头，后两个字节分别为这个字符的16进制编码 <!-- raw HTML omitted -->
+<ul>
+<li>这样的方法同样适用于所有的ASCII字符，例如 r就可以转换为\72，都可以在&rsquo;S&rsquo; 下被解析成功 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="array">array</h4>
+<p>a:&lt;n&gt;:{&lt;key_1&gt;&lt;value_1&gt;&lt;key_2&gt;&lt;value_2&gt;&hellip;&lt;key_n&gt;&lt;value_n&gt;} <!-- raw HTML omitted --></p>
+<ul>
+<li>&lt;n&gt;表示数组元素的个数 <!-- raw HTML omitted --></li>
+<li>&lt;key_1&gt;就表示数组下标 <!-- raw HTML omitted --></li>
+<li>&lt;value_1&gt;就表示对应的数组元素的值 <!-- raw HTML omitted --></li>
+</ul>
+<p>&lt;key_1&gt;下标的类型只能是整型或者字符串类型 <!-- raw HTML omitted --></p>
+<h4 id="对象的序列化">对象的序列化</h4>
+<p>O:&lt;length&gt;:&quot;&lt;class_name&gt;&quot;:&lt;n&gt;:{&lt;field_name_1&gt;&lt;field_value_1&gt;&lt;field_name_2&gt;&lt;field_value_2&gt;&hellip;&lt;field_name_n&gt;&lt;field_value_n&gt;} <!-- raw HTML omitted --></p>
+<ul>
+<li>&lt;length&gt;表示对象的类名&lt;class_name&gt;的字符串长度 <!-- raw HTML omitted --></li>
+<li>&lt;n&gt;表示对象中的属性个数，这里不包括 <code>static</code> &amp; <code>const</code> 声明的静态属性，也就是说只有对象特有的属性才会被序列化 <!-- raw HTML omitted --></li>
+<li>&lt;filed_name&gt;表示每个属性的名字，用之前提到过的字符串类型进行表示，例如：s:1:&ldquo;a&rdquo;; <!-- raw HTML omitted --></li>
+<li>以及对应的&lt;filed_value&gt;值，可以是任何类型的，s:1:&ldquo;a&rdquo;;N;比如是一个NULL <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="访问控制修饰符">访问控制修饰符</h4>
 <p>我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 <code>Access Modifiers, 访问控制修饰符</code> 的不同而有不同的表示方法 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span><span class="p">(</span><span class="nx">公有</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span><span class="p">(</span><span class="nx">公有</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="p">(</span><span class="nx">受保护</span><span class="p">)</span>     <span class="c1">// %00*%00属性名
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">private</span><span class="p">(</span><span class="nx">私有的</span><span class="p">)</span>       <span class="c1">// %00类名%00属性名
 </span></span></span></code></pre></div><p>protected属性被序列化的时候属性值会变成 <code>%00*%00属性名</code> <!-- raw HTML omitted -->
@@ -326,7 +390,85 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 <p>就如同我们这里的结果： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">s:4:&#34;*b&#34;; = s:4:&#34;%00*%00b&#34;;
 </span></span><span class="line"><span class="cl">s:7:&#34;Testc&#34;; = s:7:&#34;%00Test%00c&#34;;
-</span></span></code></pre></div><h3 id="unserialize-反序列化">Unserialize 反序列化</h3>
+</span></span></code></pre></div><h4 id="对象引用和指针引用-r-r">对象引用和指针引用 R:r</h4>
+<p>我们根据一个例子来看看两种引用的区别 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;pre&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SampleClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SampleClass</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">value</span> <span class="o">=</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SampleClass</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span><span class="o">-&gt;</span><span class="na">value</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$b</span><span class="o">-&gt;</span><span class="na">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>结果是： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">O</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="s2">&#34;SampleClass&#34;</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="s2">&#34;value&#34;</span><span class="p">;</span><span class="nx">r</span><span class="o">:</span><span class="mi">1</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">O</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="s2">&#34;SampleClass&#34;</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="p">{</span><span class="nx">s</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="s2">&#34;value&#34;</span><span class="p">;</span><span class="nx">R</span><span class="o">:</span><span class="mi">1</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// after re-value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">object</span><span class="p">(</span><span class="nx">SampleClass</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="k">public</span> <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nx">int</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">int</span> <span class="mi">1</span>
+</span></span></code></pre></div><p>我们可以从源码中看出区别就在于 <code>'&amp;'</code> <!-- raw HTML omitted -->
+特别是在经过重新赋值之后： <!-- raw HTML omitted --></p>
+<ul>
+<li>$a-&gt;value变成了int(1) <!-- raw HTML omitted --></li>
+<li>而$b整一个对象直接变成了int(1) <!-- raw HTML omitted --></li>
+</ul>
+<p>原因就是‘&amp;’进行指针引用后，使$b-&gt;value 与$b本身进行绑定，其中一个的改变也会影响另一个 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>引用标识之后的数字</p>
+<p>对象引用（r）和指针引用（R）的格式为： <!-- raw HTML omitted -->
+r:&lt;number&gt;; <!-- raw HTML omitted -->
+R:&lt;number&gt;; <!-- raw HTML omitted --></p>
+<p>&lt;number&gt;表示的就是，当前这个引用，所引用的对象，在序列化字节流中，是第几个出现的（包括其中复合型成员的子成员） <!-- raw HTML omitted --></p>
+<p>我们通过一个例子来讲解一下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ClassA</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$int</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$bool</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">var</span> <span class="nv">$pr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ClassA</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">str</span> <span class="o">=</span> <span class="s2">&#34;Hello&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">bool</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">obj</span> <span class="o">=</span> <span class="nv">$a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">pr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">serialize</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>结果是： <!-- raw HTML omitted -->
+O:6:&ldquo;ClassA&rdquo;:5:{s:3:&ldquo;int&rdquo;;i:1;s:3:&ldquo;str&rdquo;;s:5:&ldquo;Hello&rdquo;;s:4:&ldquo;bool&rdquo;;b:0;s:3:&ldquo;obj&rdquo;;r:1;s:2:&ldquo;pr&rdquo;;R:3;} <!-- raw HTML omitted --></p>
+<p>我们先来看结果： <!-- raw HTML omitted --></p>
+<ul>
+<li>$a-&gt;pr序列化后的结果为 <code>'R:3;'</code> 表示引用了第三个出现的成员 <!-- raw HTML omitted --></li>
+</ul>
+<p>那么在这个序列化字节流中，第一个成员是ClassA对象，第二个就是对象中的子成员 $a-&gt;int，第三个就是 <code>$a-&gt;str</code> 也就是我们这里所进行引用的对象，也就会被标记为 <code>'R:3;'</code>  <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="unserialize-反序列化">Unserialize 反序列化</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$a</span> <span class="o">=</span> <span class="s1">&#39;This A&#39;</span><span class="p">;</span>
@@ -357,8 +499,8 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__destruct</span><span class="p">()</span>    <span class="c1">#当一个对象没有后续被引用时，被调用（注意说销毁并不准确），当一个对象的
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__toString</span><span class="p">()</span>    <span class="c1">#当一个对象被当作一个字符串使用时被调用
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__invoke</span><span class="p">()</span>      <span class="c1">#当脚本尝试将对象调用为函数时触发
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__sleep</span><span class="p">()</span>       <span class="c1">#serialize()时会自动调用
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__wakeup</span><span class="p">()</span>      <span class="c1">#unserialize()时会自动调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__sleep</span><span class="p">()</span>       <span class="c1">#serialize()时会自动调用   
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__wakeup</span><span class="p">()</span>      <span class="c1">#unserialize()时会自动调用   
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__call</span><span class="p">()</span>        <span class="c1">#当调用对象中不存在的方法会自动调用该方法。
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__get</span><span class="p">()</span>         <span class="c1">#在调用私有属性的时候会自动执行
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">__set</span><span class="p">()</span>         <span class="c1">#用于将数据写入不可访问的属性（根据Access modifilers来判断,e.g., protected, private）
@@ -577,7 +719,8 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 <li>
 <p>__wakeup()</p>
 <p>在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行 <!-- raw HTML omitted --></p>
-<p>例如 <!-- raw HTML omitted --></p>
+<p>（此方法只适用于PHP5 &lt; 5.6.25, PHP7 &lt; 7.0.10） <!-- raw HTML omitted -->
+例如 <!-- raw HTML omitted --></p>
 <p>O:4:&ldquo;Name&rdquo;:2:{s:14:&ldquo;�Name�username&rdquo;;s:5:&ldquo;admin&rdquo;;s:14:&ldquo;�Name�password&rdquo;;i:100;} <!-- raw HTML omitted --></p>
 <p>👇 <!-- raw HTML omitted --></p>
 <p>O:4:&ldquo;Name&rdquo;:3:{s:14:&ldquo;�Name�username&rdquo;;s:5:&ldquo;admin&rdquo;;s:14:&ldquo;�Name�password&rdquo;;i:100;} <!-- raw HTML omitted --></p>
@@ -586,12 +729,27 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 </ul>
 <h4 id="配合php伪协议">配合PHP伪协议</h4>
 <p>使用 <code>glob://</code> 伪协议来查找特定的文件路径（同时可以配合测信道攻击使用） <!-- raw HTML omitted --></p>
-<h4 id="序列化">序列化</h4>
-<p>通过将字符串标识符 <code>s</code> 修改成 <code>S</code> 便可以解释十六进制字符，从而进行绕过 <!-- raw HTML omitted --></p>
-<h4 id="属性赋值">属性赋值</h4>
+<h4 id="序列化成员绕过">序列化成员绕过</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>字符串绕过</p>
+<p>通过将字符串标识符 <code>s</code> 修改成 <code>S</code> 便可以解释十六进制字符，进而将被过滤的字符串使用ASCII替换，从而进行绕过 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>引用绕过</p>
+<p>例如不允许序列化字节流出现 <code>'R:2'</code>: <!-- raw HTML omitted --></p>
+<p>修改变量的申明的顺序，即可修改R:2后面的数字 <!-- raw HTML omitted --></p>
+<p>修改为不同的引用方式，可以在R/r中切换 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="属性赋值覆盖绕过">属性赋值覆盖绕过</h4>
 <p>可以通过浅copy来为受限的属性赋值 <!-- raw HTML omitted --></p>
 <p>例如以下代码，就将 <code>$a-&gt;user</code> 作为引用传递给 <code>$a-&gt;name</code> 从而保持两个值的一致，即使 <code>$a-&gt;name</code> 被修改或者过滤，但是通过 <code>$a-&gt;user</code> 依然可以对其进行修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">user</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">user</span><span class="p">;</span> 
 </span></span></code></pre></div><h3 id="reference">Reference</h3>
 <p><a class="link" href="https://www.php.net/manual/en/function.serialize.php"  target="_blank" rel="noopener"
     >serialize:php.net</a> <!-- raw HTML omitted --></p>
@@ -617,6 +775,8 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
     >&ldquo;Notice: Undefined variable&rdquo;, &ldquo;Notice: Undefined index&rdquo;, &ldquo;Warning: Undefined array key&rdquo;, and &ldquo;Notice: Undefined offset&rdquo; using PHP</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://hachp1.github.io/posts/Web%E5%AE%89%E5%85%A8/20190906-laravel_pop1.html"  target="_blank" rel="noopener"
     >Laravel+POP链简析</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://blog.frankli.site/2021/04/11/Security/php-src/PHP-Serialize-tips/"  target="_blank" rel="noopener"
+    >PHP序列化中的R与r</a>  <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -658,7 +818,7 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
 
 
         <span>
-            Last updated on Jun 19, 2022 16:39 BST
+            Last updated on Jul 10, 2022 23:45 &#43;0100
         </span>
     </section></footer>
 
@@ -936,7 +1096,19 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
     <li><a href="#php-序列化与反序列化">PHP 序列化与反序列化</a>
       <ul>
         <li><a href="#serialize-序列化">Serialize 序列化</a></li>
-        <li><a href="#序列化后的字节流详解">序列化后的字节流详解</a></li>
+        <li><a href="#序列化后的字节流详解">序列化后的字节流详解</a>
+          <ul>
+            <li><a href="#null的序列化">NULL的序列化</a></li>
+            <li><a href="#boolean">boolean</a></li>
+            <li><a href="#integer">integer</a></li>
+            <li><a href="#double">double</a></li>
+            <li><a href="#string">string</a></li>
+            <li><a href="#array">array</a></li>
+            <li><a href="#对象的序列化">对象的序列化</a></li>
+            <li><a href="#访问控制修饰符">访问控制修饰符</a></li>
+            <li><a href="#对象引用和指针引用-r-r">对象引用和指针引用 R:r</a></li>
+          </ul>
+        </li>
         <li><a href="#unserialize-反序列化">Unserialize 反序列化</a></li>
         <li><a href="#magic-methods-魔术方法">Magic Methods 魔术方法</a></li>
         <li><a href="#property-oriented-programming--pop--面向属性编程">Property Oriented Programming (POP) 面向属性编程</a></li>
@@ -944,8 +1116,8 @@ private属性被序列化的时候属性值会变成 <code>%00类名%00属性名
           <ul>
             <li><a href="#绕过魔术方法">绕过魔术方法</a></li>
             <li><a href="#配合php伪协议">配合PHP伪协议</a></li>
-            <li><a href="#序列化">序列化</a></li>
-            <li><a href="#属性赋值">属性赋值</a></li>
+            <li><a href="#序列化成员绕过">序列化成员绕过</a></li>
+            <li><a href="#属性赋值覆盖绕过">属性赋值覆盖绕过</a></li>
           </ul>
         </li>
         <li><a href="#reference">Reference</a></li>

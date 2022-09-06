@@ -421,13 +421,13 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;li&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a &lt;code&gt;RST(reset)&lt;/code&gt; if the port closed&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;If a &lt;code&gt;SYN&lt;/code&gt; segment is sent to a host, it will respond with a RST if the port closed,&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-25_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
@@ -435,7 +435,7 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-13-30_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s talk about the mechanism details with three scanning examples:&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
@@ -454,25 +454,25 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed &lt;code&gt;SYN&lt;/code&gt; segment with Zombie computer&amp;rsquo;s IP address to the Victim&amp;rsquo;s computer&lt;/p&gt;
 &lt;p&gt;The Attacker pretend to be zombie computer, and communicate with the victim.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-16-48_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Since the target port is open, the victim computer will response a &lt;code&gt;SYN/ACK&lt;/code&gt; segment to Zombie computer.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-19-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;However, the zombie computer did not establish a session with Victim computer, so when it receive the &lt;code&gt;SYN/ACK&lt;/code&gt; segment, it will respond with a &lt;code&gt;RST&lt;/code&gt; segment to it, and meanwhile, increases its &lt;code&gt;IP ID&lt;/code&gt; by &amp;ldquo;one&amp;rdquo; to &lt;!-- raw HTML omitted --&gt;6,163&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-21-12_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;The attackers want to check the current &lt;code&gt;IP ID&lt;/code&gt;, thus they send another &lt;code&gt;SYN/ACK&lt;/code&gt; segment to The Zombie computer&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-22-07_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+            &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;
@@ -490,16 +490,16 @@ AKA &amp;ldquo;half-open&amp;rdquo; scanning&lt;/p&gt;
 &lt;p&gt;So, what if the port is closed?
 This time, the spoofed &lt;code&gt;SYN&lt;/code&gt; segment will not get the response of &lt;code&gt;RST&lt;/code&gt;, which avoid the Zombie computer to interact with Victim computer, and the &lt;code&gt;IP ID&lt;/code&gt; did not increase, thus finally we will get the &lt;code&gt;IP ID&lt;/code&gt; only increase by &amp;ldquo;one&amp;rdquo;, which indicate the port is closed.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-35_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-39_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-43_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-28-47_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -509,13 +509,13 @@ This time, the spoofed &lt;code&gt;SYN&lt;/code&gt; segment will not get the res
 &lt;p&gt;Idle Scan (Victim Port Fillterd)&lt;/p&gt;
 &lt;p&gt;If there is a firewall filter the spoofed &lt;code&gt;SYN&lt;/code&gt; segment, the Victim computer will not send anything to Zombie computer, which result in the same &lt;code&gt;IP ID&lt;/code&gt; as Port closed case.&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-31-04_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-15_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-05_16-30-40_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+        &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;

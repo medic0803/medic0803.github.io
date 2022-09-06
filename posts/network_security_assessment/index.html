@@ -555,13 +555,13 @@ AKA &ldquo;half-open&rdquo; scanning</p>
 <li>If a <code>SYN</code> segment is sent to a host, it will respond with a <code>RST(reset)</code> if the port closed</li>
 </ul>
 <figure><img src="/ox-hugo/2022-03-05_16-13-15_screenshot.png" width="400px"/>
-</figure>
+    </figure>
 
 <ul>
 <li>
 <p>If a <code>SYN</code> segment is sent to a host, it will respond with a RST if the port closed,</p>
 <figure><img src="/ox-hugo/2022-03-05_16-13-25_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 </li>
 <li>
@@ -569,7 +569,7 @@ AKA &ldquo;half-open&rdquo; scanning</p>
 </li>
 </ul>
 <figure><img src="/ox-hugo/2022-03-05_16-13-30_screenshot.png" width="400px"/>
-</figure>
+    </figure>
 
 <p>Now let&rsquo;s talk about the mechanism details with three scanning examples:</p>
 <!-- raw HTML omitted -->
@@ -588,25 +588,25 @@ AKA &ldquo;half-open&rdquo; scanning</p>
 <p>Since attackers get the initial IP ID value of Zombie computer, they will then sends a spoofed <code>SYN</code> segment with Zombie computer&rsquo;s IP address to the Victim&rsquo;s computer</p>
 <p>The Attacker pretend to be zombie computer, and communicate with the victim.</p>
 <figure><img src="/ox-hugo/2022-03-05_16-16-48_screenshot.png" width="400px"/>
-</figure>
+            </figure>
 
 </li>
 <li>
 <p>Since the target port is open, the victim computer will response a <code>SYN/ACK</code> segment to Zombie computer.</p>
 <figure><img src="/ox-hugo/2022-03-05_16-19-04_screenshot.png" width="400px"/>
-</figure>
+            </figure>
 
 </li>
 <li>
 <p>However, the zombie computer did not establish a session with Victim computer, so when it receive the <code>SYN/ACK</code> segment, it will respond with a <code>RST</code> segment to it, and meanwhile, increases its <code>IP ID</code> by &ldquo;one&rdquo; to <!-- raw HTML omitted -->6,163<!-- raw HTML omitted --></p>
 <figure><img src="/ox-hugo/2022-03-05_16-21-12_screenshot.png" width="400px"/>
-</figure>
+            </figure>
 
 </li>
 <li>
 <p>The attackers want to check the current <code>IP ID</code>, thus they send another <code>SYN/ACK</code> segment to The Zombie computer</p>
 <figure><img src="/ox-hugo/2022-03-05_16-22-07_screenshot.png" width="400px"/>
-</figure>
+            </figure>
 
 </li>
 <li>
@@ -624,16 +624,16 @@ AKA &ldquo;half-open&rdquo; scanning</p>
 <p>So, what if the port is closed?
 This time, the spoofed <code>SYN</code> segment will not get the response of <code>RST</code>, which avoid the Zombie computer to interact with Victim computer, and the <code>IP ID</code> did not increase, thus finally we will get the <code>IP ID</code> only increase by &ldquo;one&rdquo;, which indicate the port is closed.</p>
 <figure><img src="/ox-hugo/2022-03-05_16-28-35_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 <figure><img src="/ox-hugo/2022-03-05_16-28-39_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 <figure><img src="/ox-hugo/2022-03-05_16-28-43_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 <figure><img src="/ox-hugo/2022-03-05_16-28-47_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 </li>
 </ul>
@@ -643,13 +643,13 @@ This time, the spoofed <code>SYN</code> segment will not get the response of <co
 <p>Idle Scan (Victim Port Fillterd)</p>
 <p>If there is a firewall filter the spoofed <code>SYN</code> segment, the Victim computer will not send anything to Zombie computer, which result in the same <code>IP ID</code> as Port closed case.</p>
 <figure><img src="/ox-hugo/2022-03-05_16-31-04_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 <figure><img src="/ox-hugo/2022-03-05_16-30-15_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 <figure><img src="/ox-hugo/2022-03-05_16-30-40_screenshot.png" width="400px"/>
-</figure>
+        </figure>
 
 </li>
 </ul>
@@ -735,7 +735,7 @@ k#+end_src</p>
 
 
         <span>
-            Last updated on May 22, 2022 17:47 BST
+            Last updated on May 22, 2022 17:47 &#43;0100
         </span>
     </section></footer>
 

@@ -371,7 +371,7 @@ if (!doNotTrack) {
 <li>
 <p>Protocol mode (tunnel or transport) <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_16-27-03_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -458,7 +458,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <li>
 <p>提供端对端的IPsec系统保护 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_17-46-59_screenshot.png" width="300px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ol>
@@ -474,7 +474,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <li>new outer header 同样也会收到保护，但是包含的是例如firewall/security gateway的地址 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-05-29_17-47-12_screenshot.png" width="300px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -491,7 +491,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <p>Transport Mode ESP</p>
 <p>Transport Mode ESP 一般端对端的安全通信上，可以对IP数据包进行加密和认证。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_21-09-38_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <ul>
 <li>对于IPv4数据包，IPsec一旦介入： <!-- raw HTML omitted -->
@@ -512,10 +512,10 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 </li>
 </ul>
 <p><figure><img src="/ox-hugo/2022-05-29_21-08-59_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_21-35-41_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>总的来说Transport mode的操作主要是： <!-- raw HTML omitted --></p>
 <ol>
@@ -533,13 +533,13 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <p>Tunnel mode ESP</p>
 <p>如下图就是Tunnel mode的一个使用场景，每个公司的内网通过tunnel mode 建立的VPN进行互相的通信，而完成不和Internet的路由上的任何其他主机或者设备进行交互。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_21-09-51_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>那么为了避免沿路的路由器对通信进行流量分析，Tunnel mode ESP将会加密整一个IP packet，然后将 <code>ESP header</code> 加在 <code>Original IP header</code> 前面 <!-- raw HTML omitted --></p>
 <p>由于Original IP header中包含目标地址以及routing的信息，因此一旦全部被加密之后，途径的路由器就无法处理这些数据包。因此就需要一个新的IP header，其中包含必要的信息，但是不能被进行流量分析 <!-- raw HTML omitted --></p>
 <p>同时，为了保护内网的主机，ESP会提供内网的边界设备，例如firewall or security gateway <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_21-09-20_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>我们来看一个具体的例子，看看一个外网的主机是如何通过Tunnel mode ESP来与内网主机进行通信的 <!-- raw HTML omitted --></p>
 <ol>
@@ -560,7 +560,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 </li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-05-29_21-36-13_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -585,7 +585,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <li>
 <p>Case 1</p>
 <p><figure><img src="/ox-hugo/2022-05-29_21-39-02_screenshot.png" width="400px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>端对端的安全（通过交换密钥） <!-- raw HTML omitted --></p>
 <p>一般为内网的主机访问外网的服务器提供保护 <!-- raw HTML omitted --></p>
@@ -611,7 +611,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <li>ESP加上authentication选项（AH是没有的） <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-05-29_22-54-09_screenshot.png" width="400px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -621,7 +621,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <p>Case 3</p>
 <p>Case3可以被看作是Case 1 加上Case2，即在Case2的IP tunneling所提供的 security gateways之间的保护的基础上，又加上了case1中的点对点的保护措施，通过提供端对端的SAs组合来实现内网中的保护 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-29_22-53-34_screenshot.png" width="400px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -635,7 +635,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 <li>同时security gateway也会与内网的主机建立SAs的保护 <!-- raw HTML omitted --></li>
 </ul>
 <p><figure><img src="/ox-hugo/2022-05-29_22-54-21_screenshot.png" width="400px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -674,7 +674,7 @@ AH作为一个额外的header，其夹在IP &amp; TCP header之间，提供足�
 
 
         <span>
-            Last updated on May 29, 2022 23:03 BST
+            Last updated on May 29, 2022 23:03 &#43;0100
         </span>
     </section></footer>
 

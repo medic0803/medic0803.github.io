@@ -328,7 +328,7 @@ if (!doNotTrack) {
 <p>我们在之前的章节中就介绍过，coinbase transaction就是一条特殊的transaction，由miner所创建，包含在新的candidate block当中，作为新的block挖掘的奖励，奖励的数值每四年减半，这些都需要miner自行计算并构造coinbase transaction <!-- raw HTML omitted --></p>
 <p>我们可以观察一下以下的transaction和之前我们在第六章中见过的有什么区别，主要是在inputs这一块，没有再指向一个特定的UTXO,而是一个coinbase <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-13_11-49-53_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>通过下图我们也可以比较普通的transaction与coinbase transaction的区别 <!-- raw HTML omitted --></p>
 <p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
@@ -344,7 +344,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) <!-- raw HTML omitted --></p
 <p>在开始mining工作之前，miner需要先构造好这样一个block header然后，填好出了Nonce之外的所有fields，最后的mining的目标就是找到一个特定的nonce，使构成的block hash小于target的值，一个mining node需要尝试十亿或者数万亿的nonce才能找到一个符合条件的。 <!-- raw HTML omitted --></p>
 <p>关于target的介绍我们会放到后面，我们可以先将其当作是一个需要解决的puzzle,而mining的目的就是解决这个puzzle <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-13_11-59-20_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -505,7 +505,7 @@ Total Transaction Fees = Sum(Inputs) - Sum(Outputs) <!-- raw HTML omitted --></p
 
 
         <span>
-            Last updated on May 13, 2022 22:32 BST
+            Last updated on May 13, 2022 22:32 &#43;0100
         </span>
     </section></footer>
 

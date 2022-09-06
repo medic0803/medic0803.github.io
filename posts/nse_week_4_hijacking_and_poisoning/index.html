@@ -304,7 +304,7 @@ if (!doNotTrack) {
 <li>
 <p>TCP three-way handshake</p>
 <p><figure><img src="/ox-hugo/2022-05-28_10-22-56_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>通过不断增加Sequence number以及Acknowledgement number来实现握手，以及后续的通信 <!-- raw HTML omitted --></p>
 </li>
@@ -321,7 +321,7 @@ if (!doNotTrack) {
 <li>Sequence number (如果攻击者在路由上的话就不会很难，因为可以通过获取到的通信数据包来推测) <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-05-28_10-33-18_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>Sequence number可以是捕捉到的数据包的sequence number + 1 亦或是+ n，只要n不要太大，接收者都会将这些数据包保存在buffer中，等待中间“未接收到”的数据包 <!-- raw HTML omitted --></p>
 </li>
@@ -368,7 +368,7 @@ if (!doNotTrack) {
 <li>
 <p>TCP initial sequence number attack</p>
 <p><figure><img src="/ox-hugo/2022-05-28_10-46-15_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>Attacker首先通过flooding使client无法正常工作，然后发起一个新的TCP连接给server，然后通过预测sequence number来伪装成client来进行通信 <!-- raw HTML omitted --></p>
 </li>
@@ -408,7 +408,7 @@ CIDR prefix = 16 <!-- raw HTML omitted --></p>
 <li>
 <p>l就是路由器的接口interface，指向下一跳的地址 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-28_16-12-24_screenshot.png" width="300px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ol>
@@ -459,7 +459,7 @@ CIDR prefix = 16 <!-- raw HTML omitted --></p>
 <li>
 <p>iEBGP, internal BGP (TCP), 用于同一个AS中的路由器之间的通信 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-28_16-27-38_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ol>
@@ -520,7 +520,7 @@ DNS服务器采用树状结构 <!-- raw HTML omitted --></p>
 <li>Authoritative DNS server <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-05-28_16-57-23_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -530,7 +530,7 @@ DNS服务器采用树状结构 <!-- raw HTML omitted --></p>
 <p>Recursive DNS query with caching 递归查询</p>
 <p>同样也是按次序查询，但是不同的地方在于，只有查到了才会原路返回给用户，否则就会继续将查询递交给下一个服务器 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-28_16-59-21_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>注：一般来说不会在实际中使用 <!-- raw HTML omitted --></p>
 </li>
@@ -559,7 +559,7 @@ DNS服务器采用树状结构 <!-- raw HTML omitted --></p>
 <li>
 <p>因此不存在连接的说法，只要能够选对正确的QID，就能成功代替真实的回复 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-28_17-07-58_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -609,7 +609,7 @@ DNS服务器采用树状结构 <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on May 28, 2022 17:24 BST
+            Last updated on May 28, 2022 17:24 &#43;0100
         </span>
     </section></footer>
 

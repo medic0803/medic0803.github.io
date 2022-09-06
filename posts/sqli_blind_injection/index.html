@@ -219,7 +219,7 @@ if (!doNotTrack) {
     <header class="article-category">
         
             <a href="/categories/ctf/" >
-                CTF
+                ctf
             </a>
         
     </header>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    10 minute read
+                    9 minute read
                 </time>
             </div>
         
@@ -355,7 +355,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
 </span></span></span></code></pre></div><p>根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&rsquo;~&lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
 <figure><img src="/ox-hugo/2022-03-23_20-38-37_screenshot.png" width="400px"/>
-</figure>
+    </figure>
 
 <p>查询当前数据库名称及操作系统版本信息：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,database(),0x7e,@@version_compile_os,0x7e),3)-- -
@@ -450,7 +450,7 @@ count(*) = 主键出现的次数</p>
 <p>(3) 为什么会发生主键重复？</p>
 <p>我们接着看，接下来数据库会根据主键逐条查询users表中的内容。</p>
 <figure><img src="/ox-hugo/2022-03-31_21-23-38_screenshot.png" width="200px"/>
-</figure>
+    </figure>
 
 <p>这里为了得到主键的具体内容，进行了第一次计算，得到security1(之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)
 我们当然之后users表里不会有security1这样的字段，同样数据库也找不到，同时也没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)增加为1</p>
@@ -669,7 +669,7 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
 
 
         <span>
-            Last updated on Apr 20, 2022 22:13 BST
+            Last updated on Apr 20, 2022 22:13 &#43;0100
         </span>
     </section></footer>
 

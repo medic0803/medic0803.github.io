@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>php on Under The Ginkgo</title>
+        <link>https://ginkgo.org.cn/categories/php/</link>
+        <description>Recent content in php on Under The Ginkgo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-uk</language><atom:link href="https://ginkgo.org.cn/categories/php/index.xml" rel="self" type="application/rss+xml" />
+    </channel>
+</rss>

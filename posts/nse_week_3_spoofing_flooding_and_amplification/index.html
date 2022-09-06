@@ -300,7 +300,7 @@ if (!doNotTrack) {
 <p>ARP (Address Resolution Protocol)</p>
 <p>aims to translate from IP address to MAC address <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_11-05-46_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <ul>
@@ -364,7 +364,7 @@ if (!doNotTrack) {
 <p>RARP (Reverse ARP)</p>
 <p>aims to translate from MAC address to IP address <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_11-06-13_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -376,7 +376,7 @@ if (!doNotTrack) {
 <p>ARP spoofing attack</p>
 <p>ARP spoofing主要的目的就是污染原本的ARP cache，将Computer A存放的关于 Computer B的信息，改为attacker的，这样A在给B发frame的时候，就会发给attacker <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_10-49-32_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <ul>
@@ -407,7 +407,7 @@ if (!doNotTrack) {
 <p>Man-in-the-middle attack with ARP spoofing</p>
 <p>通过ARP spoofing 污染两/多台电脑的 <code>ARP cache</code> ，使他们的通信destination都指向attacker，从而截取通信内容(attacker node 进而转发通信，因为它知道IP address所对应的正确的MAC address) <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_10-53-55_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -419,7 +419,7 @@ if (!doNotTrack) {
 每当有frame 经过 switches, switch就会通过这个 table 来实现转发 <!-- raw HTML omitted --></p>
 <p>MAC flooding就是使用大量的spoofed frame来填充switch 的转发表，从而占满 switch 所有的内存空间，使正常的frame的转发策略无法加入table，最终就会导致正常的frame 通信因为没有对应的port而 <code>被迫广播</code> ，使attacker可以利用sniffer所监听到。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_11-04-54_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -439,7 +439,7 @@ client 发送接收IP的message <!-- raw HTML omitted -->
 4.  Acknowledge <!-- raw HTML omitted -->
 server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HTML omitted --></p>
 <pre><code>     <figure><img src="/ox-hugo/2022-04-26_09-31-53_screenshot.png" width="700px"/>
-</figure>
+            </figure>
  &lt;br/&gt;
 </code></pre>
 </li>
@@ -451,23 +451,23 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <p>DHCP spoofing 主要是通过向DHCP server发送大量的 <code>Spoofed DHCP request message</code> 来 <code>占用</code> IP池里的所有可分配的IP，然后再使用一台假的DHCP server来回复client所发出的DHCP discovery message，进而控制这些client的IP以及其他配置（网关，DNS server地址）。 <!-- raw HTML omitted --></p>
 <p>正常的DHCP request message： <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-43-14_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>Spoofed DHCP discovery message: 利用大量虚假的MAC地址来占用可分配的IP地址 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-43-53_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>DHCP starvation
 :</p>
 <p>通过发送大量的带有伪造MAC Address的DHCP request message来占用所有的IP池中的IP地址，进而使用假的DHCP server给其他client分配地址和其他配置信息，对他们进行控制 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-45-24_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-45-38_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_09-45-50_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -487,12 +487,12 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <p>ICMP Smurfing</p>
 <p>Attacker通过向一个局域网的广播域中发送大量的 <code>spoofed ICMP ECHO_REQUEST</code> 来诱导大量的clients发送 <code>ICMP ECHO_REPLY_REQUEST</code> 到指定的一台client进而使其崩溃 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_10-11-31_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>Amplification
 : 我们从上面的例子可以看到，通过一个简单的广播，就可以让这么多的client进而产生巨大的流量，进而就催生出一个新的技术就是 <code>Amplification</code> ,可以通过多层的amplifiers来实现巨大的DDoS流量 <!-- raw HTML omitted --></p>
 <pre><code> <figure><img src="/ox-hugo/2022-04-26_10-13-55_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  &lt;br/&gt;
 </code></pre>
 </li>
@@ -510,7 +510,7 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <p>NTP用来用来各个主机的时钟 <!-- raw HTML omitted --></p>
 <p>NTP是一个分层的，中间层的时间资源系统 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-26_22-46-00_screenshot.png" width="500px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>每一层我们称为 <code>stratum</code> ,由最上层的clock一层层同步到不同 <code>stratum</code> 的NTP server <!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
@@ -518,25 +518,25 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <li>
 <p>NTP如何工作</p>
 <p><figure><img src="/ox-hugo/2022-04-26_22-50-06_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>Client首先发出NTP message，并且在上面记录当前的时间戳： <code>T1=9:00:00am</code>  <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-26_22-50-55_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>NTP server 收到后马上打上时间戳： <code>T2=10:00:01am</code> <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-26_22-52-06_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>NTP sever返回一条NTP message，然后在发出之前打上时间戳： <code>T3=10:00:02am</code> <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-26_22-56-25_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>NTP message到达用户的时候马上打上时间戳： <code>T4=9:00:03am</code> <!-- raw HTML omitted --></li>
@@ -608,19 +608,19 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <li>
 <p>How NTP amplification attack works?</p>
 <p><figure><img src="/ox-hugo/2022-04-27_09-36-42_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>Attacker使用bot来伪造NTP request packets，使用victim的IP地址 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_09-36-57_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>Botnet 发送这些伪造的NTP请求，来诱使NTP servers调用他们的monlist命令，返回大量的response <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_09-38-14_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>Client收到了每一个NTP server所返回的600个IP地址的信息，相当于收到了一次DoS攻击。我们根据上面Wireshark的截图可以观察到，一条的spoofed NTP request只需要234bytes，但是却要受到100个482 bytes的数据包，可见其攻击力度。 <!-- raw HTML omitted --></li>
@@ -689,7 +689,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <li>Acknowledgement number (32 bits) <!-- raw HTML omitted --></li>
 </ul>
 <p><figure><img src="/ox-hugo/2022-04-27_10-36-39_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 <p>然后看一个具体的例子 <!-- raw HTML omitted --></p>
 <ol>
@@ -699,7 +699,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <li>至此三次握手连接成功，接下来就可以正常的进行通信，并且Source 和 Destination 将逐渐递增其自己的 <code>sequence number</code> 以及 <code>acknowledge number</code> <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_10-35-28_screenshot.png" width="700px"/>
-</figure>
+        </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -712,19 +712,19 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 <p>TCP SYN flooding attack本质上是一个DoS attack, 其目的是为了通过向目标服务器发送大量的无效 <code>SYN</code>, 来诱使服务器发送对等数量的 <code>SYN+ACK</code> 请求, 继而等待 <code>ACK</code> 请求回复，同时利用本地缓存这个连接，最终导致本地的缓存空间被占满。 <!-- raw HTML omitted --></p>
 <p>我们最后通过一个具体的例子来复现一下这个过程 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-27_10-48-13_screenshot.png"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>首先黑客向服务器发送大量的 <code>SYN</code> 请求,用的是伪造过的IP地址 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_10-52-20_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>接着服务器在收到了 <code>SYN</code> 请求之后，便会发出对应的 <code>SYN+ACK</code> 回复请求到之前伪造的IP地址 <!-- raw HTML omitted --></li>
 </ol>
 <p><figure><img src="/ox-hugo/2022-04-27_10-52-30_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <ol>
 <li>被伪造的IP地址的主机收到由服务器发来的大量 <code>SYN+ACK</code> 请求，可发现没有记录显示自己之前有发送过 <code>SYN</code> 请求到该服务器，因此不会回复 <code>ACK</code> 请求。同时，每维护一个等待 <code>ACK</code> 的连接，服务器都要开设一个新的端口，同时用缓存保存这些信息，一旦超出上限，那么就会使服务器瘫痪 <!-- raw HTML omitted --></li>
@@ -801,7 +801,7 @@ T4 = T3 - offset + delay/2 <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on May 30, 2022 22:13 BST
+            Last updated on May 30, 2022 22:13 &#43;0100
         </span>
     </section></footer>
 

