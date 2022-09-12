@@ -7,12 +7,12 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <lastBuildDate>Sun, 21 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/java_sec/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>JAVASec - Java 基础 - JVM与类的加载</title>
+        <title>JavaSec - Java 基础 - JVM与类的加载</title>
         <link>https://ginkgo.org.cn/posts/javasec_javabasic_jvmandclassloader/</link>
         <pubDate>Sun, 21 Aug 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/javasec_javabasic_jvmandclassloader/</guid>
-        <description>&lt;h2 id=&#34;javasec-java-基础-jvm与类的加载&#34;&gt;JAVASec - Java 基础 - JVM与类的加载&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;javasec-java-基础-jvm与类的加载&#34;&gt;JavaSec - Java 基础 - JVM与类的加载&lt;/h2&gt;
 &lt;p&gt;本篇主要记录一些在正式开始Java安全学习之前的一些基础知识的学习，说是基础，其实更多的是一些Java的底层概念的理解以及学习文章的分享，至于语法部分，请参考各种教程网站会更为高效 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h3 id=&#34;了解jvm--java-virtual-machine&#34;&gt;了解JVM (Java Virtual Machine)&lt;/h3&gt;
 &lt;p&gt;参考：&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zhangjg_blog/article/details/20380971&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -33,7 +33,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;java HelloWorld
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;看上去和C语言的流程是一样的，但是区别在于，C语言最后编译得到的是可以直接由计算机开启进程来运行的可执行文件，而Java的class文件是无法被直接执行的，这时候就需要请JVM (Java Virtual Machine)登场了。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们先简单地给出一个定义，到底什么是一个Java虚拟机？Java虚拟机和我们平时用到的虚拟机是一样，都是通过仿真实际计算机上的各种硬件的功能来实现的，例如处理器、堆栈、寄存器以及对应的指令系统，同时JVM会屏蔽与操作系统平台相关的信息，以此来实现跨平台使用。JVM实现的指令系统就是字节码，即.class文件。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;这时候我们回顾刚才举的例子，最后是使用 &lt;code&gt;java&lt;/code&gt; 命令来执行 .class文件，这里实际的效果就是启动了一个JVM进程，然后由JVM来加载 .class文件（字节码）来进行翻译成CPU能够识别的指令来交给CPU执行。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这时候我们回顾刚才举的例子，最后是使用 &lt;code&gt;java&lt;/code&gt; 命令来执行 .class文件，这里实际的效果就是 &lt;code&gt;启动了一个JVM进程&lt;/code&gt; ，然后由JVM来加载 .class文件（字节码）来进行翻译成CPU能够识别的指令来交给CPU执行。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-08-23_16-37-40_screenshot.png&#34;
          alt=&#34;Figure 1: Java编译运行&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
             &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;Java编译运行&lt;/p&gt;
@@ -115,8 +115,33 @@
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们之前提到过，Class类文件的排列非常紧凑，没有分隔符，紧接着主、次版本号之后存储的依次就是常量池、访问标志、类索引、父类索引与接口索引集合、字段表集合、方法表集合和属性表集合，这些内容我们在这里就不做展开介绍了，有兴趣的师傅可以读一读《深入理解Java虚拟机：JVM高级特性与最佳实践》的6.3节。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;类加载的触发时机&#34;&gt;类加载的触发时机&lt;/h3&gt;
+&lt;p&gt;在我们正式开始讲JVM的类加载机制之前，我们先来搞清楚什么时候会触发类加载机制。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;总的来说，类加载的原则是：延迟加载，即能不加载就不加载；同样的类加载的时机就是，第一次需要使用这个类的信息时，常见的情况有： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;访问调用静态成员 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;访问类的静态方法（除了有final修饰时） &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;public static final int a =123;为常量，不需要加载 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;public static final int a = math.PI; 编译时不确定常量的时，会加载 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;访问类的静态变量 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;第一次new对象的时候 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;创建顶层父类的实例 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;创建子类的实例时，优先加载其父类 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;一个类被加载时，如果类中的静态代码块、静态方法或静态变量饮用到了另一个类，则这个类也会被加载 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;JVM启动时，定义了main的类，启动main方法时该类会被加载 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;反射 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h3 id=&#34;虚拟机类加载机制&#34;&gt;虚拟机类加载机制&lt;/h3&gt;
-&lt;p&gt;上一节中我们简单介绍了一些Class文件的结构，那么接下来我们要介绍的就是JVM如何加载和使用这些Class文件。之前我们提到过，每一个类或者接口都需要一个单独的Class文件，从他们被加载到虚拟机内存中开始，到卸载出内存为止，一共要经历七个阶段，分别是：加载 （Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化 （Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称 为连接（Linking）。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;之前我们简单介绍了一些Class文件的结构以及触发类加载机制的时机，那么接下来我们要介绍的就是JVM具体是如何加载和使用这些Class文件。之前我们提到过，每一个类或者接口都需要一个单独的Class文件，从他们被加载到虚拟机内存中开始，到卸载出内存为止，一共要经历七个阶段，分别是：加载 （Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化 （Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称 为连接（Linking）。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-08-31_10-35-35_screenshot.png&#34;
          alt=&#34;Figure 7: Class文件加载的生命周期&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
             &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 7: &lt;!-- raw HTML omitted --&gt;Class文件加载的生命周期&lt;/p&gt;
@@ -797,6 +822,10 @@
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zhangjg_blog/article/details/20380971&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;深入理解Java虚拟机到底是什么&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/weixin_30384285/article/details/114759232&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;java什么时候会触发类加载_java中类的加载，及执行顺序&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/weixin_30233335/article/details/114390832&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;java中类何时被加载_java类在何时被加载&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/briblue/article/details/54973413&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;一看你就懂，超详细java中的ClassLoader详解&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://javasec.org/javase/ClassLoader/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
