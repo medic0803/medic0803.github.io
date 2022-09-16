@@ -3,24 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/java_sec/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/java_sec/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/posts/javasec_javabasic_reflection/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <loc>https://ginkgo.org.cn/tags/java_web/</loc>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/javasec_javaweb_servlet/</loc>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-09-13T01:20:36+08:00</lastmod>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-09-16T15:50:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/javasec_javabasic_reflection/</loc>
     <lastmod>2022-09-13T01:20:36+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/javasec_javabasic_jvmandclassloader/</loc>
