@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''><title>LeetBook Basic Algorithm</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; LeetBook Basic Algorithm Notes https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/ 删除排序数组中的重复项 解题方法：利用双指针 解题思路： 定义两个指针 fast, low,起始分别指向nums[1]， 循环遍历直至最后一个元素，'><title>LeetBook Basic Algorithm</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/leetbook_basic_algorithm/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='LeetBook Basic Algorithm'>
-<meta property='og:description' content=''>
+<meta property='og:description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; LeetBook Basic Algorithm Notes https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/ 删除排序数组中的重复项 解题方法：利用双指针 解题思路： 定义两个指针 fast, low,起始分别指向nums[1]， 循环遍历直至最后一个元素，'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/leetbook_basic_algorithm/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='python' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2022-03-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-27T15:44:46&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='python' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2022-03-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-22T10:52:31&#43;08:00'/>
 <meta name="twitter:title" content="LeetBook Basic Algorithm">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; LeetBook Basic Algorithm Notes https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/ 删除排序数组中的重复项 解题方法：利用双指针 解题思路： 定义两个指针 fast, low,起始分别指向nums[1]， 循环遍历直至最后一个元素，">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -275,13 +275,22 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="leetbook-basic-algorithm-notes">LeetBook Basic Algorithm Notes</h2>
+    <p>&lt;!&ndash;more&ndash;&gt;</p>
+<h2 id="leetbook-basic-algorithm-notes">LeetBook Basic Algorithm Notes</h2>
 <p><a class="link" href="https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/"  target="_blank" rel="noopener"
     >https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/</a></p>
 <h3 id="删除排序数组中的重复项">删除排序数组中的重复项</h3>
 <p>解题方法：利用双指针</p>
-<p>解题思路：
-定义两个指针 <code>fast</code>, <code>low</code>,起始分别指向nums[1]，循环遍历直至最后一个元素，每次判断nums[fast] == [fast-1],如果不想等，说明当前nums[fast]的值还没有重复，这时nums[low]写入nums[fast]的值（这里不用担心会覆盖没有重复的元素，因为low永远&lt;=fast，当low&lt;fast时说明有重复的元素需要覆盖）；如果相等，说明重复了，fast自增，low保持不变（这里也可以看出，fast自增后会留下一个重复的元素，可以用于覆盖）。</p>
+<p>解题思路：</p>
+<ol>
+<li>定义两个指针 <code>fast</code>, <code>low</code>,起始分别指向nums[1]，</li>
+<li>循环遍历直至最后一个元素，每次判断nums[fast] == [fast-1],
+<ul>
+<li>如果不相等，说明当前nums[fast]的值还没有重复，这时nums[low]写入nums[fast]的值（这里不用担心会覆盖没有重复的元素，因为low永远&lt;=fast，当low&lt;fast时说明有重复的元素需要覆盖）；</li>
+<li>如果相等，说明重复了，fast自增，low保持不变（这里也可以看出，fast自增后会留下一个重复的元素，可以用于覆盖）。</li>
+</ul>
+</li>
+</ol>
 <p>复杂度：
 时间复杂度O(n)：遍历数组
 空间复杂度O(1): 原数组进行元素覆盖</p>
@@ -340,6 +349,92 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">                <span class="n">fast</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">slow</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">expand</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="买卖股票的最佳时机-ii">买卖股票的最佳时机 II</h3>
+<p>解题思路：使用贪心算法，即在跌之前卖出即可取得利益最大化</p>
+<p>我们先来根据题目实际情况明确几个概念</p>
+<dl>
+<dt>单个交易日</dt>
+<dd><ul>
+<li>
+<p>只能持有一份股票</p>
+</li>
+<li>
+<p>可以执行的操作</p>
+<ul>
+<li>卖出</li>
+<li>卖出后买入</li>
+<li>买入后立即卖出</li>
+</ul>
+</li>
+<li>
+<p>操作原则</p>
+<ul>
+<li>
+<p>如果明天股价 <code>跌了</code>, 立即卖出，结束交易日</p>
+</li>
+<li>
+<p>如果明天股价 <code>涨了</code>, 最后买入今天的股票，等待明天卖掉</p>
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<p>根据以上的原则，如果碰到连续上涨日</p>
+<p>tmp_profit = (p_2 - p_1) + (p_3 - p_2) + (p_n - p_n-1) = p_n - p_1， 仍然可以获取最大利益</p>
+<p>算法逻辑：</p>
+<ul>
+<li>计算今日（prices[i]）与前一日（prices[i-1]）的价格差值
+<ul>
+<li>如果差值&gt;0，表示赚了，计入profit</li>
+<li>如果差值&lt;0或者=0，表示没有赚，跳过不计入profit</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">prices</span><span class="p">:</span>  <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">profit</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tmp</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">tmp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="n">profit</span> <span class="o">+=</span> <span class="n">tmp</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">profit</span>
+</span></span></code></pre></div><h3 id="只出现一次的数字">只出现一次的数字</h3>
+<p><a class="link" href="https://leetcode.cn/problems/single-number/solution/zhi-chu-xian-yi-ci-de-shu-zi-by-leetcode-solution/"  target="_blank" rel="noopener"
+    >官方解法</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># tempSet = set()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># for i in range(len(nums)):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#     oldLen = len(tempSet)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#     tempSet.add(nums[i])</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#     if len(tempSet) == oldLen:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#         tempSet.remove(nums[i])</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return tempSet.pop()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+</span></span></code></pre></div><p>算法思路：</p>
+<ol>
+<li>已知列表中除了目标元素外均重复两次</li>
+<li>那么直接使用XOR运算，就可以抵消所有的重复元素</li>
+</ol>
+<p>例如：1⊕2⊕1⊕2⊕4 = 4</p>
+<p>接着再加上reduce方法来简化代码，一行完成！</p>
+<h4 id="python-reduce-函数"><a class="link" href="https://www.runoob.com/python/python-func-reduce.html"  target="_blank" rel="noopener"
+    >Python reduce() 函数</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">[,</span> <span class="n">initializer</span><span class="p">])</span>
+</span></span></code></pre></div><p>function &ndash; 函数，有两个参数
+iterable &ndash; 可迭代对象
+initializer &ndash; 可选，初始参数</p>
+<p>对于所有iterable中的元素， <code>两两</code> 作为function的参数执行操作</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span>            <span class="c1"># 两数相加</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">sum1</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>   <span class="c1"># 计算列表和：1+2+3+4+5</span>
+</span></span><span class="line"><span class="cl"><span class="n">sum2</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>  <span class="c1"># 使用 lambda 匿名函数</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">sum1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">sum2</span><span class="p">)</span>
 </span></span></code></pre></div>
 </section>
 
@@ -377,7 +472,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Mar 27, 2022 15:44 &#43;0100
+            Last updated on Sep 22, 2022 10:52 CST
         </span>
     </section></footer>
 
@@ -586,6 +681,12 @@ if (!doNotTrack) {
     <li><a href="#leetbook-basic-algorithm-notes">LeetBook Basic Algorithm Notes</a>
       <ul>
         <li><a href="#删除排序数组中的重复项">删除排序数组中的重复项</a></li>
+        <li><a href="#买卖股票的最佳时机-ii">买卖股票的最佳时机 II</a></li>
+        <li><a href="#只出现一次的数字">只出现一次的数字</a>
+          <ul>
+            <li><a href="#python-reduce-函数"><a href="https://www.runoob.com/python/python-func-reduce.html">Python reduce() 函数</a></a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>

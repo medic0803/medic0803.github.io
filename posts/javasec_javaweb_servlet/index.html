@@ -9,7 +9,7 @@
 <meta property='og:description' content='JavaSec - Java Web - 三大核心组件 - Servlet 本篇作为JavaSec的基础内容学习中，Java web中的三大核心组件介绍的第一篇Servlet，主要分享学习Se'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_servlet/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_web' /><meta property='article:tag' content='java_sec' /><meta property='article:published_time' content='2022-09-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-16T15:50:57&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_web' /><meta property='article:tag' content='java_sec' /><meta property='article:published_time' content='2022-09-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-21T11:42:08&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - Java Web - 三大核心组件 - Servlet">
 <meta name="twitter:description" content="JavaSec - Java Web - 三大核心组件 - Servlet 本篇作为JavaSec的基础内容学习中，Java web中的三大核心组件介绍的第一篇Servlet，主要分享学习Se">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    6 minute read
+                    11 minute read
                 </time>
             </div>
         
@@ -277,10 +277,16 @@ if (!doNotTrack) {
     
     <h2 id="javasec-java-web-三大核心组件-servlet">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
 <p>本篇作为JavaSec的基础内容学习中，Java web中的三大核心组件介绍的第一篇Servlet，主要分享学习Servlet在Java web工程中的所承担的职责，以及开始了解Java web工程，以便之后更好的了解漏洞所处的工程环境 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/servlet.svg"
+         alt="Figure 1: Servlet Summary" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Servlet Summary</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
 <h3 id="什么是servlet">什么是Servlet</h3>
 <p>&ldquo;A servlet is a small Java program that runs within a Web server. Servlets receive and respond to requests from Web clients, usually across HTTP, the HyperText Transfer Protocol.&rdquo; &ndash; Java EE API <!-- raw HTML omitted --></p>
 <p>根据Java EE的文档说明，Servlet是运行在Web服务器上的一个Java程序，主要负责接收和处理从Web客户端（浏览器）发出的请求（POST &amp; GET）,一般通过HTTP。 <!-- raw HTML omitted --></p>
-<p>我们知道在PHP当中，当用户填写表达并提交，一般就会将相应的请求发送到服务端对应的php脚本上，然后php脚本会根据 $_GET以及 $_POST数组（以及其他请求）来获取请求的内容并进行处理。 <!-- raw HTML omitted --></p>
+<p>我们知道在PHP当中，当用户填写表达并提交，一般就会将相应的请求发送到服务端对应的php脚本上，然后php脚本会根据 <code>$_GET</code> 以及 <code>$_POST</code> 数组（以及其他请求）来获取请求的内容并进行处理。 <!-- raw HTML omitted --></p>
 <p>Servlet就是Java中用来处理来自客户端的GET以及POST请求（以及其他请求）的一个程序。 <!-- raw HTML omitted --></p>
 <h3 id="servlet的生命周期">Servlet的生命周期</h3>
 <p>&ldquo;This interface defines methods to initialize a servlet, to service requests, and to remove a servlet from the server. These are known as life-cycle methods and are called in the following sequence: <!-- raw HTML omitted --></p>
@@ -306,8 +312,8 @@ The servlet is taken out of service, then destroyed with the destroy method, the
 <p>接着我们就要知道，具体要如何实现并使用Servlet来帮助web程序来处理来自客户端的请求呢？ <!-- raw HTML omitted --></p>
 <p>一般来说，我们都是通过直接继承 <code>HttpServlet</code> 这个类，并且重写 <code>doGet()</code> 以及 <code>doPost()</code> 这两个方法来实现对于不同请求的处理 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-09-14_11-24-24_screenshot.png"
-         alt="Figure 1: Servlet的继承关系" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Servlet的继承关系</p>
+         alt="Figure 2: Servlet的继承关系" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Servlet的继承关系</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -395,8 +401,8 @@ The servlet is taken out of service, then destroyed with the destroy method, the
 </span></span></code></pre></div><p>可以配置的信息包括启用的Servlet程序所对应的类以及访问的url路径（servlet-name, servlet-class, servlet-mapping, url-paatern）,还可以配置一个Servlet在初始化时所初始化的一些变量（init-param）。 <!-- raw HTML omitted --></p>
 <p>回顾一下之前的Servlet继承关系，我们说GenericServlet已经开始定义配置信息了，是因为它实现了 <code>ServletCofnig</code> 接口，因此servlet对象可以通过以下的get方法来获取配置信息，同时还可以同通过 <code>getServletconfig()</code> 方法来返回一个 <code>ServletConfig</code> 对象 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-09-14_18-58-08_screenshot.png"
-         alt="Figure 2: ServletConfig 接口" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->ServletConfig 接口</p>
+         alt="Figure 3: ServletConfig 接口" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->ServletConfig 接口</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -475,9 +481,263 @@ The servlet is taken out of service, then destroyed with the destroy method, the
 </span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;获取Context中的存储的值, key_int: &#34;</span> <span class="o">+</span> <span class="n">context</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&#34;key_int&#34;</span><span class="o">));</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="结语">结语</h3>
+</span></span></code></pre></div><h3 id="httpservletrequest">HttpServletRequest</h3>
+<p>接下来我们会来具体地看看Servlet是如何处理来自客户端的请求的。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{}</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{}</span>
+</span></span></code></pre></div><p>首先还是回到doGet以及doPost请求，我们看到他们都有共同的参数 HttpServletRequest以及HttpServletResponse <!-- raw HTML omitted --></p>
+<h4 id="httpservletrequest的作用">HttpServletRequest的作用</h4>
+<p>每当Tomcat服务器收到来自客户端的请求时，服务器都会将用户的HTTP请求封装到 Request的对象中并传递到service方法中供程序员进行处理，我们可以通过该HttpServletRequest对象获取所有请求的信息 <!-- raw HTML omitted --></p>
+<h4 id="httpservletrequest-api">HttpServletRequest API</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description｜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getRequestURI()</td>
+<td>获取请求的资源路径</td>
+</tr>
+<tr>
+<td>getRequestURL()</td>
+<td>获取请求的统一资源定位符（绝对路径）</td>
+</tr>
+<tr>
+<td>getRemoteHost()</td>
+<td>获取客户端的ip地址</td>
+</tr>
+<tr>
+<td>getHeader()</td>
+<td>获取请求头</td>
+</tr>
+<tr>
+<td>getParameter</td>
+<td>获取请求的参数</td>
+</tr>
+<tr>
+<td>getParameterValues</td>
+<td>获取请求的参数（多个值的时候使用）</td>
+</tr>
+<tr>
+<td>getMethod()</td>
+<td>获取请求的方式（GET/POST）</td>
+</tr>
+<tr>
+<td>setAttribute(key， value)</td>
+<td>设置域数据</td>
+</tr>
+<tr>
+<td>getAttribute(key)</td>
+<td>获取域数据</td>
+</tr>
+<tr>
+<td>getRequestDispatcher()</td>
+<td>获取请求转发对象</td>
+</tr>
+<tr>
+<td>setCharacterEncoding()</td>
+<td>设置字符集（防止出现POST请求的中文乱码问题）</td>
+</tr>
+<tr>
+<td></td>
+<td>注意：设置字符集需要在获取请求参数之前设置才有效</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="请求转发">请求转发</h4>
+<p>当我们需要创建多个Servlet完成复杂的业务操作时，就要使用请求的转发。 <!-- raw HTML omitted --></p>
+<p>首先我们要明确对于每次客户端的请求都只维护唯一个HttpServletRequest对象，这个request对象将在业务流水线上的所有Servlet之间传递。 <!-- raw HTML omitted --></p>
+<p>每个Servlet首先完成自己的业务逻辑，然后需要使用 <code>getRequestDispatcher(str)</code> 获取调度器，进而使用RequestDispatcher forward(request, response)来完成转发 <!-- raw HTML omitted --></p>
+<p>值得注意的是，使用的调度器只能在工程目录下寻找（因为是斜杠打头），并且由于WEB-INF是受保护的目录，因此用户在客户端无法直接访问WEB-INF下的资源 <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>getRequestDispatcher(str)</th>
+<th>获取调度器，请求转发到另一个资源（以斜杠打头）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>/ 斜杠表示地址为：<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E5%90%8D"  target="_blank" rel="noopener"
+    >http://ip:port/%E5%B7%A5%E7%A8%8B%E5%90%8D</a>, 部署后所映射到的web目录</td>
+</tr>
+<tr>
+<td>RequestDispatcher forward(request, response)</td>
+<td>转发请求</td>
+</tr>
+</tbody>
+</table></div>
+<p>值得注意的是，使用的调度器只能在工程目录下寻找（因为是斜杠打头），并且由于WEB-INF是受保护的目录，因此用户在客户端无法直接访问WEB-INF下的资源 <!-- raw HTML omitted --></p>
+<p>第二点需要关注的是，在使用请求转发以及其他情况下发生了地址栏URL的变化的时候，可能会导致一些相对路径的地址发生跳转错误，这时候可以使用&lt;base href&gt;标签来将一个页面的相对路径固定，从而避免错误 <!-- raw HTML omitted --></p>
+<h3 id="httpservletresponse">HttpServletResponse</h3>
+<p>对于每一个用户的HTTP请求，Tomcat服务器都会创建唯一一个Response对象在Servlet之间传递，用于表示所有的响应信息。 <!-- raw HTML omitted --></p>
+<h4 id="两个输出流">两个输出流</h4>
+<p>那么当Tomcat服务器收到并处理了用户的请求之后，就需要做出响应，通常都需要返回给用户资源，那么根据返回资源类型的不同，Java Web提供了两种输出流 <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>get Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getOutputStream()</td>
+<td>回传二进制数据</td>
+</tr>
+<tr>
+<td>getWriter()</td>
+<td>回传字符串数据</td>
+</tr>
+</tbody>
+</table></div>
+<p>只能获取一个输出流，因此这两个方法不能同时使用，否则会出现报错（服务器错误，500） <!-- raw HTML omitted --></p>
+<h4 id="如何往客户端回传数据">如何往客户端回传数据</h4>
+<p>那么得到了返回流对象之后，还需要使用回传的具体方法来进行输出 <!-- raw HTML omitted --></p>
+<ol>
+<li>write() <!-- raw HTML omitted --></li>
+<li>printWriter() <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="结语">结语</h3>
 <p>通过对于Servlet的学习，我们知道了Servlet是作为Java web中是web服务端用来处理客户端的各种请求的一个中间件，我们一直都说要重视用户的输入，因此其的安全至关重要。 <!-- raw HTML omitted --></p>
+<p>Servelet中各个组件的关系如下图所示： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/servlet.svg"
+         alt="Figure 4: Servlet Summary" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->Servlet Summary</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
 <p>我们也开始了解了一些Java web开发中的一些组成结构，也体验了一下实际开发中的一些流程与操作，更加具体的使用这里暂时就不具体展开了。 <!-- raw HTML omitted --></p>
+<h3 id="补充内容">补充内容</h3>
+<h4 id="cookie">Cookie</h4>
+<p>Cookie是服务器通知客户端保存键值对的一种技术 <!-- raw HTML omitted -->
+客户端有了Cookie之后，每次请求都发送给服务器 <!-- raw HTML omitted -->
+每个cookie的大小不能超过4KB <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-21_10-17-18_screenshot.png"
+         alt="Figure 5: Cookie的创建" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->Cookie的创建</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>服务器获取Cookie</p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+返回数组进行遍历之后才能获取具体的Cookie的值 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>修改Cookie</p>
+<ol>
+<li>构造新的Cookie对象来覆盖原有Cookie <!-- raw HTML omitted --></li>
+<li>查找需要修改的的Cookie对象，并用setValue方法赋予Cookie新的值（注意有一定的格式要求），最后调用response.addCookie()通知客户端保存修改的Cookie <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cookie的生命控制</p>
+<p>Cookie的生命控制指的是如何管理Cookie什么时候被销毁（删除） <!-- raw HTML omitted --></p>
+<p>由SetMaxAge()方法来控制 <!-- raw HTML omitted --></p>
+<p>public void setMaxAge(int expiry) <!-- raw HTML omitted --></p>
+<p>Sets the maximum age in seconds for this Cookie. <!-- raw HTML omitted --></p>
+<p>A <code>positive value</code> indicates that the cookie will expire after that many <code>seconds</code> have passed. Note that the value is the maximum age when the cookie will expire, not the cookie&rsquo;s current age. <!-- raw HTML omitted --></p>
+<p>A <code>negative value</code> means that the cookie is not stored persistently and will be <!-- raw HTML omitted -->deleted when the Web browser exits<!-- raw HTML omitted -->. <!-- raw HTML omitted --></p>
+<p>A <code>zero value</code> causes the cookie to be deleted. 马上删除 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cookie有效路径path的设置</p>
+<p>使用path属性可以有效地过滤哪些Cookie可以发送给服务器，哪些不发 <!-- raw HTML omitted --></p>
+<p>对于单次的请求来说，只有path满足当前请求地址的cookie，才会被一起发送 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Cookie免密登陆</p>
+<p><figure><img src="/ox-hugo/2022-09-21_11-18-53_screenshot.png"
+             alt="Figure 7: Cookie免密登陆" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->Cookie免密登陆</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="session">Session</h4>
+<p>Session在Java中是一个接口，是一个会话，用来维护 <code>一个客户端</code> 和服务器之间的关联技术。 <!-- raw HTML omitted --></p>
+<p>Session会话中，我们经常用来保存用户登陆之后的信息（在服务端） <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>创建和获取Session</p>
+<p>request.getSession() <!-- raw HTML omitted -->
+第一调用时创建Session会话，之后再调用，都会获取前面创建好的Session会话对象。 <!-- raw HTML omitted --></p>
+<p>isNew():判断到底是不是刚创建出来的 <!-- raw HTML omitted --></p>
+<p>每个会话都有一个ID值来唯一标识一个Session <!-- raw HTML omitted -->
+getId() 来获取ID <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Session域的数据存取</p>
+<p>我们知道Session是保存在服务器端保存的用户登陆之后的信息 <!-- raw HTML omitted --></p>
+<p>既然是域对象，那么API与之间我们见过的也是一致的 <!-- raw HTML omitted --></p>
+<p>setAttribute(key, value) <!-- raw HTML omitted -->
+getAttribute(key) <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>Session生命周期控制</p>
+<p>void setMaxInactiveInterval(int interval) <!-- raw HTML omitted --></p>
+<p>Specifies the time, in seconds, between client requests before the servlet container will invalidate this session. <!-- raw HTML omitted --></p>
+<p>An interval value of <code>zero or less</code> indicates that the session should <code>never timeout</code>. <!-- raw HTML omitted --></p>
+<p>Parameters: <!-- raw HTML omitted -->
+interval - An integer specifying <code>the number of seconds</code> <!-- raw HTML omitted --></p>
+<hr>
+<p>int getMaxInactiveInterval() <!-- raw HTML omitted --></p>
+<p>Returns the maximum time interval, in seconds, that the servlet container will keep this session open between client accesses. After this interval, the servlet container will invalidate the session. The maximum time interval can be set with the setMaxInactiveInterval method. <!-- raw HTML omitted --></p>
+<p>A return value of zero or less indicates that the session will never timeout. <!-- raw HTML omitted --></p>
+<p>Returns: <!-- raw HTML omitted -->
+an integer specifying the number of seconds this session remains open between client requests <!-- raw HTML omitted -->
+See Also: <!-- raw HTML omitted -->
+setMaxInactiveInterval(int) <!-- raw HTML omitted --></p>
+<p>Session的超时的概念指的是，客户端两次请求之间的间隔（Interval），如果超出规定的时间，Session就会失效 <!-- raw HTML omitted --></p>
+<p>Session的默认的超时时间为30min，可以在web.xml中查看到该配置，如果需要修改统一的默认时间，也可以重写这个配置来定义 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;session-config&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;session-timeout&gt;</span>30<span class="nt">&lt;/session-timeout&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/session-config&gt;</span>
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="cookie-and-session总结">Cookie &amp; Session总结</h4>
+<p><figure><img src="/ox-hugo/2022-09-21_11-38-00_screenshot.png"
+         alt="Figure 8: Cookie &amp;amp; Session总结" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->Cookie &amp; Session总结</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>客户端发起请求，服务器接收到请求之后创建新的Session（request.getSession()），并存放到内存中 <!-- raw HTML omitted --></li>
+<li>服务器在为该客户端创建Session时，还会创建一个Cookie对象来保存JSESSIONID:ID的键值对，并发送给客户端 <!-- raw HTML omitted --></li>
+<li>客户端收到Set-Cookie请求头之后，保存SessionID，并在之后的每一次请求中都带上这个Cookie <!-- raw HTML omitted --></li>
+<li>服务器在每次收到客户端的请求时也会收到SessionID，从而在内存中寻找对应的Session <!-- raw HTML omitted --></li>
+</ol>
+<p>由于Cookie的默认存活时间设置为Session，即关闭浏览器直接销毁，因此当保存有SessionID的Cookie被销毁之后，原本的Session也就自然而然的失效了。 <!-- raw HTML omitted --></p>
 <h3 id="reference">Reference</h3>
 <p><a class="link" href="https://www.bilibili.com/video/BV1Y7411K7zz?vd_source=13198d68e199803d43258bc64add9d55"  target="_blank" rel="noopener"
     >【尚硅谷最新版JavaWeb全套教程,java web零基础入门完整版】</a> <!-- raw HTML omitted --></p>
@@ -518,7 +778,7 @@ The servlet is taken out of service, then destroyed with the destroy method, the
 
 
         <span>
-            Last updated on Sep 16, 2022 15:50 CST
+            Last updated on Sep 21, 2022 11:42 CST
         </span>
     </section></footer>
 
@@ -578,6 +838,18 @@ The servlet is taken out of service, then destroyed with the destroy method, the
 
         <div class="article-details">
             <h2 class="article-title">JavaSec - Java 基础 - JVM与类的加载</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_listener_and_filter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</h2>
         </div>
     </a>
 </article>
@@ -769,7 +1041,27 @@ The servlet is taken out of service, then destroyed with the destroy method, the
             <li><a href="#servletcontext的作用">ServletContext的作用</a></li>
           </ul>
         </li>
+        <li><a href="#httpservletrequest">HttpServletRequest</a>
+          <ul>
+            <li><a href="#httpservletrequest的作用">HttpServletRequest的作用</a></li>
+            <li><a href="#httpservletrequest-api">HttpServletRequest API</a></li>
+            <li><a href="#请求转发">请求转发</a></li>
+          </ul>
+        </li>
+        <li><a href="#httpservletresponse">HttpServletResponse</a>
+          <ul>
+            <li><a href="#两个输出流">两个输出流</a></li>
+            <li><a href="#如何往客户端回传数据">如何往客户端回传数据</a></li>
+          </ul>
+        </li>
         <li><a href="#结语">结语</a></li>
+        <li><a href="#补充内容">补充内容</a>
+          <ul>
+            <li><a href="#cookie">Cookie</a></li>
+            <li><a href="#session">Session</a></li>
+            <li><a href="#cookie-and-session总结">Cookie &amp; Session总结</a></li>
+          </ul>
+        </li>
         <li><a href="#reference">Reference</a></li>
       </ul>
     </li>

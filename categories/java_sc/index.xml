@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>java_sc on Under The Ginkgo</title>
+        <link>https://ginkgo.org.cn/categories/java_sc/</link>
+        <description>Recent content in java_sc on Under The Ginkgo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-uk</language>
+        <lastBuildDate>Tue, 20 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/java_sc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</title>
+        <link>https://ginkgo.org.cn/posts/javasec_javaweb_listener_and_filter/</link>
+        <pubDate>Tue, 20 Sep 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/javasec_javaweb_listener_and_filter/</guid>
+        <description>&lt;h2 id=&#34;javasec-java-web-三大核心组件-listener-and-filter&#34;&gt;JavaSec - Java Web - 三大核心组件 - Listener &amp;amp; Filter&lt;/h2&gt;
+&lt;p&gt;本篇主要介绍Java Web的其他两大核心组件，Listener和Filter，建议先阅读Servlet篇，对于Java Web的底层组件有一个基础的了解之后，再来进行阅读会更为方便 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;servletcontextlistener-监听器&#34;&gt;ServletContextListener 监听器&lt;/h3&gt;
+&lt;p&gt;Listener监听器我们在各大MVC中已经见过很多遍了，主要的作用就是监听变化，做出反馈。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们这里要介绍的 &lt;code&gt;ServletContextListener&lt;/code&gt; 顾名思义就是监听 &lt;code&gt;ServletContext&lt;/code&gt; 的变化 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们知道 &lt;code&gt;ServletContext&lt;/code&gt; 会在Web工程启动时被创建，并且在所有的Servlet程序之间共享，直到在web工程停止时销毁，而 &lt;code&gt;ServletContextListener&lt;/code&gt; 就可以实现对于 &lt;code&gt;ServletContext&lt;/code&gt; 对象  &lt;code&gt;初始化&lt;/code&gt;  以及 &lt;code&gt;销毁&lt;/code&gt; 的监听。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们可以自行创建一个类来实现  &lt;code&gt;ServletContextListener&lt;/code&gt; 接口，当然也可以直接使用IDEA所提供的自动创建功能 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;接着可以重写以下方法来通过监听 &lt;code&gt;ServletContext&lt;/code&gt;, &lt;code&gt;Session&lt;/code&gt; 以及 &lt;code&gt;Attribute&lt;/code&gt; 的变化而做出反馈行为 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;contextInitialized&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ServletContextEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sce&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* This method is called when the servlet context is initialized(when the Web application is deployed). */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;contextDestroyed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ServletContextEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sce&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* This method is called when the servlet Context is undeployed or Application Server shuts down. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sessionCreated&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpSessionEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;se&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* Session is created. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sessionDestroyed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpSessionEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;se&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* Session is destroyed. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;attributeAdded&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpSessionBindingEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sbe&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* This method is called when an attribute is added to a session. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;attributeRemoved&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpSessionBindingEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sbe&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* This method is called when an attribute is removed from a session. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;attributeReplaced&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpSessionBindingEvent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sbe&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;cm&#34;&gt;/* This method is called when an attribute is replaced in a session. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;filter-过滤器&#34;&gt;Filter 过滤器&lt;/h3&gt;
+&lt;p&gt;Filter的主要功能是： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;拦截请求 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;权限检查 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;日记操作 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;事务管理 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&amp;hellip; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;过滤响应 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;filter过滤器的使用步骤&#34;&gt;Filter过滤器的使用步骤&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;编写一个类实现Filter接口（IDEA可以自动生成） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;重写实现 &lt;code&gt;doFilter()&lt;/code&gt; 方法（进行过滤） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;web.xml或者注解中配置拦截路径 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;filter的生命周期&#34;&gt;Filter的生命周期&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;构造器方法 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;init初始化方法 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;第1，2步，在web工程启动的时候执行（Filter已经创建） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;doFilter过滤方法 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;每次拦截到请求，就会执行过滤 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;destory销毁方法 &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;停止web工程时，销毁Filter过滤器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;filterconfig类&#34;&gt;FilterConfig类&lt;/h4&gt;
+&lt;p&gt;Tomcat每次创建Filter的时候，也会同时创建一个FilterConfig类，其中包含了Filter配置文件的配置信息，其中包含： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;获取Filter的名称 filter-name的内容 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;获取再Filter中配置的init-param初始化参数 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;获取ServletContext对象 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;filterchain-过滤链类&#34;&gt;FilterChain 过滤链类&lt;/h4&gt;
+&lt;p&gt;FilterChain顾名思义就是将多个Filter联合使用，形成过滤链 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-09-22_11-34-33_screenshot.png&#34;
+         alt=&#34;Figure 1: Filter链执行顺序&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;Filter链执行顺序&lt;/p&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;filter的拦截路径&#34;&gt;Filter的拦截路径&lt;/h4&gt;
+&lt;dl&gt;
+&lt;dt&gt;精确匹配&lt;/dt&gt;
+&lt;dd&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/target.jsp&lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;对&lt;a class=&#34;link&#34; href=&#34;http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp&lt;/a&gt; 单个资源有效 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;目录匹配&lt;/dt&gt;
+&lt;dd&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/admin/*&lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;对所有admin目录下的资源访问进行拦截过滤 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;dt&gt;后缀名匹配&lt;/dt&gt;
+&lt;dd&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;*.html&lt;span class=&#34;nt&#34;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;对所有的html文件进行拦截过滤 &lt;!-- raw HTML omitted --&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Filter过滤器只关心请求的地址是否匹配，不关心请求的资源是否存在！ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

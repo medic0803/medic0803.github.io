@@ -9,7 +9,7 @@
 <meta property='og:description' content='URI &amp;amp; URL &amp;amp; URN 的关系 很长一段时间以来，我都搞不清楚URI，URL的关系，最近养成了写博客的习惯，那么我们就来一起搞搞明白。 如果有和我一样搞不清楚'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/uri_url_urn/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:published_time' content='2022-05-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-21T22:31:18&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:published_time' content='2022-05-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-17T16:03:03&#43;08:00'/>
 <meta name="twitter:title" content="URI &amp; URL &amp; URN 的关系">
 <meta name="twitter:description" content="URI &amp;amp; URL &amp;amp; URN 的关系 很长一段时间以来，我都搞不清楚URI，URL的关系，最近养成了写博客的习惯，那么我们就来一起搞搞明白。 如果有和我一样搞不清楚">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -317,7 +317,18 @@ if (!doNotTrack) {
 <li>一个URL一定是一个URI <!-- raw HTML omitted --></li>
 <li>一个URI不一定是一个URL，它还可以是URN <!-- raw HTML omitted --></li>
 </ul>
-<h3 id="urn">URN</h3>
+<p>我们最后用一个Java Web中的例子来结束URI与URL的区分 <!-- raw HTML omitted --></p>
+<p>我们重写Servlet的doGet方法来帮助服务器处理来自客户端的HTTP请求，并通过HttpServletRequest对象来获取GET请求的具体信息 <!-- raw HTML omitted --></p>
+<p>接着通过getRequestURI() &amp; getRequestURL()来分别获取请求的URI以及URL的信息 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;URI of the requested resource: &#34;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;URL of the request resource: &#34;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>结果如下，我们可以看到，URI可以非常简短，工程名+资源的路径即可，而URL就需要完整的ip:port的信息来帮助唯一定位一个资源 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">URI of the requested resource: /JSPLearn/hello
+</span></span><span class="line"><span class="cl">URL of the request resource: http://localhost:8089/JSPLearn/hello
+</span></span></code></pre></div><h3 id="urn">URN</h3>
 <p>URN, Uniform Resource Name, 统一资源名称，是一种特殊的URI，特点是其scheme使用 <code>urn:</code> <!-- raw HTML omitted --></p>
 <p>“统一”，表示使用一种统一的规范来表示 <!-- raw HTML omitted -->
 “资源名称”，表达了URN会表示一个资源的名称，并称这个标识会同时在空间以及时间上保持其唯一性，及全球唯一，并且在未来也会保持唯一 <!-- raw HTML omitted --></p>
@@ -376,7 +387,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on May 21, 2022 22:31 &#43;0100
+            Last updated on Sep 17, 2022 16:03 CST
         </span>
     </section></footer>
 
