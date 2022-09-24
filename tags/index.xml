@@ -6,12 +6,28 @@
         <description>Recent content in Tags on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Tue, 20 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 23 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>java_sec</title>
         <link>https://ginkgo.org.cn/tags/java_sec/</link>
-        <pubDate>Tue, 20 Sep 2022 00:00:00 +0000</pubDate>
+        <pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/java_sec/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>kali</title>
+        <link>https://ginkgo.org.cn/tags/kali/</link>
+        <pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/kali/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LCE</title>
+        <link>https://ginkgo.org.cn/tags/lce/</link>
+        <pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/lce/</guid>
         <description></description>
         </item>
         <item>
@@ -20,6 +36,30 @@
         <pubDate>Tue, 20 Sep 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/tags/java_web/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>linux</title>
+        <link>https://ginkgo.org.cn/tags/linux/</link>
+        <pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>pentest</title>
+        <link>https://ginkgo.org.cn/tags/pentest/</link>
+        <pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/pentest/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>shell</title>
+        <link>https://ginkgo.org.cn/tags/shell/</link>
+        <pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/shell/</guid>
         <description></description>
         </item>
         <item>

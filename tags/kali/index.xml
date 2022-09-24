@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>kali on Under The Ginkgo</title>
+        <link>https://ginkgo.org.cn/tags/kali/</link>
+        <description>Recent content in kali on Under The Ginkgo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-uk</language>
+        <lastBuildDate>Fri, 23 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/kali/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Ncat/nc 学习（未完待续）</title>
+        <link>https://ginkgo.org.cn/posts/learn_ncat/</link>
+        <pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/learn_ncat/</guid>
+        <description>&lt;h2 id=&#34;ncat-nc-学习-未完待续&#34;&gt;Ncat/nc 学习（未完待续）&lt;/h2&gt;
+&lt;p&gt;本篇主要记录ncat/nc工具的学习使用，接下来具体的使用以ncat命令为主，主要是是考虑到nc在各个操作系统存在多个版本，造成很多参数都不能同步使用。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Ncat是由Nmap下的一个新的项目，因此可以直接代替使用。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;本文主要参考官方文档以及国光师傅的文章：&lt;a class=&#34;link&#34; href=&#34;https://www.sqlsec.com/2019/10/nc.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;nc 命令教程&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;基础使用&#34;&gt;基础使用&lt;/h3&gt;
+&lt;p&gt;参考官网使用手册：&lt;a class=&#34;link&#34; href=&#34;https://nmap.org/ncat/guide/ncat-usage.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Basic usage&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;ncat的使用主要分为两种模式：connect mode连接模式以及listen mode监听模式 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Connect mode 连接模式&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;ncat &amp;lt;host&amp;gt; [&amp;lt;port&amp;gt;] &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;ncat会向一个正在监听的服务发起一个连接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;类似于socket网络编程中的 connect 方法，而发起者可以看作是client客户端 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Listen mode 监听模式&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;ncat &amp;ndash;listen [&amp;lt;host&amp;gt;] [&amp;lt;port&amp;gt;] &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;ncat -l [&amp;lt;host&amp;gt;] [&amp;lt;port&amp;gt;] &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;ncat会启动服务并等待连接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;类似于socket网络编程中的bind和listen方法，监听端可以看作是server服务端 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;默认的host为任何本地接口（INADDR_ANY） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;默认的port为31337 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;默认只有root用户才能监听低于1024（服务端口）的端口号 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;默认使用TCP连接，且只接收一个连接，并且在客户端退出之后断开连接 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;可以使用 &lt;code&gt;-k, --keep-open&lt;/code&gt; 选项来允许多个连接并保持 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;实验环境&#34;&gt;实验环境&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;操作系统&lt;/th&gt;
+&lt;th&gt;IP地址&lt;/th&gt;
+&lt;th&gt;定位&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;macOS 12.4&lt;/td&gt;
+&lt;td&gt;192.168.0.100&lt;/td&gt;
+&lt;td&gt;服务端监听&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;kali 5.18.0-kali5-arm64&lt;/td&gt;
+&lt;td&gt;172.16.232.135&lt;/td&gt;
+&lt;td&gt;客户端连接&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;文字交互&#34;&gt;文字交互&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-l, --listen               listen mode, &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; inbound connects
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们使用macOS来监听本地2333端口的入站连接 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ncat -l &lt;span class=&#34;m&#34;&gt;2333&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在kali端进行连接，之后就可以进行通信了 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ncat 192.168.0.100 &lt;span class=&#34;m&#34;&gt;2333&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-09-23_10-33-38_screenshot.png&#34;
+         alt=&#34;Figure 1: 基础文字交互&#34; width=&#34;300px&#34;/&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;基础文字交互&lt;/p&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;任意一方按下 &lt;code&gt;Ctrl+C&lt;/code&gt; 结束连接之后，双方都会断开 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;当macOS服务端加上 &lt;code&gt;-k, --keep-open&lt;/code&gt; 选项之后，kali客户端断开连接后，macOS服务端仍然监听，方便多个客户端在之后连入 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;命令交互&#34;&gt;命令交互&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-e, --exec &amp;lt;command&amp;gt;       Executes the given &lt;span class=&#34;nb&#34;&gt;command&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    --lua-exec &amp;lt;filename&amp;gt;  Executes the given Lua script
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-v, --verbose              Set verbosity level &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;can be used several &lt;span class=&#34;nb&#34;&gt;times&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;macOS服务端监听本地2333端口的入站连接，并将收到的信息发送的/bin/zsh &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ncat 192.168.0.100 &lt;span class=&#34;m&#34;&gt;2333&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-09-23_10-45-02_screenshot.png&#34;
+         alt=&#34;Figure 2: 命令交互&#34; width=&#34;400px&#34;/&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;命令交互&lt;/p&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;内网弹shell&#34;&gt;内网弹shell&lt;/h3&gt;
+&lt;p&gt;因为没有现成的服务器，考虑时间成本问题，待更新 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

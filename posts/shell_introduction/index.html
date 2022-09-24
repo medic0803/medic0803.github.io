@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='浅谈Shell中的小知识 什么是交互式shell和非交互式shell？ 我们在进行渗透测试的时候，往往需要自己构造一个 Interactive 可交互的shell，那么'><title>浅谈Shell中的小知识</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/shell_introduction/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='浅谈Shell中的小知识'>
+<meta property='og:description' content='浅谈Shell中的小知识 什么是交互式shell和非交互式shell？ 我们在进行渗透测试的时候，往往需要自己构造一个 Interactive 可交互的shell，那么'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/shell_introduction/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='pentest' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='shell' /><meta property='article:published_time' content='2022-07-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-23T15:17:33&#43;08:00'/>
+<meta name="twitter:title" content="浅谈Shell中的小知识">
+<meta name="twitter:description" content="浅谈Shell中的小知识 什么是交互式shell和非交互式shell？ 我们在进行渗透测试的时候，往往需要自己构造一个 Interactive 可交互的shell，那么">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest/" >
+                pentest
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/shell_introduction/">浅谈Shell中的小知识</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 21, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="浅谈shell中的小知识">浅谈Shell中的小知识</h2>
+<h3 id="什么是交互式shell和非交互式shell">什么是交互式shell和非交互式shell？</h3>
+<p>我们在进行渗透测试的时候，往往需要自己构造一个 <code>Interactive</code> 可交互的shell，那么什么是可交互？原本的shell也可以执行命令，为什么不能用，非得想办法构造一个可交互的shell呢？ <!-- raw HTML omitted --></p>
+<h4 id="interactive-shell-交互式shell">Interactive shell 交互式shell</h4>
+<dl>
+<dt>我们先来看一下Bash对于 <code>Interactive Shell</code> 的定义:</dt>
+<dd>&ldquo;An interactive shell is one started without non-option arguments, unless -s is specified, without specifying the -c option, and whose input and error output are both connected to terminals (as determined by isatty(3)), or one started with the -i option. <!-- raw HTML omitted -->
+<p>An interactive shell generally reads from and writes to a user’s terminal. <!-- raw HTML omitted --></p>
+<p>The -s invocation option may be used to set the positional parameters when an interactive shell is started.&rdquo; [1]. <!-- raw HTML omitted --></p>
+</dd>
+</dl>
+<p>这里提到了两个概念， <code>option</code>, <code>argument</code>; <!-- raw HTML omitted --></p>
+<p>介绍前先说结论: argument包含option <!-- raw HTML omitted --></p>
+<p>如果大家尝试过使用C语言与shell交互，应该就会用到如下的代码来对输入的参数进行利用 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]</span> <span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;The argument supplied is %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Too many arguments supplied.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">else</span>
+</span></span><span class="line"><span class="cl">   <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;One argument expected.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>argc</code> 表示输入参数的数量， <code>*argv[]</code> 就表示包含输入参数的数组 <!-- raw HTML omitted --></p>
+<p>这里为了一劳永逸，我们再插一嘴，再辨析一下英文文档中的 <code>parameter</code> &amp; <code>argument</code> 的区别： <!-- raw HTML omitted --></p>
+<ol>
+<li>parameter指的是在 <code>定义</code> 函数时的所申明的变量名 <!-- raw HTML omitted --></li>
+<li>argument指的是在 <code>调用</code> 函数时，实际传入的值 <!-- raw HTML omitted --></li>
+</ol>
+<p>例如在下面的例子中，在函数 <code>MyMethod</code> 中所定义的 <code>myParam</code> 就是parameter,而在下面实际调用使用中，将要传入的真实数据就叫做 argument [2]. <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="kt">void</span> <span class="nf">MyMethod</span><span class="p">(</span><span class="n">string</span> <span class="n">myParam</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">myArg1</span> <span class="o">=</span> <span class="s">&#34;this is my argument&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">myClass</span><span class="p">.</span><span class="n">MyMethod</span><span class="p">(</span><span class="n">myArg1</span><span class="p">);</span>
+</span></span></code></pre></div><p>好，我们赶紧回来shell中的option和argument的定义： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p><code>arguments</code> 就是包含整一串shell命令的数组，每一个string都可以称为 <code>argument</code>, 和调用c语言脚本时一个道理，第一个参数（0）就是命令的名字，例如&rsquo;ls&rsquo;,同时也被称为 <code>positional parameters</code>; <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p><code>option</code> 同样也是一个argument，但是它们的特殊之处在于option会改变第一个argument的命令的行为，例如 ls -la 中的 &lsquo;-la&rsquo; 就会改变ls的行为 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p><code>parameter</code> 也是一个argument,其作用时为命令或者其选项提供信息 [3]. <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ls -la /tmp /var/tmp
+</span></span><span class="line"><span class="cl"><span class="nv">parameter1</span><span class="o">=</span> /tmp
+</span></span><span class="line"><span class="cl"><span class="nv">parameter2</span><span class="o">=</span> /var/tmp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ls -l -- -a
+</span></span><span class="line"><span class="cl"><span class="nv">option1</span>    <span class="o">=</span> -l
+</span></span><span class="line"><span class="cl"><span class="nv">parameter1</span> <span class="o">=</span> -a
+</span></span></code></pre></div><p>更多关于 <code>shell parameter</code> 以及 <code>subcommands</code> 的解释也可以参考 [3]. <!-- raw HTML omitted --></p>
+<p>了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，在启动的时候命令后面跟的只有option类型的argument，除非用了 <code>-s</code> 选项并且没有使用 <code>-c</code>, 或者直接使用了 <code>-i</code> 开启了交互模式 <!-- raw HTML omitted --></p>
+<ol>
+<li>-c &lt;string&gt; If  the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. <!-- raw HTML omitted --></li>
+<li>-i        If the -i option is present, the shell is interactive. <!-- raw HTML omitted --></li>
+<li>-s        If the -s option is present, or if no arguments remain after option processing,  then  commands are  read from the standard input.  This option allows the positional parameters to be set when invoking an interactive shell. <!-- raw HTML omitted --></li>
+</ol>
+<p>使用 <code>-s</code> ，就可以从stdin读取需要执行的命令，这么说有一点抽象，难以和-c区分开来，我们来看一个例子 [4]： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -L https://chef.io/chef/install.sh <span class="p">|</span> sudo bash -s -- -P chefdk
+</span></span></code></pre></div><p>一般来说 <code>-s</code> 选项都以 <code>curl $script_url | bash</code> 的形式来配合使用，目的是为了执行下载到的shell <!-- raw HTML omitted --></p>
+<p>这里 <code>--</code> 表示，将后面所有的string都当作要执行的命令的argument，而不是当前命令的option,而 <code>-s</code> 则会负责执行下载到的install.sh <!-- raw HTML omitted --></p>
+<p>顺便也翻译一下，使用  <code>-c</code> 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令的其他argument(从$0开始)。 <!-- raw HTML omitted --></p>
+<p>总结一下，启动一个交互式的shell，需要命令的argument全部都为option，而不能有parameter，除非使用了 <code>-s</code> (而没有-c) 或者 <code>-i</code> 的情况,并且交互式shell可以接受来自用户的输入和读取,即这个shell需要用户与其互动，输入命令来决定其行动 <!-- raw HTML omitted --></p>
+<h4 id="non-interactive-shell-非交互式shell">Non-Interactive shell 非交互式shell</h4>
+<p>非交互式的shell就正好相反，其不会与用户进行交互，即标准输入和错误流都没有连接到终端（即用户不可见），往往用于脚本的自动化执行，输入则进入专门的log文件中，同时配置文件例如.bashrc, .profile, .zshrc 都不会被执行 [5]. <!-- raw HTML omitted --></p>
+<h4 id="如何区分交互式shell和非交互式shell">如何区分交互式shell和非交互式shell</h4>
+<p>我们可以通过交互式shell中所定义的两个变量来进行区分 <!-- raw HTML omitted --></p>
+<ol>
+<li><code>$PS1</code> 在交互式shell中被定义，有输出的内容，而在非交互式shell中没有被定义，没有输出； <!-- raw HTML omitted --></li>
+<li><code>$-</code> 在交互式的shell中，输出的字符串包含字符 <code>'i'</code>, 非交互式shell中，则不包含&rsquo;i&rsquo; [6]； <!-- raw HTML omitted --></li>
+</ol>
+<p>可以用下列代码来进行测试 [5] <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ‘Interactive’ <span class="o">||</span> <span class="nb">echo</span> ‘not-interactive’
+</span></span></code></pre></div><h4 id="bash中的特殊变量">Bash中的特殊变量</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>$PS*</p>
+<p>那到底什么是 <code>$PS1</code>,看起来像一个变量，叫做 <code>Bash Prompt</code>, 其代表的是命令行的提示符，即我们看到的终端呈现的shell每一行的开头，例如在下面这个shell中，就由三个内容组成： <!-- raw HTML omitted --></p>
+<ul>
+<li>\s = bash, the name of the shell <!-- raw HTML omitted --></li>
+<li>\v = 3.2, the version of bash <!-- raw HTML omitted --></li>
+<li>$ <!-- raw HTML omitted --></li>
+</ul>
+<p>还有类似的： <!-- raw HTML omitted --></p>
+<ul>
+<li>$PS1, primary prompt string, shell 每一行的开头标识符; <!-- raw HTML omitted --></li>
+<li>$PS2, 表示次级的标识符，secondary prompt string，通常为 &gt;; <!-- raw HTML omitted --></li>
+<li>$PS3, 用来指示选中的命令; <!-- raw HTML omitted --></li>
+<li>$PS4, 表示命令在执行的过程中，每一行的输出都会输出 $PS4 的值 [7]; <!-- raw HTML omitted --></li>
+</ul>
+<p><figure><img src="/ox-hugo/2022-07-21_22-05-03_screenshot.png"
+             alt="Figure 1: $PS in Bash" width="150px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->$PS in Bash</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p>知道了这个之后，我们也就能理解为什么我们通过msf拿到的shell的每一行开头什么都没有，因此被称为非交互式的shell，因为其$PS1没有被定义，也就没有内容可以显示 <!-- raw HTML omitted --></p>
+<p>我们平时利用一些工具对终端进行自定义美化的时候，应该也是对这些内容进行修改来实现的，大家可以试试看在自己的终端中输出这些内容，可能都是很长的输出 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>$-</p>
+<p>$-
+: $-, dollar hyphen, 将会返回当前shell（bash）在开启时，所设定的option，例如当返回是himBH，就表示bash启动时设定了[8]： <!-- raw HTML omitted -->
+-   H - histexpand: when history expansion is enabled <!-- raw HTML omitted -->
+-   m - monitor: when job control is enabled <!-- raw HTML omitted -->
+-   h - hashall: Locate and remember (hash) commands as they are looked up for execution <!-- raw HTML omitted -->
+-   B - braceexpand: when brace expansion is enabled <!-- raw HTML omitted -->
+-   i - interactive: when current shell is interactive <!-- raw HTML omitted --></p>
+<pre><code>     这样也就不难理解我们为什么在进行shell是否可交互时可以查看 `$-` 的值中是否包含i了 &lt;br/&gt;
+</code></pre>
+<p>$$
+: $$会输出当前shell的进程ID或者说PID，每当新开启一个shell的时候，就会产生一个新的进程 <!-- raw HTML omitted --></p>
+<p>$#
+: $#用来表示一个bash命令的argument数量，例如下面的例子[9]: <!-- raw HTML omitted --></p>
+<pre><code> ```shell
+ $ bash -c ‘echo $#’ _ 1 2 3
+ ```
+
+ 这里的 `_` 下划线表示一个占位符，表示后面的string为命令的arguments，要主要的是，#表示的数字并不会被算进去，因此上面指令的输出为3 &lt;br/&gt;
+</code></pre>
+<p>$0
+: 显示出当前运行脚本的名字，也就是第一个argument的值 <!-- raw HTML omitted --></p>
+<p>$?
+: $?表示的是上一条命令的exit code，如果成功执行则为0，如果出现错误，就回事1 <!-- raw HTML omitted --></p>
+<p>$!
+: $!，dollar exclamation,表示上一个最近一个被执行的任务的PID <!-- raw HTML omitted --></p>
+<p>$_
+: $_表示最近一条指令的最后一个argument <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-21_23-10-43_screenshot.png"
+             alt="Figure 2: $_指示上一条指令的最后一个argument" width="200px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->$_指示上一条指令的最后一个argument</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="区分-terminal-shell-tty-以及-console">区分&rsquo;terminal&rsquo;, &lsquo;shell&rsquo;, &rsquo;tty&rsquo; 以及 &lsquo;console&rsquo;</h3>
+<p>我们通过msf获得了一个非交互式的shell之后，很多walkthrough都会教我们将其转换为完全交互式的TTY，那么这个TTY是什么呢？它和shell，console，terminal这些名词到底是什么关系呢？我们就在这里搞搞清楚。 <!-- raw HTML omitted --></p>
+<h4 id="tty-and-terminal">tty &amp; terminal</h4>
+<p>tty是一种实现了除了读写以外额外命令 <code>device file</code> 的设备文件，一般来说，terminal等价于tty。 <!-- raw HTML omitted --></p>
+<p>一些tty是由kernel内核为了硬件设备所提供的，例如键盘输入，在屏幕上输出文字，或者是对输入输出进行传输。 <!-- raw HTML omitted --></p>
+<p>另一种tty被称为 <code>pseudo-ttys</code>, 通常由软件所提供，被称为终端仿真器，例如Xterm，Screen，SSH，等等 <!-- raw HTML omitted --></p>
+<p>Terminal也有一种更为传统的含义，即一个提供人们与电脑进行交互的设备，通常配备键盘以及显示器。 <!-- raw HTML omitted --></p>
+<h3 id="什么是login-shell和non-login-shell">什么是Login Shell和Non-Login Shell?</h3>
+<p>&ldquo;A login shell is one whose first character of argument zero is a -, or one started with the &ndash;login option.&rdquo; [10]. <!-- raw HTML omitted --></p>
+<h4 id="如何判断">如何判断？</h4>
+<p>判断一个shell是否是login shell的标准就是$0的输出字符串，其第一个字符是否是&rsquo;-&rsquo;，如果是，则是一个login shell <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-22_23-14-23_screenshot.png"
+         alt="Figure 3: 判断Login shell" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->判断Login shell</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们也可以通过输入logout命令来进行判断其是否用了 &ndash;login选项，如果可以正常退出，则表示这是一个login shell，如果只能用&rsquo;exit&rsquo; 退出，则表示不是一个login shell <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-07-22_23-14-48_screenshot.png"
+         alt="Figure 4: Logout" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->Logout</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="login-shell">Login shell</h4>
+<p>Login shell在启动的时候，会传递$0, 通常就是带&rsquo;-&lsquo;的shell名，例如 &lsquo;-bash&rsquo;, &lsquo;-zsh&rsquo;, <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/pentest/">pentest</a>
+        
+            <a href="/tags/linux/">linux</a>
+        
+            <a href="/tags/shell/">shell</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Sep 23, 2022 15:17 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#浅谈shell中的小知识">浅谈Shell中的小知识</a>
+      <ul>
+        <li><a href="#什么是交互式shell和非交互式shell">什么是交互式shell和非交互式shell？</a>
+          <ul>
+            <li><a href="#interactive-shell-交互式shell">Interactive shell 交互式shell</a></li>
+            <li><a href="#non-interactive-shell-非交互式shell">Non-Interactive shell 非交互式shell</a></li>
+            <li><a href="#如何区分交互式shell和非交互式shell">如何区分交互式shell和非交互式shell</a></li>
+            <li><a href="#bash中的特殊变量">Bash中的特殊变量</a></li>
+          </ul>
+        </li>
+        <li><a href="#区分-terminal-shell-tty-以及-console">区分&rsquo;terminal&rsquo;, &lsquo;shell&rsquo;, &rsquo;tty&rsquo; 以及 &lsquo;console&rsquo;</a>
+          <ul>
+            <li><a href="#tty-and-terminal">tty &amp; terminal</a></li>
+          </ul>
+        </li>
+        <li><a href="#什么是login-shell和non-login-shell">什么是Login Shell和Non-Login Shell?</a>
+          <ul>
+            <li><a href="#如何判断">如何判断？</a></li>
+            <li><a href="#login-shell">Login shell</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
