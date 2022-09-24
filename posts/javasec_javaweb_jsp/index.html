@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='JavaSec - JavaWeb - JSP基础 在JavaWeb的Servlet篇，我们介绍了Servlet是如何作为一个中间件来帮助Tomcat服务器处理来自用户客户端'><title>JavaSec - JavaWeb - JSP基础</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/javasec_javaweb_jsp/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='JavaSec - JavaWeb - JSP基础'>
+<meta property='og:description' content='JavaSec - JavaWeb - JSP基础 在JavaWeb的Servlet篇，我们介绍了Servlet是如何作为一个中间件来帮助Tomcat服务器处理来自用户客户端'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_jsp/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='jsp' /><meta property='article:published_time' content='2022-09-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-24T15:05:20&#43;08:00'/>
+<meta name="twitter:title" content="JavaSec - JavaWeb - JSP基础">
+<meta name="twitter:description" content="JavaSec - JavaWeb - JSP基础 在JavaWeb的Servlet篇，我们介绍了Servlet是如何作为一个中间件来帮助Tomcat服务器处理来自用户客户端">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/java_sec/" >
+                java_sec
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/javasec_javaweb_jsp/">JavaSec - JavaWeb - JSP基础</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 20, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="javasec-javaweb-jsp基础">JavaSec - JavaWeb - JSP基础</h2>
+<p>在JavaWeb的Servlet篇，我们介绍了Servlet是如何作为一个中间件来帮助Tomcat服务器处理来自用户客户端请求的。 <!-- raw HTML omitted --></p>
+<p>当我们最后讲到服务器返回资源时提到了在两种输出流（字节流/字符流）选择一种后，再直接输出内容。但是如果需要返回完整的一个页面，就需要将HTML的内容逐行返回，这就会使整个过程变得非常繁琐，同时极大地增加了开发成本和维护成本。 <!-- raw HTML omitted --></p>
+<p>JSP, Java Server Pages，我们在这篇blog中要介绍的，就是JSP如何代替Servlet更为高效的回传HTML页面的数据 <!-- raw HTML omitted --></p>
+<p>因为脚本语言的学习较为基础，没有特别多逻辑性的需要理解的地方，因此本篇主要作为学习笔记。 <!-- raw HTML omitted --></p>
+<h3 id="jsp是一个servlet程序">JSP是一个Servlet程序</h3>
+<p>当JSP文件被客户端访问时，JSP就会被翻译成为.java文件再被编译成.class文件来使用 <!-- raw HTML omitted --></p>
+<p>那我们访问翻译之后的.java源码可以发现，翻译之后的类继承了org.apache.jasper.runtime.HttpJspBase这个类继承了HttpServlet，因此我们可以说JSP就是一个Servlet程序 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-19_19-17-16_screenshot.png"
+         alt="Figure 1: JSP是一个Servlet程序" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->JSP是一个Servlet程序</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>同时我们可以看到源码当中就像我们之前说的那样逐行的打印了HTML源码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;text/html;charset=UTF-8&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">pageContext</span> <span class="o">=</span> <span class="n">_jspxFactory</span><span class="o">.</span><span class="na">getPageContext</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">8192</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_jspx_page_context</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">application</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">config</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getServletConfig</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">session</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span> <span class="o">=</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">getOut</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_jspx_out</span> <span class="o">=</span> <span class="n">out</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;html&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;head&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;    &lt;title&gt;Hello JSP&lt;/title&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;/head&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;body&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;    Hi, I am learning JSP!\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;/body&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;/html&gt;\n&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h3 id="jsp指令">JSP指令</h3>
+<p>接下来我们看看实际的JSP代码，我个人感觉其实和PHP是一个道理，就是前后端不分离，HTML以及处理的脚本语言都放在一起，同时脚本语言会通过特殊的格式单独拎出来方便翻译 <!-- raw HTML omitted --></p>
+<h4 id="page指令">page指令</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&#34;text/html;charset=UTF-8&#34;</span> <span class="n">language</span><span class="o">=</span><span class="s">&#34;java&#34;</span> <span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">Hello</span> <span class="n">JSP</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Hi</span><span class="o">,</span> <span class="n">I</span> <span class="n">am</span> <span class="n">learning</span> <span class="n">JSP</span><span class="o">!</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</span></span></code></pre></div><p><code>&lt;%@ page ... %&gt;</code> 就是我们第一个要了解的JSP脚本语句，主要用来修改JSP页面中的一些重要的属性，或者行为，从而影响之后翻译的.java以及.class文件 <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>language</td>
+<td>表示jsp翻译之后是什么语言。暂时只支持java</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>表示服务器响应中的数据类型是什么（response.setContentType()）</td>
+</tr>
+<tr>
+<td>pageEncoding</td>
+<td>表示当前jsp页面文件本身的字符集</td>
+</tr>
+<tr>
+<td>import</td>
+<td>需要导入的package（和java源码中一样）</td>
+</tr>
+<tr>
+<td>errorPage</td>
+<td>设置当jsp页面运行出错时，自动跳转去的错误页面路径（一般以斜杠打头，<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84"  target="_blank" rel="noopener"
+    >http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84</a>）</td>
+</tr>
+<tr>
+<td>isErrorPage</td>
+<td>设置当前jsp页面是否为错误信息页面（默认为false）。如果是true的话会额外开辟一个存储异常信息的对象</td>
+</tr>
+<tr>
+<td>session</td>
+<td>设置访问当前jsp页面，是否会创建HttpSession对象（默认为true）</td>
+</tr>
+<tr>
+<td>extends属性</td>
+<td>设置jsp翻译出来的java类默认继承类（默认为HttpServlet）</td>
+</tr>
+<tr>
+<td>out输出流属性：</td>
+<td>如果没有正确设置会出现 BufferOverflow的错误</td>
+</tr>
+<tr>
+<td>autoFlush</td>
+<td>设置为 out 输出流缓冲区满了之后，是否自动刷新缓冲区（默认为true）</td>
+</tr>
+<tr>
+<td>buffer属性</td>
+<td>设置 out 缓冲区的大小（默认为8kb）</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="include指令">include指令</h4>
+<p>这里的include和PHP中的include比较像，主要是通过include包含指令来组合页面，避免复写一些公共网页模块（比如导航栏，页脚） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="o">...</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<ul>
+<li>
+<p>静态包含</p>
+<p>file属性置顶需要包含的jsp页面的路径，一般以/斜杠打头（表示<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84"  target="_blank" rel="noopener"
+    >http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84</a>）  映射到工程的web目录下 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="n">file</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
+</span></span></code></pre></div><p>静态包含的特点： <!-- raw HTML omitted --></p>
+<ol>
+<li>静态包含不会将包含的jsp页面翻译翻译成为.java文件 <!-- raw HTML omitted --></li>
+<li>而是直接把被包含的jsp页面的代码转换成为html内容直接拷贝到包含的位置执行输出（out.write()） <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>动态包含</p>
+<p>page属性是指定要包含的jsp的页面路径 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span><span class="o">&gt;</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-09-20_18-20-32_screenshot.png"
+             alt="Figure 2: JSP动态包含" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->JSP动态包含</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p>动态包含的特点： <!-- raw HTML omitted --></p>
+<ol>
+<li>动态包含会将包含的jsp页面主动翻译成为.java文件 <!-- raw HTML omitted --></li>
+<li>在本jsp被翻译的.java文件中使用JspRuntimeLibrary.include(request, response, &ldquo;/include/footer.jsp&rdquo;, out, false)的形式来动态包含jsp文件 <!-- raw HTML omitted --></li>
+<li>动态包含还可以传递参数 <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;admin&#34;</span><span class="o">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;password&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;root&#34;</span><span class="o">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span><span class="o">&gt;</span>
+</span></span></code></pre></div><p>一般使用静态包含 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="taglib指令">taglib指令</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#34;c&#34;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&#34;http://java.sun.com/jsp/jstl/core&#34;</span> <span class="o">%&gt;</span> <span class="n">引入标签库的定义</span>
+</span></span></code></pre></div><h3 id="jsp常用脚本">JSP常用脚本</h3>
+<h4 id="jsp-声明脚本">JSP 声明脚本</h4>
+<p>格式为： &lt;%! 声明 java 代码 %&gt; <!-- raw HTML omitted --></p>
+<p>主要用来对一下内容进行声明： <!-- raw HTML omitted --></p>
+<ol>
+<li>声明类属性 <!-- raw HTML omitted --></li>
+<li>声明static静态代码块 <!-- raw HTML omitted --></li>
+<li>声明方法 <!-- raw HTML omitted --></li>
+<li>声明内部类 <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-09-20_15-56-30_screenshot.png"
+         alt="Figure 3: JSP文件中的脚本声明以及翻译之后的java代码" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->JSP文件中的脚本声明以及翻译之后的java代码</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="表达式脚本">表达式脚本</h4>
+<p>格式为：&lt;%= 表达式%&gt; <!-- raw HTML omitted --></p>
+<p>表达式脚本是用来在JSP页面上来输出以下数据数据 <!-- raw HTML omitted --></p>
+<ol>
+<li>整形 <!-- raw HTML omitted --></li>
+<li>浮点型 <!-- raw HTML omitted --></li>
+<li>字符串 <!-- raw HTML omitted --></li>
+<li>对象 <!-- raw HTML omitted --></li>
+</ol>
+<p>使用的特点： <!-- raw HTML omitted --></p>
+<ol>
+<li>所有的表达式脚本都会被翻译到 <code>_jspService()</code> 方法中 <!-- raw HTML omitted --></li>
+<li>因此_jspService()方法中的对象都可以直接使用 <!-- raw HTML omitted --></li>
+<li>表达式脚本都会被翻译成out.print()输出到页面上 <!-- raw HTML omitted --></li>
+<li>表达式脚本中的表达式不能以 <code>;</code> 结尾 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="代码脚本">代码脚本</h4>
+<p>格式：&lt;% java语句 %&gt; <!-- raw HTML omitted --></p>
+<p>作用：可以在jsp页面中，编写我们自己需要的功能（写的是java语句） <!-- raw HTML omitted --></p>
+<ol>
+<li>if语句 <!-- raw HTML omitted --></li>
+<li>for循环语句 <!-- raw HTML omitted --></li>
+<li>翻译后java文件中 <code>_jspService</code> 方法内的代码都可以写 <!-- raw HTML omitted --></li>
+</ol>
+<p>特点： <!-- raw HTML omitted --></p>
+<ol>
+<li>代码脚本翻译之后的崽 <code>_jspService()</code> 方法中 <!-- raw HTML omitted --></li>
+<li>因此 <code>jspService()</code> 方法中的对象都可以直接使用 <!-- raw HTML omitted --></li>
+<li>还可以由多个代码脚本块组成完成一个完整的java语句 <!-- raw HTML omitted --></li>
+<li>代码脚本还可以和表达式脚本一起组合使用，在jsp页面上输出内容 <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="s">&#34;1&#34;</span> <span class="n">cellspacing</span><span class="o">=</span><span class="s">&#34;0&#34;</span><span class="o">&gt;&lt;%</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">第</span><span class="o">&lt;%=</span> <span class="n">i</span><span class="o">%&gt;</span><span class="n">行</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;%</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">%&gt;&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</span></span></code></pre></div><h3 id="jsp中的三种注释">JSP中的三种注释</h3>
+<ol>
+<li>
+<p>html 注释 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- html 注释 --&gt;</span>
+</span></span></code></pre></div><p>html注释会被翻译到java源代码中。在_jspService方法里，以out.writer输出到客户端（还是作为html注释） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>java注释 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="c1">// 单行java注释
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cm">/*  多行java注释 */</span>
+</span></span></code></pre></div><p>java注释会被翻译到java源代码中还是作为java注释 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>jsp注释 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%--</span> <span class="n">jsp注释</span> <span class="o">--%&gt;</span>
+</span></span></code></pre></div><p>jsp注释可以真正注释掉任意代码 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="jsp中的九大内置对象">JSP中的九大内置对象</h3>
+<p>jsp中的内置对象，指的是Tomcat在翻译jsp页面成为Servlet源代码后，内部提供的九大对象 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">pageContext</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Throwable</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">jasper</span><span class="o">.</span><span class="na">runtime</span><span class="o">.</span><span class="na">JspRuntimeLibrary</span><span class="o">.</span><span class="na">getThrowable</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletContext</span> <span class="n">application</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletConfig</span> <span class="n">config</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">JspWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Object</span> <span class="n">page</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">JspWriter</span> <span class="n">_jspx_out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">_jspx_page_context</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span></code></pre></div><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>内置对象</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>request</td>
+<td>请求对象</td>
+</tr>
+<tr>
+<td>response</td>
+<td>响应对象</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td>jsp的上下文对象</td>
+</tr>
+<tr>
+<td>session</td>
+<td>会话对象</td>
+</tr>
+<tr>
+<td>application</td>
+<td>ServletContext对象</td>
+</tr>
+<tr>
+<td>config</td>
+<td>ServletConfig对象</td>
+</tr>
+<tr>
+<td>out</td>
+<td>jsp输出流对象</td>
+</tr>
+<tr>
+<td>page</td>
+<td>指向当前jsp的对象</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>异常对象（只有当page指令表示当前页面为错误信息页面时才会生成）</td>
+</tr>
+</tbody>
+</table></div>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>JSP四大域对象</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>域对象</th>
+<th>类</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pageContext</td>
+<td>PageContextImpl</td>
+<td>当前jsp页面范围内有效（换一个jsp页面就无法访问）</td>
+</tr>
+<tr>
+<td>request</td>
+<td>HttpServletRequest</td>
+<td>一次请求内有效（发出一个新的请求就无法访问）</td>
+</tr>
+<tr>
+<td>session</td>
+<td>HttpSession</td>
+<td>一个会话范围内有效（打开浏览器访问服务器，直到关闭浏览器）（关闭浏览器窗口之后就会失效）</td>
+</tr>
+<tr>
+<td>application</td>
+<td>ServletContext</td>
+<td>整个web工程范围内都有效（只要web工程不停止，数据都还在，可以参考我们在Servlet中介绍的ServletContext）（重新部署工程后就会失效）</td>
+</tr>
+</tbody>
+</table></div>
+<p>域对象是可以像Map一样可以存储数据的对象。 <!-- raw HTML omitted --></p>
+<p>四个域对象功能一样，但是他们对数据的存取以及有效范围（时间，空间）不同 <!-- raw HTML omitted --></p>
+<p>四个域对象在使用时的优先顺序是按照他们的从小到大的作用范围所排序的，主要的原因是为了优化内存：因为作用范围小的对象在不用是就可以提早释放，减轻内存负担，而范围大的对象就需要存储很多地方都要用到的数据。 <!-- raw HTML omitted --></p>
+<p>pageContext &gt; request &gt; session &gt; application <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>out与response的区别</p>
+<p><figure><img src="/ox-hugo/2022-09-20_17-21-49_screenshot.png"
+             alt="Figure 4: out&amp;amp;response输出的区别" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->out&amp;response输出的区别</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p>由于jsp翻译之后，底层源代码都是使用out来进行输出，所以一般情况下我们也是用out来进行输出，避免打乱页面输出内容的顺序。 <!-- raw HTML omitted --></p>
+<p>同时对于out中的两种输出方法： <!-- raw HTML omitted --></p>
+<p>out.write() 输出字符串没有问题（整型就有问题了） <!-- raw HTML omitted -->
+out.print() 输出任意数据都没有问题（都转换成为字符串后调用的write输出） <!-- raw HTML omitted --></p>
+<p>因此我们一般都用 <code>out.print()</code> 来进行输出 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="jsp的常用标签">JSP的常用标签</h4>
+<h3 id="jsp请求转发">JSP请求转发</h3>
+<p>JSP简化了Servlet的请求转发两步走的流程（先获取Dispatcher再forward），而是直接使用 <code>jsp:forward</code> 标签来进行转发 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span><span class="o">&gt;</span>
+</span></span></code></pre></div><h3 id="el-表达式">EL 表达式</h3>
+<h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.bilibili.com/video/BV1Y7411K7zz?vd_source=13198d68e199803d43258bc64add9d55"  target="_blank" rel="noopener"
+    >【尚硅谷最新版JavaWeb全套教程,java web零基础入门完整版】</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/java_sec/">java_sec</a>
+        
+            <a href="/tags/jsp/">jsp</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Sep 24, 2022 15:05 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/javasec_runtimecommandexecution/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Java本地命令执行</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_servlet/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javabasic_reflection/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java基础 - 反射（Reflection）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javabasic_jvmandclassloader/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java 基础 - JVM与类的加载</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#javasec-javaweb-jsp基础">JavaSec - JavaWeb - JSP基础</a>
+      <ul>
+        <li><a href="#jsp是一个servlet程序">JSP是一个Servlet程序</a></li>
+        <li><a href="#jsp指令">JSP指令</a>
+          <ul>
+            <li><a href="#page指令">page指令</a></li>
+            <li><a href="#include指令">include指令</a></li>
+            <li><a href="#taglib指令">taglib指令</a></li>
+          </ul>
+        </li>
+        <li><a href="#jsp常用脚本">JSP常用脚本</a>
+          <ul>
+            <li><a href="#jsp-声明脚本">JSP 声明脚本</a></li>
+            <li><a href="#表达式脚本">表达式脚本</a></li>
+            <li><a href="#代码脚本">代码脚本</a></li>
+          </ul>
+        </li>
+        <li><a href="#jsp中的三种注释">JSP中的三种注释</a></li>
+        <li><a href="#jsp中的九大内置对象">JSP中的九大内置对象</a>
+          <ul>
+            <li><a href="#jsp的常用标签">JSP的常用标签</a></li>
+          </ul>
+        </li>
+        <li><a href="#jsp请求转发">JSP请求转发</a></li>
+        <li><a href="#el-表达式">EL 表达式</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
