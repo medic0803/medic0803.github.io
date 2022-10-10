@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，'><title>CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CASPP Chapter 11 Network Programming 学习笔记（不定期更新） 学习进度 Socket 套接字： 11.3.3，11.4 Web Servers: 11.5 Socket套接字 (11.3.3, 11.4) 学习契机 学习Java内存马之前，想再看看'><title>CASPP Chapter 11 Network Programming 学习笔记（不定期更新）</title>
 
-<link rel='canonical' href='https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/'>
+<link rel='canonical' href='https://ginkgo.org.cn/posts/csapp_chapter11_learning_notes/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）'>
-<meta property='og:description' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，'>
-<meta property='og:url' content='https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CASPP Chapter 11 Network Programming 学习笔记（不定期更新）'>
+<meta property='og:description' content='CASPP Chapter 11 Network Programming 学习笔记（不定期更新） 学习进度 Socket 套接字： 11.3.3，11.4 Web Servers: 11.5 Socket套接字 (11.3.3, 11.4) 学习契机 学习Java内存马之前，想再看看'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/csapp_chapter11_learning_notes/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='csapp' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='io' /><meta property='article:published_time' content='2022-09-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-27T11:24:14&#43;08:00'/>
-<meta name="twitter:title" content="CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）">
-<meta name="twitter:description" content="CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='socket' /><meta property='article:tag' content='csapp' /><meta property='article:tag' content='linux' /><meta property='article:published_time' content='2022-09-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-10T23:09:49&#43;08:00'/>
+<meta name="twitter:title" content="CASPP Chapter 11 Network Programming 学习笔记（不定期更新）">
+<meta name="twitter:description" content="CASPP Chapter 11 Network Programming 学习笔记（不定期更新） 学习进度 Socket 套接字： 11.3.3，11.4 Web Servers: 11.5 Socket套接字 (11.3.3, 11.4) 学习契机 学习Java内存马之前，想再看看">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/csapp_chapter10_learning_notes/">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</a>
+            <a href="/posts/csapp_chapter11_learning_notes/">CASPP Chapter 11 Network Programming 学习笔记（不定期更新）</a>
         </h2>
     
         
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    6 minute read
                 </time>
             </div>
         
@@ -275,148 +275,110 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="csapp-chapter-10-system-level-i-o-学习笔记-不定期更新">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</h2>
+    <h2 id="caspp-chapter-11-network-programming-学习笔记-不定期更新">CASPP Chapter 11 Network Programming 学习笔记（不定期更新）</h2>
 <h3 id="学习进度">学习进度</h3>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> 10.1 Unix I/O <!-- raw HTML omitted --></li>
-<li><input checked="" disabled="" type="checkbox"> 10.2 Files <!-- raw HTML omitted --></li>
+<li><input checked="" disabled="" type="checkbox"> Socket 套接字： 11.3.3，11.4 <!-- raw HTML omitted --></li>
+<li><input disabled="" type="checkbox"> Web Servers: 11.5 <!-- raw HTML omitted --></li>
 </ul>
-<h3 id="10-dot-1-unix-i-o">10.1 Unix I/O</h3>
+<h3 id="socket套接字--11-dot-3-dot-3-11-dot-4">Socket套接字 (11.3.3, 11.4)</h3>
 <h4 id="学习契机">学习契机</h4>
-<p>在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，提到了大量的 <code>file descriptor</code> 的参数，发现这个概念有点陌生了，就来复习巩固一下。这么说来我对于各种语言的文件读写一直都有一种望而却步能用就行的感觉，没有好好的学习使用过，从Unix I/O开始也可以打下一个良好的基础。 <!-- raw HTML omitted --></p>
-<h4 id="什么是i-o">什么是I/O</h4>
-<p>I/O就是Input和Output，是对于 <code>main memory</code> 主存与 <code>external devices</code> 外部设备（e.g., 硬盘，终端以及网络）之间数据的输入与输出： <!-- raw HTML omitted --></p>
-<ul>
-<li>Input：将数据从从I/O设备中拷贝到主存中 <!-- raw HTML omitted --></li>
-<li>Output：将数据从内存中拷贝到外部设备上 <!-- raw HTML omitted --></li>
-</ul>
-<h4 id="unix中的i-o">Unix中的I/O</h4>
-<p>关于Unix中I/O的具体实现，首先我们要了解的两个很重要的结论： <!-- raw HTML omitted --></p>
+<p>学习Java内存马之前，想再看看Tomcat服务器的总体框架，其中有提到socket的内容，之前学nc的时候，也提到了socket的方法，感觉不是特别熟悉，看来还得是CSAPP！ <!-- raw HTML omitted --></p>
+<h4 id="什么是socket套接字">什么是socket套接字？</h4>
+<p>什么是socket套接字？我们经常能在网络编程，客户端与服务器的通信这样的话题中聊到socket套接字，以及其相关的方法，那么存在即有意义，我们就一起来看看什么是scoket套接字以及为什么需要socket套接字。 <!-- raw HTML omitted --></p>
+<p>我们都熟悉OSI七层模型或者TCP/IP模型，知道在双方通信的过程中，数据在应用层或者高层发出之后，需要经过层层打包封装后再通过物理层发送给对方，之后再层层解析拆包，最终使接收方获取到真实的数据。以上场景是非常宏观的以及抽象的描述，简单来说，socket套接字就是其中一个环节的具体实现！ <!-- raw HTML omitted --></p>
+<p>我们知道在Internet通信的双方是可以建立连接的，这样的连接是 <code>point-to-point</code> 点对点的，而这个点 <code>endpoint</code> 就是 <code>socket</code> ，所以我们现在可以说socket就是用来帮助通信的双方建立连接，接收，以及发送数据的。 <!-- raw HTML omitted --></p>
+<p>那我们刚才将socket是通信的具体实现又是连接的端点，那么每一个socket是首先是由 <code>socket address</code> 即套接字地址唯一标识的（待确认），其中： <!-- raw HTML omitted --></p>
+<p>socket address又两部分组成(address:port)： <!-- raw HTML omitted --></p>
 <ol>
-<li>在Unix中，所有的I/O设备都是以 <code>文件</code> 的形式存储和操作 <!-- raw HTML omitted --></li>
-<li>那么所有这些I/O操作都是通过读写这些文件来实现的 <!-- raw HTML omitted --></li>
+<li>IP address <!-- raw HTML omitted --></li>
+<li>Port <!-- raw HTML omitted --></li>
 </ol>
-<p>其中，Wikipedia对于I/O 设备的定义如下： <!-- raw HTML omitted -->
-&ldquo;I/O devices are the pieces of hardware used by a human (or other system) to communicate with a computer &hellip; Devices for communication between computers, such as modems and network cards, typically perform both input and output operations.&rdquo; <!-- raw HTML omitted --></p>
-<p>了解到了这两点之后, <code>所有</code> 的I/O操作就可以规范地定义为对于 <code>文件</code> 的几个规范性操作，也就是Interface接口: <!-- raw HTML omitted --></p>
-<dl>
-<dt>Opening files, 打开文件</dt>
-<dd><ul>
-<li>触发：当一个应用想要访问操作一个I/O设备（想要输入或者输出）的时候，就会要求kernel去打开对应的代表I/O设备的文件 <!-- raw HTML omitted --></li>
-<li>结果：Kernel内核会返回一个很小的正整数，我们叫做 <code>descriptor</code> 描述符，用来在之后对于该I/O设备文件的所有操作中，唯一标识该文件 <!-- raw HTML omitted --></li>
-<li>Kernel内核会持续跟踪该打开文件的所有的信息；而应用只会跟踪返回的 <code>descriptor</code> 描述符 <!-- raw HTML omitted --></li>
-<li>每一个运行的进程会由Linux shell通过打开三个文件开启（个人认为就是启动一个进程需要用到三种I/O设备，因此开启了这三个文件，并返回了三个描述符）： <!-- raw HTML omitted -->
-<ol>
-<li>standard input (descriptor 0) 标准输入 <!-- raw HTML omitted --></li>
-<li>standard output (descriptor 1) 标准输出 <!-- raw HTML omitted --></li>
-<li>standard error (descriptor 2) 标准错误 <!-- raw HTML omitted --></li>
-</ol>
-</li>
-</ul>
-</dd>
-<dt>Changing the current file position 改变当前文件（内容）位置</dt>
-<dd><ul>
-<li>File position文件位置表示文件中下一个将要被读写的字符的位置 <!-- raw HTML omitted --></li>
-<li>Kernel会维护每一个打开的文件的file position <code>k</code> <!-- raw HTML omitted --></li>
-<li>k的初始值为0，每次有字符的读写，file position都会自增 <!-- raw HTML omitted --></li>
-<li>应用也可以通过 <code>seek</code> 操作来显示地修改file position <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-<dt>Reading and writing files 读写文件</dt>
-<dd><ul>
-<li>Read 读文件：从一个文件中读取n bytes的数据，从该文件当前的file position k开始读，并且递增n <!-- raw HTML omitted -->
-<ul>
-<li>如果读文件超过文件的size m，则会触发 <code>end-of-file (EOF)</code>, 值得注意的是，这是由应用自动检测到的，而不是真的有一个字符叫做EOF符 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>Write 写文件，同样也会递增file position k文件位置 <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-<dt>Closing files 关闭文件</dt>
-<dd><ul>
-<li>触发：当应用结束访问一个文件的时候，就会要求kernel去 <code>close</code> 关闭这个文件 <!-- raw HTML omitted --></li>
-<li>结果：kernel会释放所有的所有该文件创建的数据结构；并且将该文件的 <code>descriptor</code> 描述符归还到可用的描述符池中去 <!-- raw HTML omitted --></li>
-<li>当一个进程结束时，kernel会关闭所有打开的文件并且释放他们的内存资源，比如之前提到的标准输入/输出/错误文件，都会被关闭 <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-</dl>
-<h3 id="10-dot-2-files-文件">10.2 Files 文件</h3>
-<h4 id="学习契机">学习契机</h4>
-<p>跟随10.1顺便看看 <!-- raw HTML omitted --></p>
-<h4 id="文件分类">文件分类</h4>
-<p>Linux中对于不同的文件都有其所对应的分类 <!-- raw HTML omitted --></p>
-<dl>
-<dt>regular file 常规文件</dt>
-<dd>一个普通文件中可以包含任意数据，根据内容存储形式的不同，我们还可以再细化为： <!-- raw HTML omitted -->
-<ol>
-<li>
-<p>text files, 文本文件，即只包含ASCII或者Unicode字符的文件 <!-- raw HTML omitted --></p>
-<ul>
-<li>
-<p>其中文本文件包含一串 <code>text lines</code> 文件行，每一行都由 <code>newline</code> 符号 <code>'\n'</code> 结尾（Linux, Mac OSX） <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>再Ms Windows以及Internet协议例如HTTP中，则是使用  <code>'\r\n'</code> （0xd 0xa）表示的 <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>因此当我们在Linux以及Mac OSX环境下阅读由MS Windows编辑的文本文件时，每行后面都会出现 &lsquo;^M&rsquo;，可以使用一下命令来进行清理 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">linux&gt; perl -pi -e <span class="s2">&#34;s/\r\n/\n/g&#34;</span> foo.txt
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-</li>
-<li>
-<p>binary files，二进制文件， <!-- raw HTML omitted --></p>
-</li>
-</ol>
-</dd>
-<dt>directory 目录</dt>
-<dd><ul>
-<li>
-<p>目录时一个包含一组 <code>links</code> 链接的文件，每一个链接都对应一个文件（常规文件或者目录） <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>每一个目录文件至少包含两个默认链接 <!-- raw HTML omitted --></p>
-<ul>
-<li>. (dot), 该链接指向该目录文件本身 <!-- raw HTML omitted --></li>
-<li>.. (dot-dot)，该链接指向 <code>parent directory</code>  <!-- raw HTML omitted --></li>
-<li><code>mkdir</code> 创建目录文件， <code>ls</code> 查看内容， <code>rmdir</code> 删除目录 <!-- raw HTML omitted --></li>
-</ul>
-</li>
-</ul>
-</dd>
-<dt>socket 套接字</dt>
-<dd><ul>
-<li>套接字文件用来与其他进程进行网络通信（详见11.4） <!-- raw HTML omitted --></li>
-</ul>
-</dd>
-</dl>
-<h4 id="文件目录结构">文件目录结构</h4>
-<p>Linux内核通过唯一一个目录结构来管理所有的文件，该结构是由 <code>root directory</code> 根目录开始的一个树状结构，用 <code>/</code> 来表示，因此我们在一个文件路径中开头看到 <code>/</code> 要知道，这是一个目录文件，和后面使用到的 <code>/</code> 用作分隔符的概念时不一样的 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-09-27_11-09-45_screenshot.png"
-         alt="Figure 1: Linux目录结构" width="700px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Linux目录结构</p>
+<p>那么一个连接，就是由一对 <code>socket address</code> 组成：(cliaddr:cliport, servaddr:servport) (客户端地址：客户端端口，服务端地址：服务端端口) <!-- raw HTML omitted --></p>
+<p>其中客户端的端口是由 <code>kernel</code> 自动分配的,我们叫做 <code>ephemeral port</code> (临时端口？)；同时服务端的端口就是预留端口用来表明特定的服务，比如Web服务器使用80端口，邮箱服务器使用25端口，相信大家应该对此都已经非常熟悉了。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-26_15-48-42_screenshot.png"
+         alt="Figure 1: 一对socket address (address:port)唯一标识一个连接" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->一对socket address (address:port)唯一标识一个连接</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>每一个进程都有一个 <code>current working directory</code> 用来表示其在这个目录结构中的位置，通过 <code>cd</code> 命令可以改变shell的 <code>current working directory</code> <!-- raw HTML omitted --></p>
-<p>那么对应Linux目录结构，有两种形式来表达一个文件的位置（Location）： <!-- raw HTML omitted --></p>
+<h4 id="socket套接字具体的功能">socket套接字具体的功能</h4>
+<p>在上一小节中我们提到了socket可以帮助建立连接以及接收和发送数据，那么具体是如何实现的呢？ <!-- raw HTML omitted --></p>
+<p>说到实现，我们就可以想到Java中的实现接口，在这里也是一样，socket套接字其实就是一个Interface 接口，那么在不同的编程语言之间都用不同的实现以及API，我们在这里就从socket interface来介绍一下socket的功能 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-26_17-45-13_screenshot.png"
+         alt="Figure 2: Socket Interface" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Socket Interface</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>观察上图我们可以发现，通信的双方被定义为 <code>Client</code> 客户端以及 <code>Server</code> 服务端，同时 <!-- raw HTML omitted --></p>
 <ol>
-<li>Absolute pathname, 绝对路径，表示从根目录（/）开始的路径（之后的/表示路径的分割），例如上图中的hello.c文件的绝对路径就是/home/droh/hello.c <!-- raw HTML omitted --></li>
-<li>Relative pathname，相对路径，表示从一个文件名（./..也是文件名）开始，表示一个文件对于当前工作路径的相对路径，例如在上图中，我们当前的工作路径为 /home/droh,那么文件 hello.c的相对路径就是./hello.c <!-- raw HTML omitted --></li>
+<li>open_clientfd被定义为：getaddrinfo -&gt; socket -&gt; connect <!-- raw HTML omitted --></li>
+<li>open_listenfd被定义为：getaddrinfo -&gt; socket -&gt; bind -listen <!-- raw HTML omitted --></li>
 </ol>
+<p>在Section 10.2的学习中，我们知道了 <code>socket</code> 也是Linux中的一种文件类型，我们也知道了打开文件意味着分配到一个 <code>descriptor</code> 描述符，由此我们可以理解为，打开一个可以用于通信的 socket 文件需要满足以上步骤，接下来我们就来具体看看这些方法 <!-- raw HTML omitted --></p>
+<dl>
+<dt>getaddrinfo(&hellip; &hellip;)</dt>
+<dd>用于帮助转换hostnames, host addresses, service names, and port numbers等参数的结构，以供后面的方法使用，这里暂时不展开了 <!-- raw HTML omitted --></dd>
+<dt>socket(&hellip; &hellip;)</dt>
+<dd>无论是客户端还是服务端，都需要先用 socket 方法来完成打开一个文件（详见10.1的opening files操作），同时返回一个 <code>socket decriptor</code> socket描述符来供应用使用 <!-- raw HTML omitted --></dd>
+</dl>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>客户端socket</p>
+<p>完成一个客户端socket需要执行 <code>connect(int sockfd, const struct scokaddr *addr, ...)</code> 方法，该方法会尝试与服务端socket的地址建立连接，并且该方法会block阻塞直到连接成功或者发生错误。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>服务端socket</p>
+<p>剩下的所有 socket 方法都是给服务端socket用的，包括 bind, listen, accept <!-- raw HTML omitted --></p>
+<p>bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
+: -   <code>bind()</code> 方法会将我们之前用socket()方法创建的 socket descriptor 与 socket address地址关联起来 <!-- raw HTML omitted -->
+-   有一个问题就是为什么client socket不需要呢？ <!-- raw HTML omitted -->
+-   因为不使用 bind() 方法socket address的(IP address : port number)就会由kernel自动分配，也就是我们常见的客户端了 <!-- raw HTML omitted -->
+-   而使用了 bind() 方法就意味着我们可以指定其 socket address，也就是我们所说的服务端了 <!-- raw HTML omitted --></p>
+<p>我们说Client socket是active主动的，是主动发起来连接的（connect()）;而Server socket则是被动的,是被动地等待有client等待连接的。 <!-- raw HTML omitted --></p>
+<p>Kernel默认将由 <code>socket()</code> 方法创建的socket descriptor当作主动的socket（client），直到listen方法的出现，则会帮助kernel认出server socket <!-- raw HTML omitted --></p>
+<p>listen(int sockfd, int backlog)
+: -   listen()方法将有一个active的socket转换为passive的socket（sockfd）来监听来自客户端的连接，而backlog则代表可以连接的数量（这里我猜测nc中如果开启了-k持续连接可能与这个参数也有关系？） <!-- raw HTML omitted -->
+-   也就是将原本的 <code>socket()</code> 方法返回的 sockfd 转化为 <code>listening socket</code>, 以此来等待来自client socket的连接 <!-- raw HTML omitted --></p>
+<p>int accept(int listenfd, struct sockaddr *addr, int *addrlen)
+: -   当server socket来自client socket发起的连接（connect()）时，就会触发accept()方法 <!-- raw HTML omitted -->
+-   <code>accept()</code> 方法将会接收之前 <code>listen()</code> 方法返回的listenfd，并且绑定发起连接的client socket的地址，最后返回 <code>connected descriptor</code> 来与client socket之间使用I/O操作进行通信 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>各个file descriptors之间的关系</p>
+<p>上面的各种方法，都会使用以及返回各种file descriptor，是不是已经有点绕了，最后我们就一起来通过一个例子辨析一下吧 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-27_16-28-43_screenshot.png"
+             alt="Figure 3: 各个file descriptors之间的关系" width="700px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->各个file descriptors之间的关系</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+<ol>
+<li>通过socket方法创建Server socket，得到sockfd，在完成了listen()方法之后，返回得到listenfd，之后进入阻塞，等待客户端连接 <!-- raw HTML omitted --></li>
+<li>通过socket方法创建Client socket，得到clientfd，使用connect()方法发起连接请求 <!-- raw HTML omitted --></li>
+<li>Server socket收到连接，调用 accept 方法，返回 connfd <!-- raw HTML omitted --></li>
+<li>最终建立起 clientfd 与 connfd 两个文件之间的连接以及通信，所有的数据的传递都通过双方对于clientfd以及connfd两个文件的读写来完成 <!-- raw HTML omitted --></li>
+</ol>
+<p>接着我们再来辨析一下由listen()方法所返回的 listening descriptor <code>listenfd</code> 与 accept()方法返回得到的connected descriptor <code>connfd</code> 之间的关系： <!-- raw HTML omitted --></p>
+<ul>
+<li>listening descriptor是由server建立，为了client的connect()方法所服务的，一旦创建就会一直存在 <!-- raw HTML omitted --></li>
+<li>connected descriptor是由server建立了，是为了直接与client的clientfd之间通过I/O操作进行通信的，每当server接受一个连接就会创建直到服务结束 <!-- raw HTML omitted --></li>
+</ul>
+<p>最后我们以一个问题结束这一小节的学习，为什么要区分listening以及connected descriptors？ 为什么不直接用listenfd来监听连接，同时建立连接一步到位呢？ <!-- raw HTML omitted --></p>
+<p>乍一看connected descriptor多次一举，但是这个分离的设计却使一个多线程并行的服务器成为可能，server只需要使用一个listenfd来处理所有client发起的连接请求，再独立的开启 connected descriptor来进行通信即可。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h3 id="web-servers-web服务器"><!-- raw HTML omitted -->TODO<!-- raw HTML omitted --> Web Servers Web服务器</h3>
 <h3 id="reference">Reference</h3>
 <p>Randal E. Bryant, David R. O’Hallaron - Computer Systems. A Programmer’s Perspective [3rd ed.] (2016, Pearson) <!-- raw HTML omitted --></p>
-<p><a class="link" href="https://www.cnblogs.com/koktlzz/p/16569288.html"  target="_blank" rel="noopener"
-    >CSAPP 读书笔记：系统级 I/O</a>  <!-- raw HTML omitted --></p>
-<p><a class="link" href="https://www.gnu.org/software/libc/manual/html_node/File-Position.html"  target="_blank" rel="noopener"
-    >GNU: File Position</a> <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -425,11 +387,11 @@ if (!doNotTrack) {
     
     <section class="article-tags">
         
+            <a href="/tags/socket/">socket</a>
+        
             <a href="/tags/csapp/">csapp</a>
         
             <a href="/tags/linux/">linux</a>
-        
-            <a href="/tags/io/">io</a>
         
     </section>
 
@@ -456,7 +418,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Sep 27, 2022 11:24 CST
+            Last updated on Oct 10, 2022 23:09 CST
         </span>
     </section></footer>
 
@@ -498,12 +460,12 @@ if (!doNotTrack) {
             
                 
 <article class="">
-    <a href="/posts/csapp_chapter11_learning_notes/">
+    <a href="/posts/csapp_chapter10_learning_notes/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">CASPP Chapter 11 Network Programming 学习笔记（不定期更新）</h2>
+            <h2 class="article-title">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</h2>
         </div>
     </a>
 </article>
@@ -683,23 +645,17 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#csapp-chapter-10-system-level-i-o-学习笔记-不定期更新">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</a>
+    <li><a href="#caspp-chapter-11-network-programming-学习笔记-不定期更新">CASPP Chapter 11 Network Programming 学习笔记（不定期更新）</a>
       <ul>
         <li><a href="#学习进度">学习进度</a></li>
-        <li><a href="#10-dot-1-unix-i-o">10.1 Unix I/O</a>
+        <li><a href="#socket套接字--11-dot-3-dot-3-11-dot-4">Socket套接字 (11.3.3, 11.4)</a>
           <ul>
             <li><a href="#学习契机">学习契机</a></li>
-            <li><a href="#什么是i-o">什么是I/O</a></li>
-            <li><a href="#unix中的i-o">Unix中的I/O</a></li>
+            <li><a href="#什么是socket套接字">什么是socket套接字？</a></li>
+            <li><a href="#socket套接字具体的功能">socket套接字具体的功能</a></li>
           </ul>
         </li>
-        <li><a href="#10-dot-2-files-文件">10.2 Files 文件</a>
-          <ul>
-            <li><a href="#学习契机">学习契机</a></li>
-            <li><a href="#文件分类">文件分类</a></li>
-            <li><a href="#文件目录结构">文件目录结构</a></li>
-          </ul>
-        </li>
+        <li><a href="#web-servers-web服务器"><!-- raw HTML omitted -->TODO<!-- raw HTML omitted --> Web Servers Web服务器</a></li>
         <li><a href="#reference">Reference</a></li>
       </ul>
     </li>
