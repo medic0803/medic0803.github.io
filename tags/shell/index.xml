@@ -26,7 +26,28 @@
 &lt;p&gt;这里提到了两个概念， &lt;code&gt;option&lt;/code&gt;, &lt;code&gt;argument&lt;/code&gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;介绍前先说结论: argument包含option &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;如果大家尝试过使用C语言与shell交互，应该就会用到如下的代码来对输入的参数进行利用 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;argv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -43,20 +64,34 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;One argument expected.&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;argc&lt;/code&gt; 表示输入参数的数量， &lt;code&gt;*argv[]&lt;/code&gt; 就表示包含输入参数的数组 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;argc&lt;/code&gt; 表示输入参数的数量， &lt;code&gt;*argv[]&lt;/code&gt; 就表示包含输入参数的数组 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;这里为了一劳永逸，我们再插一嘴，再辨析一下英文文档中的 &lt;code&gt;parameter&lt;/code&gt; &amp;amp; &lt;code&gt;argument&lt;/code&gt; 的区别： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;parameter指的是在 &lt;code&gt;定义&lt;/code&gt; 函数时的所申明的变量名 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;argument指的是在 &lt;code&gt;调用&lt;/code&gt; 函数时，实际传入的值 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;例如在下面的例子中，在函数 &lt;code&gt;MyMethod&lt;/code&gt; 中所定义的 &lt;code&gt;myParam&lt;/code&gt; 就是parameter,而在下面实际调用使用中，将要传入的真实数据就叫做 argument [2]. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MyMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;myParam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MyMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;myParam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;myArg1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;this is my argument&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;myClass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MyMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;myArg1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;好，我们赶紧回来shell中的option和argument的定义： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;好，我们赶紧回来shell中的option和argument的定义： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;arguments&lt;/code&gt; 就是包含整一串shell命令的数组，每一个string都可以称为 &lt;code&gt;argument&lt;/code&gt;, 和调用c语言脚本时一个道理，第一个参数（0）就是命令的名字，例如&amp;rsquo;ls&amp;rsquo;,同时也被称为 &lt;code&gt;positional parameters&lt;/code&gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -69,37 +104,78 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ls -la /tmp /var/tmp
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;parameter1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; /tmp
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;parameter2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; /var/tmp
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ls -la /tmp /var/tmp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# parameter1= /tmp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# parameter2= /var/tmp&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ls -l -- -a
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;option1&lt;/span&gt;    &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; -l
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;parameter1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; -a
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;更多关于 &lt;code&gt;shell parameter&lt;/code&gt; 以及 &lt;code&gt;subcommands&lt;/code&gt; 的解释也可以参考 [3]. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，在启动的时候命令后面跟的只有option类型的argument，除非用了 &lt;code&gt;-s&lt;/code&gt; 选项并且没有使用 &lt;code&gt;-c&lt;/code&gt;, 或者直接使用了 &lt;code&gt;-i&lt;/code&gt; 开启了交互模式 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# option1    = -l&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# parameter1 = -a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;更多关于 &lt;code&gt;shell parameter&lt;/code&gt; 以及 &lt;code&gt;subcommands&lt;/code&gt; 的解释也可以参考 [3]. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，就是在启动的时候命令后面跟的只有option类型的argument，除非用了 &lt;code&gt;-s&lt;/code&gt; 选项并且没有使用 &lt;code&gt;-c&lt;/code&gt;, 或者直接使用了 &lt;code&gt;-i&lt;/code&gt; 开启了交互模式 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;-c &amp;lt;string&amp;gt; If  the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;-i        If the -i option is present, the shell is interactive. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;-s        If the -s option is present, or if no arguments remain after option processing,  then  commands are  read from the standard input.  This option allows the positional parameters to be set when invoking an interactive shell. &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;-c &amp;lt;string&amp;gt; If the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;如果出现option -c，那么要执行的指令就从-c后面的string中读取，如果string之后还有参数，那么就当作是一条完整的命令来执行 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;-i        If the -i option is present, the shell is interactive. &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;如果出现-i则开启一个可交互的shell &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;-s        If the -s option is present, or if no arguments remain after option processing,  then commands are read from the standard input. This option allows the positional parameters to be set when invoking an interactive shell. &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;如果出现-s，则从标准输入中读取 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;使用 &lt;code&gt;-s&lt;/code&gt; ，就可以从stdin读取需要执行的命令，这么说有一点抽象，难以和-c区分开来，我们来看一个例子 [4]： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -L https://chef.io/chef/install.sh &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo bash -s -- -P chefdk
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般来说 &lt;code&gt;-s&lt;/code&gt; 选项都以 &lt;code&gt;curl $script_url | bash&lt;/code&gt; 的形式来配合使用，目的是为了执行下载到的shell &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;这里 &lt;code&gt;--&lt;/code&gt; 表示，将后面所有的string都当作要执行的命令的argument，而不是当前命令的option,而 &lt;code&gt;-s&lt;/code&gt; 则会负责执行下载到的install.sh &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;顺便也翻译一下，使用  &lt;code&gt;-c&lt;/code&gt; 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令的其他argument(从$0开始)。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -L https://chef.io/chef/install.sh &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo bash -s -- -P chefdk
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;一般来说 &lt;code&gt;-s&lt;/code&gt; 选项都以 &lt;code&gt;curl $script_url | bash&lt;/code&gt; 的形式来配合使用，目的是为了 &lt;code&gt;执行&lt;/code&gt; 下载到的shell; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这里 &lt;code&gt;--&lt;/code&gt; 表示，将后面所有的string都当作要执行的命令（bash -s所下载的install.sh）的argument，而不是当前命令的option,而 &lt;code&gt;-s&lt;/code&gt; 则会负责执行下载到的install.sh; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;顺便也翻译一下，使用 &lt;code&gt;-c&lt;/code&gt; 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令（前面的string）的其他argument(从$0开始)。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;总结一下，启动一个交互式的shell，需要命令的argument全部都为option，而不能有parameter，除非使用了 &lt;code&gt;-s&lt;/code&gt; (而没有-c) 或者 &lt;code&gt;-i&lt;/code&gt; 的情况,并且交互式shell可以接受来自用户的输入和读取,即这个shell需要用户与其互动，输入命令来决定其行动 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;non-interactive-shell-非交互式shell&#34;&gt;Non-Interactive shell 非交互式shell&lt;/h4&gt;
 &lt;p&gt;非交互式的shell就正好相反，其不会与用户进行交互，即标准输入和错误流都没有连接到终端（即用户不可见），往往用于脚本的自动化执行，输入则进入专门的log文件中，同时配置文件例如.bashrc, .profile, .zshrc 都不会被执行 [5]. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;因此我们在渗透的过程中时常需要去获得一个交互式的shell来看到我们所执行命令的回显信息。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;如何区分交互式shell和非交互式shell&#34;&gt;如何区分交互式shell和非交互式shell&lt;/h4&gt;
 &lt;p&gt;我们可以通过交互式shell中所定义的两个变量来进行区分 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;$PS1&lt;/code&gt; 在交互式shell中被定义，有输出的内容，而在非交互式shell中没有被定义，没有输出； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;$-&lt;/code&gt; 在交互式的shell中，输出的字符串包含字符 &lt;code&gt;&#39;i&#39;&lt;/code&gt;, 非交互式shell中，则不包含&amp;rsquo;i&amp;rsquo; [6]； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;可以用下列代码来进行测试 [5] &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$-&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; *i* &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; ‘Interactive’ &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; ‘not-interactive’
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;bash中的特殊变量&#34;&gt;Bash中的特殊变量&lt;/h4&gt;
+&lt;p&gt;（如果不明白这两个变量是干什么的也不用着急，我们下面会讲） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;可以用下列代码来进行测试 [5]: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$-&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; *i* &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; ‘Interactive’ &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; ‘not-interactive’
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;bash中的特殊变量&#34;&gt;Bash中的特殊变量&lt;/h4&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -112,7 +188,7 @@
 &lt;/ul&gt;
 &lt;p&gt;还有类似的： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;$PS1, primary prompt string, shell 每一行的开头标识符; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;$PS1, primary prompt string, shell界面每次换行后的开头标识符（如果使用了插件进行美化之后，就会发现这个值特别长，就是因为开头标识符变化了）; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;$PS2, 表示次级的标识符，secondary prompt string，通常为 &amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;$PS3, 用来指示选中的命令; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;$PS4, 表示命令在执行的过程中，每一行的输出都会输出 $PS4 的值 [7]; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -123,8 +199,8 @@
             &lt;/figcaption&gt;
     &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;知道了这个之后，我们也就能理解为什么我们通过msf拿到的shell的每一行开头什么都没有，因此被称为非交互式的shell，因为其$PS1没有被定义，也就没有内容可以显示 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;我们平时利用一些工具对终端进行自定义美化的时候，应该也是对这些内容进行修改来实现的，大家可以试试看在自己的终端中输出这些内容，可能都是很长的输出 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;知道了这个之后，我们也就能理解为什么我们通过msf拿到的shell的每一行开头什么都没有，因此被称为非交互式的shell，因为其$PS1没有被定义，也就没有内容可以显示； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;我们平时利用一些工具对终端进行自定义美化的时候，应该也是对这些内容进行修改来实现的，大家可以试试看在自己的终端中输出这些内容，可能都是很长的输出； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
@@ -138,8 +214,7 @@
 -   h - hashall: Locate and remember (hash) commands as they are looked up for execution &lt;!-- raw HTML omitted --&gt;
 -   B - braceexpand: when brace expansion is enabled &lt;!-- raw HTML omitted --&gt;
 -   i - interactive: when current shell is interactive &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;     这样也就不难理解我们为什么在进行shell是否可交互时可以查看 `$-` 的值中是否包含i了 &amp;lt;br/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样也就不难理解我们为什么在进行shell是否可交互时可以查看 &lt;code&gt;$-&lt;/code&gt; 的值中是否包含i了； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;$$
 : $$会输出当前shell的进程ID或者说PID，每当新开启一个shell的时候，就会产生一个新的进程 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;$#
@@ -151,13 +226,13 @@
  这里的 `_` 下划线表示一个占位符，表示后面的string为命令的arguments，要主要的是，#表示的数字并不会被算进去，因此上面指令的输出为3 &amp;lt;br/&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;$0
-: 显示出当前运行脚本的名字，也就是第一个argument的值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: 显示出当前运行脚本的名字，也就是第一个argument的值； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;$?
-: $?表示的是上一条命令的exit code，如果成功执行则为0，如果出现错误，就回事1 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: $?表示的是上一条命令的exit code，如果成功执行则为0，如果出现错误，就回事1； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;$!
-: $!，dollar exclamation,表示上一个最近一个被执行的任务的PID &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: $!，dollar exclamation,表示上一个最近一个被执行的任务的PID； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;$_
-: $_表示最近一条指令的最后一个argument &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+: $_表示最近一条指令的最后一个argument； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-21_23-10-43_screenshot.png&#34;
              alt=&#34;Figure 2: $_指示上一条指令的最后一个argument&#34; width=&#34;200px&#34;/&gt;&lt;figcaption&gt;
                 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 2: &lt;!-- raw HTML omitted --&gt;$_指示上一条指令的最后一个argument&lt;/p&gt;
@@ -176,7 +251,7 @@
 &lt;h3 id=&#34;什么是login-shell和non-login-shell&#34;&gt;什么是Login Shell和Non-Login Shell?&lt;/h3&gt;
 &lt;p&gt;&amp;ldquo;A login shell is one whose first character of argument zero is a -, or one started with the &amp;ndash;login option.&amp;rdquo; [10]. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;如何判断&#34;&gt;如何判断？&lt;/h4&gt;
-&lt;p&gt;判断一个shell是否是login shell的标准就是$0的输出字符串，其第一个字符是否是&amp;rsquo;-&amp;rsquo;，如果是，则是一个login shell &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;判断一个shell是否是login shell的标准就是$0的输出字符串，其第一个字符是否是&amp;rsquo;-&amp;rsquo;，如果是，则是一个login shell; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-07-22_23-14-23_screenshot.png&#34;
          alt=&#34;Figure 3: 判断Login shell&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
             &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 3: &lt;!-- raw HTML omitted --&gt;判断Login shell&lt;/p&gt;
@@ -192,6 +267,25 @@
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h4 id=&#34;login-shell&#34;&gt;Login shell&lt;/h4&gt;
 &lt;p&gt;Login shell在启动的时候，会传递$0, 通常就是带&amp;rsquo;-&amp;lsquo;的shell名，例如 &amp;lsquo;-bash&amp;rsquo;, &amp;lsquo;-zsh&amp;rsquo;, &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;p&gt;[1] ‘What is an Interactive Shell? (Bash Reference Manual)’. &lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/bash/manual/html_node/What-is-an-Interactive-Shell_003f.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.gnu.org/software/bash/manual/html_node/What-is-an-Interactive-Shell_003f.html&lt;/a&gt; (accessed Jul. 21, 2022). &lt;!-- raw HTML omitted --&gt;
+[2] T. Hansson, ‘Answer to “What’s the difference between an argument and a parameter?”’, Stack Overflow, Oct. 01, 2008. &lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/a/156787/17534765&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://stackoverflow.com/a/156787/17534765&lt;/a&gt; (accessed Jul. 21, 2022). &lt;!-- raw HTML omitted --&gt;
+[3] jlliagre, ‘Answer to “Difference between terms: ‘option’, ‘argument’, and ‘parameter’?”’, Stack Overflow, Apr. 08, 2016. &lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/a/36495940/17534765&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://stackoverflow.com/a/36495940/17534765&lt;/a&gt; (accessed Jul. 21, 2022). &lt;!-- raw HTML omitted --&gt;
+[4] navigaid, ‘Answer to “What does bash -s do?”’, Stack Overflow, Aug. 15, 2018. &lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/a/51854728/17534765&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://stackoverflow.com/a/51854728/17534765&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;
+[5] ‘Shell Scripting - Interactive and Non-Interactive Shell’, GeeksforGeeks, Jan. 23, 2022. &lt;a class=&#34;link&#34; href=&#34;https://www.geeksforgeeks.org/shell-scripting-interactive-and-non-interactive-shell/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.geeksforgeeks.org/shell-scripting-interactive-and-non-interactive-shell/&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;
+[6] 毛英东, ‘什么是交互式shell和非交互式shell?’, 毛英东的个人博客, May 30, 2020. &lt;a class=&#34;link&#34; href=&#34;https://www.maoyingdong.com/what_is_a_interactive_shell/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.maoyingdong.com/what_is_a_interactive_shell/index.html&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;
+[7] V. Gite, ‘How to Change / Set up bash custom prompt (PS1) in Linux’, nixCraft, Jun. 02, 2007. &lt;a class=&#34;link&#34; href=&#34;https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;
+[8] anubhava, ‘Answer to “What does $- mean in Bash?”’, Stack Overflow, Mar. 13, 2017. &lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/a/42757277/17534765&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://stackoverflow.com/a/42757277/17534765&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;
+[9] S. Ganguly, ‘How to Use Special Variables in Bash’. &lt;a class=&#34;link&#34; href=&#34;https://linuxhint.com/use-special-variables-in-bash/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://linuxhint.com/use-special-variables-in-bash/&lt;/a&gt; (accessed Jul. 22, 2022). &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
         </item>
         

@@ -347,8 +347,15 @@ Use search query syntax(city, country, http.title net, org, port, etc.) to searc
 <p>The <code>TheHarvester</code> tool is used for gathering information of <!-- raw HTML omitted -->emails, sub-domains, hosts, employee names, open ports, and banners<!-- raw HTML omitted --> from different public sources like <!-- raw HTML omitted -->search engines, PGP key servers, and SHODAN computer database<!-- raw HTML omitted -->.</p>
 <p>example 1
 Search email addresses from domain kali.org with results of 200 and using Bing as data source.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">theharvester -d kali.org -l <span class="m">200</span> -b bing
-</span></span></code></pre></div><p>example 2</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">theharvester -d kali.org -l <span class="m">200</span> -b bing
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>example 2</p>
 <p>Search email addresses from domain nist.gov with results of 50 and using google as data source, finally  saved the resources in myresults.html</p>
 <h4 id="dns-querying">DNS Querying</h4>
 <p><a class="link" href="http://etutorials.org/Networking/network&#43;security&#43;assessment/Chapter&#43;3.&#43;Internet&#43;Host&#43;and&#43;Network&#43;Enumeration/3.3&#43;DNS&#43;Querying/"  target="_blank" rel="noopener"
@@ -463,8 +470,15 @@ but do NOT rely on it to protect sensitive data</li>
 <li>TCP scanning through R</li>
 </ul>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap 10.130.1.43
-</span></span></code></pre></div><dl>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap 10.130.1.43
+</span></span></code></pre></td></tr></table>
+</div>
+</div><dl>
 <dt>nmap -Sp</dt>
 <dd>The -sP option sends an ICMP echo request, TCP SYN to port 443, TCP ACK to port 80, and an ICMP timestamp request by default.</dd>
 </dl>
@@ -501,16 +515,31 @@ but do NOT rely on it to protect sensitive data</li>
 <dl>
 <dt>Aim</dt>
 <dd>Try to connect to <!-- raw HTML omitted -->TCP and UDP ports<!-- raw HTML omitted --> of the target system to determine which network services are <!-- raw HTML omitted -->active<!-- raw HTML omitted --> (or LISTENING).
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nmap -p(range) &lt;target IP&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nmap -p(range) &lt;target IP&gt;
 </span></span><span class="line"><span class="cl">namp -p3389,20-100 10.130.1.43
-</span></span></code></pre></div></dd>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></dd>
 </dl>
 <p>It is important to know the active ports which can by exploited to attack.</p>
 <dl>
 <dt>UDP Portscan</dt>
 <dd>Send a <!-- raw HTML omitted -->zero-length UDP packet<!-- raw HTML omitted --> to each port to determine which UDP services are available, if an <code>ICMP error message</code> &ldquo;port unreachable&rdquo; is received, it assumed that this service is <!-- raw HTML omitted -->unavailable<!-- raw HTML omitted -->.
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sU 192.168.1.1
-</span></span></code></pre></div></dd>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sU 192.168.1.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div></dd>
 <dt>TCP Portscan</dt>
 <dd>Try to <!-- raw HTML omitted -->establish<!-- raw HTML omitted --> a TCP handshake to all the 65535 ports of the victim host to determine TCP services are available or not:
 <ul>
@@ -519,8 +548,15 @@ but do NOT rely on it to protect sensitive data</li>
 </li>
 <li>
 <p>Disadvantage: very noisy</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sT 192.168.1.1
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sT 192.168.1.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 </dd>
 </dl>
@@ -534,8 +570,15 @@ but do NOT rely on it to protect sensitive data</li>
 <li>If the port is open, the <code>FIN packet</code> is ignored (timeout)</li>
 </ul>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nmap -sF 110.130.1.43
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nmap -sF 110.130.1.43
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
@@ -661,8 +704,15 @@ This time, the spoofed <code>SYN</code> segment will not get the response of <co
 <dd>To determine the operating system of a host: Which OS? Which Version?</dd>
 </dl>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nmap -O localhost
-</span></span></code></pre></div><p>#+begin_src bash
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nmap -O localhost
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>#+begin_src bash
 nmap -O -PN 192.168.1.1/24
 k#+end_src</p>
 <h4 id="service-enumeration-banner-grabbing">Service Enumeration/Banner Grabbing</h4>
@@ -670,8 +720,15 @@ k#+end_src</p>
 <h4 id="nmap-scripting-engine">Nmap Scripting Engine</h4>
 <p>Nmap provide a series of scripts for checking the vulnerabilities based on open services of victim host</p>
 <p>Scripts can be found in <em>usr/share/nmap/scripts</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap --secript <span class="o">[</span>script name<span class="o">]</span> <span class="o">[</span>target<span class="o">]</span>
-</span></span></code></pre></div><figure><img src="/ox-hugo/2022-03-06_11-32-26_screenshot.png" width="700px"/>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap --secript <span class="o">[</span>script name<span class="o">]</span> <span class="o">[</span>target<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure><img src="/ox-hugo/2022-03-06_11-32-26_screenshot.png" width="700px"/>
 </figure>
 
 <h4 id="mitnick-shimomura-attack">Mitnick-Shimomura attack</h4>

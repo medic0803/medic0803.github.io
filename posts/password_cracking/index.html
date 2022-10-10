@@ -428,9 +428,17 @@ The goal is to compute P(A), the probability that at least two people in the roo
     >exercise</a> that shows MD5 can not be trusted anymore.</p>
 <p>Please review the details, I will just post something interesting here:</p>
 <p>Let&rsquo;s see two programs like this:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Program 1: if (data1 == data1) then { good_program } else { evil_program }
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Program 1: if (data1 == data1) then { good_program } else { evil_program }
 </span></span><span class="line"><span class="cl">Program 2: if (data2 == data1) then { good_program } else { evil_program }
-</span></span></code></pre></div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the <code>death of MD5</code>.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The only difference between these two statements is the variable to compare, however, it has been proved by Chinese researchers that we can only change some data in the input source files, but get the same MD5 hash value, which announce the <code>death of MD5</code>.</p>
 <h3 id="rainbow-table-attacks">Rainbow table attacks</h3>
 <p>In this section, we will see a smarter variant of dictionary attack to do the brute force, it called <code>pre-computed dictionary attack</code>.</p>
 <p>In this attack, we will pre-compute a list of hashes of dictionary words, and store in a table, which you can always easily to map the hashed text and plaintext password. If &ldquo;hash-chain&rdquo; functions are used to store the pre-computed hashes(to reduce the storage space), then the table is called a <code>rainbow table</code>.</p>

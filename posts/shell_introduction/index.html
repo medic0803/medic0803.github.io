@@ -9,7 +9,7 @@
 <meta property='og:description' content='浅谈Shell中的小知识 什么是交互式shell和非交互式shell？ 我们在进行渗透测试的时候，往往需要自己构造一个 Interactive 可交互的shell，那么'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/shell_introduction/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='pentest' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='shell' /><meta property='article:published_time' content='2022-07-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-23T15:17:33&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='pentest' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='shell' /><meta property='article:published_time' content='2022-07-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-09T16:50:10&#43;08:00'/>
 <meta name="twitter:title" content="浅谈Shell中的小知识">
 <meta name="twitter:description" content="浅谈Shell中的小知识 什么是交互式shell和非交互式shell？ 我们在进行渗透测试的时候，往往需要自己构造一个 Interactive 可交互的shell，那么">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    7 minute read
+                    8 minute read
                 </time>
             </div>
         
@@ -289,7 +289,28 @@ if (!doNotTrack) {
 <p>这里提到了两个概念， <code>option</code>, <code>argument</code>; <!-- raw HTML omitted --></p>
 <p>介绍前先说结论: argument包含option <!-- raw HTML omitted --></p>
 <p>如果大家尝试过使用C语言与shell交互，应该就会用到如下的代码来对输入的参数进行利用 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]</span> <span class="p">)</span>  
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -306,20 +327,34 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;One argument expected.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><code>argc</code> 表示输入参数的数量， <code>*argv[]</code> 就表示包含输入参数的数组 <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>argc</code> 表示输入参数的数量， <code>*argv[]</code> 就表示包含输入参数的数组 <!-- raw HTML omitted --></p>
 <p>这里为了一劳永逸，我们再插一嘴，再辨析一下英文文档中的 <code>parameter</code> &amp; <code>argument</code> 的区别： <!-- raw HTML omitted --></p>
 <ol>
 <li>parameter指的是在 <code>定义</code> 函数时的所申明的变量名 <!-- raw HTML omitted --></li>
 <li>argument指的是在 <code>调用</code> 函数时，实际传入的值 <!-- raw HTML omitted --></li>
 </ol>
 <p>例如在下面的例子中，在函数 <code>MyMethod</code> 中所定义的 <code>myParam</code> 就是parameter,而在下面实际调用使用中，将要传入的真实数据就叫做 argument [2]. <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="kt">void</span> <span class="nf">MyMethod</span><span class="p">(</span><span class="n">string</span> <span class="n">myParam</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="kt">void</span> <span class="nf">MyMethod</span><span class="p">(</span><span class="n">string</span> <span class="n">myParam</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">myArg1</span> <span class="o">=</span> <span class="s">&#34;this is my argument&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">myClass</span><span class="p">.</span><span class="n">MyMethod</span><span class="p">(</span><span class="n">myArg1</span><span class="p">);</span>
-</span></span></code></pre></div><p>好，我们赶紧回来shell中的option和argument的定义： <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>好，我们赶紧回来shell中的option和argument的定义： <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p><code>arguments</code> 就是包含整一串shell命令的数组，每一个string都可以称为 <code>argument</code>, 和调用c语言脚本时一个道理，第一个参数（0）就是命令的名字，例如&rsquo;ls&rsquo;,同时也被称为 <code>positional parameters</code>; <!-- raw HTML omitted --></p>
@@ -332,37 +367,78 @@ if (!doNotTrack) {
 </li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ls -la /tmp /var/tmp
-</span></span><span class="line"><span class="cl"><span class="nv">parameter1</span><span class="o">=</span> /tmp
-</span></span><span class="line"><span class="cl"><span class="nv">parameter2</span><span class="o">=</span> /var/tmp
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ls -la /tmp /var/tmp
+</span></span><span class="line"><span class="cl"><span class="c1"># parameter1= /tmp</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># parameter2= /var/tmp</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">$ ls -l -- -a
-</span></span><span class="line"><span class="cl"><span class="nv">option1</span>    <span class="o">=</span> -l
-</span></span><span class="line"><span class="cl"><span class="nv">parameter1</span> <span class="o">=</span> -a
-</span></span></code></pre></div><p>更多关于 <code>shell parameter</code> 以及 <code>subcommands</code> 的解释也可以参考 [3]. <!-- raw HTML omitted --></p>
-<p>了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，在启动的时候命令后面跟的只有option类型的argument，除非用了 <code>-s</code> 选项并且没有使用 <code>-c</code>, 或者直接使用了 <code>-i</code> 开启了交互模式 <!-- raw HTML omitted --></p>
+</span></span><span class="line"><span class="cl"><span class="c1"># option1    = -l</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># parameter1 = -a</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更多关于 <code>shell parameter</code> 以及 <code>subcommands</code> 的解释也可以参考 [3]. <!-- raw HTML omitted --></p>
+<p>了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，就是在启动的时候命令后面跟的只有option类型的argument，除非用了 <code>-s</code> 选项并且没有使用 <code>-c</code>, 或者直接使用了 <code>-i</code> 开启了交互模式 <!-- raw HTML omitted --></p>
 <ol>
-<li>-c &lt;string&gt; If  the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. <!-- raw HTML omitted --></li>
-<li>-i        If the -i option is present, the shell is interactive. <!-- raw HTML omitted --></li>
-<li>-s        If the -s option is present, or if no arguments remain after option processing,  then  commands are  read from the standard input.  This option allows the positional parameters to be set when invoking an interactive shell. <!-- raw HTML omitted --></li>
+<li>-c &lt;string&gt; If the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. <!-- raw HTML omitted -->
+<ul>
+<li>如果出现option -c，那么要执行的指令就从-c后面的string中读取，如果string之后还有参数，那么就当作是一条完整的命令来执行 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>-i        If the -i option is present, the shell is interactive. <!-- raw HTML omitted -->
+<ul>
+<li>如果出现-i则开启一个可交互的shell <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>-s        If the -s option is present, or if no arguments remain after option processing,  then commands are read from the standard input. This option allows the positional parameters to be set when invoking an interactive shell. <!-- raw HTML omitted -->
+<ul>
+<li>如果出现-s，则从标准输入中读取 <!-- raw HTML omitted --></li>
+</ul>
+</li>
 </ol>
 <p>使用 <code>-s</code> ，就可以从stdin读取需要执行的命令，这么说有一点抽象，难以和-c区分开来，我们来看一个例子 [4]： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -L https://chef.io/chef/install.sh <span class="p">|</span> sudo bash -s -- -P chefdk
-</span></span></code></pre></div><p>一般来说 <code>-s</code> 选项都以 <code>curl $script_url | bash</code> 的形式来配合使用，目的是为了执行下载到的shell <!-- raw HTML omitted --></p>
-<p>这里 <code>--</code> 表示，将后面所有的string都当作要执行的命令的argument，而不是当前命令的option,而 <code>-s</code> 则会负责执行下载到的install.sh <!-- raw HTML omitted --></p>
-<p>顺便也翻译一下，使用  <code>-c</code> 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令的其他argument(从$0开始)。 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -L https://chef.io/chef/install.sh <span class="p">|</span> sudo bash -s -- -P chefdk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一般来说 <code>-s</code> 选项都以 <code>curl $script_url | bash</code> 的形式来配合使用，目的是为了 <code>执行</code> 下载到的shell; <!-- raw HTML omitted --></p>
+<p>这里 <code>--</code> 表示，将后面所有的string都当作要执行的命令（bash -s所下载的install.sh）的argument，而不是当前命令的option,而 <code>-s</code> 则会负责执行下载到的install.sh; <!-- raw HTML omitted --></p>
+<p>顺便也翻译一下，使用 <code>-c</code> 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令（前面的string）的其他argument(从$0开始)。 <!-- raw HTML omitted --></p>
 <p>总结一下，启动一个交互式的shell，需要命令的argument全部都为option，而不能有parameter，除非使用了 <code>-s</code> (而没有-c) 或者 <code>-i</code> 的情况,并且交互式shell可以接受来自用户的输入和读取,即这个shell需要用户与其互动，输入命令来决定其行动 <!-- raw HTML omitted --></p>
 <h4 id="non-interactive-shell-非交互式shell">Non-Interactive shell 非交互式shell</h4>
 <p>非交互式的shell就正好相反，其不会与用户进行交互，即标准输入和错误流都没有连接到终端（即用户不可见），往往用于脚本的自动化执行，输入则进入专门的log文件中，同时配置文件例如.bashrc, .profile, .zshrc 都不会被执行 [5]. <!-- raw HTML omitted --></p>
+<p>因此我们在渗透的过程中时常需要去获得一个交互式的shell来看到我们所执行命令的回显信息。 <!-- raw HTML omitted --></p>
 <h4 id="如何区分交互式shell和非交互式shell">如何区分交互式shell和非交互式shell</h4>
 <p>我们可以通过交互式shell中所定义的两个变量来进行区分 <!-- raw HTML omitted --></p>
 <ol>
 <li><code>$PS1</code> 在交互式shell中被定义，有输出的内容，而在非交互式shell中没有被定义，没有输出； <!-- raw HTML omitted --></li>
 <li><code>$-</code> 在交互式的shell中，输出的字符串包含字符 <code>'i'</code>, 非交互式shell中，则不包含&rsquo;i&rsquo; [6]； <!-- raw HTML omitted --></li>
 </ol>
-<p>可以用下列代码来进行测试 [5] <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ‘Interactive’ <span class="o">||</span> <span class="nb">echo</span> ‘not-interactive’
-</span></span></code></pre></div><h4 id="bash中的特殊变量">Bash中的特殊变量</h4>
+<p>（如果不明白这两个变量是干什么的也不用着急，我们下面会讲） <!-- raw HTML omitted --></p>
+<p>可以用下列代码来进行测试 [5]: <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ‘Interactive’ <span class="o">||</span> <span class="nb">echo</span> ‘not-interactive’
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="bash中的特殊变量">Bash中的特殊变量</h4>
 <!-- raw HTML omitted -->
 <ul>
 <li>
@@ -375,7 +451,7 @@ if (!doNotTrack) {
 </ul>
 <p>还有类似的： <!-- raw HTML omitted --></p>
 <ul>
-<li>$PS1, primary prompt string, shell 每一行的开头标识符; <!-- raw HTML omitted --></li>
+<li>$PS1, primary prompt string, shell界面每次换行后的开头标识符（如果使用了插件进行美化之后，就会发现这个值特别长，就是因为开头标识符变化了）; <!-- raw HTML omitted --></li>
 <li>$PS2, 表示次级的标识符，secondary prompt string，通常为 &gt;; <!-- raw HTML omitted --></li>
 <li>$PS3, 用来指示选中的命令; <!-- raw HTML omitted --></li>
 <li>$PS4, 表示命令在执行的过程中，每一行的输出都会输出 $PS4 的值 [7]; <!-- raw HTML omitted --></li>
@@ -386,8 +462,8 @@ if (!doNotTrack) {
             </figcaption>
     </figure>
  <!-- raw HTML omitted --></p>
-<p>知道了这个之后，我们也就能理解为什么我们通过msf拿到的shell的每一行开头什么都没有，因此被称为非交互式的shell，因为其$PS1没有被定义，也就没有内容可以显示 <!-- raw HTML omitted --></p>
-<p>我们平时利用一些工具对终端进行自定义美化的时候，应该也是对这些内容进行修改来实现的，大家可以试试看在自己的终端中输出这些内容，可能都是很长的输出 <!-- raw HTML omitted --></p>
+<p>知道了这个之后，我们也就能理解为什么我们通过msf拿到的shell的每一行开头什么都没有，因此被称为非交互式的shell，因为其$PS1没有被定义，也就没有内容可以显示； <!-- raw HTML omitted --></p>
+<p>我们平时利用一些工具对终端进行自定义美化的时候，应该也是对这些内容进行修改来实现的，大家可以试试看在自己的终端中输出这些内容，可能都是很长的输出； <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
@@ -401,8 +477,7 @@ if (!doNotTrack) {
 -   h - hashall: Locate and remember (hash) commands as they are looked up for execution <!-- raw HTML omitted -->
 -   B - braceexpand: when brace expansion is enabled <!-- raw HTML omitted -->
 -   i - interactive: when current shell is interactive <!-- raw HTML omitted --></p>
-<pre><code>     这样也就不难理解我们为什么在进行shell是否可交互时可以查看 `$-` 的值中是否包含i了 &lt;br/&gt;
-</code></pre>
+<p>这样也就不难理解我们为什么在进行shell是否可交互时可以查看 <code>$-</code> 的值中是否包含i了； <!-- raw HTML omitted --></p>
 <p>$$
 : $$会输出当前shell的进程ID或者说PID，每当新开启一个shell的时候，就会产生一个新的进程 <!-- raw HTML omitted --></p>
 <p>$#
@@ -414,13 +489,13 @@ if (!doNotTrack) {
  这里的 `_` 下划线表示一个占位符，表示后面的string为命令的arguments，要主要的是，#表示的数字并不会被算进去，因此上面指令的输出为3 &lt;br/&gt;
 </code></pre>
 <p>$0
-: 显示出当前运行脚本的名字，也就是第一个argument的值 <!-- raw HTML omitted --></p>
+: 显示出当前运行脚本的名字，也就是第一个argument的值； <!-- raw HTML omitted --></p>
 <p>$?
-: $?表示的是上一条命令的exit code，如果成功执行则为0，如果出现错误，就回事1 <!-- raw HTML omitted --></p>
+: $?表示的是上一条命令的exit code，如果成功执行则为0，如果出现错误，就回事1； <!-- raw HTML omitted --></p>
 <p>$!
-: $!，dollar exclamation,表示上一个最近一个被执行的任务的PID <!-- raw HTML omitted --></p>
+: $!，dollar exclamation,表示上一个最近一个被执行的任务的PID； <!-- raw HTML omitted --></p>
 <p>$_
-: $_表示最近一条指令的最后一个argument <!-- raw HTML omitted --></p>
+: $_表示最近一条指令的最后一个argument； <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-21_23-10-43_screenshot.png"
              alt="Figure 2: $_指示上一条指令的最后一个argument" width="200px"/><figcaption>
                 <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->$_指示上一条指令的最后一个argument</p>
@@ -439,7 +514,7 @@ if (!doNotTrack) {
 <h3 id="什么是login-shell和non-login-shell">什么是Login Shell和Non-Login Shell?</h3>
 <p>&ldquo;A login shell is one whose first character of argument zero is a -, or one started with the &ndash;login option.&rdquo; [10]. <!-- raw HTML omitted --></p>
 <h4 id="如何判断">如何判断？</h4>
-<p>判断一个shell是否是login shell的标准就是$0的输出字符串，其第一个字符是否是&rsquo;-&rsquo;，如果是，则是一个login shell <!-- raw HTML omitted --></p>
+<p>判断一个shell是否是login shell的标准就是$0的输出字符串，其第一个字符是否是&rsquo;-&rsquo;，如果是，则是一个login shell; <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-22_23-14-23_screenshot.png"
          alt="Figure 3: 判断Login shell" width="700px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->判断Login shell</p>
@@ -455,6 +530,25 @@ if (!doNotTrack) {
  <!-- raw HTML omitted --></p>
 <h4 id="login-shell">Login shell</h4>
 <p>Login shell在启动的时候，会传递$0, 通常就是带&rsquo;-&lsquo;的shell名，例如 &lsquo;-bash&rsquo;, &lsquo;-zsh&rsquo;, <!-- raw HTML omitted --></p>
+<h3 id="reference">Reference</h3>
+<p>[1] ‘What is an Interactive Shell? (Bash Reference Manual)’. <a class="link" href="https://www.gnu.org/software/bash/manual/html_node/What-is-an-Interactive-Shell_003f.html"  target="_blank" rel="noopener"
+    >https://www.gnu.org/software/bash/manual/html_node/What-is-an-Interactive-Shell_003f.html</a> (accessed Jul. 21, 2022). <!-- raw HTML omitted -->
+[2] T. Hansson, ‘Answer to “What’s the difference between an argument and a parameter?”’, Stack Overflow, Oct. 01, 2008. <a class="link" href="https://stackoverflow.com/a/156787/17534765"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/a/156787/17534765</a> (accessed Jul. 21, 2022). <!-- raw HTML omitted -->
+[3] jlliagre, ‘Answer to “Difference between terms: ‘option’, ‘argument’, and ‘parameter’?”’, Stack Overflow, Apr. 08, 2016. <a class="link" href="https://stackoverflow.com/a/36495940/17534765"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/a/36495940/17534765</a> (accessed Jul. 21, 2022). <!-- raw HTML omitted -->
+[4] navigaid, ‘Answer to “What does bash -s do?”’, Stack Overflow, Aug. 15, 2018. <a class="link" href="https://stackoverflow.com/a/51854728/17534765"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/a/51854728/17534765</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted -->
+[5] ‘Shell Scripting - Interactive and Non-Interactive Shell’, GeeksforGeeks, Jan. 23, 2022. <a class="link" href="https://www.geeksforgeeks.org/shell-scripting-interactive-and-non-interactive-shell/"  target="_blank" rel="noopener"
+    >https://www.geeksforgeeks.org/shell-scripting-interactive-and-non-interactive-shell/</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted -->
+[6] 毛英东, ‘什么是交互式shell和非交互式shell?’, 毛英东的个人博客, May 30, 2020. <a class="link" href="https://www.maoyingdong.com/what_is_a_interactive_shell/index.html"  target="_blank" rel="noopener"
+    >https://www.maoyingdong.com/what_is_a_interactive_shell/index.html</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted -->
+[7] V. Gite, ‘How to Change / Set up bash custom prompt (PS1) in Linux’, nixCraft, Jun. 02, 2007. <a class="link" href="https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html"  target="_blank" rel="noopener"
+    >https://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted -->
+[8] anubhava, ‘Answer to “What does $- mean in Bash?”’, Stack Overflow, Mar. 13, 2017. <a class="link" href="https://stackoverflow.com/a/42757277/17534765"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/a/42757277/17534765</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted -->
+[9] S. Ganguly, ‘How to Use Special Variables in Bash’. <a class="link" href="https://linuxhint.com/use-special-variables-in-bash/"  target="_blank" rel="noopener"
+    >https://linuxhint.com/use-special-variables-in-bash/</a> (accessed Jul. 22, 2022). <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -494,7 +588,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Sep 23, 2022 15:17 CST
+            Last updated on Oct 09, 2022 16:50 CST
         </span>
     </section></footer>
 
@@ -721,6 +815,7 @@ if (!doNotTrack) {
             <li><a href="#login-shell">Login shell</a></li>
           </ul>
         </li>
+        <li><a href="#reference">Reference</a></li>
       </ul>
     </li>
   </ul>

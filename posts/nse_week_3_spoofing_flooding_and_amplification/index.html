@@ -576,8 +576,15 @@ server确认client愿意接受并发送IP以及其他的配置信息 <!-- raw HT
 <ol>
 <li>
 <p>计算所有的Message在传输中delay的时间 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">delay = D1 - D2 = (T4-T1) - (T3-T2) = 通信花费的总时长 - 在server上的处理时间 = 3 - 1 = 2 seconds
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">delay = D1 - D2 = (T4-T1) - (T3-T2) = 通信花费的总时长 - 在server上的处理时间 = 3 - 1 = 2 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>计算 NTP client 与NTP server 之间的时间差 <!-- raw HTML omitted --></p>
 <p>O1 = T2 - T1 = 1h 1s <!-- raw HTML omitted --></p>

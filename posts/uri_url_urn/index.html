@@ -284,10 +284,24 @@ if (!doNotTrack) {
 <p>“统一”，表示使用一种统一的规范来表示 <!-- raw HTML omitted --></p>
 <p>“资源标识符”，表示URI是用来指代一种资源，网页，图片，视频，etc.. <!-- raw HTML omitted --></p>
 <p>下面是URI的统一格式规范，依次由五个部分组成 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">URI = scheme &#34;:&#34; [&#34;//&#34; authority] path [&#34;?&#34; query] [&#34;#&#34; fragment]
-</span></span></code></pre></div><p>其中Authority可以划成三个子模块 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">authority = [userinfo &#34;@&#34;] host [&#34;:&#34; port]
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_16-11-18_screenshot.png" width="700px"/>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">URI = scheme &#34;:&#34; [&#34;//&#34; authority] path [&#34;?&#34; query] [&#34;#&#34; fragment]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中Authority可以划成三个子模块 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">authority = [userinfo &#34;@&#34;] host [&#34;:&#34; port]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-21_16-11-18_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>具体的各个组成模块大家可以去<a class="link" href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier"  target="_blank" rel="noopener"
@@ -320,15 +334,34 @@ if (!doNotTrack) {
 <p>我们最后用一个Java Web中的例子来结束URI与URL的区分 <!-- raw HTML omitted --></p>
 <p>我们重写Servlet的doGet方法来帮助服务器处理来自客户端的HTTP请求，并通过HttpServletRequest对象来获取GET请求的具体信息 <!-- raw HTML omitted --></p>
 <p>接着通过getRequestURI() &amp; getRequestURL()来分别获取请求的URI以及URL的信息 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;URI of the requested resource: &#34;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">());</span>
 </span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;URL of the request resource: &#34;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getRequestURL</span><span class="o">());</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>结果如下，我们可以看到，URI可以非常简短，工程名+资源的路径即可，而URL就需要完整的ip:port的信息来帮助唯一定位一个资源 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">URI of the requested resource: /JSPLearn/hello
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果如下，我们可以看到，URI可以非常简短，工程名+资源的路径即可，而URL就需要完整的ip:port的信息来帮助唯一定位一个资源 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">URI of the requested resource: /JSPLearn/hello
 </span></span><span class="line"><span class="cl">URL of the request resource: http://localhost:8089/JSPLearn/hello
-</span></span></code></pre></div><h3 id="urn">URN</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="urn">URN</h3>
 <p>URN, Uniform Resource Name, 统一资源名称，是一种特殊的URI，特点是其scheme使用 <code>urn:</code> <!-- raw HTML omitted --></p>
 <p>“统一”，表示使用一种统一的规范来表示 <!-- raw HTML omitted -->
 “资源名称”，表达了URN会表示一个资源的名称，并称这个标识会同时在空间以及时间上保持其唯一性，及全球唯一，并且在未来也会保持唯一 <!-- raw HTML omitted --></p>

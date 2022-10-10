@@ -281,8 +281,15 @@ if (!doNotTrack) {
 <p>看到关键词wordpress，貌似是一个写blog的工具？</p>
 <p>启动后发现需要登陆，根据师傅的提示没有过多纠缠，应该是要通过一个网页来入手</p>
 <p>这时候想到以前用ssh连接虚拟机的时候，往往用vmware启动虚拟机后不用管登陆，直接用ssh就可以，说明后台服务其实已经启动，加上需要网页的线索，想到通过分配到的局域网IP地址找到网页</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ifconfig <span class="p">|</span> grep <span class="s2">&#34;inet&#34;</span>
-</span></span></code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ifconfig <span class="p">|</span> grep <span class="s2">&#34;inet&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><!-- raw HTML omitted -->
 <figure><img src="/ox-hugo/2022-03-13_21-32-22_screenshot.png" width="600px"/>
 </figure>
 
@@ -312,18 +319,48 @@ if (!doNotTrack) {
 <p>至此我已经没有什么其他想法了，其他的一些尝试包括访问<a class="link" href="https://www.whoismrrobot.com/"  target="_blank" rel="noopener"
     >https://www.whoismrrobot.com/</a> ，尝试阅读html源码以及目录下的一些js代码，也没有收获 拿到了里面的一些user:pwd，但也没没有什么作用，然后就搜到了同样题目的write-up，一开始打算看点提示，但浏览一下发现已经超出能力范围，只能拿来学习一下了</p>
 <h3 id="根据write-up的复现">根据write-up的复现</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">以下内容是根据找到的write-up的复现，同时带有一些思考
-</span></span></code></pre></div><h4 id="第一个key">第一个key</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">以下内容是根据找到的write-up的复现，同时带有一些思考
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="第一个key">第一个key</h4>
 <p>首先使用目录扫描工具来对ip地址进行扫描，用到了diremap工具</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python3 dirmap.py -i 192.168.56.118 -lcf
-</span></span></code></pre></div><p>发现一个熟悉的文件robots.txt，以前也遇到过在这个文件中包含信息的情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python3 dirmap.py -i 192.168.56.118 -lcf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现一个熟悉的文件robots.txt，以前也遇到过在这个文件中包含信息的情况</p>
 <p>得到两个文件，分别打开</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">User-agent: *
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">User-agent: *
 </span></span><span class="line"><span class="cl">fsocity.dic
 </span></span><span class="line"><span class="cl">key-1-of-3.txt
-</span></span></code></pre></div><p>得到第一个key：key-1-of-3.txt, 以及一个字典文件fsocity.dic，此时判断可能是需要通过Burp进行爆破使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">073403c8a58a1f80d943455fb30724b9
-</span></span></code></pre></div><h4 id="第二个key">第二个key</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到第一个key：key-1-of-3.txt, 以及一个字典文件fsocity.dic，此时判断可能是需要通过Burp进行爆破使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">073403c8a58a1f80d943455fb30724b9
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="第二个key">第二个key</h4>
 <p>利用字典进行爆破用户名，得到两个有用的用户名Elliot和elliot，似曾相识，之前在搜索 <a class="link" href="https://www.whoismrrobot.com/"  target="_blank" rel="noopener"
     >https://www.whoismrrobot.com/</a> 网站信息的时候有人提到过这个名字</p>
 <figure><img src="/ox-hugo/2022-03-13_22-20-58_screenshot.png" width="600px"/>
@@ -357,8 +394,15 @@ cat /etc/passwd</p>
 </figure>
 
 <p>提示需要终端才能执行，利用python生成一个终端</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
-</span></span></code></pre></div><p>使用密码进行登录后，查看文件，得到第二个key的值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用密码进行登录后，查看文件，得到第二个key的值</p>
 <figure><img src="/ox-hugo/2022-03-14_14-55-54_screenshot.png" width="600px"/>
 </figure>
 
@@ -367,11 +411,32 @@ cat /etc/passwd</p>
 学习参考文章：<a class="link" href="https://www.anquanke.com/post/id/86979"  target="_blank" rel="noopener"
     >https://www.anquanke.com/post/id/86979</a>
 利用一下命令，可以将从 / 目录中查找具有SUID权限位且属主为root的文件并输出它们，然后将所有错误重定向到/dev/null，从而仅列出该用户具有访问权限的那些二进制文件。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">find / -user root -perm -100 -print 2&gt;/dev/null
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">find / -user root -perm -100 -print 2&gt;/dev/null
 </span></span><span class="line"><span class="cl">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
 </span></span><span class="line"><span class="cl">find / -user root -perm -100 -exec ls -ldb <span class="o">{}</span> <span class="p">;</span>
-</span></span></code></pre></div><p>搜索常见的具有提权功能的Linux可执行文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Nmap
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>搜索常见的具有提权功能的Linux可执行文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Nmap
 </span></span><span class="line"><span class="cl">Vim
 </span></span><span class="line"><span class="cl">find
 </span></span><span class="line"><span class="cl">Bash
@@ -379,7 +444,9 @@ cat /etc/passwd</p>
 </span></span><span class="line"><span class="cl">Less
 </span></span><span class="line"><span class="cl">Nano
 </span></span><span class="line"><span class="cl">cp
-</span></span></code></pre></div><p>执行后发现nmap，确认权限中包含&rsquo;s&rsquo;，为root所有</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行后发现nmap，确认权限中包含&rsquo;s&rsquo;，为root所有</p>
 <figure><img src="/ox-hugo/2022-03-14_15-14-35_screenshot.png" width="600px"/>
 </figure>
 

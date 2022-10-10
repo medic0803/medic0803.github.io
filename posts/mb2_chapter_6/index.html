@@ -280,7 +280,36 @@ if (!doNotTrack) {
 <p>&ldquo;Transactions are the most important part of the bitcoin system. Everything else in bitcoin is designed to ensure that transactions can be created, propagated on the network, validated, and finally added to the global ledger of transactions (the blockchain).&rdquo; <!-- raw HTML omitted --></p>
 <p>第六章的开篇又提到了Transaction 的重要性，可以说就是为了保证Transaction 能够成功，才创造了其他一系列的技术支持。在第二章中，我们已经大致明白了transaction 是怎样工作的了，在第六章中，我们将介绍其中的细节。 <!-- raw HTML omitted --></p>
 <p>先贴一个Transaction 在这里，之后我们慢慢展开讲其中所包含的信息 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;locktime&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;vin&#34;</span><span class="p">:</span> <span class="p">[</span>
@@ -305,7 +334,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="transaction-outputs-and-inputs">Transaction Outputs and Inputs</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="transaction-outputs-and-inputs">Transaction Outputs and Inputs</h3>
 <p>这里我们直接引入一个新的概念： <code>UTXO (Unspent transaction outputs)</code> 未被花费的outputs，他具有discrete and indivisible 两个特性，就像物理货币一样，每一个硬币，每一张钞票，你在消费的时候，不能把它拆开来使用一样，并且一旦用出，你得到的找零也是其他的货币。 <!-- raw HTML omitted --></p>
 <p>所有的Transaction整个过程中都是涉及到UTXO <!-- raw HTML omitted --></p>
 <dl>
@@ -336,7 +367,23 @@ if (!doNotTrack) {
 </dd>
 </dl>
 <p>此时我们再回过头来之前transcation的内容，value out部分就很好理解了，就是用 <code>satoshis</code> 表示的一部分value 以及用scriptPubkey表示的一个 puzzle, 我们之后会讲到如何lock+unlock 这个scriptPubKey <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vout&#34;</span><span class="err">:</span> <span class="p">[</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vout&#34;</span><span class="err">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;value&#34;</span><span class="p">:</span> <span class="mf">0.01500000</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;scriptPubKey&#34;</span><span class="p">:</span> <span class="s2">&#34;OP_DUP OP_HASH160
@@ -348,7 +395,9 @@ if (!doNotTrack) {
 </span></span></span><span class="line"><span class="cl"><span class="s2"> 7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 OP_EQUALVERIFY OP_CHECKSIG&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
-</span></span></code></pre></div><h4 id="transaction-serialisation-outputs">Transaction serialisation &ndash; outputs</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="transaction-serialisation-outputs">Transaction serialisation &ndash; outputs</h4>
 <p>我们知道所有的Transaction 都会在整个bitcoin network中传递，同时也会被保存在各个节点上(bitcoin libraries) <!-- raw HTML omitted --></p>
 <p>那么为了传输以及保存的方便，就有了两种形式： <!-- raw HTML omitted --></p>
 <ol>
@@ -377,7 +426,20 @@ if (!doNotTrack) {
 <p>一个 unlocking script <!-- raw HTML omitted -->
 （用于满足UTXO的 locking script的使用条件） <!-- raw HTML omitted --></p>
 <p>我们继续通过之前的例子来看transaction inputs <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vin&#34;</span><span class="err">:</span> <span class="p">[</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vin&#34;</span><span class="err">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;txid&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;7957a35fe64f80d234d76d83a2a8f1a0d8149a41d81de548f0a65a8a999f6f18&#34;</span><span class="p">,</span>
@@ -386,7 +448,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;sequence&#34;</span><span class="p">:</span> <span class="mi">4294967295</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
-</span></span></code></pre></div><p>这条 Inputs 的记录包含了四个部分： <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这条 Inputs 的记录包含了四个部分： <!-- raw HTML omitted --></p>
 <ol>
 <li>Transaction ID <!-- raw HTML omitted -->
 指向了我们需要的UTXO所对应的Transaction <!-- raw HTML omitted --></li>
@@ -400,14 +464,27 @@ if (!doNotTrack) {
 <p>完全没有bitcoin value 以及 locking script的信息 <!-- raw HTML omitted --></p>
 <p>这也是作者提醒各位开发者的信息，每次在处理transaction 特别是inputs的时候，我们都需要利用 <code>Transaction ID</code> 去主动去获取对应的 UTXO 的信息(<code>getrawtrasaction</code> and <code>decoderawtrasaction</code>) <!-- raw HTML omitted -->
 比如以这条记录为例，查询到的结果就是 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vout&#34;</span><span class="err">:</span> <span class="p">[</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;vout&#34;</span><span class="err">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">     <span class="nt">&#34;value&#34;</span><span class="p">:</span> <span class="mf">0.10000000</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">     <span class="nt">&#34;scriptPubKey&#34;</span><span class="p">:</span> <span class="s2">&#34;OP_DUP OP_HASH160
 </span></span></span><span class="line"><span class="cl"><span class="s2">7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 OP_EQUALVERIFY OP_CHECKSIG&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
-</span></span></code></pre></div><h4 id="transaction-serialization-inputs">Transaction serialization—inputs</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="transaction-serialization-inputs">Transaction serialization—inputs</h4>
 <p>Transaction inputs的存储和传输同样也需要用到序列化和反序列化 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-25_15-17-51_screenshot.png" width="700px"/>
 </figure>
@@ -436,8 +513,15 @@ if (!doNotTrack) {
 </dd>
 <dt>Adding Fees to Trasactions</dt>
 <dd>我们观察之前的transaction的数据结构，里面并没有任何的变量指向transaction fee，那么其实这里是需要提前自行从找零的charge中扣除一部分的bitcoin value，如果忘记做了这一点，就会把整一个charge付给miner。当我们主动扣除之后，那么在后期结算的时候，就可以发现有一些未被分配的bitcoin value，这些就会被当作是transaction fee。 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Fees = Sum(Inputs) – Sum(Outputs)
-</span></span></code></pre></div><p>就如下图的一次transaction一样，我们可以看到右侧的outputs中，综合为0.995 BTC，也就是扣除了transaction fee之后的结果 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Fees = Sum(Inputs) – Sum(Outputs)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就如下图的一次transaction一样，我们可以看到右侧的outputs中，综合为0.995 BTC，也就是扣除了transaction fee之后的结果 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-11_22-57-13_screenshot.png" width="700px"/>
     </figure>
  <!-- raw HTML omitted --></p>

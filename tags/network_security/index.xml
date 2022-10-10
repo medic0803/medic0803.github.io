@@ -3497,8 +3497,15 @@ server确认client愿意接受并发送IP以及其他的配置信息 &lt;!-- raw
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;计算所有的Message在传输中delay的时间 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;delay = D1 - D2 = (T4-T1) - (T3-T2) = 通信花费的总时长 - 在server上的处理时间 = 3 - 1 = 2 seconds
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;delay = D1 - D2 = (T4-T1) - (T3-T2) = 通信花费的总时长 - 在server上的处理时间 = 3 - 1 = 2 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;计算 NTP client 与NTP server 之间的时间差 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;O1 = T2 - T1 = 1h 1s &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;

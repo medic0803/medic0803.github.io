@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提'><title>Mysql中的“奇技淫巧”</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Mysql拓展知识 MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提供了很多'><title>Mysql拓展知识</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/mysql_tricks/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mysql中的“奇技淫巧”'>
-<meta property='og:description' content='Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Mysql拓展知识'>
+<meta property='og:description' content='Mysql拓展知识 MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提供了很多'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/mysql_tricks/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='mysql' /><meta property='article:tag' content='ctf' /><meta property='article:published_time' content='2022-06-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-15T15:31:59&#43;01:00'/>
-<meta name="twitter:title" content="Mysql中的“奇技淫巧”">
-<meta name="twitter:description" content="Mysql中的“奇技淫巧” MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='mysql' /><meta property='article:published_time' content='2022-06-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-02T09:05:49&#43;08:00'/>
+<meta name="twitter:title" content="Mysql拓展知识">
+<meta name="twitter:description" content="Mysql拓展知识 MySQL中show语法使用总结 https://www.cnblogs.com/saneri/p/6963583.html 我们一般接触到的Mysql语句都是增删改查数据库中存储的数据，但是Mysql还提供了很多">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -218,8 +218,8 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/ctf/" >
-                ctf
+            <a href="/categories/sql/" >
+                sql
             </a>
         
     </header>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/mysql_tricks/">Mysql中的“奇技淫巧”</a>
+            <a href="/posts/mysql_tricks/">Mysql拓展知识</a>
         </h2>
     
         
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    9 minute read
+                    12 minute read
                 </time>
             </div>
         
@@ -275,7 +275,7 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="mysql中的-奇技淫巧">Mysql中的“奇技淫巧”</h2>
+    <h2 id="mysql拓展知识">Mysql拓展知识</h2>
 <h3 id="mysql中show语法使用总结">MySQL中show语法使用总结</h3>
 <p><a class="link" href="https://www.cnblogs.com/saneri/p/6963583.html"  target="_blank" rel="noopener"
     >https://www.cnblogs.com/saneri/p/6963583.html</a> <!-- raw HTML omitted --></p>
@@ -326,7 +326,21 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 <p><code>PREPARE</code> 语句会把一个SQL语句赋值给一个变量名stmt_name用于后面的引用。 <!-- raw HTML omitted --></p>
 <p>预编译语句会被 <code>EXECUTE</code> 执行，然后被 <code>DEALLOCATE PREPARE</code> 释放 <!-- raw HTML omitted --></p>
 <p>以下是一个使用预编译语句的例子，使用&rsquo;?&lsquo;来占位，然后通过 <code>SET</code> 来赋值再结合在一起使用，最后用 <code>DEALLOCATE PREPARE</code> 来释放 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">PREPARE</span><span class="w"> </span><span class="n">stmt1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse&#39;</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">PREPARE</span><span class="w"> </span><span class="n">stmt1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse&#39;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">EXECUTE</span><span class="w"> </span><span class="n">stmt1</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">b</span><span class="p">;</span><span class="w">
@@ -336,7 +350,9 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">          </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------+
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DEALLOCATE</span><span class="w"> </span><span class="k">PREPARE</span><span class="w"> </span><span class="n">stmt1</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h3 id="index-索引">Index 索引</h3>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="index-索引">Index 索引</h3>
 <p>参考： <!-- raw HTML omitted -->
 <a class="link" href="https://blog.csdn.net/wangfeijiu/article/details/113409719"  target="_blank" rel="noopener"
     >一文搞懂MySQL索引（清晰明了）</a> <!-- raw HTML omitted --></p>
@@ -344,35 +360,93 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
     >MySQL索引实现原理分析</a> <!-- raw HTML omitted --></p>
 <h4 id="basic-基础概念">Basic 基础概念</h4>
 <p>Index，索引，是Mysql数据库中一个用来提高表内查询速度的数据结构。 <!-- raw HTML omitted --></p>
-<p>如果没有Index，那么当我们想要从一个有一万条记录的表中找到我们想要的一列时，最坏的情况就是要遍历一万条数据才能发现匹配的，但是如果是有Index的话，就可以像字典一样，提前找到其位置，然后快速得到，Index的使用极大的提升了Mysql的查询速度和效率 <!-- raw HTML omitted --></p>
-<p>Index的使用将极大的帮助SELECT语句，但是会降低INSERT and UPDATE的速度，因为对于table的变动还需要更新index的信息 <!-- raw HTML omitted --></p>
-<p>我在学习的时候有Index的概念的时候还是没有跳脱出之前增删改查的语法的使用，一直在找资料想看看Index具体要怎么和查询一起使用，慢慢开始理解之后才突然意识到Index的创建其实就是一种字典索引的建立，只要创建了合适的索引，那么再下一次进行select语句的时候，Index就会自动加速本次查询，也就是我想找的如何使用Index的答案。 <!-- raw HTML omitted --></p>
+<p>如果没有Index，那么当我们想要从一个有一万条记录的表中找到我们想要的一列时，最坏的情况就是要遍历一万条数据才能发现匹配的; <!-- raw HTML omitted --></p>
+<p>但是如果是有Index的话，就可以像字典一样，提前找到其位置，然后根据位置快速得到其内容，Index的使用极大的提升了Mysql的查询速度和效率； <!-- raw HTML omitted --></p>
+<p>Index的使用将极大的帮助SELECT语句，但是会降低INSERT 以及 UPDATE的速度：因为对于table的变动还需要更新index的信息； <!-- raw HTML omitted --></p>
+<p>我在学习的时候有Index的概念的时候还是没有跳脱出之前增删改查的语法的使用，一直在找资料想看看Index是不是一个独立的结构，具体要创建以及在查询中使用，慢慢开始理解之后才突然意识到Index的创建其实就是一种字典索引的建立，只要创建了合适的索引，那么再下一次进行select语句的时候，Index就会自动加速本次查询，也就是我想找的如何使用Index的答案。 <!-- raw HTML omitted --></p>
 <p>接着我就看到了W3schools给的解释，就非常清晰了：The users cannot see the indexes, they are just used to speed up searches/queries :) <!-- raw HTML omitted --></p>
 <p>接下来我们就来看看具体要如何创建Index <!-- raw HTML omitted --></p>
 <h4 id="index的语法">Index的语法</h4>
 <p>创建一个最基本的Index，允许存在重复的值 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w"> 
-</span></span></span></code></pre></div><p>例子 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_lastname</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>例子 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_lastname</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="n">Persons</span><span class="w"> </span><span class="p">(</span><span class="n">LastName</span><span class="p">);</span><span class="w"> 
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_pname</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_pname</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="n">Persons</span><span class="w"> </span><span class="p">(</span><span class="n">LastName</span><span class="p">,</span><span class="w"> </span><span class="n">FirstName</span><span class="p">);</span><span class="w"> 
-</span></span></span></code></pre></div><p>创建一个唯一的Index，不允许重复的值 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建一个唯一的Index，不允许重复的值 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w"> 
-</span></span></span></code></pre></div><p>通过修改表结构来添加索引 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">indexName</span><span class="p">(</span><span class="n">columnName</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p>如果是CHAR，VARCHAR类型，length可以小于字段实际长度；如果是BLOB和TEXT类型，必须指定length。 <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过修改表结构来添加索引 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">indexName</span><span class="p">(</span><span class="n">columnName</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果是CHAR，VARCHAR类型，length可以小于字段实际长度；如果是BLOB和TEXT类型，必须指定length。 <!-- raw HTML omitted --></p>
 <p>创建表的时候直接指定INDEX <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="p">(</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="p">(</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">username</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INDEX</span><span class="w"> </span><span class="p">[</span><span class="n">indexName</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">(</span><span class="k">length</span><span class="p">))</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>删除索引 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">[</span><span class="n">indexName</span><span class="p">]</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span><span class="w"> 
-</span></span></span></code></pre></div><h4 id="index使用的准则与场景">Index使用的准则与场景</h4>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除索引 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">[</span><span class="n">indexName</span><span class="p">]</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span><span class="w"> 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="index使用的准则与场景">Index使用的准则与场景</h4>
 <p>之前我们提到了Index本质是一个数据结构，那么作为一个数据结构来存储大量的数据，势必也需要占用物理磁盘，那么如何合理的利用索引来加速查询的同时又减少开销呢？ <!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <ul>
@@ -439,21 +513,46 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>主键索引：将一张表的主键列设为索引，特点是一张表只能有一个主键索引，不允许重复，也不允许为NULL <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">column_list</span><span class="p">);</span><span class="w"> 
-</span></span></span></code></pre></div><p>反过来说，一个有主键的数据表的存储形式就是一个主键索引的文件 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">column_list</span><span class="p">);</span><span class="w"> 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>反过来说，一个有主键的数据表的存储形式就是一个主键索引的文件 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>唯一索引：被索引的列的值不允许重复，但允许为NULL，一张表可以创建多个唯一索引；同时，如果是组合索引，列值的组合也必须唯一 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">或者</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">column_list</span><span class="p">);</span><span class="w"> 
-</span></span></span></code></pre></div></li>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>普通索引：一张表可以创建多个普通索引，一个普通索引可以包含多个字段，允许数据重复，允许NULL值插入 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">`</span><span class="n">TableName</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">或者</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">TableName</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">IndexName</span><span class="p">(</span><span class="o">`</span><span class="err">字段名</span><span class="o">`</span><span class="p">(</span><span class="k">length</span><span class="p">));</span><span class="w">
-</span></span></span></code></pre></div></li>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>全文索引：查找文本中的关键词，主要用于全文内容的检索 <!-- raw HTML omitted --></p>
 </li>
@@ -570,20 +669,41 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-05_22-57-41_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
-<h3 id="explain-分析sql查询语句">EXPLAIN: 分析SQL查询语句</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="err">{</span><span class="k">EXPLAIN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESCRIBE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESC</span><span class="err">}</span><span class="w">
+<h3 id="describe-explain">DESCRIBE/EXPLAIN</h3>
+<p><a class="link" href="https://dev.mysql.com/doc/refman/5.7/en/explain.html"  target="_blank" rel="noopener"
+    >Mysql文档：13.8.2 EXPLAIN Statement</a> <!-- raw HTML omitted --></p>
+<p>EXPLAIN的目的可以帮助分析一条select语句具体是如何进行查询的，包括对于引用，索引的使用； <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="err">{</span><span class="k">EXPLAIN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESCRIBE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESC</span><span class="err">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tbl_name</span><span class="w"> </span><span class="p">[</span><span class="n">col_name</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wild</span><span class="p">]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">{</span><span class="k">EXPLAIN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESCRIBE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">DESC</span><span class="err">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="n">explain_type</span><span class="p">]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">{</span><span class="n">explainable_stmt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">CONNECTION</span><span class="w"> </span><span class="n">connection_id</span><span class="err">}</span><span class="w">
-</span></span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-06-05_23-04-38_screenshot.png"
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-06-05_23-04-38_screenshot.png"
          alt="Figure 7: explain example" width="700px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->explain example</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>具体可以参考官网对于每一列内容的介绍，explain的目的可以帮助分析一条select语句具体是如何进行查询的，包括对于引用，索引的使用 <!-- raw HTML omitted --></p>
+<p>DESCRIBE语句通常被用来解析table的结构： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-29_17-27-25_screenshot.png"
+         alt="Figure 8: DESCRIBE语句描述table的结构" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->DESCRIBE语句描述table的结构</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
 <h3 id="handler-句柄">Handler 句柄</h3>
 <p>参考： <!-- raw HTML omitted -->
 <a class="link" href="https://blog.csdn.net/qq_43427482/article/details/109898934"  target="_blank" rel="noopener"
@@ -593,7 +713,29 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 <p><code>HANDLER</code> 语句提供了直接访问table storage engine的接口，适用于InnoDB and MyISAM 表 <!-- raw HTML omitted --></p>
 <p><code>HANDLER ... OPEN</code> 语句可以打开一个table，并通过接下来的 <code>HANDLER ... READ</code> 语句来进行访问，一旦打开后就开启了一个独立的会话，并且不会被其他的会话共享直到 <code>HANDLER ... CLOSE</code> 之前都不会消失 <!-- raw HTML omitted --></p>
 <p>Basic Syntax, 基础语法： <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">打开一张表，并且可以选择</span><span class="k">alias</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">打开一张表，并且可以选择</span><span class="k">alias</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">OPEN</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="k">AS</span><span class="p">]</span><span class="w"> </span><span class="k">alias</span><span class="p">]</span><span class="w"> 
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="w"> </span><span class="err">查看表所创建的索引来检索反过来查看</span><span class="n">table的内容</span><span class="err">，</span><span class="w">
@@ -611,7 +753,136 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">where_condition</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="k">LIMIT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HANDLER</span><span class="w"> </span><span class="n">tbl_name</span><span class="w"> </span><span class="k">CLOSE</span><span class="w">
-</span></span></span></code></pre></div>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="select-dot-dot-dot-into">SELECT &hellip; INTO</h3>
+<p>参考： <!-- raw HTML omitted -->
+<a class="link" href="https://dev.mysql.com/doc/refman/5.7/en/select-into.html"  target="_blank" rel="noopener"
+    >Mysql文档：13.2.9.1 SELECT &hellip; INTO Statement</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://t.csdn.cn/P0TVj"  target="_blank" rel="noopener"
+    >SQL学习 之 into outfile 和 into dumpfile</a> <!-- raw HTML omitted --></p>
+<p><code>SELECT ... INTO</code> 表达式允许由SELECT语句查询到的结果存储到用户自定义变量或者文件中，mysql提供了三种形式： <!-- raw HTML omitted --></p>
+<h4 id="select-dot-dot-dot-into-var-list">SELECT &hellip; INTO var_list</h4>
+<p>SELECT &hellip; INTO var_list可以将查询到的column中的值存储在用户自定义变量当中 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">@</span><span class="n">myvar</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">@</span><span class="n">myvar</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">@</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">y</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">test</span><span class="p">.</span><span class="n">t1</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，查询的列数必须与自定义变量的数量一致，同时只能取一行的值（因为自定义变量也只能存储一行中的某一个具体的值） <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-29_18-56-02_screenshot.png"
+         alt="Figure 9: SELECT &amp;hellip; INTO var_list" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 9: <!-- raw HTML omitted -->SELECT &hellip; INTO var_list</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="select-dot-dot-dot-into-outfile-dumpfile-file-name">SELECT &hellip; INTO OUTFILE/DUMPFILE &lsquo;file_name&rsquo;</h4>
+<p>SELECT &hellip; INTO OUTFILE &lsquo;file_name&rsquo; 可以将查询到的多行写入文件当中，并且字段和行终止符都可以作为格式输出，由于存在服务器上的文件读写操作，因此必须要拥有文件的权限才能使用。 <!-- raw HTML omitted --></p>
+<p>同时 <code>file_name</code> 不能是已经存在文件。 <!-- raw HTML omitted --></p>
+<p>SELECT &hellip; INTO OUTFILE一般用于在服务器本地打开文件并存储，不太适用于其他远程host <!-- raw HTML omitted --></p>
+<p>而SELECT &hellip; INTO DUMPFILE &lsquo;file_name&rsquo;只能写入一行，并且输出中不存在任何格式 <!-- raw HTML omitted --></p>
+<p>例子： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-30_00-11-39_screenshot.png"
+         alt="Figure 10: SELECT &amp;hellip; INTO OUTFILE/DUMPFILE &amp;lsquo;file_name&amp;rsquo;" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->SELECT &hellip; INTO OUTFILE/DUMPFILE &lsquo;file_name&rsquo;</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>结果： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-30_00-12-14_screenshot.png"
+         alt="Figure 11: OUTFILE识别格式，DUMPFILE只能得到一行（实际情况是两行）" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->OUTFILE识别格式，DUMPFILE只能得到一行（实际情况是两行）</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="user-defined-variables-用户自定义变量">User-Defined Variables 用户自定义变量</h3>
+<p><a class="link" href="https://dev.mysql.com/doc/refman/5.7/en/user-variables.html"  target="_blank" rel="noopener"
+    >Mysql文档：《9.4 User-Defined Variables》</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">var_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">[,</span><span class="w"> </span><span class="o">@</span><span class="n">var_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="p">]</span><span class="w"> </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">var_name</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">[,</span><span class="w"> </span><span class="o">@</span><span class="n">var_name</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="p">]</span><span class="w"> </span><span class="p">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>用户可以以上使用 <code>SET</code> 语句来存储自定义变量以供后续的sql语句使用。 <!-- raw HTML omitted --></p>
+<p>自定义变量的格式为 <code>@var_name</code>, 其中 <code>var_name</code> 的部分可以使用字母表以及., ., 以及$三种符号，也可以用引号包裹来使用任意字符： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-29_17-15-46_screenshot.png"
+         alt="Figure 12: @var_name格式" width="200px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->@var_name格式</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>所有的自定义变量只在当前用户所开启的session会话中有效，并且一旦用户退出结束该session，所有的变量都会被清空。 <!-- raw HTML omitted --></p>
+<p>同时自定义变量是不区分大小写的！ <!-- raw HTML omitted --></p>
+<h3 id="locking-reads-上锁读取">Locking Reads 上锁读取</h3>
+<p>参考： <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html"  target="_blank" rel="noopener"
+    >Mysql文档：《14.7.2.4 Locking Reads》</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.cnblogs.com/smile361/p/8473611.html"  target="_blank" rel="noopener"
+    >深入理解SELECT &hellip; LOCK IN SHARE MODE和SELECT &hellip; FOR UPDATE</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://t.csdn.cn/WCu3S"  target="_blank" rel="noopener"
+    >mysql 共享锁(读写锁) 修改数据问题（update,insert）（LOCK IN SHARE MODE）</a> <!-- raw HTML omitted --></p>
+<p>Locking Reads的目的是为了保护在多个client的多个session会话中，对于数据读取的操作的一致性。 <!-- raw HTML omitted --></p>
+<p>InnoDB提供了两种形式的保护：共享锁以及排他锁 <!-- raw HTML omitted --></p>
+<h4 id="select-dot-dot-dot-lock-in-share-mode-共享锁-share-locks">SELECT &hellip; LOCK IN SHARE MODE，共享锁 Share Locks</h4>
+<p>共享锁，又称读锁，S锁，上锁之后该资源只能读不能修改以及删除，同时其他用户也可以给资源上共享锁； <!-- raw HTML omitted --></p>
+<p>使用场景：简单来说，共享锁适用于，你不要修改该数据，只需要保证数据的完整性的情况下，使用共享锁； <!-- raw HTML omitted --></p>
+<p>原因就是要避免死锁： <!-- raw HTML omitted --></p>
+<ul>
+<li>当client A对于目标数据上了共享锁之后，这段数据只能读，而不能改，只有释放之后才能进行修改和删除； <!-- raw HTML omitted --></li>
+<li>此时client B也对目标数据上了共享锁，并且想要修改这段数据，那么就要等待client A释放共享锁； <!-- raw HTML omitted --></li>
+<li>可是此时client A也想要对目标数据进行修改，那么就要等待client B释放共享锁； <!-- raw HTML omitted --></li>
+<li>双方都等待对方释放共享锁，因此双方也不会主动释放自己的共享锁，造成死锁； <!-- raw HTML omitted --></li>
+</ul>
+<p>因此我们说共享锁适用于两张表存在关系时的写操作，例如 <!-- raw HTML omitted --></p>
+<ul>
+<li>我们假设有child， parent两张表，child的外键是parent的主键uuid； <!-- raw HTML omitted --></li>
+<li>当client A想要修改child的一条数据时，其需要保证parent中的主键没有被修改，否则这条child数据就会失去意义； <!-- raw HTML omitted --></li>
+<li>因此client A就需要给parent中对应主键的记录加上 <code>共享锁</code>, 然后再修改child中的记录（使用排他锁）； <!-- raw HTML omitted --></li>
+<li>这样就可以保证parent中的主键没有被修改； <!-- raw HTML omitted --></li>
+<li>同时当client B也给parent中主键的对应记录加上共享锁，并且想要进行修改的时候，只需要等待client A完成对于child的作业之后，释放共享锁，即可开始操作，不会发生死锁。 <!-- raw HTML omitted --></li>
+</ul>
+<p>对查询到的记录上共享锁： <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">parent</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Jones&#39;</span><span class="w"> </span><span class="k">LOCK</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">SHARE</span><span class="w"> </span><span class="k">MODE</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="select-dot-dot-dot-for-update-排他锁-exclusive-locks">SELECT &hellip; FOR UPDATE，排他锁 Exclusive Locks</h4>
+<p>排他锁，又称为写锁、独占锁，X锁，一旦有一个用户对一段数据上了排他锁，那么其他用户不能再对该数据上任何锁，也不能进行读取和修改： <!-- raw HTML omitted --></p>
+<p>对t1中查询到的数据上排他锁，但是对于t2无法上锁： <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t2</span><span class="p">)</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对t1, t2中查询到的数据上锁： <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">)</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
@@ -619,11 +890,7 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
     
     <section class="article-tags">
         
-            <a href="/tags/web_security/">web_security</a>
-        
             <a href="/tags/mysql/">mysql</a>
-        
-            <a href="/tags/ctf/">ctf</a>
         
     </section>
 
@@ -650,7 +917,7 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on Jun 15, 2022 15:31 &#43;0100
+            Last updated on Oct 02, 2022 09:05 CST
         </span>
     </section></footer>
 
@@ -684,75 +951,6 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
     
 
     
-
-<aside class="related-contents--wrapper">
-    <h2 class="section-title">Related contents</h2>
-    <div class="related-contents">
-        <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/posts/ssti_twig/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">SSTI 模板注入: Twig (PHP)</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/ssti_basic/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Server Side Template Injection (SSTI) 模板注入：基础知识</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/php_bypass_query_string_parser/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/php_bypass_tricks/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">PHP特性绕过技巧</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/lrfi_basic/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Local/Remote File Inclusion 文件包含漏洞</h2>
-        </div>
-    </a>
-</article>
-            
-        </div>
-    </div>
-</aside>
 
      
     
@@ -925,7 +1123,7 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#mysql中的-奇技淫巧">Mysql中的“奇技淫巧”</a>
+    <li><a href="#mysql拓展知识">Mysql拓展知识</a>
       <ul>
         <li><a href="#mysql中show语法使用总结">MySQL中show语法使用总结</a></li>
         <li><a href="#预编译语句-prepare-statement">预编译语句 Prepare statement</a></li>
@@ -940,8 +1138,21 @@ PREPARE stmt_name FROM preparable_stmt <!-- raw HTML omitted --></p>
             <li><a href="#mysql中key--primary-key-unique-key--v-dot-s-dot-index的区别">Mysql中key(primary key, unique key) v.s. index的区别</a></li>
           </ul>
         </li>
-        <li><a href="#explain-分析sql查询语句">EXPLAIN: 分析SQL查询语句</a></li>
+        <li><a href="#describe-explain">DESCRIBE/EXPLAIN</a></li>
         <li><a href="#handler-句柄">Handler 句柄</a></li>
+        <li><a href="#select-dot-dot-dot-into">SELECT &hellip; INTO</a>
+          <ul>
+            <li><a href="#select-dot-dot-dot-into-var-list">SELECT &hellip; INTO var_list</a></li>
+            <li><a href="#select-dot-dot-dot-into-outfile-dumpfile-file-name">SELECT &hellip; INTO OUTFILE/DUMPFILE &lsquo;file_name&rsquo;</a></li>
+          </ul>
+        </li>
+        <li><a href="#user-defined-variables-用户自定义变量">User-Defined Variables 用户自定义变量</a></li>
+        <li><a href="#locking-reads-上锁读取">Locking Reads 上锁读取</a>
+          <ul>
+            <li><a href="#select-dot-dot-dot-lock-in-share-mode-共享锁-share-locks">SELECT &hellip; LOCK IN SHARE MODE，共享锁 Share Locks</a></li>
+            <li><a href="#select-dot-dot-dot-for-update-排他锁-exclusive-locks">SELECT &hellip; FOR UPDATE，排他锁 Exclusive Locks</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>csapp on Under The Ginkgo</title>
+        <link>https://ginkgo.org.cn/categories/csapp/</link>
+        <description>Recent content in csapp on Under The Ginkgo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-uk</language>
+        <lastBuildDate>Mon, 26 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/csapp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</title>
+        <link>https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/</link>
+        <pubDate>Mon, 26 Sep 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/</guid>
+        <description>&lt;h2 id=&#34;csapp-chapter-10-system-level-i-o-学习笔记-不定期更新&#34;&gt;CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）&lt;/h2&gt;
+&lt;h3 id=&#34;学习进度&#34;&gt;学习进度&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 10.1 Unix I/O &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 10.2 Files &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;10-dot-1-unix-i-o&#34;&gt;10.1 Unix I/O&lt;/h3&gt;
+&lt;h4 id=&#34;学习契机&#34;&gt;学习契机&lt;/h4&gt;
+&lt;p&gt;在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，提到了大量的 &lt;code&gt;file descriptor&lt;/code&gt; 的参数，发现这个概念有点陌生了，就来复习巩固一下。这么说来我对于各种语言的文件读写一直都有一种望而却步能用就行的感觉，没有好好的学习使用过，从Unix I/O开始也可以打下一个良好的基础。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;什么是i-o&#34;&gt;什么是I/O&lt;/h4&gt;
+&lt;p&gt;I/O就是Input和Output，是对于 &lt;code&gt;main memory&lt;/code&gt; 主存与 &lt;code&gt;external devices&lt;/code&gt; 外部设备（e.g., 硬盘，终端以及网络）之间数据的输入与输出： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Input：将数据从从I/O设备中拷贝到主存中 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Output：将数据从内存中拷贝到外部设备上 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unix中的i-o&#34;&gt;Unix中的I/O&lt;/h4&gt;
+&lt;p&gt;关于Unix中I/O的具体实现，首先我们要了解的两个很重要的结论： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在Unix中，所有的I/O设备都是以 &lt;code&gt;文件&lt;/code&gt; 的形式存储和操作 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;那么所有这些I/O操作都是通过读写这些文件来实现的 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中，Wikipedia对于I/O 设备的定义如下： &lt;!-- raw HTML omitted --&gt;
+&amp;ldquo;I/O devices are the pieces of hardware used by a human (or other system) to communicate with a computer &amp;hellip; Devices for communication between computers, such as modems and network cards, typically perform both input and output operations.&amp;rdquo; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;了解到了这两点之后, &lt;code&gt;所有&lt;/code&gt; 的I/O操作就可以规范地定义为对于 &lt;code&gt;文件&lt;/code&gt; 的几个规范性操作，也就是Interface接口: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Opening files, 打开文件&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;触发：当一个应用想要访问操作一个I/O设备（想要输入或者输出）的时候，就会要求kernel去打开对应的代表I/O设备的文件 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;结果：Kernel内核会返回一个很小的正整数，我们叫做 &lt;code&gt;descriptor&lt;/code&gt; 描述符，用来在之后对于该I/O设备文件的所有操作中，唯一标识该文件 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Kernel内核会持续跟踪该打开文件的所有的信息；而应用只会跟踪返回的 &lt;code&gt;descriptor&lt;/code&gt; 描述符 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;每一个运行的进程会由Linux shell通过打开三个文件开启（个人认为就是启动一个进程需要用到三种I/O设备，因此开启了这三个文件，并返回了三个描述符）： &lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;standard input (descriptor 0) 标准输入 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;standard output (descriptor 1) 标准输出 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;standard error (descriptor 2) 标准错误 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Changing the current file position 改变当前文件（内容）位置&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;File position文件位置表示文件中下一个将要被读写的字符的位置 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Kernel会维护每一个打开的文件的file position &lt;code&gt;k&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;k的初始值为0，每次有字符的读写，file position都会自增 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;应用也可以通过 &lt;code&gt;seek&lt;/code&gt; 操作来显示地修改file position &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Reading and writing files 读写文件&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;Read 读文件：从一个文件中读取n bytes的数据，从该文件当前的file position k开始读，并且递增n &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;如果读文件超过文件的size m，则会触发 &lt;code&gt;end-of-file (EOF)&lt;/code&gt;, 值得注意的是，这是由应用自动检测到的，而不是真的有一个字符叫做EOF符 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Write 写文件，同样也会递增file position k文件位置 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Closing files 关闭文件&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;触发：当应用结束访问一个文件的时候，就会要求kernel去 &lt;code&gt;close&lt;/code&gt; 关闭这个文件 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;结果：kernel会释放所有的所有该文件创建的数据结构；并且将该文件的 &lt;code&gt;descriptor&lt;/code&gt; 描述符归还到可用的描述符池中去 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;当一个进程结束时，kernel会关闭所有打开的文件并且释放他们的内存资源，比如之前提到的标准输入/输出/错误文件，都会被关闭 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h3 id=&#34;10-dot-2-files-文件&#34;&gt;10.2 Files 文件&lt;/h3&gt;
+&lt;h4 id=&#34;学习契机&#34;&gt;学习契机&lt;/h4&gt;
+&lt;p&gt;跟随10.1顺便看看 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;文件分类&#34;&gt;文件分类&lt;/h4&gt;
+&lt;p&gt;Linux中对于不同的文件都有其所对应的分类 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;regular file 常规文件&lt;/dt&gt;
+&lt;dd&gt;一个普通文件中可以包含任意数据，根据内容存储形式的不同，我们还可以再细化为： &lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;text files, 文本文件，即只包含ASCII或者Unicode字符的文件 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;其中文本文件包含一串 &lt;code&gt;text lines&lt;/code&gt; 文件行，每一行都由 &lt;code&gt;newline&lt;/code&gt; 符号 &lt;code&gt;&#39;\n&#39;&lt;/code&gt; 结尾（Linux, Mac OSX） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;再Ms Windows以及Internet协议例如HTTP中，则是使用  &lt;code&gt;&#39;\r\n&#39;&lt;/code&gt; （0xd 0xa）表示的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因此当我们在Linux以及Mac OSX环境下阅读由MS Windows编辑的文本文件时，每行后面都会出现 &amp;lsquo;^M&amp;rsquo;，可以使用一下命令来进行清理 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;linux&amp;gt; perl -pi -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;s/\r\n/\n/g&amp;#34;&lt;/span&gt; foo.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;binary files，二进制文件， &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/dd&gt;
+&lt;dt&gt;directory 目录&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;目录时一个包含一组 &lt;code&gt;links&lt;/code&gt; 链接的文件，每一个链接都对应一个文件（常规文件或者目录） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每一个目录文件至少包含两个默认链接 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;. (dot), 该链接指向该目录文件本身 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;.. (dot-dot)，该链接指向 &lt;code&gt;parent directory&lt;/code&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkdir&lt;/code&gt; 创建目录文件， &lt;code&gt;ls&lt;/code&gt; 查看内容， &lt;code&gt;rmdir&lt;/code&gt; 删除目录 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;socket 套接字&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;套接字文件用来与其他进程进行网络通信（详见11.4） &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4 id=&#34;文件目录结构&#34;&gt;文件目录结构&lt;/h4&gt;
+&lt;p&gt;Linux内核通过唯一一个目录结构来管理所有的文件，该结构是由 &lt;code&gt;root directory&lt;/code&gt; 根目录开始的一个树状结构，用 &lt;code&gt;/&lt;/code&gt; 来表示，因此我们在一个文件路径中开头看到 &lt;code&gt;/&lt;/code&gt; 要知道，这是一个目录文件，和后面使用到的 &lt;code&gt;/&lt;/code&gt; 用作分隔符的概念时不一样的 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-09-27_11-09-45_screenshot.png&#34;
+         alt=&#34;Figure 1: Linux目录结构&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 1: &lt;!-- raw HTML omitted --&gt;Linux目录结构&lt;/p&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+ &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;每一个进程都有一个 &lt;code&gt;current working directory&lt;/code&gt; 用来表示其在这个目录结构中的位置，通过 &lt;code&gt;cd&lt;/code&gt; 命令可以改变shell的 &lt;code&gt;current working directory&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;那么对应Linux目录结构，有两种形式来表达一个文件的位置（Location）： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Absolute pathname, 绝对路径，表示从根目录（/）开始的路径（之后的/表示路径的分割），例如上图中的hello.c文件的绝对路径就是/home/droh/hello.c &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Relative pathname，相对路径，表示从一个文件名（./..也是文件名）开始，表示一个文件对于当前工作路径的相对路径，例如在上图中，我们当前的工作路径为 /home/droh,那么文件 hello.c的相对路径就是./hello.c &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;p&gt;Randal E. Bryant, David R. O’Hallaron - Computer Systems. A Programmer’s Perspective [3rd ed.] (2016, Pearson) &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cnblogs.com/koktlzz/p/16569288.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CSAPP 读书笔记：系统级 I/O&lt;/a&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/libc/manual/html_node/File-Position.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GNU: File Position&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

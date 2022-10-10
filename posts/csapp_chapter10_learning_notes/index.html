@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，'><title>CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）'>
+<meta property='og:description' content='CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/csapp_chapter10_learning_notes/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='csapp' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='io' /><meta property='article:published_time' content='2022-09-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-27T11:24:14&#43;08:00'/>
+<meta name="twitter:title" content="CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）">
+<meta name="twitter:description" content="CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新） 学习进度 10.1 Unix I/O 10.2 Files 10.1 Unix I/O 学习契机 在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/csapp/" >
+                csapp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/csapp_chapter10_learning_notes/">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 26, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="csapp-chapter-10-system-level-i-o-学习笔记-不定期更新">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</h2>
+<h3 id="学习进度">学习进度</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 10.1 Unix I/O <!-- raw HTML omitted --></li>
+<li><input checked="" disabled="" type="checkbox"> 10.2 Files <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="10-dot-1-unix-i-o">10.1 Unix I/O</h3>
+<h4 id="学习契机">学习契机</h4>
+<p>在学习CSAPP第11章的socket套接字接口的时候，在介绍相关的方法时，提到了大量的 <code>file descriptor</code> 的参数，发现这个概念有点陌生了，就来复习巩固一下。这么说来我对于各种语言的文件读写一直都有一种望而却步能用就行的感觉，没有好好的学习使用过，从Unix I/O开始也可以打下一个良好的基础。 <!-- raw HTML omitted --></p>
+<h4 id="什么是i-o">什么是I/O</h4>
+<p>I/O就是Input和Output，是对于 <code>main memory</code> 主存与 <code>external devices</code> 外部设备（e.g., 硬盘，终端以及网络）之间数据的输入与输出： <!-- raw HTML omitted --></p>
+<ul>
+<li>Input：将数据从从I/O设备中拷贝到主存中 <!-- raw HTML omitted --></li>
+<li>Output：将数据从内存中拷贝到外部设备上 <!-- raw HTML omitted --></li>
+</ul>
+<h4 id="unix中的i-o">Unix中的I/O</h4>
+<p>关于Unix中I/O的具体实现，首先我们要了解的两个很重要的结论： <!-- raw HTML omitted --></p>
+<ol>
+<li>在Unix中，所有的I/O设备都是以 <code>文件</code> 的形式存储和操作 <!-- raw HTML omitted --></li>
+<li>那么所有这些I/O操作都是通过读写这些文件来实现的 <!-- raw HTML omitted --></li>
+</ol>
+<p>其中，Wikipedia对于I/O 设备的定义如下： <!-- raw HTML omitted -->
+&ldquo;I/O devices are the pieces of hardware used by a human (or other system) to communicate with a computer &hellip; Devices for communication between computers, such as modems and network cards, typically perform both input and output operations.&rdquo; <!-- raw HTML omitted --></p>
+<p>了解到了这两点之后, <code>所有</code> 的I/O操作就可以规范地定义为对于 <code>文件</code> 的几个规范性操作，也就是Interface接口: <!-- raw HTML omitted --></p>
+<dl>
+<dt>Opening files, 打开文件</dt>
+<dd><ul>
+<li>触发：当一个应用想要访问操作一个I/O设备（想要输入或者输出）的时候，就会要求kernel去打开对应的代表I/O设备的文件 <!-- raw HTML omitted --></li>
+<li>结果：Kernel内核会返回一个很小的正整数，我们叫做 <code>descriptor</code> 描述符，用来在之后对于该I/O设备文件的所有操作中，唯一标识该文件 <!-- raw HTML omitted --></li>
+<li>Kernel内核会持续跟踪该打开文件的所有的信息；而应用只会跟踪返回的 <code>descriptor</code> 描述符 <!-- raw HTML omitted --></li>
+<li>每一个运行的进程会由Linux shell通过打开三个文件开启（个人认为就是启动一个进程需要用到三种I/O设备，因此开启了这三个文件，并返回了三个描述符）： <!-- raw HTML omitted -->
+<ol>
+<li>standard input (descriptor 0) 标准输入 <!-- raw HTML omitted --></li>
+<li>standard output (descriptor 1) 标准输出 <!-- raw HTML omitted --></li>
+<li>standard error (descriptor 2) 标准错误 <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</dd>
+<dt>Changing the current file position 改变当前文件（内容）位置</dt>
+<dd><ul>
+<li>File position文件位置表示文件中下一个将要被读写的字符的位置 <!-- raw HTML omitted --></li>
+<li>Kernel会维护每一个打开的文件的file position <code>k</code> <!-- raw HTML omitted --></li>
+<li>k的初始值为0，每次有字符的读写，file position都会自增 <!-- raw HTML omitted --></li>
+<li>应用也可以通过 <code>seek</code> 操作来显示地修改file position <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Reading and writing files 读写文件</dt>
+<dd><ul>
+<li>Read 读文件：从一个文件中读取n bytes的数据，从该文件当前的file position k开始读，并且递增n <!-- raw HTML omitted -->
+<ul>
+<li>如果读文件超过文件的size m，则会触发 <code>end-of-file (EOF)</code>, 值得注意的是，这是由应用自动检测到的，而不是真的有一个字符叫做EOF符 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Write 写文件，同样也会递增file position k文件位置 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Closing files 关闭文件</dt>
+<dd><ul>
+<li>触发：当应用结束访问一个文件的时候，就会要求kernel去 <code>close</code> 关闭这个文件 <!-- raw HTML omitted --></li>
+<li>结果：kernel会释放所有的所有该文件创建的数据结构；并且将该文件的 <code>descriptor</code> 描述符归还到可用的描述符池中去 <!-- raw HTML omitted --></li>
+<li>当一个进程结束时，kernel会关闭所有打开的文件并且释放他们的内存资源，比如之前提到的标准输入/输出/错误文件，都会被关闭 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="10-dot-2-files-文件">10.2 Files 文件</h3>
+<h4 id="学习契机">学习契机</h4>
+<p>跟随10.1顺便看看 <!-- raw HTML omitted --></p>
+<h4 id="文件分类">文件分类</h4>
+<p>Linux中对于不同的文件都有其所对应的分类 <!-- raw HTML omitted --></p>
+<dl>
+<dt>regular file 常规文件</dt>
+<dd>一个普通文件中可以包含任意数据，根据内容存储形式的不同，我们还可以再细化为： <!-- raw HTML omitted -->
+<ol>
+<li>
+<p>text files, 文本文件，即只包含ASCII或者Unicode字符的文件 <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>其中文本文件包含一串 <code>text lines</code> 文件行，每一行都由 <code>newline</code> 符号 <code>'\n'</code> 结尾（Linux, Mac OSX） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>再Ms Windows以及Internet协议例如HTTP中，则是使用  <code>'\r\n'</code> （0xd 0xa）表示的 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>因此当我们在Linux以及Mac OSX环境下阅读由MS Windows编辑的文本文件时，每行后面都会出现 &lsquo;^M&rsquo;，可以使用一下命令来进行清理 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">linux&gt; perl -pi -e <span class="s2">&#34;s/\r\n/\n/g&#34;</span> foo.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>binary files，二进制文件， <!-- raw HTML omitted --></p>
+</li>
+</ol>
+</dd>
+<dt>directory 目录</dt>
+<dd><ul>
+<li>
+<p>目录时一个包含一组 <code>links</code> 链接的文件，每一个链接都对应一个文件（常规文件或者目录） <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>每一个目录文件至少包含两个默认链接 <!-- raw HTML omitted --></p>
+<ul>
+<li>. (dot), 该链接指向该目录文件本身 <!-- raw HTML omitted --></li>
+<li>.. (dot-dot)，该链接指向 <code>parent directory</code>  <!-- raw HTML omitted --></li>
+<li><code>mkdir</code> 创建目录文件， <code>ls</code> 查看内容， <code>rmdir</code> 删除目录 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt>socket 套接字</dt>
+<dd><ul>
+<li>套接字文件用来与其他进程进行网络通信（详见11.4） <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h4 id="文件目录结构">文件目录结构</h4>
+<p>Linux内核通过唯一一个目录结构来管理所有的文件，该结构是由 <code>root directory</code> 根目录开始的一个树状结构，用 <code>/</code> 来表示，因此我们在一个文件路径中开头看到 <code>/</code> 要知道，这是一个目录文件，和后面使用到的 <code>/</code> 用作分隔符的概念时不一样的 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-27_11-09-45_screenshot.png"
+         alt="Figure 1: Linux目录结构" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Linux目录结构</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>每一个进程都有一个 <code>current working directory</code> 用来表示其在这个目录结构中的位置，通过 <code>cd</code> 命令可以改变shell的 <code>current working directory</code> <!-- raw HTML omitted --></p>
+<p>那么对应Linux目录结构，有两种形式来表达一个文件的位置（Location）： <!-- raw HTML omitted --></p>
+<ol>
+<li>Absolute pathname, 绝对路径，表示从根目录（/）开始的路径（之后的/表示路径的分割），例如上图中的hello.c文件的绝对路径就是/home/droh/hello.c <!-- raw HTML omitted --></li>
+<li>Relative pathname，相对路径，表示从一个文件名（./..也是文件名）开始，表示一个文件对于当前工作路径的相对路径，例如在上图中，我们当前的工作路径为 /home/droh,那么文件 hello.c的相对路径就是./hello.c <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="reference">Reference</h3>
+<p>Randal E. Bryant, David R. O’Hallaron - Computer Systems. A Programmer’s Perspective [3rd ed.] (2016, Pearson) <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.cnblogs.com/koktlzz/p/16569288.html"  target="_blank" rel="noopener"
+    >CSAPP 读书笔记：系统级 I/O</a>  <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.gnu.org/software/libc/manual/html_node/File-Position.html"  target="_blank" rel="noopener"
+    >GNU: File Position</a> <!-- raw HTML omitted --></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/csapp/">csapp</a>
+        
+            <a href="/tags/linux/">linux</a>
+        
+            <a href="/tags/io/">io</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Sep 27, 2022 11:24 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#csapp-chapter-10-system-level-i-o-学习笔记-不定期更新">CSAPP Chapter 10 System-Level I/O 学习笔记（不定期更新）</a>
+      <ul>
+        <li><a href="#学习进度">学习进度</a></li>
+        <li><a href="#10-dot-1-unix-i-o">10.1 Unix I/O</a>
+          <ul>
+            <li><a href="#学习契机">学习契机</a></li>
+            <li><a href="#什么是i-o">什么是I/O</a></li>
+            <li><a href="#unix中的i-o">Unix中的I/O</a></li>
+          </ul>
+        </li>
+        <li><a href="#10-dot-2-files-文件">10.2 Files 文件</a>
+          <ul>
+            <li><a href="#学习契机">学习契机</a></li>
+            <li><a href="#文件分类">文件分类</a></li>
+            <li><a href="#文件目录结构">文件目录结构</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

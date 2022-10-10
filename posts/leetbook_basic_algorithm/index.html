@@ -303,7 +303,24 @@ if (!doNotTrack) {
 <figure><img src="/ox-hugo/2022-03-24_09-37-59_screenshot.png" width="400px"/>
 </figure>
 
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span>
@@ -316,12 +333,30 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">            <span class="n">fast</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">slow</span>
-</span></span></code></pre></div><p>这里我们来拓展一下，如果允许每个元素最多出现两次呢，会有什么变化呢？</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们来拓展一下，如果允许每个元素最多出现两次呢，会有什么变化呢？</p>
 <p>核心思想是要保证 <code>写入的值</code> ：nums[fast]，在 <code>写入的位置</code> ：nums[slow]，要和nums[slow-2]的值不一样</p>
 <p>为什么之前要求一个都不重复的时候可以用nums[fast]与nums[fast-1]进行比较，现在却不行了呢？
 因为在之前，nums[fast-1]的位置不可能是更改过的位置，也就是不是nums[slow]的曾经到过的位置，因此不会影响判断；
 但是在允许有一个重复的元素的情况下，当前nums[fast]需要与前两位进行对比，那么可能就会存在nums[fast-2]已经做过了修改（因为slow还是自增1的），造成误判</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span>
@@ -333,9 +368,29 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">                <span class="n">slow</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">            <span class="n">fast</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">slow</span>
-</span></span></code></pre></div><p>那么我们再扩展允许到n个元素重复
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么我们再扩展允许到n个元素重复
 核心思想是要保证 <code>写入的值</code> ：nums[fast]，在 <code>写入的位置</code> ：nums[slow]，要和nums[slow-k]的值不一样</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span>
@@ -349,7 +404,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">                <span class="n">fast</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">slow</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">expand</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span></code></pre></div><h3 id="买卖股票的最佳时机-ii">买卖股票的最佳时机 II</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="买卖股票的最佳时机-ii">买卖股票的最佳时机 II</h3>
 <p>解题思路：使用贪心算法，即在跌之前卖出即可取得利益最大化</p>
 <p>我们先来根据题目实际情况明确几个概念</p>
 <dl>
@@ -392,7 +449,19 @@ if (!doNotTrack) {
 </li>
 </ul>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">prices</span><span class="p">:</span>  <span class="k">return</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">        <span class="n">profit</span> <span class="o">=</span> <span class="mi">0</span>
@@ -400,10 +469,26 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">            <span class="n">tmp</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">tmp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="n">profit</span> <span class="o">+=</span> <span class="n">tmp</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">profit</span>
-</span></span></code></pre></div><h3 id="只出现一次的数字">只出现一次的数字</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="只出现一次的数字">只出现一次的数字</h3>
 <p><a class="link" href="https://leetcode.cn/problems/single-number/solution/zhi-chu-xian-yi-ci-de-shu-zi-by-leetcode-solution/"  target="_blank" rel="noopener"
     >官方解法</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># tempSet = set()</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># for i in range(len(nums)):</span>
@@ -413,7 +498,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="c1">#         tempSet.remove(nums[i])</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># return tempSet.pop()</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
-</span></span></code></pre></div><p>算法思路：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>算法思路：</p>
 <ol>
 <li>已知列表中除了目标元素外均重复两次</li>
 <li>那么直接使用XOR运算，就可以抵消所有的重复元素</li>
@@ -422,12 +509,31 @@ if (!doNotTrack) {
 <p>接着再加上reduce方法来简化代码，一行完成！</p>
 <h4 id="python-reduce-函数"><a class="link" href="https://www.runoob.com/python/python-func-reduce.html"  target="_blank" rel="noopener"
     >Python reduce() 函数</a></h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">[,</span> <span class="n">initializer</span><span class="p">])</span>
-</span></span></code></pre></div><p>function &ndash; 函数，有两个参数
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">[,</span> <span class="n">initializer</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>function &ndash; 函数，有两个参数
 iterable &ndash; 可迭代对象
 initializer &ndash; 可选，初始参数</p>
 <p>对于所有iterable中的元素， <code>两两</code> 作为function的参数执行操作</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span>            <span class="c1"># 两数相加</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
@@ -435,7 +541,9 @@ initializer &ndash; 可选，初始参数</p>
 </span></span><span class="line"><span class="cl"><span class="n">sum2</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>  <span class="c1"># 使用 lambda 匿名函数</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">sum1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">sum2</span><span class="p">)</span>
-</span></span></code></pre></div>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 

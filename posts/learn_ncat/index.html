@@ -329,12 +329,33 @@ if (!doNotTrack) {
 </tbody>
 </table></div>
 <h3 id="文字交互">文字交互</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-l, --listen               listen mode, <span class="k">for</span> inbound connects
-</span></span></code></pre></div><p>我们使用macOS来监听本地2333端口的入站连接 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat -l <span class="m">2333</span>
-</span></span></code></pre></div><p>在kali端进行连接，之后就可以进行通信了 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat 192.168.0.100 <span class="m">2333</span>
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-09-23_10-33-38_screenshot.png"
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-l, --listen               listen mode, <span class="k">for</span> inbound connects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们使用macOS来监听本地2333端口的入站连接 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat -l <span class="m">2333</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在kali端进行连接，之后就可以进行通信了 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat 192.168.0.100 <span class="m">2333</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-09-23_10-33-38_screenshot.png"
          alt="Figure 1: 基础文字交互" width="300px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->基础文字交互</p>
         </figcaption>
@@ -343,12 +364,28 @@ if (!doNotTrack) {
 <p>任意一方按下 <code>Ctrl+C</code> 结束连接之后，双方都会断开 <!-- raw HTML omitted --></p>
 <p>当macOS服务端加上 <code>-k, --keep-open</code> 选项之后，kali客户端断开连接后，macOS服务端仍然监听，方便多个客户端在之后连入 <!-- raw HTML omitted --></p>
 <h3 id="命令交互">命令交互</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-e, --exec &lt;command&gt;       Executes the given <span class="nb">command</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-e, --exec &lt;command&gt;       Executes the given <span class="nb">command</span>
 </span></span><span class="line"><span class="cl">    --lua-exec &lt;filename&gt;  Executes the given Lua script
 </span></span><span class="line"><span class="cl">-v, --verbose              Set verbosity level <span class="o">(</span>can be used several <span class="nb">times</span><span class="o">)</span>
-</span></span></code></pre></div><p>macOS服务端监听本地2333端口的入站连接，并将收到的信息发送的/bin/zsh <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat 192.168.0.100 <span class="m">2333</span>
-</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-09-23_10-45-02_screenshot.png"
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>macOS服务端监听本地2333端口的入站连接，并将收到的信息发送的/bin/zsh <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ncat 192.168.0.100 <span class="m">2333</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/ox-hugo/2022-09-23_10-45-02_screenshot.png"
          alt="Figure 2: 命令交互" width="400px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->命令交互</p>
         </figcaption>

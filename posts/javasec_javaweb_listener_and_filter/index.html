@@ -9,7 +9,7 @@
 <meta property='og:description' content='JavaSec - Java Web - 三大核心组件 - Listener &amp;amp; Filter 本篇主要介绍Java Web的其他两大核心组件，Listener和Filter，建议先阅读Servlet篇，对于'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_listener_and_filter/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='java_web' /><meta property='article:published_time' content='2022-09-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-22T11:38:40&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='java_web' /><meta property='article:published_time' content='2022-09-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-10T16:14:57&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter">
 <meta name="twitter:description" content="JavaSec - Java Web - 三大核心组件 - Listener &amp;amp; Filter 本篇主要介绍Java Web的其他两大核心组件，Listener和Filter，建议先阅读Servlet篇，对于">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -218,8 +218,8 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/java_sc/" >
-                java_sc
+            <a href="/categories/java_sec/" >
+                java_sec
             </a>
         
     </header>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    5 minute read
                 </time>
             </div>
         
@@ -277,47 +277,7 @@ if (!doNotTrack) {
     
     <h2 id="javasec-java-web-三大核心组件-listener-and-filter">JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</h2>
 <p>本篇主要介绍Java Web的其他两大核心组件，Listener和Filter，建议先阅读Servlet篇，对于Java Web的底层组件有一个基础的了解之后，再来进行阅读会更为方便 <!-- raw HTML omitted --></p>
-<h3 id="servletcontextlistener-监听器">ServletContextListener 监听器</h3>
-<p>Listener监听器我们在各大MVC中已经见过很多遍了，主要的作用就是监听变化，做出反馈。 <!-- raw HTML omitted --></p>
-<p>我们这里要介绍的 <code>ServletContextListener</code> 顾名思义就是监听 <code>ServletContext</code> 的变化 <!-- raw HTML omitted --></p>
-<p>我们知道 <code>ServletContext</code> 会在Web工程启动时被创建，并且在所有的Servlet程序之间共享，直到在web工程停止时销毁，而 <code>ServletContextListener</code> 就可以实现对于 <code>ServletContext</code> 对象  <code>初始化</code>  以及 <code>销毁</code> 的监听。 <!-- raw HTML omitted --></p>
-<p>我们可以自行创建一个类来实现  <code>ServletContextListener</code> 接口，当然也可以直接使用IDEA所提供的自动创建功能 <!-- raw HTML omitted --></p>
-<p>接着可以重写以下方法来通过监听 <code>ServletContext</code>, <code>Session</code> 以及 <code>Attribute</code> 的变化而做出反馈行为 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextInitialized</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* This method is called when the servlet context is initialized(when the Web application is deployed). */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextDestroyed</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* This method is called when the servlet Context is undeployed or Application Server shuts down. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sessionCreated</span><span class="o">(</span><span class="n">HttpSessionEvent</span> <span class="n">se</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Session is created. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sessionDestroyed</span><span class="o">(</span><span class="n">HttpSessionEvent</span> <span class="n">se</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Session is destroyed. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeAdded</span><span class="o">(</span><span class="n">HttpSessionBindingEvent</span> <span class="n">sbe</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* This method is called when an attribute is added to a session. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeRemoved</span><span class="o">(</span><span class="n">HttpSessionBindingEvent</span> <span class="n">sbe</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* This method is called when an attribute is removed from a session. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeReplaced</span><span class="o">(</span><span class="n">HttpSessionBindingEvent</span> <span class="n">sbe</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* This method is called when an attribute is replaced in a session. */</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="filter-过滤器">Filter 过滤器</h3>
+<h3 id="filter-过滤器">Filter 过滤器</h3>
 <p>Filter的主要功能是： <!-- raw HTML omitted --></p>
 <ol>
 <li>拦截请求 <!-- raw HTML omitted -->
@@ -373,17 +333,223 @@ if (!doNotTrack) {
 <h4 id="filter的拦截路径">Filter的拦截路径</h4>
 <dl>
 <dt>精确匹配</dt>
-<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/target.jsp<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></div>对<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp"  target="_blank" rel="noopener"
+<dd><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/target.jsp<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>对<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp"  target="_blank" rel="noopener"
     >http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp</a> 单个资源有效 <!-- raw HTML omitted --></dd>
 <dt>目录匹配</dt>
-<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/admin/*<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></div>对所有admin目录下的资源访问进行拦截过滤 <!-- raw HTML omitted --></dd>
+<dd><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/admin/*<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>对所有admin目录下的资源访问进行拦截过滤 <!-- raw HTML omitted --></dd>
 <dt>后缀名匹配</dt>
-<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>*.html<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></div>对所有的html文件进行拦截过滤 <!-- raw HTML omitted --></dd>
+<dd><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>*.html<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>对所有的html文件进行拦截过滤 <!-- raw HTML omitted --></dd>
 </dl>
 <p>Filter过滤器只关心请求的地址是否匹配，不关心请求的资源是否存在！ <!-- raw HTML omitted --></p>
+<h3 id="listener-监听器">Listener 监听器</h3>
+<p>本节内容绝大部分搬运自: <a class="link" href="http://c.biancheng.net/servlet2/listener.html"  target="_blank" rel="noopener"
+    >Servlet Listener（监听器）</a> <!-- raw HTML omitted --></p>
+<p>&ldquo;Servlet 规范中定义了 8 个监听器接口，可以用于监听 ServletContext、HttpSession 和 ServletRequest 对象的生命周期和属性变化事件。开发 Servlet 监听器需要实现相应的监听器接口并重写接口中的方法。&rdquo; <!-- raw HTML omitted --></p>
+<p>根据Listener所监听的事件，可以分为3类 <!-- raw HTML omitted --></p>
+<ol>
+<li>监听对象 <code>创建和销毁</code> 的监听器 <!-- raw HTML omitted --></li>
+<li>监听对象中 <code>属性变更</code> 的监听器 <!-- raw HTML omitted --></li>
+<li>监听 <code>HttpSession</code> 中的对象状态改变的监听器 <!-- raw HTML omitted --></li>
+</ol>
+<h4 id="监听对象创建和销毁的监听器">监听对象创建和销毁的监听器</h4>
+<p>“Servlet 规范定义了监听 ServletContext、HttpSession、HttpServletRequest 这三个对象创建和销毁事件的监听器，如下表所示：” <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-27_19-06-18_screenshot.png"
+         alt="Figure 2: 监听对象创建和销毁的监听器" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->监听对象创建和销毁的监听器</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="监听属性变更的监听器">监听属性变更的监听器</h4>
+<p>“Servlet 规范定义了监听 ServletContext、HttpSession、HttpServletRequest 这三个对象中的属性变更事件的监听器，这三个监听器接口分别是 ServletContextAttributeListener、HttpSessionAttributeListener 和 ServletRequestAttributeListener。这三个接口中都定义了三个方法，用来处理被监听对象中属性的增加，删除和替换事件。同一种事件在这三个接口中对应的方法名称完全相同，只是参数类型不同，如下表所示:” <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-27_19-07-53_screenshot.png"
+         alt="Figure 3: 监听属性变更的监听器" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->监听属性变更的监听器</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="监听-session-中对象状态改变的监听器">监听 Session 中对象状态改变的监听器</h4>
+<p>“Session 中的对象可以有多种状态：绑定到 Session 中、从 Session 中解除绑定、随 Session 对象持久化到存储设备中(钝化)、随 Session 对象从存储设备中恢复（活化）。” <!-- raw HTML omitted --></p>
+<p>“Servlet 规范中定义了两个特殊的监听器接口，用来帮助对象了解自己在 Session 中的状态：HttpSessionBindingListener 接口和 HttpSessionActivationListener 接口 ，实现这两个接口的类不需要进行注册。” <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-27_19-13-15_screenshot.png"
+         alt="Figure 4: 监听 Session 中对象状态改变的监听器" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->监听 Session 中对象状态改变的监听器</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="监听器的注册">监听器的注册</h4>
+<p>注册 Servlet 监听器有 2 种方式，分别是： <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>在 web.xml 中注册监听器； <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>使用 @WebListener 注册监听器。 <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在 web.xml 中注册监听器 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>在 web.xml 中使用 &lt;listener&gt; 标签配置监听器，Web 容器会自动把监听器注册到事件源中，示例代码如下。 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&#34;http://xmlns.jcp.org/xml/ns/javaee&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">version=</span><span class="s">&#34;4.0&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;listener&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;listener-class&gt;</span>net.biancheng.www.listener.MySessionListener<span class="nt">&lt;/listener-class&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/listener&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/web-app&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>使用 @WebListener 注解注册监听器 <!-- raw HTML omitted --></li>
+</ol>
+<p>在监听器类上使用 @WebListener 注解，可以将该 Java 类注册为一个监听器类。示例代码如下。 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">net.biancheng.www.servlet</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.ServletContextEvent</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.ServletContextListener</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebListener</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">* 监听器实例代码
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @author 编程帮 www.biancheng.net
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@WebListener</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyListener</span> <span class="kd">implements</span> <span class="n">ServletContextListener</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">MyListener</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextDestroyed</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextInitialized</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="三个组件的调用顺序">三个组件的调用顺序</h3>
+<p>三者的加载顺序为Listener-&gt;Filter-&gt;Servlet <!-- raw HTML omitted --></p>
+<p>在org.apache.catalina.core.StandardContext类的 <code>startInternal()</code> 方法中， <!-- raw HTML omitted --></p>
+<p>依次调用了listenerStart(), filterStart()，最后是loadOnStartup(); <!-- raw HTML omitted --></p>
+<p>这三处调用触发了Listener、Filter、Servlet的构造加载。 <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">startInternal</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">LifecycleException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 1. ListenerStart()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">listenerStart</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.listenerFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 2. filterStart()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">filterStart</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.filterFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 3. loadOnStartup()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">loadOnStartup</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findChildren</span><span class="o">()))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.servletFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kd">super</span><span class="o">.</span><span class="na">threadStart</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="reference">Reference</h3>
+<p><a class="link" href="https://www.bilibili.com/video/BV1Y7411K7zz?vd_source=13198d68e199803d43258bc64add9d55"  target="_blank" rel="noopener"
+    >【尚硅谷最新版JavaWeb全套教程,java web零基础入门完整版】</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://c.biancheng.net/servlet2/listener.html"  target="_blank" rel="noopener"
+    >Servlet Listener（监听器）</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://goodapple.top/archives/1359"  target="_blank" rel="noopener"
+    >Java安全学习——Tomcat架构浅析</a> <!-- raw HTML omitted --></p>
 
 </section>
 
@@ -421,7 +587,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Sep 22, 2022 11:38 CST
+            Last updated on Oct 10, 2022 16:14 CST
         </span>
     </section></footer>
 
@@ -469,6 +635,54 @@ if (!doNotTrack) {
 
         <div class="article-details">
             <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_runtimecommandexecution/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Java本地命令执行</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_jsp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - JavaWeb - JSP基础</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javabasic_reflection/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java基础 - 反射（Reflection）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javabasic_jvmandclassloader/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java 基础 - JVM与类的加载</h2>
         </div>
     </a>
 </article>
@@ -650,7 +864,6 @@ if (!doNotTrack) {
   <ul>
     <li><a href="#javasec-java-web-三大核心组件-listener-and-filter">JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</a>
       <ul>
-        <li><a href="#servletcontextlistener-监听器">ServletContextListener 监听器</a></li>
         <li><a href="#filter-过滤器">Filter 过滤器</a>
           <ul>
             <li><a href="#filter过滤器的使用步骤">Filter过滤器的使用步骤</a></li>
@@ -660,6 +873,16 @@ if (!doNotTrack) {
             <li><a href="#filter的拦截路径">Filter的拦截路径</a></li>
           </ul>
         </li>
+        <li><a href="#listener-监听器">Listener 监听器</a>
+          <ul>
+            <li><a href="#监听对象创建和销毁的监听器">监听对象创建和销毁的监听器</a></li>
+            <li><a href="#监听属性变更的监听器">监听属性变更的监听器</a></li>
+            <li><a href="#监听-session-中对象状态改变的监听器">监听 Session 中对象状态改变的监听器</a></li>
+            <li><a href="#监听器的注册">监听器的注册</a></li>
+          </ul>
+        </li>
+        <li><a href="#三个组件的调用顺序">三个组件的调用顺序</a></li>
+        <li><a href="#reference">Reference</a></li>
       </ul>
     </li>
   </ul>
