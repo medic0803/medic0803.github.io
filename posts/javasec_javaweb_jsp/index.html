@@ -290,33 +290,7 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>同时我们可以看到源码当中就像我们之前说的那样逐行的打印了HTML源码 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">try</span> <span class="o">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">try</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;text/html;charset=UTF-8&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">  <span class="n">pageContext</span> <span class="o">=</span> <span class="n">_jspxFactory</span><span class="o">.</span><span class="na">getPageContext</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">,</span>
 </span></span><span class="line"><span class="cl">            <span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">8192</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
@@ -338,25 +312,10 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;/body&gt;\n&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">  <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;&lt;/html&gt;\n&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="jsp指令">JSP指令</h3>
+</span></span></code></pre></div><h3 id="jsp指令">JSP指令</h3>
 <p>接下来我们看看实际的JSP代码，我个人感觉其实和PHP是一个道理，就是前后端不分离，HTML以及处理的脚本语言都放在一起，同时脚本语言会通过特殊的格式单独拎出来方便翻译 <!-- raw HTML omitted --></p>
 <h4 id="page指令">page指令</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&#34;text/html;charset=UTF-8&#34;</span> <span class="n">language</span><span class="o">=</span><span class="s">&#34;java&#34;</span> <span class="o">%&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&#34;text/html;charset=UTF-8&#34;</span> <span class="n">language</span><span class="o">=</span><span class="s">&#34;java&#34;</span> <span class="o">%&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">Hello</span> <span class="n">JSP</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
@@ -365,9 +324,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="n">Hi</span><span class="o">,</span> <span class="n">I</span> <span class="n">am</span> <span class="n">learning</span> <span class="n">JSP</span><span class="o">!</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>&lt;%@ page ... %&gt;</code> 就是我们第一个要了解的JSP脚本语句，主要用来修改JSP页面中的一些重要的属性，或者行为，从而影响之后翻译的.java以及.class文件 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p><code>&lt;%@ page ... %&gt;</code> 就是我们第一个要了解的JSP脚本语句，主要用来修改JSP页面中的一些重要的属性，或者行为，从而影响之后翻译的.java以及.class文件 <!-- raw HTML omitted --></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -425,29 +382,15 @@ if (!doNotTrack) {
 </table></div>
 <h4 id="include指令">include指令</h4>
 <p>这里的include和PHP中的include比较像，主要是通过include包含指令来组合页面，避免复写一些公共网页模块（比如导航栏，页脚） <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="o">...</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="o">...</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <ul>
 <li>
 <p>静态包含</p>
 <p>file属性置顶需要包含的jsp页面的路径，一般以/斜杠打头（表示<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84"  target="_blank" rel="noopener"
     >http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84</a>）  映射到工程的web目录下 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="n">file</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>静态包含的特点： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">include</span> <span class="n">file</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;</span> <span class="n">包含其他文件</span><span class="err">（</span><span class="n">静态包含</span><span class="err">）</span>
+</span></span></code></pre></div><p>静态包含的特点： <!-- raw HTML omitted --></p>
 <ol>
 <li>静态包含不会将包含的jsp页面翻译翻译成为.java文件 <!-- raw HTML omitted --></li>
 <li>而是直接把被包含的jsp页面的代码转换成为html内容直接拷贝到包含的位置执行输出（out.write()） <!-- raw HTML omitted --></li>
@@ -459,15 +402,8 @@ if (!doNotTrack) {
 <li>
 <p>动态包含</p>
 <p>page属性是指定要包含的jsp的页面路径 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><figure><img src="/ox-hugo/2022-09-20_18-20-32_screenshot.png"
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="o">%&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span><span class="o">&gt;</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-09-20_18-20-32_screenshot.png"
              alt="Figure 2: JSP动态包含" width="700px"/><figcaption>
                 <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->JSP动态包含</p>
             </figcaption>
@@ -480,33 +416,16 @@ if (!doNotTrack) {
 <li>动态包含还可以传递参数 <!-- raw HTML omitted --></li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;admin&#34;</span><span class="o">/&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&#34;password&#34;</span> <span class="n">value</span><span class="o">=</span><span class="s">&#34;root&#34;</span><span class="o">/&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">include</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>一般使用静态包含 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>一般使用静态包含 <!-- raw HTML omitted --></p>
 </li>
 </ul>
 <h4 id="taglib指令">taglib指令</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#34;c&#34;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&#34;http://java.sun.com/jsp/jstl/core&#34;</span> <span class="o">%&gt;</span> <span class="n">引入标签库的定义</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="jsp常用脚本">JSP常用脚本</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#34;c&#34;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&#34;http://java.sun.com/jsp/jstl/core&#34;</span> <span class="o">%&gt;</span> <span class="n">引入标签库的定义</span>
+</span></span></code></pre></div><h3 id="jsp常用脚本">JSP常用脚本</h3>
 <h4 id="jsp-声明脚本">JSP 声明脚本</h4>
 <p>格式为： &lt;%! 声明 java 代码 %&gt; <!-- raw HTML omitted --></p>
 <p>主要用来对一下内容进行声明： <!-- raw HTML omitted --></p>
@@ -554,21 +473,7 @@ if (!doNotTrack) {
 <li>代码脚本还可以和表达式脚本一起组合使用，在jsp页面上输出内容 <!-- raw HTML omitted --></li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="s">&#34;1&#34;</span> <span class="n">cellspacing</span><span class="o">=</span><span class="s">&#34;0&#34;</span><span class="o">&gt;&lt;%</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">table</span> <span class="n">border</span><span class="o">=</span><span class="s">&#34;1&#34;</span> <span class="n">cellspacing</span><span class="o">=</span><span class="s">&#34;0&#34;</span><span class="o">&gt;&lt;%</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
@@ -578,65 +483,28 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;%</span>
 </span></span><span class="line"><span class="cl">        <span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">%&gt;&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="jsp中的三种注释">JSP中的三种注释</h3>
+</span></span></code></pre></div><h3 id="jsp中的三种注释">JSP中的三种注释</h3>
 <ol>
 <li>
 <p>html 注释 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- html 注释 --&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>html注释会被翻译到java源代码中。在_jspService方法里，以out.writer输出到客户端（还是作为html注释） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- html 注释 --&gt;</span>
+</span></span></code></pre></div><p>html注释会被翻译到java源代码中。在_jspService方法里，以out.writer输出到客户端（还是作为html注释） <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>java注释 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="c1">// 单行java注释
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="c1">// 单行java注释
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cm">/*  多行java注释 */</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>java注释会被翻译到java源代码中还是作为java注释 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>java注释会被翻译到java源代码中还是作为java注释 <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>jsp注释 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%--</span> <span class="n">jsp注释</span> <span class="o">--%&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>jsp注释可以真正注释掉任意代码 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%--</span> <span class="n">jsp注释</span> <span class="o">--%&gt;</span>
+</span></span></code></pre></div><p>jsp注释可以真正注释掉任意代码 <!-- raw HTML omitted --></p>
 </li>
 </ol>
 <h3 id="jsp中的九大内置对象">JSP中的九大内置对象</h3>
 <p>jsp中的内置对象，指的是Tomcat在翻译jsp页面成为Servlet源代码后，内部提供的九大对象 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">pageContext</span><span class="o">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">pageContext</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Throwable</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">jasper</span><span class="o">.</span><span class="na">runtime</span><span class="o">.</span><span class="na">JspRuntimeLibrary</span><span class="o">.</span><span class="na">getThrowable</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletContext</span> <span class="n">application</span><span class="o">;</span>
@@ -645,9 +513,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Object</span> <span class="n">page</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">JspWriter</span> <span class="n">_jspx_out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">jakarta</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">jsp</span><span class="o">.</span><span class="na">PageContext</span> <span class="n">_jspx_page_context</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="table-wrapper"><table>
+</span></span></code></pre></div><div class="table-wrapper"><table>
 <thead>
 <tr>
 <th>内置对象</th>
@@ -754,15 +620,8 @@ out.print() 输出任意数据都没有问题（都转换成为字符串后调�
 <h4 id="jsp的常用标签">JSP的常用标签</h4>
 <h3 id="jsp请求转发">JSP请求转发</h3>
 <p>JSP简化了Servlet的请求转发两步走的流程（先获取Dispatcher再forward），而是直接使用 <code>jsp:forward</code> 标签来进行转发 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="el-表达式">EL 表达式</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span> <span class="n">page</span><span class="o">=</span><span class="s">&#34;/index.jsp&#34;</span><span class="o">&gt;&lt;/</span><span class="n">jsp</span><span class="o">:</span><span class="n">forward</span><span class="o">&gt;</span>
+</span></span></code></pre></div><h3 id="el-表达式">EL 表达式</h3>
 <h3 id="reference">Reference</h3>
 <p><a class="link" href="https://www.bilibili.com/video/BV1Y7411K7zz?vd_source=13198d68e199803d43258bc64add9d55"  target="_blank" rel="noopener"
     >【尚硅谷最新版JavaWeb全套教程,java web零基础入门完整版】</a> <!-- raw HTML omitted --></p>

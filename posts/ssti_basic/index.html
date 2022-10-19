@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -304,26 +304,7 @@ if (!doNotTrack) {
 <p>模板引擎的主要思想就是要将  <code>用户界面</code> 与 <code>业务数据</code> 的内容分离，比如在我们提到的Powerpoint的例子中，用户只需要思考每个页面上需要展示什么数据即可，排版布局就交给了软件本身。 <!-- raw HTML omitted --></p>
 <p>同样的，在网页模板系统中，我们可以说将前后端的工作进一步分离开来，前端可以可以更专注于页面布局，业务逻辑的设计上，而后端可以专注于数据的处理 <!-- raw HTML omitted --></p>
 <p>在传统的网页开发中，为了展示数据，需要如下将JS代码与HTML拼接在一起，存在的问题就是拼接很容易出错，同时一旦出错或者需要修改，那么就需要前后端一起进行修改，代码不易维护。 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">html</span> <span class="o">+=</span> <span class="s1">&#39;&lt;!DOCTYPE html&gt;\
 </span></span></span><span class="line"><span class="cl"><span class="s1">         &lt;html lang=&#34;en&#34;&gt;\
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;head&gt;\
@@ -338,25 +319,9 @@ if (!doNotTrack) {
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/body&gt;\
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用模板引擎就可以很好的解决这个问题，前端开发者可以专注于开发模版，即网页的布局与框架，同时留下数据部分，等待填充 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>使用模板引擎就可以很好的解决这个问题，前端开发者可以专注于开发模版，即网页的布局与框架，同时留下数据部分，等待填充 <!-- raw HTML omitted --></p>
 <p>template.html <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Webpage<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
@@ -366,22 +331,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        {{ name }}
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>twig_render.php <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span></code></pre></div><p>twig_render.php <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="k">require_once</span><span class="p">(</span><span class="s1">&#39;../../../../PHP_Resources/vendor/autoload.php&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\FilesystemLoader</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">);</span>
@@ -389,9 +340,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;template.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>接着访问twig_render.php即可 <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>接着访问twig_render.php即可 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_10-14-22_screenshot.png"
          alt="Figure 4: 访问 twig_render.php" width="300px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->访问 twig_render.php</p>
@@ -402,49 +351,17 @@ if (!doNotTrack) {
 <h3 id="ssti-模板注入">SSTI 模板注入</h3>
 <p>SSTI 模板注入是一种Web注入漏洞，其产生的原因本质上是对于用户的输入没有做全面的审核，导致了 <code>模板</code> 拼接了用户输入的 <code>模板语言</code> 代码，进而被模板引擎所执行，从而引发敏感信息泄露，远程代码执行等问题 <!-- raw HTML omitted --></p>
 <p>Web应用可以使用模板系统来动态的显示一些信息，比如下面的例子就是可以动态的显示用户的姓 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s2">&#34;Dear {first_name},&#34;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span> 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>一切看起来都没有问题 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s2">&#34;Dear {first_name},&#34;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span> 
+</span></span></code></pre></div><p>一切看起来都没有问题 <!-- raw HTML omitted --></p>
 <p>但是如果我们允许用户进行输入，就会引发风险，我们这里不再是简单的使用一个值了，而是引入了一个用户输入 <code>$_GET['custom_email']</code> 进行拼接 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;custom_email&#39;</span><span class="p">],</span>  <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="mi">7</span><span class="o">*</span><span class="mi">7</span><span class="p">}}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;custom_email&#39;</span><span class="p">],</span>  <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="mi">7</span><span class="o">*</span><span class="mi">7</span><span class="p">}}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="mi">49</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="nx">self</span><span class="p">}}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="nx">self</span><span class="p">}}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">Object</span> <span class="nx">of</span> <span class="k">class</span> <span class="nc">__TwigTemplate_7ae62e582f8a35e5ea6cc639800ecf15b96c0d6f78db3538221c1145580ca4a5</span> <span class="nx">could</span> <span class="k">not</span> <span class="nx">be</span> <span class="nx">converted</span> <span class="nx">to</span> <span class="nx">string</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果是在黑盒的条件下，我们很容易测试出来XSS，但是这往往就会让我们忽略了模板引擎的存在，并且与XSS不同的是，模板注入可以直接对服务器造成危害 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>如果是在黑盒的条件下，我们很容易测试出来XSS，但是这往往就会让我们忽略了模板引擎的存在，并且与XSS不同的是，模板注入可以直接对服务器造成危害 <!-- raw HTML omitted --></p>
 <h3 id="模板注入的方法">模板注入的方法</h3>
 <p>我们根据 <code>James Kettle</code> 所提供的模板注入流程来进行介绍 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_11-18-43_screenshot.png"
@@ -458,53 +375,17 @@ if (!doNotTrack) {
 <li>Plaintext context 纯文本的上下文 <!-- raw HTML omitted --></li>
 </ol>
 <p>大部分模板语言都提供纯文本的输入，可以直接看到反馈的结果 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">smarty=Hello {user.name}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">smarty=Hello {user.name}
 </span></span><span class="line"><span class="cl">Hello user1 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">freemarker=Hello ${username}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">freemarker=Hello ${username}
 </span></span><span class="line"><span class="cl">Hello newuser 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">any=&lt;b&gt;Hello&lt;/b&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">any=&lt;b&gt;Hello&lt;/b&gt;
 </span></span><span class="line"><span class="cl">&lt;b&gt;Hello&lt;b&gt; 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+</span></span></code></pre></div><ol>
 <li>Code context 代码上下文 <!-- raw HTML omitted --></li>
 </ol>
 <p>我们通过输入一些代码片段来观察返回的内容是否显示了我们想要得到的拼接结果 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">personal_greeting=username
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">personal_greeting=username
 </span></span><span class="line"><span class="cl">Hello user01
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">personal_greeting=username&lt;tag&gt;
@@ -512,9 +393,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">personal_greeting=username}}&lt;tag&gt;
 </span></span><span class="line"><span class="cl">Hello user01 &lt;tag&gt; 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="identify">Identify</h4>
+</span></span></code></pre></div><h4 id="identify">Identify</h4>
 <p>在成功检测到了模板引擎的存在之后，下一步就是要确定哪一种引擎被使用了，我们可以根据不同的语法来进行输入并观察返回的结果 <!-- raw HTML omitted --></p>
 <p>James Kettle 为我们提供了这张决策树，绿色表示成功识别，红色代表失败需要进一步尝试 <!-- raw HTML omitted --></p>
 <p>例如当我们在尝试 <code>{{7 * 7'}}</code> 时，如果返回49那么就是Twig,如果是 7777777 就是 Jinja2 <!-- raw HTML omitted --></p>

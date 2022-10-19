@@ -360,15 +360,8 @@ if (!doNotTrack) {
 </li>
 <li>
 <p>因此当我们在Linux以及Mac OSX环境下阅读由MS Windows编辑的文本文件时，每行后面都会出现 &lsquo;^M&rsquo;，可以使用一下命令来进行清理 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">linux&gt; perl -pi -e <span class="s2">&#34;s/\r\n/\n/g&#34;</span> foo.txt
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">linux&gt; perl -pi -e <span class="s2">&#34;s/\r\n/\n/g&#34;</span> foo.txt
+</span></span></code></pre></div></li>
 </ul>
 </li>
 <li>

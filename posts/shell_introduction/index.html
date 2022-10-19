@@ -289,28 +289,7 @@ if (!doNotTrack) {
 <p>这里提到了两个概念， <code>option</code>, <code>argument</code>; <!-- raw HTML omitted --></p>
 <p>介绍前先说结论: argument包含option <!-- raw HTML omitted --></p>
 <p>如果大家尝试过使用C语言与shell交互，应该就会用到如下的代码来对输入的参数进行利用 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]</span> <span class="p">)</span>  
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -327,34 +306,20 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;One argument expected.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>argc</code> 表示输入参数的数量， <code>*argv[]</code> 就表示包含输入参数的数组 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p><code>argc</code> 表示输入参数的数量， <code>*argv[]</code> 就表示包含输入参数的数组 <!-- raw HTML omitted --></p>
 <p>这里为了一劳永逸，我们再插一嘴，再辨析一下英文文档中的 <code>parameter</code> &amp; <code>argument</code> 的区别： <!-- raw HTML omitted --></p>
 <ol>
 <li>parameter指的是在 <code>定义</code> 函数时的所申明的变量名 <!-- raw HTML omitted --></li>
 <li>argument指的是在 <code>调用</code> 函数时，实际传入的值 <!-- raw HTML omitted --></li>
 </ol>
 <p>例如在下面的例子中，在函数 <code>MyMethod</code> 中所定义的 <code>myParam</code> 就是parameter,而在下面实际调用使用中，将要传入的真实数据就叫做 argument [2]. <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="kt">void</span> <span class="nf">MyMethod</span><span class="p">(</span><span class="n">string</span> <span class="n">myParam</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="kt">void</span> <span class="nf">MyMethod</span><span class="p">(</span><span class="n">string</span> <span class="n">myParam</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">myArg1</span> <span class="o">=</span> <span class="s">&#34;this is my argument&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">myClass</span><span class="p">.</span><span class="n">MyMethod</span><span class="p">(</span><span class="n">myArg1</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>好，我们赶紧回来shell中的option和argument的定义： <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>好，我们赶紧回来shell中的option和argument的定义： <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p><code>arguments</code> 就是包含整一串shell命令的数组，每一个string都可以称为 <code>argument</code>, 和调用c语言脚本时一个道理，第一个参数（0）就是命令的名字，例如&rsquo;ls&rsquo;,同时也被称为 <code>positional parameters</code>; <!-- raw HTML omitted --></p>
@@ -367,27 +332,14 @@ if (!doNotTrack) {
 </li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ls -la /tmp /var/tmp
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ls -la /tmp /var/tmp
 </span></span><span class="line"><span class="cl"><span class="c1"># parameter1= /tmp</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># parameter2= /var/tmp</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">$ ls -l -- -a
 </span></span><span class="line"><span class="cl"><span class="c1"># option1    = -l</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># parameter1 = -a</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>更多关于 <code>shell parameter</code> 以及 <code>subcommands</code> 的解释也可以参考 [3]. <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>更多关于 <code>shell parameter</code> 以及 <code>subcommands</code> 的解释也可以参考 [3]. <!-- raw HTML omitted --></p>
 <p>了解这些内容之后，我们再回过头来解释 Interactive shell的定义，也就是说一个可交互的shell，就是在启动的时候命令后面跟的只有option类型的argument，除非用了 <code>-s</code> 选项并且没有使用 <code>-c</code>, 或者直接使用了 <code>-i</code> 开启了交互模式 <!-- raw HTML omitted --></p>
 <ol>
 <li>-c &lt;string&gt; If the -c option is present, then commands are read from string.  If there are arguments after the string, they are assigned to the positional parameters, starting with $0. <!-- raw HTML omitted -->
@@ -407,15 +359,8 @@ if (!doNotTrack) {
 </li>
 </ol>
 <p>使用 <code>-s</code> ，就可以从stdin读取需要执行的命令，这么说有一点抽象，难以和-c区分开来，我们来看一个例子 [4]： <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -L https://chef.io/chef/install.sh <span class="p">|</span> sudo bash -s -- -P chefdk
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>一般来说 <code>-s</code> 选项都以 <code>curl $script_url | bash</code> 的形式来配合使用，目的是为了 <code>执行</code> 下载到的shell; <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -L https://chef.io/chef/install.sh <span class="p">|</span> sudo bash -s -- -P chefdk
+</span></span></code></pre></div><p>一般来说 <code>-s</code> 选项都以 <code>curl $script_url | bash</code> 的形式来配合使用，目的是为了 <code>执行</code> 下载到的shell; <!-- raw HTML omitted --></p>
 <p>这里 <code>--</code> 表示，将后面所有的string都当作要执行的命令（bash -s所下载的install.sh）的argument，而不是当前命令的option,而 <code>-s</code> 则会负责执行下载到的install.sh; <!-- raw HTML omitted --></p>
 <p>顺便也翻译一下，使用 <code>-c</code> 选项后面需要跟一个string，来表示将要执行的命令，并且后面还有其他的字符串，都会被当作是命令（前面的string）的其他argument(从$0开始)。 <!-- raw HTML omitted --></p>
 <p>总结一下，启动一个交互式的shell，需要命令的argument全部都为option，而不能有parameter，除非使用了 <code>-s</code> (而没有-c) 或者 <code>-i</code> 的情况,并且交互式shell可以接受来自用户的输入和读取,即这个shell需要用户与其互动，输入命令来决定其行动 <!-- raw HTML omitted --></p>
@@ -430,15 +375,8 @@ if (!doNotTrack) {
 </ol>
 <p>（如果不明白这两个变量是干什么的也不用着急，我们下面会讲） <!-- raw HTML omitted --></p>
 <p>可以用下列代码来进行测试 [5]: <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ‘Interactive’ <span class="o">||</span> <span class="nb">echo</span> ‘not-interactive’
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="bash中的特殊变量">Bash中的特殊变量</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ‘Interactive’ <span class="o">||</span> <span class="nb">echo</span> ‘not-interactive’
+</span></span></code></pre></div><h4 id="bash中的特殊变量">Bash中的特殊变量</h4>
 <!-- raw HTML omitted -->
 <ul>
 <li>
@@ -622,6 +560,27 @@ if (!doNotTrack) {
     
 
     
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/internal_pentest_vulnstack1/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Internal Pentest VulnStack1 内网渗透练习</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
 
      
     

@@ -324,32 +324,7 @@ if (!doNotTrack) {
 </table></div>
 <p>[What does a bash sequence &lsquo;\033<a class="link" href="https://unix.stackexchange.com/questions/116243/what-does-a-bash-sequence-033999d-mean-and-where-is-it-explained"  target="_blank" rel="noopener"
     >999D&rsquo; mean and where is it explained?</a> <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">([</span>
 </span></span><span class="line"><span class="cl">             <span class="s2">&#34;{chr}foo_bar&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">             <span class="s2">&#34;foo{chr}bar&#34;</span><span class="p">,</span>
@@ -370,9 +345,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\033</span><span class="s2">[999D</span><span class="se">\033</span><span class="s2">[K</span><span class="se">\r</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>\033</code> 是C语言风格的八进制字符，表示一个转义符号， <code>[999D</code> 表示将cursor光标回退999列，作用是强制将光标返回到开头， <code>[k</code> 表示清空当前行的内容， <code>\r</code> 还是和我们平常见到的一样的作用，就是将光标返回到一行的开头 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p><code>\033</code> 是C语言风格的八进制字符，表示一个转义符号， <code>[999D</code> 表示将cursor光标回退999列，作用是强制将光标返回到开头， <code>[k</code> 表示清空当前行的内容， <code>\r</code> 还是和我们平常见到的一样的作用，就是将光标返回到一行的开头 <!-- raw HTML omitted --></p>
 <p>这种编码主要和终端模拟器又关系，不同的终端模拟器使用不同的库可能效果就不一样，比如 <code>ANSI X3.64</code> 以及 <code>ECMA-48</code> 两种标准。 <!-- raw HTML omitted --></p>
 <p><code>parse_str</code> 方法会被用在 <code>get</code>, <code>post</code>, <code>cookie</code> 的参数获取上，通过三种形式来观察 <code>parse_str</code> 的行为，我们可以看到以下的符号（除去那些分隔符）可以被 <code>parse_str</code> 方法错误的解释为 <code>foo_bar</code>  <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/Screen%20Recording%202022-06-12%20at%2022.32.59.gif"

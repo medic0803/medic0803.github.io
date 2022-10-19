@@ -9,7 +9,7 @@
 <meta property='og:description' content='浏览器是如何工作的？ 本文内容主要来源于：Populating the page: how browsers work，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/how_browsers_work/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:tag' content='browser' /><meta property='article:tag' content='firefox' /><meta property='article:tag' content='render' /><meta property='article:published_time' content='2022-06-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-25T12:18:40&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='web' /><meta property='article:tag' content='browser' /><meta property='article:tag' content='firefox' /><meta property='article:tag' content='render' /><meta property='article:published_time' content='2022-06-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-17T09:43:30&#43;08:00'/>
 <meta name="twitter:title" content="浏览器是如何工作的？">
 <meta name="twitter:description" content="浏览器是如何工作的？ 本文内容主要来源于：Populating the page: how browsers work，再加上本人的理解以及拓展知识的介绍，但是还是建议大家去阅读英文">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -311,31 +311,30 @@ if (!doNotTrack) {
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
+<p>这五条信息可以概括为三个阶段（参考：<a class="link" href="https://blog.pwn.al/waf/bypass/ssl/2018/07/02/web-application-firewall-bypass.html"  target="_blank" rel="noopener"
+    >Bypassing Web-Application Firewalls by abusing SSL/TLS</a>） <!-- raw HTML omitted --></p>
+<dl>
+<dt>ClientHello/ServerHello 打招呼阶段</dt>
+<dd><ul>
+<li>握手由用户发出clientHello信息开始，这条信息将包含所有服务器所需要的信息，包括cipher suite加密套件（一组算法）以及支持的TLS或者SSL版本; <!-- raw HTML omitted --></li>
+<li>接着服务器端也会返回对应的ServerHello信息包括接下来将要使用的cipher suite以及SSL版本 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Certificate Exchange 证书交换阶段</dt>
+<dd><ul>
+<li>接下来服务器需要向客户端证明自己的身份，于是向客户端发出自己的certificate证书（和serverHello信息一起发出） <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Key Exchange 密钥交换阶段</dt>
+<dd><ul>
+<li>最后为了建立加密的管道，双方需要交换密钥来进行数据的加密和解密 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
 <h3 id="response-响应">Response 响应</h3>
 <p>现在浏览器已经和服务器建立了安全的TCP连接了，这时浏览器就会发送一个初始的 <code>HTTP GET request</code> 来请求网页资源，这通常是一个HTML文件，服务器收到了请求，接着返回对应的HTTP headers以及HTML文件的内容 <!-- raw HTML omitted --></p>
 <p>例如： <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!doctype HTML&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!doctype HTML&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">/&gt;</span>
@@ -352,9 +351,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;anotherscript.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>Time to First Byte (TTFB)</code> 表示从用户发出请求（点击连接）到收到第一个HTML的数据包的时间，通常第一块信息的大小是14KB的数据 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p><code>Time to First Byte (TTFB)</code> 表示从用户发出请求（点击连接）到收到第一个HTML的数据包的时间，通常第一块信息的大小是14KB的数据 <!-- raw HTML omitted --></p>
 <p>下面我们会解释为什么第一块信息是14KB的。 <!-- raw HTML omitted --></p>
 <h4 id="congestion-control-tcp-slow-start-14-kb-rule-tcp慢启动">Congestion control: TCP Slow Start /14 KB rule TCP慢启动</h4>
 <p>现在已经建立了安全的连接，接下来服务器将会根据用户的请求返回对应的数据，但是传输的速度（单位时间内传输的数据）并不是从一开始就达到最优的速度的，而是慢慢增加的，为的是防止 <code>网络拥塞</code> 。 <!-- raw HTML omitted --></p>
@@ -445,21 +442,11 @@ if (!doNotTrack) {
 <h4 id="preload-scanner-预加载扫描器">Preload scanner 预加载扫描器</h4>
 <p>当浏览器在构建DOM tree时，Preload scanner就会占据主线程，并同步开始请求高优先级的资源，以此保证解析不会卡在这些资源的获取上，例如CSS, JS, images, web fonts。 <!-- raw HTML omitted --></p>
 <p>例如下列标签就会在HTML解析的过程中，被preload scanner 所请求获取 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">/&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myscript.js&#34;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;myimage.jpg&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;image description&#34;</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;anotherscript.js&#34;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="building-the-cssom">Building the CSSOM</h4>
+</span></span></code></pre></div><h4 id="building-the-cssom">Building the CSSOM</h4>
 <p>第二步就是构建CSSOM树，CSSOM树与DOM类似，只不过处理的是CSS而非HTML，通过将CSS规则以及CSS selectors所制定的关系结构转换为一个树的结构 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-26_10-05-58_screenshot.png"
          alt="Figure 5: CSSOM" width="300px"/><figcaption>
@@ -537,22 +524,7 @@ if (!doNotTrack) {
 <li>样式文件下载完成之后，就开始构建CSSOM；脚本文件下载完成后，解释并立即执行 <!-- raw HTML omitted --></li>
 </ol>
 <p>我们可以通过一个例子来演示这个中断 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
@@ -563,18 +535,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    body render!
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>head中过所加载的脚本文件为 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am the script&#39;</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><figure><img src="/ox-hugo/Screen%20Recording%202022-06-27%20at%2015.52.16.gif"
+</span></span></code></pre></div><p>head中过所加载的脚本文件为 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am the script&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/Screen%20Recording%202022-06-27%20at%2015.52.16.gif"
              alt="Figure 8: Load and execute script before render" width="400px"/><figcaption>
                 <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->Load and execute script before render</p>
             </figcaption>
@@ -587,34 +550,7 @@ if (!doNotTrack) {
 -   如果有多个申明了的defer外联脚本，则会按照顺序加载和执行 <!-- raw HTML omitted -->
 -   defer外联脚本会在 <code>DOMContentLoaded</code> 和 <code>Load</code> 事件之前执行 <!-- raw HTML omitted --></p>
 <p>我们利用下面的例子来进行测试 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
@@ -637,27 +573,11 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>defer1.js: <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;defer1&#39;</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>defer2.js: <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;defer2&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们可以观察到html一共有4个脚本，全部都打上了defer属性，但是其中只有 <code>defer1.js</code> &amp; <code>defer2.js</code> 两个文件是外联的，因此我们可以观察脚本执行的顺序，首先内联的脚本会在解析body中的内容之前就被加载与执行，defer1.js &amp; defer2.js会在DOMContentLoaded &amp; Load事件之前执行 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>defer1.js: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;defer1&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>defer2.js: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;defer2&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>我们可以观察到html一共有4个脚本，全部都打上了defer属性，但是其中只有 <code>defer1.js</code> &amp; <code>defer2.js</code> 两个文件是外联的，因此我们可以观察脚本执行的顺序，首先内联的脚本会在解析body中的内容之前就被加载与执行，defer1.js &amp; defer2.js会在DOMContentLoaded &amp; Load事件之前执行 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-27_16-49-11_screenshot.png"
              alt="Figure 9: 内联脚本使用defer" width="700px"/><figcaption>
                 <p><!-- raw HTML omitted -->Figure 9: <!-- raw HTML omitted -->内联脚本使用defer</p>
@@ -669,34 +589,7 @@ if (!doNotTrack) {
 -   如果有多个async的脚本，每一个脚本都会开启一个新的线程，因此它们的下载和执行都是异步的，不能确保彼此的先后顺序 <!-- raw HTML omitted -->
 -   async会在load事件之前执行，但是不能确保与DOMContentLoaded的执行显示顺序 <!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
@@ -719,27 +612,11 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>async1.js: <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1.js&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>async2.js: <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2.js&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>我们可以根据下面三次的结果观察到： <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>async1.js: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1.js&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>async2.js: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2.js&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>我们可以根据下面三次的结果观察到： <!-- raw HTML omitted --></p>
 <ol>
 <li>async对于内联的脚本无效，仍然会占据浏览器的主线程进行加载和执行 <!-- raw HTML omitted --></li>
 <li>async会在onload之前发生 <!-- raw HTML omitted --></li>
@@ -820,27 +697,14 @@ if (!doNotTrack) {
 <ol>
 <li>
 <p>不要逐条修改DOM样式，可以预先定义好css的class，然后修改DOM中的className <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 不好的写法
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 不好的写法
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">left</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="nx">top</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">+</span> <span class="s2">&#34;px&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">top</span> <span class="o">+</span> <span class="s2">&#34;px&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 推荐写法
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">el</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s2">&#34; theclassname&#34;</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+</span></span></code></pre></div></li>
 <li>
 <p>将DOM进行离线修改：先用 <code>documentFragment</code> 对象在内存中操作DOM，将其设置为display:none触发reflow与repaint，再完全修改完成之后，再显示出来，这样就不会重复触发reflow；或者可以克隆一个DOM节点到内存中，修改完成之后再整一个与当前的DOM进行交换 <!-- raw HTML omitted --></p>
 </li>
@@ -1047,7 +911,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Sep 25, 2022 12:18 CST
+            Last updated on Oct 17, 2022 09:43 CST
         </span>
     </section></footer>
 

@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -333,36 +333,15 @@ if (!doNotTrack) {
 <h4 id="filter的拦截路径">Filter的拦截路径</h4>
 <dl>
 <dt>精确匹配</dt>
-<dd><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/target.jsp<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div>对<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp"  target="_blank" rel="noopener"
+<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/target.jsp<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></div>对<a class="link" href="http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp"  target="_blank" rel="noopener"
     >http://ip:port/%E5%B7%A5%E7%A8%8B%E8%B7%AF%E5%BE%84/target.jsp</a> 单个资源有效 <!-- raw HTML omitted --></dd>
 <dt>目录匹配</dt>
-<dd><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/admin/*<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div>对所有admin目录下的资源访问进行拦截过滤 <!-- raw HTML omitted --></dd>
+<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>/admin/*<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></div>对所有admin目录下的资源访问进行拦截过滤 <!-- raw HTML omitted --></dd>
 <dt>后缀名匹配</dt>
-<dd><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>*.html<span class="nt">&lt;url-pattern&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div>对所有的html文件进行拦截过滤 <!-- raw HTML omitted --></dd>
+<dd><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;url-pattern&gt;</span>*.html<span class="nt">&lt;url-pattern&gt;</span>
+</span></span></code></pre></div>对所有的html文件进行拦截过滤 <!-- raw HTML omitted --></dd>
 </dl>
 <p>Filter过滤器只关心请求的地址是否匹配，不关心请求的资源是否存在！ <!-- raw HTML omitted --></p>
 <h3 id="listener-监听器">Listener 监听器</h3>
@@ -414,20 +393,7 @@ if (!doNotTrack) {
 </li>
 </ul>
 <p>在 web.xml 中使用 &lt;listener&gt; 标签配置监听器，Web 容器会自动把监听器注册到事件源中，示例代码如下。 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&#34;http://xmlns.jcp.org/xml/ns/javaee&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&#34;</span>
@@ -436,35 +402,11 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="nt">&lt;listener-class&gt;</span>net.biancheng.www.listener.MySessionListener<span class="nt">&lt;/listener-class&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;/listener&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/web-app&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
+</span></span></code></pre></div><ol>
 <li>使用 @WebListener 注解注册监听器 <!-- raw HTML omitted --></li>
 </ol>
 <p>在监听器类上使用 @WebListener 注解，可以将该 Java 类注册为一个监听器类。示例代码如下。 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">net.biancheng.www.servlet</span><span class="o">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">net.biancheng.www.servlet</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.ServletContextEvent</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.ServletContextListener</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebListener</span><span class="o">;</span>
@@ -482,42 +424,12 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextInitialized</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="三个组件的调用顺序">三个组件的调用顺序</h3>
+</span></span></code></pre></div><h3 id="三个组件的调用顺序">三个组件的调用顺序</h3>
 <p>三者的加载顺序为Listener-&gt;Filter-&gt;Servlet <!-- raw HTML omitted --></p>
 <p>在org.apache.catalina.core.StandardContext类的 <code>startInternal()</code> 方法中， <!-- raw HTML omitted --></p>
 <p>依次调用了listenerStart(), filterStart()，最后是loadOnStartup(); <!-- raw HTML omitted --></p>
 <p>这三处调用触发了Listener、Filter、Servlet的构造加载。 <!-- raw HTML omitted --></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">startInternal</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">LifecycleException</span> <span class="o">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">startInternal</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">LifecycleException</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
@@ -541,9 +453,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">            <span class="kd">super</span><span class="o">.</span><span class="na">threadStart</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="reference">Reference</h3>
+</span></span></code></pre></div><h3 id="reference">Reference</h3>
 <p><a class="link" href="https://www.bilibili.com/video/BV1Y7411K7zz?vd_source=13198d68e199803d43258bc64add9d55"  target="_blank" rel="noopener"
     >【尚硅谷最新版JavaWeb全套教程,java web零基础入门完整版】</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="http://c.biancheng.net/servlet2/listener.html"  target="_blank" rel="noopener"
