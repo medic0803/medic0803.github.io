@@ -6,7 +6,31 @@
         <description>Recent content in Tags on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Tue, 11 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>JavaEE</title>
+        <link>https://ginkgo.org.cn/tags/javaee/</link>
+        <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/javaee/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>servlet</title>
+        <link>https://ginkgo.org.cn/tags/servlet/</link>
+        <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/servlet/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>tomcat</title>
+        <link>https://ginkgo.org.cn/tags/tomcat/</link>
+        <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/tags/tomcat/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>internal_pentest</title>
         <link>https://ginkgo.org.cn/tags/internal_pentest/</link>
         <pubDate>Tue, 11 Oct 2022 00:00:00 +0000</pubDate>

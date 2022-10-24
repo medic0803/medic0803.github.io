@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教'><title>JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系'>
+<meta property='og:description' content='Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='tomcat' /><meta property='article:tag' content='servlet' /><meta property='article:tag' content='JavaEE' /><meta property='article:published_time' content='2022-10-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-24T09:53:49&#43;08:00'/>
+<meta name="twitter:title" content="JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系">
+<meta name="twitter:description" content="Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" >
+                web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/javasec_javaweb_tomcat/">JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 20, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    23 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="tomcat框架以及与servlet之间的联系">Tomcat框架以及与Servlet之间的联系</h2>
+<h3 id="写在前面">写在前面</h3>
+<p>最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教程都建议要掌握一下Tomcat的框架，但是迫于一直都没有找到好的教程和文章来看，如果只是单纯地给每个模块下一个定义，感觉很难说服自己懂了。 <!-- raw HTML omitted --></p>
+<p>虽然很想从头看一遍《How Tomcat Works》但是确实也不现实，偶然一个机会需要找一下Tomcat的 <code>server.xml</code> 配置文件来看一下，又碰巧找到了一篇解读 <code>server.xml</code> 的文章，于是就有了这篇文章或者说学习笔记。 <!-- raw HTML omitted --></p>
+<p>在本文中，我们将一起学习以下内容： <!-- raw HTML omitted --></p>
+<ol>
+<li>通过解读一个基础的Tomcat <strong>server.xml</strong> 配置文件，了解Tomcat下面的组件是如何分工处理一个HTTP请求的； <!-- raw HTML omitted --></li>
+<li>进而了解Tomcat下各个组件的作用，以及它们之间的关系； <!-- raw HTML omitted --></li>
+<li>最后尝试通过Tomcat以及Java EE源码来了解一下Tomcat是如何与Java EE中的三大组件（Servlet，Filter，Listener）是如何关联起来的； <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="tomcat基础框架">Tomcat基础框架</h3>
+<p>Tomcat作为一个Web应用服务器，其最核心的功能自然就是： <!-- raw HTML omitted --></p>
+<ol>
+<li>接受来自用户的HTTP request请求; <!-- raw HTML omitted --></li>
+<li>根据用户的HTTP请求进行业务处理： <!-- raw HTML omitted --></li>
+<li>最后返回Response响应给用户 <!-- raw HTML omitted --></li>
+</ol>
+<p>在接下来的文章中，记住这个最基本的功能可以让我们更好的理解Tomcat到底是怎么来对HTTP请求进行处理的。 <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-28_11-31-48_screenshot.png"
+         alt="Figure 1: Tomcat框架" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Tomcat框架</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们先来根据上图看一下最简单的Tomcat server框架，其中包含了很多陌生的抽象名词，大家不要着急，后面我们会具体展开来讲： <!-- raw HTML omitted --></p>
+<ol>
+<li>一个Tomcat服务器包含多个Service; <!-- raw HTML omitted --></li>
+<li>一个Service可以绑定 <strong>多个</strong> Connector，并同时与 <strong>唯一</strong> 一个Container绑定; <!-- raw HTML omitted --></li>
+<li><strong>Connector</strong> 负责处理由客户端发出的HTTP请求，并封装成ServletRequest对象发送给Container进行处理; <!-- raw HTML omitted --></li>
+<li><strong>Container</strong> 负责对收到的请求（ServletRequest对象）进行处理，并将响应Response封装成ServletResponse对象发回Connector; <!-- raw HTML omitted --></li>
+<li>最后由Connector发送HTTP响应返回给客户端，至此完成一次HTTP请求与响应。 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</h3>
+<p>server.xml是Tomcat服务器的配置文件，其中的每一个xml元素都代表了tomcat中的一个组件，这些组件都在处理请求中拥有自己的职责，我们通过对配置文件的解读学习，可以大致了解Tomcat服务器的整体架构组成，有助于我们进一步的源码阅读； <!-- raw HTML omitted --></p>
+<p>Tomcat的配置文件server.xml的整体结构如下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Server&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Service&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;Connector</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;Connector</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;Engine&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;Host&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;Context</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/Host&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/Engine&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/Service&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Server&gt;</span>
+</span></span></code></pre></div><p>接下来我们讲一个个元素来进行理解，并了解这些元素所配置的Tomcat组件的功能； <!-- raw HTML omitted --></p>
+<h3 id="server">Server</h3>
+<p>&lt;Server&gt;元素是配置文件的根元素，用来代表着我们整一个Tomcat服务器； <!-- raw HTML omitted --></p>
+<p>根据上面的框架图我们知道，一个Tomcat Server可以包含多个Service，而Server的主要任务，就是为客户端提供了一个能够访问所有这些Service的接口，同时维护所有Service的生命周期，包括如何找到客户端想要访问的Service： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Server</span> <span class="na">port=</span><span class="s">&#34;8005&#34;</span> <span class="na">shutdown=</span><span class="s">&#34;SHUTDOWN&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Server&gt;</span>
+</span></span></code></pre></div><p>上面的这个实例包含了两个属性，port以及shutdown，这两个属性组合在一起表示，当我们向8005端口发送&quot;SHUTDOWN&quot;这个信息时，服务器就会关闭（当shutdown的属性设为-1时就可以禁用这个功能） <!-- raw HTML omitted --></p>
+<p>如果大家用过nc或者ncat的话，就不难想到我们可以使用nc来创建一个client socket去连接8005端口并发出指令关闭端口： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">nc localhost <span class="m">8005</span>
+</span></span><span class="line"><span class="cl">SHUTDOWN
+</span></span></code></pre></div><h3 id="service">Service</h3>
+<p>Tomcat框架中的这个Service，我认为是和我们传统意义上的Service是一个概念，即监听一个端口，与客户端建立连接来进行通信交互； <!-- raw HTML omitted --></p>
+<p>一般来说，默认只开启一个名叫Catalina的Service，也就是最核心的Web容器，当然Tomcat也可以提供多个Service，但是一般来说用不上，我们只要知道根据name属性，Catalina就是Tomcat server下面的一个Service就可以了： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Service</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8080&#34;</span> <span class="na">protocol=</span><span class="s">&#34;HTTP/1.1&#34;</span>
+</span></span><span class="line"><span class="cl">               <span class="na">connectionTimeout=</span><span class="s">&#34;20000&#34;</span>
+</span></span><span class="line"><span class="cl">               <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span> <span class="na">defaultHost=</span><span class="s">&#34;localhost&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/Host&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Engine&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Service&gt;</span>
+</span></span></code></pre></div><h3 id="connector">Connector</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8080&#34;</span> <span class="na">protocol=</span><span class="s">&#34;HTTP/1.1&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="na">connectionTimeout=</span><span class="s">&#34;20000&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8009&#34;</span> <span class="na">protocol=</span><span class="s">&#34;AJP/1.3&#34;</span> <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
+</span></span></code></pre></div><p>我们之前提到过Service包含多个Connector和唯一的Container，我们在上面的配置中，发现了两个Connector元素监听了不同的端口，可这就让Service的概念不是不同了吗？ <!-- raw HTML omitted --></p>
+<p>其实仔细看，可以发现两个Connector都使用了不同的协议，HTTP/1.1 以及 AJP/1.3； <!-- raw HTML omitted --></p>
+<p>我们接着看看元素内的属性，port，protocol就是Connector所监听的端口，我们可以看到这里使用了8080，而不是传统的80端口，这是因为： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>“在正式的生产环境中，Tomcat也常常监听8080端口，而不是80端口。这是因为在生产环境中，很少将Tomcat直接对外开放接收请求，而是在Tomcat和客户端之间加一层代理服务器(如nginx)，用于请求的转发、负载均衡、处理静态文件等；通过代理服务器访问Tomcat时，是在局域网中，因此一般仍使用8080端口。” <!-- raw HTML omitted --></p>
+</blockquote>
+<p>而配置了第二个AJP协议的Connector连接器是因为Tomcat作为Servlet容器，对于静态资源处理速度相对较慢，因此可以用AJP协议与Apache等服务器连接，让Apache等服务器来处理静态资源； <!-- raw HTML omitted --></p>
+<dl>
+<dt>静态资源</dt>
+<dd><ul>
+<li>静态资源就是服务器不需要经过任何处理就可以直接返回给用户的内容，例如HTML页面，Flash，JavaScript图片等内容； <!-- raw HTML omitted --></li>
+<li>相对的，动态资源就是例如ASP、PHP、JSP等文件，需要经过服务器处理之后，然后再返回给用户； <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>为什么我们要用Apache等HTTP服务器来处理静态资源？</dt>
+<dd><ul>
+<li>我们知道Tomcat会使用Connector连接器对客户端发来的HTTP请求进行解析，然后转换成Request以及Response对象进行处理之后再返回给客户端； <!-- raw HTML omitted --></li>
+<li>但如果是静态资源，根本不需要服务器进行任何处理，如果每次碰到静态资源，例如图片啊，JS这样的资源如果还问Tomcat来要，那就会浪费时间在对于所有这些HTTP请求的无用的解析和构造对象上了； <!-- raw HTML omitted --></li>
+<li>而AJP(Apache JServ Protocol) 是一个二进制的协议，并且与Tomcat服务器建立一个永久的连接，这两点都极大地提高了通信的效率; <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<blockquote>
+<p><figure><img src="/ox-hugo/2022-10-21_09-09-22_screenshot.png"
+         alt="Figure 2: Tomcat与Apache集成" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Tomcat与Apache集成</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+</blockquote>
+<p>总结一下，Connector的主要功能就是提供一个接口，来接收所有来自客户端的HTTP请求，并将HTTP Request以及Response封装成ServletRequest对象发送给Container进行处理; <!-- raw HTML omitted --></p>
+<p>我们在开头说过，我们要关注Tomcat本质上是来处理客户端传来的HTTP请求，我们接下来就拿一个例子来具体介绍： <!-- raw HTML omitted --></p>
+<p>URL： <!-- raw HTML omitted --></p>
+<blockquote>
+<p><a class="link" href="http://localhost:8080/LearnFilter_war/admin/a.jsp"  target="_blank" rel="noopener"
+    >http://localhost:8080/LearnFilter_war/admin/a.jsp</a> <!-- raw HTML omitted --></p>
+</blockquote>
+<p>HTTP请求： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">GET</span> <span class="nn">/LearnFilter_war/admin/a.jsp</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">localhost:8080</span>
+</span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Language</span><span class="o">:</span> <span class="l">en-US,en;q=0.5</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+</span></span><span class="line"><span class="cl"><span class="n">DNT</span><span class="o">:</span> <span class="l">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Dest</span><span class="o">:</span> <span class="l">document</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Mode</span><span class="o">:</span> <span class="l">navigate</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Site</span><span class="o">:</span> <span class="l">none</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-User</span><span class="o">:</span> <span class="l">?1</span>
+</span></span></code></pre></div><p>直到Connector进行处理，我们的请求首先已经经历这些处理（暂时不考虑nginx反向代理）： <!-- raw HTML omitted --></p>
+<ol>
+<li>localhost经过了本机默认的DNS服务器，被解析成了127.0.0.1，然后建立了一个client socket并尝试与服务器的8080端口建立连接； <!-- raw HTML omitted --></li>
+<li>Tomcat的HTTP Connector连接器接收到了HTTP请求，并将请求转换为ServletRequest以及对应的ServletResponse对象传递给Container。 <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="container">Container</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span> <span class="na">defaultHost=</span><span class="s">&#34;localhost&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Host&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Engine&gt;</span>
+</span></span></code></pre></div><p>Container? 谁是Container？哪里有Container，配置文件里没看到啊？ <!-- raw HTML omitted --></p>
+<p>我们之前介绍的Container容器其实都是一个抽象的概念，其实真正在使用的都是继承了Container接口的所有子类，包括Engine，Host，Context以及Wrapper； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-09-28_11-59-42_screenshot.png"
+         alt="Figure 3: Container 类层次" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->Container 类层次</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>接下来我们会依次介绍他们的作用，不过就和之前介绍的那样，整一个Container模块的功能就是处理请求以及构造响应。 <!-- raw HTML omitted --></p>
+<h3 id="engine与host">Engine与Host</h3>
+<p>一个Service只包含一个Engine；一个Engine与Service中的多个Connector进行绑定；同时一个Engine可以内嵌一个或多个Host（即Host是Engine的子容器）； <!-- raw HTML omitted --></p>
+<p>Engine是最顶层的Container（容器），而Host作为子容器，表示Engine中的一个虚拟主机，对应了服务器中的网络实体名（例如域名或者IP地址）； <!-- raw HTML omitted --></p>
+<p>客户端通过主机名来标识他们想要连接的主机，主机名会作为 <strong>HOST</strong> Header被放在HTTP请求中，Engine会根据HTTP Header中Host的值决定由哪一个HOST来继续处理请求。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span> <span class="na">defaultHost=</span><span class="s">&#34;localhost&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Host&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;anotherHost&#34;</span> <span class="na">appbase=</span><span class="s">&#34;otherApps&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Host&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Engine&gt;</span>
+</span></span></code></pre></div><p>在Engine元素的属性中: <!-- raw HTML omitted --></p>
+<ol>
+<li>name属性用于用户日志和错误信息，在整个Server中应该保持唯一； <!-- raw HTML omitted --></li>
+<li>defaultHost表示如果HTTP请求中的HOST Header的值与所有的Host元素都不匹配，默认交由defaultHost所设定的Host处理； <!-- raw HTML omitted --></li>
+</ol>
+<p>最后再说明一下Host的配置属性： <!-- raw HTML omitted --></p>
+<ol>
+<li>name表示Tomcat上虚拟主机的主机名，一般来说主机名是DNS服务器中已经注册的域名（当然defaultHost不需要，只要保证能接受到就好了）； <!-- raw HTML omitted --></li>
+<li>unpackWARs指示了是否要将代表Web应用的WAR文件解压： <!-- raw HTML omitted -->
+<ul>
+<li>如果为true，则解压之后再运行web应用 <!-- raw HTML omitted --></li>
+<li>如果为false，则直接使用WAR文件运行Web应用 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>autoDeploy以及appBase属性我们放到后面Web应用自动部署再介绍，先知道appBase就表示存放Web应用的目录就可以了 <!-- raw HTML omitted --></li>
+</ol>
+<p>最后回到我们的HTTP请求的例子（当然这时候这些数据都是从Connector整合的ServletRequest对象中获取了）： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">GET</span> <span class="nn">/LearnFilter_war/admin/a.jsp</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">localhost:8080</span>
+</span></span><span class="line"><span class="cl"><span class="err">...</span> <span class="l">...</span>
+</span></span></code></pre></div><p>至此我们就知道了一个Tomcat服务器可以有唯一一个公网IP，而客户端可以通过多个域名（localhost, anotherHost）来访问服务器（只要DNS能够解析到对应的IP地址即可），然后Engine会根据HTTP请求中的HOST头将请求分配给对应的HOST组件，比如我们的例子中的localhost这个HOST。 <!-- raw HTML omitted --></p>
+<h3 id="context">Context</h3>
+<p>我们继续套娃，一个Service有唯一一个Engine，一个Engine内嵌一个或者多个Host，而一个Host则可以内嵌一个多个Context，用来表示一个虚拟主机HOST下所运行的一个或者多个Web应用程序（同样也是子容器）； <!-- raw HTML omitted --></p>
+<p>我们知道Host具体的表现形式就是HOST Header，而Context的具体表现形式就是我们在HTTP请求中的URI，在我们的例子中就是 <code>LearnFilter_war</code>; <!-- raw HTML omitted --></p>
+<p>这个URI其实也就是我们在使用IDEA开发的时候，创建的项目名，记得我们在Servlet的介绍中，曾经说过一个web项目，只有一个ServletContext对象吗，记住这一点，我们在将Wrapper的时候还会再提到（其实Wrapper就是我们所开发的一个个Servlet）； <!-- raw HTML omitted --></p>
+<p>在知道了这些内容之后，你可能最想问的还是，为什么我没有在server.xml中看到Context元素啊？ <!-- raw HTML omitted --></p>
+<p>原因就是我们在Host的配置中开启了自动部署（autoDeploy=true），在这个场景下，Tomcat会自动匹配URI的path与 <code>appBase</code> 属性中的目录名称进行匹配，一旦匹配上则默认这个目录就是要继续处理请求的Context，也就不需要再进行额外配置的： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="na">deployOnstartup=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Host&gt;</span>
+</span></span></code></pre></div><blockquote>
+<p>如果deployOnStartup和autoDeploy设置为true，则tomcat启动自动部署： <!-- raw HTML omitted --></p>
+<ul>
+<li>当检测到新的Web应用或Web应用的更新时，会触发应用的部署(或重新部署)。 <!-- raw HTML omitted --></li>
+<li>二者的主要区别在于: <!-- raw HTML omitted -->
+<ul>
+<li>deployOnStartup为true时，Tomcat在启动时检查Web应用，且检测到的所有Web应用视作新应用； <!-- raw HTML omitted --></li>
+<li>autoDeploy为true时，Tomcat在运行时定期检查新的Web应用或Web应用的更新。除此之外，二者的处理相似。 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>下面的这些Web应用都可以直接使用localhost:8080/xxx进行访问： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-10-21_11-20-02_screenshot.png"
+         alt="Figure 4: webpas目录下的Context Web应用" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->webpas目录下的Context Web应用</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们也可以手动配置静态Context元素，其中 <code>path</code> 表示URI， <code>docBase</code> 表示Web应用的war文件或者目录的位置，而 <code>reloadable</code> 属性则表示当class文件发生改动时，是否要触发整个Web应用的重新加载： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">&#34;/&#34;</span> <span class="na">docBase=</span><span class="s">&#34;other_directory_absolute_path/app1.war&#34;</span> <span class="na">reloadable=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
+</span></span></code></pre></div><p>但是一般不建议使用静态配置，因为 <code>server.xml</code> 这个文件在修改后需要重新启动服务器才能加载，因此一旦需要修改Path的信息，就需要重启服务器，而在自动部署的时候Tomcat就可以通过定期的扫描了检查Web应用的路径是否发生了修改； <!-- raw HTML omitted --></p>
+<p>至此，我们想要根据 <strong>server.xml</strong> 所获取的组件元素信息已经全部介绍完毕，但是Container作为处理HTTP请求的容器，肯定和我们在Java Web编程中的核心组件Servlet时分不开的，而Servlet其实是被Container的最底层子类Wrapper所包裹使用，我们将在下面的章节中介绍。 <!-- raw HTML omitted --></p>
+<h3 id="wrapper">Wrapper</h3>
+<p>Wrapper是Context的子容器，也是Tomcat的最底层容器了，我们知道一个Context代表一个Web应用，那么一个Wrapper就代表一个Web应用下的一个个功能组件，也就是我们之前介绍过的Servlet：一个Wrapper就是一个Servlet的封装。 <!-- raw HTML omitted --></p>
+<p>在我们介绍Tomcat三大组件：Servlet，Filter以及Lisntener的时候我们都介绍了这些组件的一个生命周期，包括init(), destroy()方法，而Wrapper就是来管理Servlet的生命周期的： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>void load() throws ServletException <!-- raw HTML omitted --></p>
+<p>Load and initialize an instance of this Servlet, if there is not already at least one initialized instance. This can be used, for example, to load Servlets that are marked in the deployment descriptor to be loaded at server startup time. <!-- raw HTML omitted --></p>
+</blockquote>
+<p>在StandardWrapper的load()方法中使用loadServlet来初始化一个Servlet，接着再用initServlet来初始化这个Servlet: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">load</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     <span class="k">this</span><span class="o">.</span><span class="na">instance</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">loadServlet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">instanceInitialized</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">this</span><span class="o">.</span><span class="na">initServlet</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">instance</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span> 
+</span></span><span class="line"><span class="cl"> <span class="o">}</span>
+</span></span></code></pre></div><p>接着我们具体来看这两个方法： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>public Servlet loadServlet() throws ServletException <!-- raw HTML omitted --></p>
+<p>Load and initialize an instance of this servlet, if there is not already at least one initialized instance. This can be used, for example, to load servlets that are marked in the deployment descriptor to be loaded at server startup time. <!-- raw HTML omitted --></p>
+<p>Returns: <!-- raw HTML omitted -->
+the loaded Servlet instance <!-- raw HTML omitted --></p>
+</blockquote>
+<p>StandardWrapper对象的loadServlet()先是获取了其父容器StandardContext来加载这个Servlet类，再利用initServetlet()来进行初始化： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">synchronized</span> <span class="n">Servlet</span> <span class="nf">loadServlet</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">   <span class="o">...</span> <span class="o">...</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">InstanceManager</span> <span class="n">instanceManager</span> <span class="o">=</span> <span class="o">((</span><span class="n">StandardContext</span><span class="o">)</span><span class="k">this</span><span class="o">.</span><span class="na">getParent</span><span class="o">()).</span><span class="na">getInstanceManager</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">servlet</span> <span class="o">=</span> <span class="o">(</span><span class="n">Servlet</span><span class="o">)</span><span class="n">instanceManager</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">servletClass</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">.</span><span class="na">initServlet</span><span class="o">(</span><span class="n">servlet</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">.</span><span class="na">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;load&#34;</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">.</span><span class="na">loadTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">t1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var12</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">servlet</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>而initServlet(Servlet servlet)做的最重要的一件事情就是调用了servlet的init()方法，开启了其生命周期 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">initServlet</span><span class="o">(</span><span class="n">Servlet</span> <span class="n">servlet</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">instanceInitialized</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="na">singleThreadModel</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="n">Globals</span><span class="o">.</span><span class="na">IS_SECURITY_ENABLED</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">boolean</span> <span class="n">success</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[]{</span><span class="k">this</span><span class="o">.</span><span class="na">facade</span><span class="o">};</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">SecurityUtil</span><span class="o">.</span><span class="na">doAsPrivilege</span><span class="o">(</span><span class="s">&#34;init&#34;</span><span class="o">,</span> <span class="n">servlet</span><span class="o">,</span> <span class="n">classType</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(!</span><span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">SecurityUtil</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">servlet</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">servlet</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">facade</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="o">.</span><span class="na">instanceInitialized</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span> 
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>至此，Tomcat服务器也就和我们使用Java EE定义和创建的Servlet联系起来了，我们也能绘制出整一个container的子容器之间的关系了： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/Tomcat_Container.drawio.png"
+         alt="Figure 5: Tomcat Container子容器结构" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->Tomcat Container子容器结构</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="tomcat中的三种context-standardcontext-applicationcontext以及servletcontext">Tomcat中的三种Context，StandardContext, ApplicationContext以及ServletContext</h3>
+<p>既然我们说到了Servlet是如何与Tomcat服务器结合起来使用的，那自然当然也少不了Filter以及Listener，我们就借此机会，来好好说道说道Context； <!-- raw HTML omitted --></p>
+<p>如果大家了解过Servlet的开发，那就一定知道一个概念就是ServletContext，这和Tomcat组件中的Context会不会有什么联系呢？ <!-- raw HTML omitted --></p>
+<blockquote>
+<p>org.apache.catalina.Context <!-- raw HTML omitted --></p>
+<p>org.apache.catalina.core.StandardContext <!-- raw HTML omitted --></p>
+<p>jakarta.servlet.ServletContext <!-- raw HTML omitted --></p>
+<p>org.apache.catalina.core.ApplicationContext <!-- raw HTML omitted --></p>
+<p>org.apache.catalina.core.ApplicationContextFacade <!-- raw HTML omitted --></p>
+</blockquote>
+<p>上面我们一共提到了5中Context，我们依次先来简单认识一下，之后再展开讲他们的具体关系： <!-- raw HTML omitted --></p>
+<ol>
+<li>org.apache.catalina.Context接口： <!-- raw HTML omitted -->
+<ul>
+<li>定义了Tomcat中的Context容器，其父容器为Host，其子容器为Wrapper； <!-- raw HTML omitted --></li>
+<li>用来表示一个Web应用 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>org.apache.catalina.core.StandardContext类： <!-- raw HTML omitted -->
+<ul>
+<li>是org.apache.catalina.Context接口的标准实现 <!-- raw HTML omitted --></li>
+<li>之后方便辨认，我们统一用StandardContext来表示Context接口以及实现类 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>jakarta.servlet.ServletContext接口 <!-- raw HTML omitted -->
+<ul>
+<li>定义了一系列servlet可以用来与servlet容器通信的方法； <!-- raw HTML omitted --></li>
+<li>每一个JVM中的每一个web应用都有唯一一个ServletContext（web应用直观的来说就是表示访问服务器所用的URL中所跟着的URI例如/catalog，并且整个应用可能就是一个 <strong>.war</strong> 文件）； <!-- raw HTML omitted --></li>
+<li>细心的师傅应该发现了这个接口是在JAVA EE的包里定义了，和其他在org.apache.catalina中定义的不同，这是Java EE先提供的接口，来帮助web应用中的Servlet存储数据，进行通信； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>org.apache.catalina.core.ApplicationContext类： <!-- raw HTML omitted -->
+<ul>
+<li>这个类就是Tomcat对于ServletContext的具体实现； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>org.apache.catalina.core.ApplicationContextFacade类： <!-- raw HTML omitted -->
+<ul>
+<li>这个类是ApplicationContext的一个门面类，可以理解为讲ApplicationContext的属性和方法封装在这个Facade门面类里面，对外就调用Facade中的方法就可以了（具体可以参考：<a class="link" href="https://www.runoob.com/w3cnote/facade-pattern-3.html"  target="_blank" rel="noopener"
+    >JAVA设计模式之门面模式（外观模式）</a>） <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p>这样讲其实还挺割裂的，好像两个实现类StandardContext以及ApplicationContext没有什么直接的联系，但是事实上他们却有着千丝万缕的联系： <!-- raw HTML omitted --></p>
+<p>StandardContext中就有一个 <strong>getServletContext()</strong> 方法，我们可以观察到，其中生成的就是ServletContext的实现类 <strong>ApplicationContext</strong>, 同时返回值就是ApplicationContext的门面类的对象： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StandardContext</span> <span class="kd">extends</span> <span class="n">ContainerBase</span> <span class="kd">implements</span> <span class="n">Context</span><span class="o">,</span> <span class="n">NotificationEmitter</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">protected</span> <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ServletContext</span> <span class="nf">getServletContext</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">context</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">.</span><span class="na">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationContext</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">altDDName</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="o">.</span><span class="na">context</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;org.apache.catalina.deploy.alt_dd&#34;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">altDDName</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">context</span><span class="o">.</span><span class="na">getFacade</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>上面的代码还有值得注意的一点，就是ApplicationContext的构造器使用了StandardContext的对象，我们接着去看看ApplicationContext的源码： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ApplicationContext</span> <span class="kd">implements</span> <span class="n">ServletContext</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">ApplicationContext</span><span class="o">(</span><span class="n">StandardContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">context</span> <span class="o">=</span> <span class="n">context</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">service</span> <span class="o">=</span> <span class="o">((</span><span class="n">Engine</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getParent</span><span class="o">().</span><span class="na">getParent</span><span class="o">()).</span><span class="na">getService</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">sessionCookieConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationSessionCookieConfig</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">populateSessionTrackingModes</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>我们发现在ApplicationContext中， <code>this.context</code> 竟然是StandardContext的对象，我们接着查找 <code>this.context</code> 的使用情况，发现了有很大一部分的方法中都在使用了这个 <strong>StandardContext</strong> 的对象： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-10-21_15-32-52_screenshot.png"
+         alt="Figure 6: this.context在ApplicationContext中的使用情况" width="200px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->this.context在ApplicationContext中的使用情况</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-10-21_15-42-46_screenshot.png"
+         alt="Figure 7: 76处使用context" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->76处使用context</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-10-21_15-42-59_screenshot.png"
+         alt="Figure 8: 47处调用了StandardContext的get方法" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->47处调用了StandardContext的get方法</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-10-21_15-44-20_screenshot.png"
+         alt="Figure 9: 调用StandardContext的事件触发方法" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 9: <!-- raw HTML omitted -->调用StandardContext的事件触发方法</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我们隐约可以感觉到ServletContext就像是StandaardContext下属的一个部门，负责管理Servlet的一些事务，但是都要向StandardContext进行汇报以及获取物资的感觉。 <!-- raw HTML omitted --></p>
+<h3 id="standardcontext是如何启动tomcat三大组件-servlet-filter以及listener的">StandardContext是如何启动Tomcat三大组件：Servlet，Filter以及Listener的？</h3>
+<p>接着我们来具体看看StandardContext是启动Tomcat的三大组件，借此进一步了解Tomcat所定义的Context与Java EE自带的这三大组件是如何协调工作的： <!-- raw HTML omitted --></p>
+<h4 id="contextconfig-dot-configurecontext-与-standardcontext-dot-startinternal">ContextConfig.configureContext() 与 StandardContext.startInternal()</h4>
+<p>首先，我们要问第一个问题: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">StandardContext是怎么知道应该加载哪些Servlet, Filter以及Listener的？
+</span></span></code></pre></div><p>答案其实很容易就可以猜到，就是从web.xml或者annotation中读取： <!-- raw HTML omitted --></p>
+<p>我们看到下面的这个 <code>configureContext()</code> 方法中，通过获取一个webxml对象，然后从中分别读取了这三大组件的相关配置内容： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getContextParams</span><span class="o">().</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addParameter</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Filter的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">FilterDef</span> <span class="n">filter</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getFilters</span><span class="o">().</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">getAsyncSupported</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filter</span><span class="o">.</span><span class="na">setAsyncSupported</span><span class="o">(</span><span class="s">&#34;false&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addFilterDef</span><span class="o">(</span><span class="n">filter</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">FilterMap</span> <span class="n">filterMap</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getFilterMappings</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addFilterMap</span><span class="o">(</span><span class="n">filterMap</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Listner的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">listener</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getListeners</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addApplicationListener</span><span class="o">(</span><span class="n">listener</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Servlet的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">ServletDef</span> <span class="n">servlet</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getServlets</span><span class="o">().</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Wrapper</span> <span class="n">wrapper</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">createWrapper</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getLoadOnStartup</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wrapper</span><span class="o">.</span><span class="na">setLoadOnStartup</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getLoadOnStartup</span><span class="o">().</span><span class="na">intValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getEnabled</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wrapper</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getEnabled</span><span class="o">().</span><span class="na">booleanValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getServletName</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="n">servlet</span><span class="o">.</span><span class="na">getParameterMap</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">params</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wrapper</span><span class="o">.</span><span class="na">addInitParameter</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setRunAs</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getRunAs</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">SecurityRoleRef</span><span class="o">&gt;</span> <span class="n">roleRefs</span> <span class="o">=</span> <span class="n">servlet</span><span class="o">.</span><span class="na">getSecurityRoleRefs</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">SecurityRoleRef</span> <span class="n">roleRef</span> <span class="o">:</span> <span class="n">roleRefs</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wrapper</span><span class="o">.</span><span class="na">addSecurityReference</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">roleRef</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">roleRef</span><span class="o">.</span><span class="na">getLink</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setServletClass</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getServletClass</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setOverridable</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">isOverridable</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addChild</span><span class="o">(</span><span class="n">wrapper</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">webxml</span><span class="o">.</span><span class="na">getServletMappings</span><span class="o">().</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addServletMappingDecoded</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>加载配置完毕之后，接下来就是我们在介绍Filter以及Listener中的文章中曾经介绍过，StandardContext通过 <code>startInternal()</code> 这个方法来依次启动加载 <strong>Listener</strong>, <strong>Filter</strong> 以及 <strong>Servlet</strong>: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">startInternal</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">LifecycleException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 1. ListenerStart(), 启动加载Listener
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">listenerStart</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.listenerFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 2. filterStart(), 启动加载Filter
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">filterStart</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.filterFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 3. loadOnStartup(), 启动加载Servlet
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="na">loadOnStartup</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findChildren</span><span class="o">()))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.servletFail&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kd">super</span><span class="o">.</span><span class="na">threadStart</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>下面就让我们来针对每一个组件来看StandardContext是如何读取配置，如何初始化和加载对象的： <!-- raw HTML omitted --></p>
+<h4 id="listener">Listener</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>加载Listener配置</p>
+<p>通过ContextConfig.configureContext从 <strong>web.xml</strong> 中向StandardContext加载listener配置： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Listner的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">listener</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getListeners</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addApplicationListener</span><span class="o">(</span><span class="n">listener</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>其中，StandardContext.addApplicationListener() 方法来将Listener的类名到StandardContext中的一个字符串数组 <strong>applicationListeners</strong> 中： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">String</span> <span class="n">applicationListeners</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addApplicationListener</span><span class="o">(</span><span class="n">String</span> <span class="n">listener</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">synchronized</span> <span class="o">(</span><span class="n">applicationListenersLock</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">results</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">applicationListeners</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">applicationListeners</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">listener</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">applicationListeners</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.duplicateListener&#34;</span><span class="o">,</span><span class="n">listener</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">results</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">applicationListeners</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">results</span><span class="o">[</span><span class="n">applicationListeners</span><span class="o">.</span><span class="na">length</span><span class="o">]</span> <span class="o">=</span> <span class="n">listener</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">applicationListeners</span> <span class="o">=</span> <span class="n">results</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;addApplicationListener&#34;</span><span class="o">,</span> <span class="n">listener</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>初始化和加载Listener</p>
+<p>接着我们来看在StandardContext.startInternal()中是如何初始化Listener的： <!-- raw HTML omitted --></p>
+<p>listenerStart()是用来将所有我们在Web工程中所定义的Listeners进行初始化的方法，它先是从StandardContext的private属性applicationListeners这样一个字符串变量中拿到所有需要加载的Listeners的名字，接着用 <strong>this.getInstanceManager().newInstance(listener)</strong> 的形式来进行加载。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Configure the set of instantiated application event listeners
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * for this Context.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return &lt;code&gt;true&lt;/code&gt; if all listeners wre
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * initialized successfully, or &lt;code&gt;false&lt;/code&gt; otherwise.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">applicationListeners</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">listenerStart</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">       <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">String</span><span class="o">[]</span> <span class="n">listeners</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">findApplicationListeners</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Object</span><span class="o">[]</span> <span class="n">results</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="n">listeners</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">boolean</span> <span class="n">ok</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">results</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span> 
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">String</span> <span class="n">listener</span> <span class="o">=</span> <span class="n">listeners</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">                <span class="n">results</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getInstanceManager</span><span class="o">().</span><span class="na">newInstance</span><span class="o">(</span><span class="n">listener</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="o">...</span> <span class="o">...</span>        
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>我们最后来看这个 <code>newInstance()</code> 是如何来加载listener的，如果看过我们有关Java反射的文章或者了解反射的师傅应该很快就能反应过来，这个方法就是通过Java反射机制来根据Listener的类名来生成一个新的Listener对象： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">newInstance</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">className</span><span class="o">,</span> <span class="kd">final</span> <span class="n">ClassLoader</span> <span class="n">classLoader</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">throws</span> <span class="n">IllegalAccessException</span><span class="o">,</span> <span class="n">NamingException</span><span class="o">,</span> <span class="n">InvocationTargetException</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">InstantiationException</span><span class="o">,</span> <span class="n">ClassNotFoundException</span><span class="o">,</span> <span class="n">IllegalArgumentException</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">NoSuchMethodException</span><span class="o">,</span> <span class="n">SecurityException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">classLoader</span><span class="o">.</span><span class="na">loadClass</span><span class="o">(</span><span class="n">className</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">newInstance</span><span class="o">(</span><span class="n">clazz</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">().</span><span class="na">newInstance</span><span class="o">(),</span> <span class="n">clazz</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>其实通过这个例子，我们也能理解到使用反射的妙处了，就是无论你创建的Listener叫什么名字，只要你往配置里写好，就可以自动进行加载以及利用； <!-- raw HTML omitted --></p>
+<p>同时，如果你修改了这个类的名字，那也只需要修改一下配置文件里修改一下就好了，不需要去一个个改源码。 <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<h4 id="filter">Filter</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>加载Filter相关配置</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Filter的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">FilterDef</span> <span class="n">filter</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getFilters</span><span class="o">().</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">getAsyncSupported</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filter</span><span class="o">.</span><span class="na">setAsyncSupported</span><span class="o">(</span><span class="s">&#34;false&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addFilterDef</span><span class="o">(</span><span class="n">filter</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">FilterMap</span> <span class="n">filterMap</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getFilterMappings</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addFilterMap</span><span class="o">(</span><span class="n">filterMap</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>我们可以看到 <strong>configureContext()</strong> 在对filter进行处理的时候，添加了两个内容：FilterDef以及FilterMap，这也就对应了我们在开发的过程中注册一个filter需要在 <strong>web.xml</strong> 中完成的配置：&lt;filter&gt;以及&lt;filter-mapping&gt; <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;filter&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;filter-name&gt;</span>HelloFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;filter-class&gt;</span>pers.javasec.javafilter.HelloFilter<span class="nt">&lt;/filter-class&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/filter&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;filter-mapping&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;filter-name&gt;</span>HelloFilter<span class="nt">&lt;/filter-name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;url-pattern&gt;</span>/admin/*<span class="nt">&lt;/url-pattern&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/filter-mapping&gt;</span>
+</span></span></code></pre></div><p>接着我们可以根据StandardContext中两个具体的add方法看到，他们都是将得到配置信息分别存入HashMap当中： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Add a filter definition to this Context.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param filterDef The filter definition to be added
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFilterDef</span><span class="o">(</span><span class="n">FilterDef</span> <span class="n">filterDef</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">filterDefs</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filterDefs</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">filterDef</span><span class="o">.</span><span class="na">getFilterName</span><span class="o">(),</span> <span class="n">filterDef</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Add a filter mapping to this Context at the end of the current set
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * of filter mappings.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param filterMap The filter mapping to be added
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @exception IllegalArgumentException if the specified filter name
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *  does not match an existing filter definition, or the filter mapping
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *  is malformed
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFilterMap</span><span class="o">(</span><span class="n">FilterMap</span> <span class="n">filterMap</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">validateFilterMap</span><span class="o">(</span><span class="n">filterMap</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Add this filter mapping to our registered set
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">filterMaps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">filterMap</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;addFilterMap&#34;</span><span class="o">,</span> <span class="n">filterMap</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>初始化和加载Filter</p>
+<p>我们在上面的filter配置加载中看到了StandardContext会存放每一个filter的基本信息在 <strong>filterDefs</strong> 中。 <!-- raw HTML omitted --></p>
+<p>那么在接着来看StandardContext在初始化和加载Filter的过程中，就是通过读取 <code>filterDefs</code> 中的filter信息，接着为每一个filter都创建一个filterconfig对象，并存入hashmap <code>filterConfigs</code> 中： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * The set of filter configurations (and associated filter instances) we
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * have initialized, keyed by filter name.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">ApplicationFilterConfig</span><span class="o">&gt;</span> <span class="n">filterConfigs</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * The set of filter definitions for this application, keyed by
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * filter name.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">FilterDef</span><span class="o">&gt;</span> <span class="n">filterDefs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span></span></code></pre></div><p>filterStart(): <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Configure and initialize the set of filters for this Context.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @return &lt;code&gt;true&lt;/code&gt; if all filter initialization completed
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * successfully, or &lt;code&gt;false&lt;/code&gt; otherwise.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filterStart</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Instantiate and record a FilterConfig for each defined filter
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">boolean</span> <span class="n">ok</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">synchronized</span> <span class="o">(</span><span class="n">filterConfigs</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filterConfigs</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">FilterDef</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">filterDefs</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">getLogger</span><span class="o">().</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">getLogger</span><span class="o">().</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34; Starting filter &#39;&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;&#39;&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 为每一个filterDef都创建一个filterConfig
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">ApplicationFilterConfig</span> <span class="n">filterConfig</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">new</span> <span class="n">ApplicationFilterConfig</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 将创建的filterConfig存入filterConfigs中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">filterConfigs</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">filterConfig</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">t</span> <span class="o">=</span> <span class="n">ExceptionUtils</span><span class="o">.</span><span class="na">unwrapInvocationTargetException</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ExceptionUtils</span><span class="o">.</span><span class="na">handleThrowable</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">getLogger</span><span class="o">().</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="s">&#34;standardContext.filterStart&#34;</span><span class="o">,</span> <span class="n">name</span><span class="o">),</span> <span class="n">t</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ok</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="servlet">Servlet</h4>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>加载Servlet相关配置</p>
+<p>最后我们来看看Servlet，处理的语句明显变多了； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;servlet&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;servlet-name&gt;</span>MyServlet<span class="nt">&lt;/servlet-name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;servlet-class&gt;</span>pers.medic.jsplearn.MyServlet<span class="nt">&lt;/servlet-class&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;init-param&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;param-name&gt;</span>username<span class="nt">&lt;/param-name&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;param-value&gt;</span>root<span class="nt">&lt;/param-value&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/init-param&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/servlet&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;servlet-mapping&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;servlet-name&gt;</span>MyServlet<span class="nt">&lt;/servlet-name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;url-pattern&gt;</span>/my<span class="nt">&lt;/url-pattern&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/servlet-mapping&gt;</span>
+</span></span></code></pre></div><p>对于所有Servlet的配置，configureContext都会为其单独建立一个Wrapper来进行封装； <!-- raw HTML omitted --></p>
+<p>并且这些Wrapper会被当作子容器通过 <code>addChild()</code> 被嵌入 <strong>StandardContext</strong> 当中； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 加载Servlet的配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">ServletDef</span> <span class="n">servlet</span> <span class="o">:</span> <span class="n">webxml</span><span class="o">.</span><span class="na">getServlets</span><span class="o">().</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将每一个&lt;servlet&gt;配置都封装到Wrapper中去
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Wrapper</span> <span class="n">wrapper</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">createWrapper</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getServletName</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将当前&lt;servlet&gt;下的所有存储的params变量信息进行加载
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="n">servlet</span><span class="o">.</span><span class="na">getParameterMap</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">params</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wrapper</span><span class="o">.</span><span class="na">addInitParameter</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setRunAs</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getRunAs</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">wrapper</span><span class="o">.</span><span class="na">setServletClass</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getServletClass</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addChild</span><span class="o">(</span><span class="n">wrapper</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 增加&lt;servlet-mapping&gt;中的信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">webxml</span><span class="o">.</span><span class="na">getServletMappings</span><span class="o">().</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="na">addServletMappingDecoded</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>初始化和加载Servlet</p>
+<p>loadOnStartup是StandardContext中用来启动所有注册的Servlet（Wrapper）的方法，我们主要关注下半部分的for循环中，可以看到 <strong>wrapper.load()</strong> 就是用来启动Wrapper的： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Load and initialize all servlets marked &#34;load on startup&#34; in the
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * web application deployment descriptor.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param children Array of wrappers for all currently defined
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *  servlets (including those not declared load on startup)
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @return &lt;code&gt;true&lt;/code&gt; if load on startup was considered successful
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">loadOnStartup</span><span class="o">(</span><span class="n">Container</span> <span class="n">children</span><span class="o">[])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Collect &#34;load on startup&#34; servlets that need to be initialized
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Wrapper</span><span class="o">&gt;&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">Container</span> <span class="n">child</span> <span class="o">:</span> <span class="n">children</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Wrapper</span> <span class="n">wrapper</span> <span class="o">=</span> <span class="o">(</span><span class="n">Wrapper</span><span class="o">)</span> <span class="n">child</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">loadOnStartup</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="na">getLoadOnStartup</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">loadOnStartup</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Integer</span> <span class="n">key</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">loadOnStartup</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Wrapper</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">list</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">list</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">wrapper</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Load the collected &#34;load on startup&#34; servlets
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Wrapper</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">:</span> <span class="n">map</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">Wrapper</span> <span class="n">wrapper</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">wrapper</span><span class="o">.</span><span class="na">load</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ServletException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">getLogger</span><span class="o">().</span><span class="na">error</span><span class="o">(</span><span class="n">sm</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;standardContext.loadOnStartup.loadException&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">getName</span><span class="o">(),</span> <span class="n">wrapper</span><span class="o">.</span><span class="na">getName</span><span class="o">()),</span> <span class="n">StandardWrapper</span><span class="o">.</span><span class="na">getRootCause</span><span class="o">(</span><span class="n">e</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// NOTE: load errors (including a servlet that throws
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// UnavailableException from the init() method) are NOT
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// fatal to application startup
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// unless failCtxIfServletStartFails=&#34;true&#34; is specified
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span><span class="o">(</span><span class="n">getComputedFailCtxIfServletStartFails</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>我们再凑近点看看这个 <strong>wrapper.load()</strong> 方法： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">load</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">instance</span> <span class="o">=</span> <span class="n">loadServlet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="n">instanceInitialized</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">initServlet</span><span class="o">(</span><span class="n">instance</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>我们可以本质上就是通过调用initServlet()方法进而最终调用 <code>servlet.init()</code> 来最终开启servlet的生命周期 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">initServlet</span><span class="o">(</span><span class="n">Servlet</span> <span class="n">servlet</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Call the initialization method of this servlet
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span> <span class="n">Globals</span><span class="o">.</span><span class="na">IS_SECURITY_ENABLED</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">boolean</span> <span class="n">success</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[]</span> <span class="o">{</span> <span class="n">facade</span> <span class="o">};</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">SecurityUtil</span><span class="o">.</span><span class="na">doAsPrivilege</span><span class="o">(</span><span class="s">&#34;init&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                               <span class="n">servlet</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                               <span class="n">classType</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                               <span class="n">args</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(!</span><span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// destroy() will not be called, thus clear the reference now
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="n">SecurityUtil</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">servlet</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 开启servlet的生命周期
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">servlet</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">facade</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">instanceInitialized</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="小结">小结</h4>
+<p>通过上面对于Java EE中的三大组件与Tomcat之间的联系，我们可以进一步的了解Tomcat是如何通过web.xml来读取由开发者定义的Servlet, Listener以及Filter的，读取之后会以各种形式被保存在 StandardContext 实例当中，在 StandardContext 启动的时候就会再被拿出来进行初始化和加载。 <!-- raw HTML omitted --></p>
+<p>Tomcat_and_Servlet.drawio.png <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/Tomcat_and_Servlet.drawio.png"
+         alt="Figure 10: Tomcat与三大组件的关系" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->Tomcat与三大组件的关系</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="写在最后">写在最后</h3>
+<p>很长的一篇文章，或者说这个长度已经不配叫做文章了（个人感觉文章还是应该更为简洁干练一些），更像是一篇学习笔记，这也导致了一开始的目标并不明确，不知道这样一篇内容需要放多少东西进来，很多知识应该学习到什么程度，这也极大地打击了效率，应该吸取教训，精简每篇文章，这样也可以分批次提高成就感。 <!-- raw HTML omitted --></p>
+<p>如果读者对于内容有任何的疑问或者对于写作有任何的意见，请您务必通过邮件告诉我，提前感谢！ <!-- raw HTML omitted --></p>
+<h3 id="代办">代办</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Pipeline &amp; Valve <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="reference">Reference</h3>
+<blockquote>
+<p><a class="link" href="https://www.jianshu.com/p/1a2d2f868143"  target="_blank" rel="noopener"
+    >深入理解Tomcat（八）Container</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.ramkitech.com/2012/02/understanding-virtual-host-concept-in.html"  target="_blank" rel="noopener"
+    >Understanding Virtual Host Concept in Tomcat</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://tomcat.apache.org/tomcat-10.0-doc/architecture/overview.html"  target="_blank" rel="noopener"
+    >Apache Tomcat 10 Architecture</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.cnblogs.com/kismetv/p/7228274.html"  target="_blank" rel="noopener"
+    >详解Tomcat 配置文件server.xml</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://www.shouhuola.com/q-36247.html"  target="_blank" rel="noopener"
+    >什么是静态资源，什么是动态资源</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.stackpath.com/edge-academy/what-is-static-content/"  target="_blank" rel="noopener"
+    >What is Static Content?</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.techwalla.com/articles/what-is-the-ajp-protocol"  target="_blank" rel="noopener"
+    >What Is the AJP Protocol?</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://en.wikipedia.org/wiki/Apache_JServ_Protocol"  target="_blank" rel="noopener"
+    >Apache JServ Protocol</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://stackoverflow.com/questions/21757694/what-is-ajp-protocol-used-for"  target="_blank" rel="noopener"
+    >What is AJP protocol used for?</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.jianshu.com/p/1a2d2f868143"  target="_blank" rel="noopener"
+    >深入理解Tomcat（八）Container</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.runoob.com/w3cnote/facade-pattern-3.html"  target="_blank" rel="noopener"
+    >JAVA设计模式之门面模式（外观模式）</a> <!-- raw HTML omitted --></p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/tomcat/">tomcat</a>
+        
+            <a href="/tags/servlet/">servlet</a>
+        
+            <a href="/tags/javaee/">JavaEE</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Oct 24, 2022 09:53 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/how_browsers_work/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">浏览器是如何工作的？</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/uri_url_urn/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">URI &amp; URL &amp; URN 的关系</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tomcat框架以及与servlet之间的联系">Tomcat框架以及与Servlet之间的联系</a>
+      <ul>
+        <li><a href="#写在前面">写在前面</a></li>
+        <li><a href="#tomcat基础框架">Tomcat基础框架</a></li>
+        <li><a href="#从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</a></li>
+        <li><a href="#server">Server</a></li>
+        <li><a href="#service">Service</a></li>
+        <li><a href="#connector">Connector</a></li>
+        <li><a href="#container">Container</a></li>
+        <li><a href="#engine与host">Engine与Host</a></li>
+        <li><a href="#context">Context</a></li>
+        <li><a href="#wrapper">Wrapper</a></li>
+        <li><a href="#tomcat中的三种context-standardcontext-applicationcontext以及servletcontext">Tomcat中的三种Context，StandardContext, ApplicationContext以及ServletContext</a></li>
+        <li><a href="#standardcontext是如何启动tomcat三大组件-servlet-filter以及listener的">StandardContext是如何启动Tomcat三大组件：Servlet，Filter以及Listener的？</a>
+          <ul>
+            <li><a href="#contextconfig-dot-configurecontext-与-standardcontext-dot-startinternal">ContextConfig.configureContext() 与 StandardContext.startInternal()</a></li>
+            <li><a href="#listener">Listener</a></li>
+            <li><a href="#filter">Filter</a></li>
+            <li><a href="#servlet">Servlet</a></li>
+            <li><a href="#小结">小结</a></li>
+          </ul>
+        </li>
+        <li><a href="#写在最后">写在最后</a></li>
+        <li><a href="#代办">代办</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
