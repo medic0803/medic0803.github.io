@@ -9,7 +9,7 @@
 <meta property='og:description' content='Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='tomcat' /><meta property='article:tag' content='servlet' /><meta property='article:tag' content='JavaEE' /><meta property='article:published_time' content='2022-10-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-24T09:53:49&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='tomcat' /><meta property='article:tag' content='servlet' /><meta property='article:tag' content='JavaEE' /><meta property='article:published_time' content='2022-10-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-24T22:13:16&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系">
 <meta name="twitter:description" content="Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    23 minute read
+                    28 minute read
                 </time>
             </div>
         
@@ -283,14 +283,20 @@ if (!doNotTrack) {
 <ol>
 <li>通过解读一个基础的Tomcat <strong>server.xml</strong> 配置文件，了解Tomcat下面的组件是如何分工处理一个HTTP请求的； <!-- raw HTML omitted --></li>
 <li>进而了解Tomcat下各个组件的作用，以及它们之间的关系； <!-- raw HTML omitted --></li>
-<li>最后尝试通过Tomcat以及Java EE源码来了解一下Tomcat是如何与Java EE中的三大组件（Servlet，Filter，Listener）是如何关联起来的； <!-- raw HTML omitted --></li>
+<li>通过Tomcat以及Java EE源码来了解一下Tomcat是如何与Java EE中的三大组件（Servlet，Filter，Listener）是如何关联起来的； <!-- raw HTML omitted --></li>
+<li>最后通过了解Tomcat Pipeline-Valve责任链机制了解Tomcat与Java Web具体在代码中是如何处理一个HTTP请求的； <!-- raw HTML omitted --></li>
 </ol>
+<p>如果对于Java Web中三大组件有疑问的话，可以看看我总结的内容： <!-- raw HTML omitted -->
+<a class="link" href="https://ginkgo.org.cn/posts/javasec_javaweb_servlet/"  target="_blank" rel="noopener"
+    >JavaSec - Java Web - 三大核心组件 - Servlet</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://ginkgo.org.cn/posts/javasec_javaweb_listener_and_filter/"  target="_blank" rel="noopener"
+    >JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</a> <!-- raw HTML omitted --></p>
 <h3 id="tomcat基础框架">Tomcat基础框架</h3>
 <p>Tomcat作为一个Web应用服务器，其最核心的功能自然就是： <!-- raw HTML omitted --></p>
 <ol>
 <li>接受来自用户的HTTP request请求; <!-- raw HTML omitted --></li>
-<li>根据用户的HTTP请求进行业务处理： <!-- raw HTML omitted --></li>
-<li>最后返回Response响应给用户 <!-- raw HTML omitted --></li>
+<li>根据用户的HTTP请求进行业务处理； <!-- raw HTML omitted --></li>
+<li>最后返回Response响应给用户； <!-- raw HTML omitted --></li>
 </ol>
 <p>在接下来的文章中，记住这个最基本的功能可以让我们更好的理解Tomcat到底是怎么来对HTTP请求进行处理的。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-09-28_11-31-48_screenshot.png"
@@ -421,7 +427,7 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>接下来我们会依次介绍他们的作用，不过就和之前介绍的那样，整一个Container模块的功能就是处理请求以及构造响应。 <!-- raw HTML omitted --></p>
-<h3 id="engine与host">Engine与Host</h3>
+<h4 id="engine与host">Engine与Host</h4>
 <p>一个Service只包含一个Engine；一个Engine与Service中的多个Connector进行绑定；同时一个Engine可以内嵌一个或多个Host（即Host是Engine的子容器）； <!-- raw HTML omitted --></p>
 <p>Engine是最顶层的Container（容器），而Host作为子容器，表示Engine中的一个虚拟主机，对应了服务器中的网络实体名（例如域名或者IP地址）； <!-- raw HTML omitted --></p>
 <p>客户端通过主机名来标识他们想要连接的主机，主机名会作为 <strong>HOST</strong> Header被放在HTTP请求中，Engine会根据HTTP Header中Host的值决定由哪一个HOST来继续处理请求。 <!-- raw HTML omitted --></p>
@@ -453,7 +459,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">localhost:8080</span>
 </span></span><span class="line"><span class="cl"><span class="err">...</span> <span class="l">...</span>
 </span></span></code></pre></div><p>至此我们就知道了一个Tomcat服务器可以有唯一一个公网IP，而客户端可以通过多个域名（localhost, anotherHost）来访问服务器（只要DNS能够解析到对应的IP地址即可），然后Engine会根据HTTP请求中的HOST头将请求分配给对应的HOST组件，比如我们的例子中的localhost这个HOST。 <!-- raw HTML omitted --></p>
-<h3 id="context">Context</h3>
+<h4 id="context">Context</h4>
 <p>我们继续套娃，一个Service有唯一一个Engine，一个Engine内嵌一个或者多个Host，而一个Host则可以内嵌一个多个Context，用来表示一个虚拟主机HOST下所运行的一个或者多个Web应用程序（同样也是子容器）； <!-- raw HTML omitted --></p>
 <p>我们知道Host具体的表现形式就是HOST Header，而Context的具体表现形式就是我们在HTTP请求中的URI，在我们的例子中就是 <code>LearnFilter_war</code>; <!-- raw HTML omitted --></p>
 <p>这个URI其实也就是我们在使用IDEA开发的时候，创建的项目名，记得我们在Servlet的介绍中，曾经说过一个web项目，只有一个ServletContext对象吗，记住这一点，我们在将Wrapper的时候还会再提到（其实Wrapper就是我们所开发的一个个Servlet）； <!-- raw HTML omitted --></p>
@@ -486,7 +492,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">&#34;/&#34;</span> <span class="na">docBase=</span><span class="s">&#34;other_directory_absolute_path/app1.war&#34;</span> <span class="na">reloadable=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
 </span></span></code></pre></div><p>但是一般不建议使用静态配置，因为 <code>server.xml</code> 这个文件在修改后需要重新启动服务器才能加载，因此一旦需要修改Path的信息，就需要重启服务器，而在自动部署的时候Tomcat就可以通过定期的扫描了检查Web应用的路径是否发生了修改； <!-- raw HTML omitted --></p>
 <p>至此，我们想要根据 <strong>server.xml</strong> 所获取的组件元素信息已经全部介绍完毕，但是Container作为处理HTTP请求的容器，肯定和我们在Java Web编程中的核心组件Servlet时分不开的，而Servlet其实是被Container的最底层子类Wrapper所包裹使用，我们将在下面的章节中介绍。 <!-- raw HTML omitted --></p>
-<h3 id="wrapper">Wrapper</h3>
+<h4 id="wrapper">Wrapper</h4>
 <p>Wrapper是Context的子容器，也是Tomcat的最底层容器了，我们知道一个Context代表一个Web应用，那么一个Wrapper就代表一个Web应用下的一个个功能组件，也就是我们之前介绍过的Servlet：一个Wrapper就是一个Servlet的封装。 <!-- raw HTML omitted --></p>
 <p>在我们介绍Tomcat三大组件：Servlet，Filter以及Lisntener的时候我们都介绍了这些组件的一个生命周期，包括init(), destroy()方法，而Wrapper就是来管理Servlet的生命周期的： <!-- raw HTML omitted --></p>
 <blockquote>
@@ -525,7 +531,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">servlet</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></div><p>而initServlet(Servlet servlet)做的最重要的一件事情就是调用了servlet的init()方法，开启了其生命周期 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>而initServlet(Servlet servlet)做的最重要的一件事情就是调用了servlet的init()方法，开启了其生命周期： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">initServlet</span><span class="o">(</span><span class="n">Servlet</span> <span class="n">servlet</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="na">instanceInitialized</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="na">singleThreadModel</span><span class="o">)</span> <span class="o">{</span>
@@ -860,7 +866,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-37-29_screenshot.png"
+             alt="Figure 10: 单个FilterDef中所存放的信息：" width="400px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->单个FilterDef中所存放的信息：</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * Add a filter mapping to this Context at the end of the current set
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * of filter mappings.
 </span></span></span><span class="line"><span class="cl"><span class="cm">     *
@@ -877,7 +889,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">filterMaps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">filterMap</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;addFilterMap&#34;</span><span class="o">,</span> <span class="n">filterMap</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-42-01_screenshot.png"
+             alt="Figure 11: 单个FilterMap中存放的内容" width="400px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->单个FilterMap中存放的内容</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+</li>
 </ul>
 <!-- raw HTML omitted -->
 <ul>
@@ -933,7 +951,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ok</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-43-51_screenshot.png"
+             alt="Figure 12: 单个filterConfig存放的内容" width="400px"/><figcaption>
+                <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->单个filterConfig存放的内容</p>
+            </figcaption>
+    </figure>
+ <!-- raw HTML omitted --></p>
+</li>
 </ul>
 <h4 id="servlet">Servlet</h4>
 <!-- raw HTML omitted -->
@@ -1079,24 +1103,250 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </ul>
 <h4 id="小结">小结</h4>
 <p>通过上面对于Java EE中的三大组件与Tomcat之间的联系，我们可以进一步的了解Tomcat是如何通过web.xml来读取由开发者定义的Servlet, Listener以及Filter的，读取之后会以各种形式被保存在 StandardContext 实例当中，在 StandardContext 启动的时候就会再被拿出来进行初始化和加载。 <!-- raw HTML omitted --></p>
-<p>Tomcat_and_Servlet.drawio.png <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/Tomcat_and_Servlet.drawio.png"
-         alt="Figure 10: Tomcat与三大组件的关系" width="500px"/><figcaption>
-            <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->Tomcat与三大组件的关系</p>
+         alt="Figure 13: Tomcat与三大组件的关系" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 13: <!-- raw HTML omitted -->Tomcat与三大组件的关系</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
+<h3 id="tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</h3>
+<h4 id="pipeline-valve责任链">Pipeline-Valve责任链</h4>
+<p>目前我们已经了解了Container中所有子容器的作用以及结构，也通过代码来学习了Tomcat与Java Web三大组件是如何共同使用的了； <!-- raw HTML omitted --></p>
+<p>最后就让我们再一次深入代码，看看Tomcat的Container容器和Java EE的三大组件是如何一步步处理一次来自客户端的HTTP请求的； <!-- raw HTML omitted --></p>
+<p>我们知道Tomcat的Connector连接器会负责接受客户端发来的HTTP请求，并将Request以及Response封装好交由Container进行处理： <!-- raw HTML omitted --></p>
+<p>而这四个Container子容器类的实现类都以StandardXXX命名(e.g., StandardContext), 而这些实现类都无一例外的继承了 <code>ContainerBase</code> 抽象类，而这个抽象类的定义就应用了一个设计模式：<a class="link" href="https://www.runoob.com/design-pattern/chain-of-responsibility-pattern.html"  target="_blank" rel="noopener"
+    >责任链模式（菜鸟教程）</a>，其思想也很简单，就是将对于一个请求的处理任务拆分开，将责任分配到一条责任链的每一环上，从而进行分步处理： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ContainerBase</span> <span class="kd">extends</span> <span class="n">LifecycleMBeanBase</span> <span class="kd">implements</span> <span class="n">Container</span>
+</span></span></code></pre></div><p>根据这个设计模式，每一个Container子容器都会管理一个 <strong>Pipeline</strong> 类实例，用“管道”来表示一条“责任链”，而一个或者多个 <strong>Valve</strong> 阀门实例将会被添加到 <strong>Pipeline</strong> 当中来分别对请求进行处理。 <!-- raw HTML omitted --></p>
+<p>下面是两个ContainerBase所定义的需要被实现的abstract方法： <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>addChild</td>
+<td>Container</td>
+<td>添加子容器（e.g, Engine.addChild(Host)）</td>
+</tr>
+<tr>
+<td>pipeline.addValve</td>
+<td>Valve</td>
+<td>将一个Valve添加到Pipeline中</td>
+</tr>
+</tbody>
+</table></div>
+<p>每一个Container都会用 <code>setBasic()</code> 方法在构造器中会向pipeple中添加一个默认的 <code>Valve</code>, 比如下面的 <strong>StandardEngine</strong>: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * The Pipeline object with which this Container is associated.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">protected</span> <span class="kd">final</span> <span class="n">Pipeline</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StandardPipeline</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Create a new StandardEngine component with the default basic Valve.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">StandardEngine</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">super</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// setBasic(): 向pipeline中添加默认的Valve
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">pipeline</span><span class="o">.</span><span class="na">setBasic</span><span class="o">(</span><span class="k">new</span> <span class="n">StandardEngineValve</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="cm">/* Set the jmvRoute using the system property jvmRoute */</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>我们说过Pipeline中的所有Valve都是用来分批处理请求的，那么他们将会被自带的 <strong>invoke()</strong> 方法所依次调用，默认的Valve一般叫做StandardXXXValve，会被放在责任链的最后一个执行，如果需要自定义vavle，需要添加配置到 <strong>server.xml</strong> 中，并且每一个vavle都会指向后一个valve，最终将由StandardXXXValve处理，之后再传递给相对应的子容器： <!-- raw HTML omitted --></p>
+<p>StandardEngineValve.invoke()，就像我们之前的说的，默认的Valve会继续调用对应子容器的pipeline中的vavle继续处理请求： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">,</span> <span class="n">Response</span> <span class="n">response</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Select the Host to be used for this Request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 调用Request#getHost()方法来根据HTTP请求获取对应的Host
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Host</span> <span class="n">host</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getHost</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">host</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// HTTP 0.9 or HTTP 1.0 request without a host when no default host
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// is defined.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// Don&#39;t overwrite an existing error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="o">(!</span><span class="n">response</span><span class="o">.</span><span class="na">isError</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span><span class="o">.</span><span class="na">sendError</span><span class="o">(</span><span class="n">404</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">isAsyncSupported</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">request</span><span class="o">.</span><span class="na">setAsyncSupported</span><span class="o">(</span><span class="n">host</span><span class="o">.</span><span class="na">getPipeline</span><span class="o">().</span><span class="na">isAsyncSupported</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Ask this Host to process this request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">host</span><span class="o">.</span><span class="na">getPipeline</span><span class="o">().</span><span class="na">getFirst</span><span class="o">().</span><span class="na">invoke</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>就这样按照顺序一直执行下去：Engine-&gt;Host-&gt;Context-&gt;Wrapper: <!-- raw HTML omitted --></p>
+<ol>
+<li>根据HTTP请求调用Request类中的getHost(), getContext(), getWrapper()方法来获取对应的子容器； <!-- raw HTML omitted --></li>
+<li>然后执行子容器中的Pipleline-Valve责任链，直到最后WrapperValve#invoke()方法； <!-- raw HTML omitted --></li>
+</ol>
+<p><figure><img src="/ox-hugo/2022-10-24_21-12-28_screenshot.png"
+         alt="Figure 14: Pipleline-Valve责任链" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 14: <!-- raw HTML omitted -->Pipleline-Valve责任链</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h4 id="tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</h4>
+<p>我们来看最后的StandardWrappeValve的invoke()方法： <!-- raw HTML omitted --></p>
+<ol>
+<li>创建Servlet实例； <!-- raw HTML omitted --></li>
+<li>创建一个新的FilterChain实例（FilterChain也是一个责任链，将对于请求的过滤行为分散到了多个Filter上）； <!-- raw HTML omitted --></li>
+<li>调用新创建的FilterChain实例的doFilter()方法来继续处理请求； <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">,</span> <span class="n">Response</span> <span class="n">response</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Initialize local variables we may need
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">StandardWrapper</span> <span class="n">wrapper</span> <span class="o">=</span> <span class="o">(</span><span class="n">StandardWrapper</span><span class="o">)</span> <span class="n">getContainer</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Servlet</span> <span class="n">servlet</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="o">(</span><span class="n">Context</span><span class="o">)</span> <span class="n">wrapper</span><span class="o">.</span><span class="na">getParent</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Allocate a servlet instance to process this request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 1. 分配一个Servlet实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(!</span><span class="n">unavailable</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">servlet</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="na">allocate</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Create the filter chain for this request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 2. 使用Factory工厂类创建一个filterChain实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ApplicationFilterChain</span> <span class="n">filterChain</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ApplicationFilterFactory</span><span class="o">.</span><span class="na">createFilterChain</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">wrapper</span><span class="o">,</span> <span class="n">servlet</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Call the filter chain for this request
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// NOTE: This also calls the servlet&#39;s service() method
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Container</span> <span class="n">container</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">container</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">((</span><span class="n">servlet</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">filterChain</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// Swallow output if needed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">getSwallowOutput</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">SystemLogHandler</span><span class="o">.</span><span class="na">startCapture</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">isAsyncDispatching</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">request</span><span class="o">.</span><span class="na">getAsyncContextInternal</span><span class="o">().</span><span class="na">doInternalDispatch</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">// 3. 调用创建的filterChain的doFilter方法来处理请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                            <span class="n">filterChain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequest</span><span class="o">(),</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">response</span><span class="o">.</span><span class="na">getResponse</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">isAsyncDispatching</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">request</span><span class="o">.</span><span class="na">getAsyncContextInternal</span><span class="o">().</span><span class="na">doInternalDispatch</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// 3. 调用创建的filterChain的doFilter方法来处理请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="n">filterChain</span><span class="o">.</span><span class="na">doFilter</span>
+</span></span><span class="line"><span class="cl">                            <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequest</span><span class="o">(),</span> <span class="n">response</span><span class="o">.</span><span class="na">getResponse</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>ApplicationFilterChain是FilterChain的实现类，doFilter方法将继续调用 <strong>ApplicationFilterChain</strong> 中的 <code>internalDoFilter()</code> 方法处理请求： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">ServletResponse</span> <span class="n">response</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span> <span class="n">Globals</span><span class="o">.</span><span class="na">IS_SECURITY_ENABLED</span> <span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">final</span> <span class="n">ServletRequest</span> <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">final</span> <span class="n">ServletResponse</span> <span class="n">res</span> <span class="o">=</span> <span class="n">response</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">AccessController</span><span class="o">.</span><span class="na">doPrivileged</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">PrivilegedExceptionAction</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">                        <span class="kd">public</span> <span class="n">Void</span> <span class="nf">run</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                            <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">internalDoFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">res</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">internalDoFilter</span><span class="o">(</span><span class="n">request</span><span class="o">,</span><span class="n">response</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p><strong>ApplicationFilterChain.internalDoFilter()</strong>: <!-- raw HTML omitted --></p>
+<ol>
+<li>根据FilterConfig来创建一个Filter实例； <!-- raw HTML omitted -->
+<ul>
+<li>这时候我们终于知道之前在加载Filter的时候为什么要保存FilterConfigs了，恐怕就是为了在调用Filter时可以创建实例； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>调用Filter中的过滤方法； <!-- raw HTML omitted -->
+<ul>
+<li>过滤操作结束之后，需要再次调用 <strong>ApplicationFilterChain#doFilter()</strong> 来执行下一个Filter的doFilter()； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>最后在所有的Filter的过滤操作都结束后，正式调用Servlet的service()方法来处理请求； <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">internalDoFilter</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">request</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                  <span class="n">ServletResponse</span> <span class="n">response</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Call the next filter if there is one
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ApplicationFilterConfig</span> <span class="n">filterConfig</span> <span class="o">=</span> <span class="n">filters</span><span class="o">[</span><span class="n">pos</span><span class="o">++];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 1. 根据FilterConfig来获取Filter实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Filter</span> <span class="n">filter</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getFilter</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="o">(</span> <span class="n">Globals</span><span class="o">.</span><span class="na">IS_SECURITY_ENABLED</span> <span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>      
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// 2. 调用Filter中的过滤方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">filter</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// We fell off the end of the chain -- call the servlet instance
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Use potentially wrapped request from this point
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">((</span><span class="n">request</span> <span class="k">instanceof</span> <span class="n">HttpServletRequest</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">(</span><span class="n">response</span> <span class="k">instanceof</span> <span class="n">HttpServletResponse</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Globals</span><span class="o">.</span><span class="na">IS_SECURITY_ENABLED</span> <span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 3. 所有的Filter的过滤操作都结束后，正式调用Servlet的service()方法来处理请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">servlet</span><span class="o">.</span><span class="na">service</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span></code></pre></div><h4 id="小结">小结</h4>
+<p>Tomcat的Container容器通过Pipeline-Valve责任链机制，对于HTTP请求中不同信息逐渐选择对应的子容器，最终到达StandardWrapperValve中； <!-- raw HTML omitted --></p>
+<p>接着，StandardWrapperValve会每个请求的处理都创建一个ApplicaitonFilterChain过滤链，并根据 FilterConfigs 信息快速加载Filter进行doFilter过滤操作，所有定义的Filter都完成过滤操作之后，执行Wrapper所定义Servlet的service()方法，完成对于HTTP请求的处理。 <!-- raw HTML omitted --></p>
 <h3 id="写在最后">写在最后</h3>
 <p>很长的一篇文章，或者说这个长度已经不配叫做文章了（个人感觉文章还是应该更为简洁干练一些），更像是一篇学习笔记，这也导致了一开始的目标并不明确，不知道这样一篇内容需要放多少东西进来，很多知识应该学习到什么程度，这也极大地打击了效率，应该吸取教训，精简每篇文章，这样也可以分批次提高成就感。 <!-- raw HTML omitted --></p>
 <p>如果读者对于内容有任何的疑问或者对于写作有任何的意见，请您务必通过邮件告诉我，提前感谢！ <!-- raw HTML omitted --></p>
-<h3 id="代办">代办</h3>
-<ul>
-<li><input disabled="" type="checkbox"> Pipeline &amp; Valve <!-- raw HTML omitted --></li>
-</ul>
 <h3 id="reference">Reference</h3>
 <blockquote>
 <p><a class="link" href="https://www.jianshu.com/p/1a2d2f868143"  target="_blank" rel="noopener"
     >深入理解Tomcat（八）Container</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://goodapple.top/archives/1359"  target="_blank" rel="noopener"
+    >Java安全学习——Tomcat架构浅析</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://www.ramkitech.com/2012/02/understanding-virtual-host-concept-in.html"  target="_blank" rel="noopener"
     >Understanding Virtual Host Concept in Tomcat</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://tomcat.apache.org/tomcat-10.0-doc/architecture/overview.html"  target="_blank" rel="noopener"
@@ -1117,6 +1367,12 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
     >深入理解Tomcat（八）Container</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://www.runoob.com/w3cnote/facade-pattern-3.html"  target="_blank" rel="noopener"
     >JAVA设计模式之门面模式（外观模式）</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.runoob.com/design-pattern/chain-of-responsibility-pattern.html"  target="_blank" rel="noopener"
+    >责任链模式（菜鸟教程）</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="http://t.zoukankan.com/bolang100-p-6041426.html"  target="_blank" rel="noopener"
+    >tomcat架构分析(valve机制)</a> <!-- raw HTML omitted --></p>
+<p><a class="link" href="https://www.anquanke.com/post/id/266240"  target="_blank" rel="noopener"
+    >【技术分享】Tomcat 内存马技术分析（一）—— Filter型</a>  <!-- raw HTML omitted --></p>
 </blockquote>
 
 </section>
@@ -1157,7 +1413,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on Oct 24, 2022 09:53 CST
+            Last updated on Oct 24, 2022 22:13 CST
         </span>
     </section></footer>
 
@@ -1404,10 +1660,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
         <li><a href="#server">Server</a></li>
         <li><a href="#service">Service</a></li>
         <li><a href="#connector">Connector</a></li>
-        <li><a href="#container">Container</a></li>
-        <li><a href="#engine与host">Engine与Host</a></li>
-        <li><a href="#context">Context</a></li>
-        <li><a href="#wrapper">Wrapper</a></li>
+        <li><a href="#container">Container</a>
+          <ul>
+            <li><a href="#engine与host">Engine与Host</a></li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#wrapper">Wrapper</a></li>
+          </ul>
+        </li>
         <li><a href="#tomcat中的三种context-standardcontext-applicationcontext以及servletcontext">Tomcat中的三种Context，StandardContext, ApplicationContext以及ServletContext</a></li>
         <li><a href="#standardcontext是如何启动tomcat三大组件-servlet-filter以及listener的">StandardContext是如何启动Tomcat三大组件：Servlet，Filter以及Listener的？</a>
           <ul>
@@ -1418,8 +1677,14 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
             <li><a href="#小结">小结</a></li>
           </ul>
         </li>
+        <li><a href="#tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</a>
+          <ul>
+            <li><a href="#pipeline-valve责任链">Pipeline-Valve责任链</a></li>
+            <li><a href="#tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</a></li>
+            <li><a href="#小结">小结</a></li>
+          </ul>
+        </li>
         <li><a href="#写在最后">写在最后</a></li>
-        <li><a href="#代办">代办</a></li>
         <li><a href="#reference">Reference</a></li>
       </ul>
     </li>
