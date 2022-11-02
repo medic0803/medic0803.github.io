@@ -85,11 +85,11 @@
 &lt;p&gt;本节内容绝大部分搬运自: &lt;a class=&#34;link&#34; href=&#34;http://c.biancheng.net/servlet2/listener.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Servlet Listener（监听器）&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&amp;ldquo;Servlet 规范中定义了 8 个监听器接口，可以用于监听 ServletContext、HttpSession 和 ServletRequest 对象的生命周期和属性变化事件。开发 Servlet 监听器需要实现相应的监听器接口并重写接口中的方法。&amp;rdquo; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;根据Listener所监听的事件，可以分为3类 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;根据Listener所监听的事件，可以分为3类： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;监听对象 &lt;code&gt;创建和销毁&lt;/code&gt; 的监听器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;监听对象中 &lt;code&gt;属性变更&lt;/code&gt; 的监听器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;监听 &lt;code&gt;HttpSession&lt;/code&gt; 中的对象状态改变的监听器 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;监听对象 &lt;code&gt;创建和销毁&lt;/code&gt; 的监听器； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;监听对象中 &lt;code&gt;属性变更&lt;/code&gt; 的监听器； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;监听 &lt;code&gt;HttpSession&lt;/code&gt; 中的对象状态改变的监听器； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4 id=&#34;监听对象创建和销毁的监听器&#34;&gt;监听对象创建和销毁的监听器&lt;/h4&gt;
 &lt;p&gt;“Servlet 规范定义了监听 ServletContext、HttpSession、HttpServletRequest 这三个对象创建和销毁事件的监听器，如下表所示：” &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;

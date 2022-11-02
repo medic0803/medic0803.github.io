@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教'><title>JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教程都建议要掌握一下Tomcat的框架，但是迫于'><title>JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系'>
-<meta property='og:description' content='Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教'>
+<meta property='og:description' content='写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教程都建议要掌握一下Tomcat的框架，但是迫于'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='tomcat' /><meta property='article:tag' content='servlet' /><meta property='article:tag' content='JavaEE' /><meta property='article:published_time' content='2022-10-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-24T22:13:16&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='tomcat' /><meta property='article:tag' content='servlet' /><meta property='article:tag' content='JavaEE' /><meta property='article:published_time' content='2022-10-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-01T18:17:41&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - JavaWeb - Tomcat 框架以及与Servlet之间的联系">
-<meta name="twitter:description" content="Tomcat框架以及与Servlet之间的联系 写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教">
+<meta name="twitter:description" content="写在前面 最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教程都建议要掌握一下Tomcat的框架，但是迫于">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -275,8 +275,7 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="tomcat框架以及与servlet之间的联系">Tomcat框架以及与Servlet之间的联系</h2>
-<h3 id="写在前面">写在前面</h3>
+    <h2 id="写在前面">写在前面</h2>
 <p>最近一直都说想学Java内存马，但也一直都停在Tomcat内存马这里，原因就是很多的教程都建议要掌握一下Tomcat的框架，但是迫于一直都没有找到好的教程和文章来看，如果只是单纯地给每个模块下一个定义，感觉很难说服自己懂了。 <!-- raw HTML omitted --></p>
 <p>虽然很想从头看一遍《How Tomcat Works》但是确实也不现实，偶然一个机会需要找一下Tomcat的 <code>server.xml</code> 配置文件来看一下，又碰巧找到了一篇解读 <code>server.xml</code> 的文章，于是就有了这篇文章或者说学习笔记。 <!-- raw HTML omitted --></p>
 <p>在本文中，我们将一起学习以下内容： <!-- raw HTML omitted --></p>
@@ -291,7 +290,7 @@ if (!doNotTrack) {
     >JavaSec - Java Web - 三大核心组件 - Servlet</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://ginkgo.org.cn/posts/javasec_javaweb_listener_and_filter/"  target="_blank" rel="noopener"
     >JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</a> <!-- raw HTML omitted --></p>
-<h3 id="tomcat基础框架">Tomcat基础框架</h3>
+<h2 id="tomcat基础框架">Tomcat基础框架</h2>
 <p>Tomcat作为一个Web应用服务器，其最核心的功能自然就是： <!-- raw HTML omitted --></p>
 <ol>
 <li>接受来自用户的HTTP request请求; <!-- raw HTML omitted --></li>
@@ -313,7 +312,7 @@ if (!doNotTrack) {
 <li><strong>Container</strong> 负责对收到的请求（ServletRequest对象）进行处理，并将响应Response封装成ServletResponse对象发回Connector; <!-- raw HTML omitted --></li>
 <li>最后由Connector发送HTTP响应返回给客户端，至此完成一次HTTP请求与响应。 <!-- raw HTML omitted --></li>
 </ol>
-<h3 id="从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</h3>
+<h2 id="从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</h2>
 <p>server.xml是Tomcat服务器的配置文件，其中的每一个xml元素都代表了tomcat中的一个组件，这些组件都在处理请求中拥有自己的职责，我们通过对配置文件的解读学习，可以大致了解Tomcat服务器的整体架构组成，有助于我们进一步的源码阅读； <!-- raw HTML omitted --></p>
 <p>Tomcat的配置文件server.xml的整体结构如下： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Server&gt;</span>
@@ -328,7 +327,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;/Service&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/Server&gt;</span>
 </span></span></code></pre></div><p>接下来我们讲一个个元素来进行理解，并了解这些元素所配置的Tomcat组件的功能； <!-- raw HTML omitted --></p>
-<h3 id="server">Server</h3>
+<h2 id="server">Server</h2>
 <p>&lt;Server&gt;元素是配置文件的根元素，用来代表着我们整一个Tomcat服务器； <!-- raw HTML omitted --></p>
 <p>根据上面的框架图我们知道，一个Tomcat Server可以包含多个Service，而Server的主要任务，就是为客户端提供了一个能够访问所有这些Service的接口，同时维护所有Service的生命周期，包括如何找到客户端想要访问的Service： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Server</span> <span class="na">port=</span><span class="s">&#34;8005&#34;</span> <span class="na">shutdown=</span><span class="s">&#34;SHUTDOWN&#34;</span><span class="nt">&gt;</span>
@@ -337,7 +336,7 @@ if (!doNotTrack) {
 <p>如果大家用过nc或者ncat的话，就不难想到我们可以使用nc来创建一个client socket去连接8005端口并发出指令关闭端口： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">nc localhost <span class="m">8005</span>
 </span></span><span class="line"><span class="cl">SHUTDOWN
-</span></span></code></pre></div><h3 id="service">Service</h3>
+</span></span></code></pre></div><h2 id="service">Service</h2>
 <p>Tomcat框架中的这个Service，我认为是和我们传统意义上的Service是一个概念，即监听一个端口，与客户端建立连接来进行通信交互； <!-- raw HTML omitted --></p>
 <p>一般来说，默认只开启一个名叫Catalina的Service，也就是最核心的Web容器，当然Tomcat也可以提供多个Service，但是一般来说用不上，我们只要知道根据name属性，Catalina就是Tomcat server下面的一个Service就可以了： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Service</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span><span class="nt">&gt;</span>
@@ -350,7 +349,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;/Host&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Engine&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/Service&gt;</span>
-</span></span></code></pre></div><h3 id="connector">Connector</h3>
+</span></span></code></pre></div><h2 id="connector">Connector</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&#34;8080&#34;</span> <span class="na">protocol=</span><span class="s">&#34;HTTP/1.1&#34;</span>
 </span></span><span class="line"><span class="cl">             <span class="na">connectionTimeout=</span><span class="s">&#34;20000&#34;</span>
 </span></span><span class="line"><span class="cl">             <span class="na">redirectPort=</span><span class="s">&#34;8443&#34;</span> <span class="nt">/&gt;</span>
@@ -412,7 +411,7 @@ if (!doNotTrack) {
 <li>localhost经过了本机默认的DNS服务器，被解析成了127.0.0.1，然后建立了一个client socket并尝试与服务器的8080端口建立连接； <!-- raw HTML omitted --></li>
 <li>Tomcat的HTTP Connector连接器接收到了HTTP请求，并将请求转换为ServletRequest以及对应的ServletResponse对象传递给Container。 <!-- raw HTML omitted --></li>
 </ol>
-<h3 id="container">Container</h3>
+<h2 id="container">Container</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">&#34;Catalina&#34;</span> <span class="na">defaultHost=</span><span class="s">&#34;localhost&#34;</span><span class="nt">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&#34;localhost&#34;</span>  <span class="na">appBase=</span><span class="s">&#34;webapps&#34;</span>
 </span></span><span class="line"><span class="cl">        <span class="na">unpackWARs=</span><span class="s">&#34;true&#34;</span> <span class="na">autoDeploy=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
@@ -427,7 +426,7 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>接下来我们会依次介绍他们的作用，不过就和之前介绍的那样，整一个Container模块的功能就是处理请求以及构造响应。 <!-- raw HTML omitted --></p>
-<h4 id="engine与host">Engine与Host</h4>
+<h3 id="engine与host">Engine与Host</h3>
 <p>一个Service只包含一个Engine；一个Engine与Service中的多个Connector进行绑定；同时一个Engine可以内嵌一个或多个Host（即Host是Engine的子容器）； <!-- raw HTML omitted --></p>
 <p>Engine是最顶层的Container（容器），而Host作为子容器，表示Engine中的一个虚拟主机，对应了服务器中的网络实体名（例如域名或者IP地址）； <!-- raw HTML omitted --></p>
 <p>客户端通过主机名来标识他们想要连接的主机，主机名会作为 <strong>HOST</strong> Header被放在HTTP请求中，Engine会根据HTTP Header中Host的值决定由哪一个HOST来继续处理请求。 <!-- raw HTML omitted --></p>
@@ -459,7 +458,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">localhost:8080</span>
 </span></span><span class="line"><span class="cl"><span class="err">...</span> <span class="l">...</span>
 </span></span></code></pre></div><p>至此我们就知道了一个Tomcat服务器可以有唯一一个公网IP，而客户端可以通过多个域名（localhost, anotherHost）来访问服务器（只要DNS能够解析到对应的IP地址即可），然后Engine会根据HTTP请求中的HOST头将请求分配给对应的HOST组件，比如我们的例子中的localhost这个HOST。 <!-- raw HTML omitted --></p>
-<h4 id="context">Context</h4>
+<h3 id="context">Context</h3>
 <p>我们继续套娃，一个Service有唯一一个Engine，一个Engine内嵌一个或者多个Host，而一个Host则可以内嵌一个多个Context，用来表示一个虚拟主机HOST下所运行的一个或者多个Web应用程序（同样也是子容器）； <!-- raw HTML omitted --></p>
 <p>我们知道Host具体的表现形式就是HOST Header，而Context的具体表现形式就是我们在HTTP请求中的URI，在我们的例子中就是 <code>LearnFilter_war</code>; <!-- raw HTML omitted --></p>
 <p>这个URI其实也就是我们在使用IDEA开发的时候，创建的项目名，记得我们在Servlet的介绍中，曾经说过一个web项目，只有一个ServletContext对象吗，记住这一点，我们在将Wrapper的时候还会再提到（其实Wrapper就是我们所开发的一个个Servlet）； <!-- raw HTML omitted --></p>
@@ -492,7 +491,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">&#34;/&#34;</span> <span class="na">docBase=</span><span class="s">&#34;other_directory_absolute_path/app1.war&#34;</span> <span class="na">reloadable=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
 </span></span></code></pre></div><p>但是一般不建议使用静态配置，因为 <code>server.xml</code> 这个文件在修改后需要重新启动服务器才能加载，因此一旦需要修改Path的信息，就需要重启服务器，而在自动部署的时候Tomcat就可以通过定期的扫描了检查Web应用的路径是否发生了修改； <!-- raw HTML omitted --></p>
 <p>至此，我们想要根据 <strong>server.xml</strong> 所获取的组件元素信息已经全部介绍完毕，但是Container作为处理HTTP请求的容器，肯定和我们在Java Web编程中的核心组件Servlet时分不开的，而Servlet其实是被Container的最底层子类Wrapper所包裹使用，我们将在下面的章节中介绍。 <!-- raw HTML omitted --></p>
-<h4 id="wrapper">Wrapper</h4>
+<h3 id="wrapper">Wrapper</h3>
 <p>Wrapper是Context的子容器，也是Tomcat的最底层容器了，我们知道一个Context代表一个Web应用，那么一个Wrapper就代表一个Web应用下的一个个功能组件，也就是我们之前介绍过的Servlet：一个Wrapper就是一个Servlet的封装。 <!-- raw HTML omitted --></p>
 <p>在我们介绍Tomcat三大组件：Servlet，Filter以及Lisntener的时候我们都介绍了这些组件的一个生命周期，包括init(), destroy()方法，而Wrapper就是来管理Servlet的生命周期的： <!-- raw HTML omitted --></p>
 <blockquote>
@@ -565,7 +564,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<h3 id="tomcat中的三种context-standardcontext-applicationcontext以及servletcontext">Tomcat中的三种Context，StandardContext, ApplicationContext以及ServletContext</h3>
+<h2 id="tomcat中的三种context辨析">Tomcat中的三种Context辨析</h2>
 <p>既然我们说到了Servlet是如何与Tomcat服务器结合起来使用的，那自然当然也少不了Filter以及Listener，我们就借此机会，来好好说道说道Context； <!-- raw HTML omitted --></p>
 <p>如果大家了解过Servlet的开发，那就一定知道一个概念就是ServletContext，这和Tomcat组件中的Context会不会有什么联系呢？ <!-- raw HTML omitted --></p>
 <blockquote>
@@ -659,9 +658,9 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </figure>
  <!-- raw HTML omitted --></p>
 <p>我们隐约可以感觉到ServletContext就像是StandaardContext下属的一个部门，负责管理Servlet的一些事务，但是都要向StandardContext进行汇报以及获取物资的感觉。 <!-- raw HTML omitted --></p>
-<h3 id="standardcontext是如何启动tomcat三大组件-servlet-filter以及listener的">StandardContext是如何启动Tomcat三大组件：Servlet，Filter以及Listener的？</h3>
+<h2 id="tomcat如何启动三大组件">Tomcat如何启动三大组件</h2>
 <p>接着我们来具体看看StandardContext是启动Tomcat的三大组件，借此进一步了解Tomcat所定义的Context与Java EE自带的这三大组件是如何协调工作的： <!-- raw HTML omitted --></p>
-<h4 id="contextconfig-dot-configurecontext-与-standardcontext-dot-startinternal">ContextConfig.configureContext() 与 StandardContext.startInternal()</h4>
+<h3 id="contextconfig-configurecontext-与-standardcontext-startinternal">ContextConfig#configureContext() 与 StandardContext#startInternal()</h3>
 <p>首先，我们要问第一个问题: <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">StandardContext是怎么知道应该加载哪些Servlet, Filter以及Listener的？
 </span></span></code></pre></div><p>答案其实很容易就可以猜到，就是从web.xml或者annotation中读取： <!-- raw HTML omitted --></p>
@@ -742,11 +741,8 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">            <span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></div><p>下面就让我们来针对每一个组件来看StandardContext是如何读取配置，如何初始化和加载对象的： <!-- raw HTML omitted --></p>
-<h4 id="listener">Listener</h4>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>加载Listener配置</p>
+<h3 id="listener">Listener</h3>
+<h4 id="加载listener配置">加载Listener配置</h4>
 <p>通过ContextConfig.configureContext从 <strong>web.xml</strong> 中向StandardContext加载listener配置： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 加载Listner的配置
@@ -774,12 +770,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">    <span class="n">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;addApplicationListener&#34;</span><span class="o">,</span> <span class="n">listener</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>初始化和加载Listener</p>
+</span></span></code></pre></div><h4 id="初始化和加载listener">初始化和加载Listener</h4>
 <p>接着我们来看在StandardContext.startInternal()中是如何初始化Listener的： <!-- raw HTML omitted --></p>
 <p>listenerStart()是用来将所有我们在Web工程中所定义的Listeners进行初始化的方法，它先是从StandardContext的private属性applicationListeners这样一个字符串变量中拿到所有需要加载的Listeners的名字，接着用 <strong>this.getInstanceManager().newInstance(listener)</strong> 的形式来进行加载。 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
@@ -821,13 +812,8 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></div><p>其实通过这个例子，我们也能理解到使用反射的妙处了，就是无论你创建的Listener叫什么名字，只要你往配置里写好，就可以自动进行加载以及利用； <!-- raw HTML omitted --></p>
 <p>同时，如果你修改了这个类的名字，那也只需要修改一下配置文件里修改一下就好了，不需要去一个个改源码。 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="filter">Filter</h4>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>加载Filter相关配置</p>
+<h3 id="filter">Filter</h3>
+<h4 id="加载filter相关配置">加载Filter相关配置</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">configureContext</span><span class="o">(</span><span class="n">WebXml</span> <span class="n">webxml</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// 加载Filter的配置
@@ -867,10 +853,10 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-37-29_screenshot.png"
-             alt="Figure 10: 单个FilterDef中所存放的信息：" width="400px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->单个FilterDef中所存放的信息：</p>
-            </figcaption>
-    </figure>
+         alt="Figure 10: 单个FilterDef中所存放的信息：" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 10: <!-- raw HTML omitted -->单个FilterDef中所存放的信息：</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * Add a filter mapping to this Context at the end of the current set
@@ -890,17 +876,12 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">        <span class="n">fireContainerEvent</span><span class="o">(</span><span class="s">&#34;addFilterMap&#34;</span><span class="o">,</span> <span class="n">filterMap</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-42-01_screenshot.png"
-             alt="Figure 11: 单个FilterMap中存放的内容" width="400px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->单个FilterMap中存放的内容</p>
-            </figcaption>
-    </figure>
+         alt="Figure 11: 单个FilterMap中存放的内容" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 11: <!-- raw HTML omitted -->单个FilterMap中存放的内容</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>初始化和加载Filter</p>
+<h4 id="初始化和加载filter">初始化和加载Filter</h4>
 <p>我们在上面的filter配置加载中看到了StandardContext会存放每一个filter的基本信息在 <strong>filterDefs</strong> 中。 <!-- raw HTML omitted --></p>
 <p>那么在接着来看StandardContext在初始化和加载Filter的过程中，就是通过读取 <code>filterDefs</code> 中的filter信息，接着为每一个filter都创建一个filterconfig对象，并存入hashmap <code>filterConfigs</code> 中： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
@@ -916,14 +897,15 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
 </span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">FilterDef</span><span class="o">&gt;</span> <span class="n">filterDefs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
 </span></span></code></pre></div><p>filterStart(): <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * Configure and initialize the set of filters for this Context.
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * @return &lt;code&gt;true&lt;/code&gt; if all filter initialization completed
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * successfully, or &lt;code&gt;false&lt;/code&gt; otherwise.
-</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filterStart</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">
+<ul>
+<li>对于每一个保存的FilterDef对象都创建一个FilterConfig来进行封装保存； <!-- raw HTML omitted -->
+<ul>
+<li>目的是为了在之后快速创建实例； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filterStart</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// Instantiate and record a FilterConfig for each defined filter
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">boolean</span> <span class="n">ok</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">synchronized</span> <span class="o">(</span><span class="n">filterConfigs</span><span class="o">)</span> <span class="o">{</span>
@@ -952,18 +934,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ok</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-10-24_17-43-51_screenshot.png"
-             alt="Figure 12: 单个filterConfig存放的内容" width="400px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->单个filterConfig存放的内容</p>
-            </figcaption>
-    </figure>
+         alt="Figure 12: 单个filterConfig存放的内容" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 12: <!-- raw HTML omitted -->单个filterConfig存放的内容</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="servlet">Servlet</h4>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>加载Servlet相关配置</p>
+<h3 id="servlet">Servlet</h3>
+<h4 id="加载servlet相关配置">加载Servlet相关配置</h4>
 <p>最后我们来看看Servlet，处理的语句明显变多了； <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;servlet&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;servlet-name&gt;</span>MyServlet<span class="nt">&lt;/servlet-name&gt;</span>
@@ -1004,12 +981,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>初始化和加载Servlet</p>
+</span></span></code></pre></div><h4 id="初始化和加载servlet">初始化和加载Servlet</h4>
 <p>loadOnStartup是StandardContext中用来启动所有注册的Servlet（Wrapper）的方法，我们主要关注下半部分的for循环中，可以看到 <strong>wrapper.load()</strong> 就是用来启动Wrapper的： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm"> * Load and initialize all servlets marked &#34;load on startup&#34; in the
@@ -1099,9 +1071,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">        <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></div></li>
-</ul>
-<h4 id="小结">小结</h4>
+</span></span></code></pre></div><h3 id="小结">小结</h3>
 <p>通过上面对于Java EE中的三大组件与Tomcat之间的联系，我们可以进一步的了解Tomcat是如何通过web.xml来读取由开发者定义的Servlet, Listener以及Filter的，读取之后会以各种形式被保存在 StandardContext 实例当中，在 StandardContext 启动的时候就会再被拿出来进行初始化和加载。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/Tomcat_and_Servlet.drawio.png"
          alt="Figure 13: Tomcat与三大组件的关系" width="500px"/><figcaption>
@@ -1109,8 +1079,8 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<h3 id="tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</h3>
-<h4 id="pipeline-valve责任链">Pipeline-Valve责任链</h4>
+<h2 id="tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</h2>
+<h3 id="pipeline-valve责任链">Pipeline-Valve责任链</h3>
 <p>目前我们已经了解了Container中所有子容器的作用以及结构，也通过代码来学习了Tomcat与Java Web三大组件是如何共同使用的了； <!-- raw HTML omitted --></p>
 <p>最后就让我们再一次深入代码，看看Tomcat的Container容器和Java EE的三大组件是如何一步步处理一次来自客户端的HTTP请求的； <!-- raw HTML omitted --></p>
 <p>我们知道Tomcat的Connector连接器会负责接受客户端发来的HTTP请求，并将Request以及Response封装好交由Container进行处理： <!-- raw HTML omitted --></p>
@@ -1193,7 +1163,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<h4 id="tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</h4>
+<h3 id="tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</h3>
 <p>我们来看最后的StandardWrappeValve的invoke()方法： <!-- raw HTML omitted --></p>
 <ol>
 <li>创建Servlet实例； <!-- raw HTML omitted --></li>
@@ -1255,7 +1225,6 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">                <span class="o">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></div><p>ApplicationFilterChain是FilterChain的实现类，doFilter方法将继续调用 <strong>ApplicationFilterChain</strong> 中的 <code>internalDoFilter()</code> 方法处理请求： <!-- raw HTML omitted --></p>
@@ -1287,7 +1256,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 <ol>
 <li>根据FilterConfig来创建一个Filter实例； <!-- raw HTML omitted -->
 <ul>
-<li>这时候我们终于知道之前在加载Filter的时候为什么要保存FilterConfigs了，恐怕就是为了在调用Filter时可以创建实例； <!-- raw HTML omitted --></li>
+<li>这时候我们终于知道之前在加载Filter的时候为什么要保存FilterConfigs了，就是为了封装Filter对象，并保存更多的信息和功能； <!-- raw HTML omitted --></li>
 </ul>
 </li>
 <li>调用Filter中的过滤方法； <!-- raw HTML omitted -->
@@ -1335,13 +1304,13 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 </span></span><span class="line"><span class="cl">        <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">     <span class="o">}</span>
-</span></span></code></pre></div><h4 id="小结">小结</h4>
+</span></span></code></pre></div><h3 id="小结">小结</h3>
 <p>Tomcat的Container容器通过Pipeline-Valve责任链机制，对于HTTP请求中不同信息逐渐选择对应的子容器，最终到达StandardWrapperValve中； <!-- raw HTML omitted --></p>
-<p>接着，StandardWrapperValve会每个请求的处理都创建一个ApplicaitonFilterChain过滤链，并根据 FilterConfigs 信息快速加载Filter进行doFilter过滤操作，所有定义的Filter都完成过滤操作之后，执行Wrapper所定义Servlet的service()方法，完成对于HTTP请求的处理。 <!-- raw HTML omitted --></p>
-<h3 id="写在最后">写在最后</h3>
+<p>接着，StandardWrapperValve会每个请求的处理都创建一个ApplicaitonFilterChain过滤链，并根据FilterConfig中封装的Filter进行doFilter过滤操作，所有定义的Filter都完成过滤操作之后，执行Wrapper所定义Servlet的service()方法，完成对于HTTP请求的处理。 <!-- raw HTML omitted --></p>
+<h2 id="写在最后">写在最后</h2>
 <p>很长的一篇文章，或者说这个长度已经不配叫做文章了（个人感觉文章还是应该更为简洁干练一些），更像是一篇学习笔记，这也导致了一开始的目标并不明确，不知道这样一篇内容需要放多少东西进来，很多知识应该学习到什么程度，这也极大地打击了效率，应该吸取教训，精简每篇文章，这样也可以分批次提高成就感。 <!-- raw HTML omitted --></p>
 <p>如果读者对于内容有任何的疑问或者对于写作有任何的意见，请您务必通过邮件告诉我，提前感谢！ <!-- raw HTML omitted --></p>
-<h3 id="reference">Reference</h3>
+<h2 id="reference">Reference</h2>
 <blockquote>
 <p><a class="link" href="https://www.jianshu.com/p/1a2d2f868143"  target="_blank" rel="noopener"
     >深入理解Tomcat（八）Container</a> <!-- raw HTML omitted --></p>
@@ -1413,7 +1382,7 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
 
 
         <span>
-            Last updated on Oct 24, 2022 22:13 CST
+            Last updated on Nov 01, 2022 18:17 CST
         </span>
     </section></footer>
 
@@ -1652,42 +1621,53 @@ the loaded Servlet instance <!-- raw HTML omitted --></p>
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#tomcat框架以及与servlet之间的联系">Tomcat框架以及与Servlet之间的联系</a>
+    <li><a href="#写在前面">写在前面</a></li>
+    <li><a href="#tomcat基础框架">Tomcat基础框架</a></li>
+    <li><a href="#从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</a></li>
+    <li><a href="#server">Server</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#connector">Connector</a></li>
+    <li><a href="#container">Container</a>
       <ul>
-        <li><a href="#写在前面">写在前面</a></li>
-        <li><a href="#tomcat基础框架">Tomcat基础框架</a></li>
-        <li><a href="#从tomcat配置文件server-dot-xml了解tomcat">从Tomcat配置文件server.xml了解Tomcat</a></li>
-        <li><a href="#server">Server</a></li>
-        <li><a href="#service">Service</a></li>
-        <li><a href="#connector">Connector</a></li>
-        <li><a href="#container">Container</a>
-          <ul>
-            <li><a href="#engine与host">Engine与Host</a></li>
-            <li><a href="#context">Context</a></li>
-            <li><a href="#wrapper">Wrapper</a></li>
-          </ul>
-        </li>
-        <li><a href="#tomcat中的三种context-standardcontext-applicationcontext以及servletcontext">Tomcat中的三种Context，StandardContext, ApplicationContext以及ServletContext</a></li>
-        <li><a href="#standardcontext是如何启动tomcat三大组件-servlet-filter以及listener的">StandardContext是如何启动Tomcat三大组件：Servlet，Filter以及Listener的？</a>
-          <ul>
-            <li><a href="#contextconfig-dot-configurecontext-与-standardcontext-dot-startinternal">ContextConfig.configureContext() 与 StandardContext.startInternal()</a></li>
-            <li><a href="#listener">Listener</a></li>
-            <li><a href="#filter">Filter</a></li>
-            <li><a href="#servlet">Servlet</a></li>
-            <li><a href="#小结">小结</a></li>
-          </ul>
-        </li>
-        <li><a href="#tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</a>
-          <ul>
-            <li><a href="#pipeline-valve责任链">Pipeline-Valve责任链</a></li>
-            <li><a href="#tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</a></li>
-            <li><a href="#小结">小结</a></li>
-          </ul>
-        </li>
-        <li><a href="#写在最后">写在最后</a></li>
-        <li><a href="#reference">Reference</a></li>
+        <li><a href="#engine与host">Engine与Host</a></li>
+        <li><a href="#context">Context</a></li>
+        <li><a href="#wrapper">Wrapper</a></li>
       </ul>
     </li>
+    <li><a href="#tomcat中的三种context辨析">Tomcat中的三种Context辨析</a></li>
+    <li><a href="#tomcat如何启动三大组件">Tomcat如何启动三大组件</a>
+      <ul>
+        <li><a href="#contextconfig-configurecontext-与-standardcontext-startinternal">ContextConfig#configureContext() 与 StandardContext#startInternal()</a></li>
+        <li><a href="#listener">Listener</a>
+          <ul>
+            <li><a href="#加载listener配置">加载Listener配置</a></li>
+            <li><a href="#初始化和加载listener">初始化和加载Listener</a></li>
+          </ul>
+        </li>
+        <li><a href="#filter">Filter</a>
+          <ul>
+            <li><a href="#加载filter相关配置">加载Filter相关配置</a></li>
+            <li><a href="#初始化和加载filter">初始化和加载Filter</a></li>
+          </ul>
+        </li>
+        <li><a href="#servlet">Servlet</a>
+          <ul>
+            <li><a href="#加载servlet相关配置">加载Servlet相关配置</a></li>
+            <li><a href="#初始化和加载servlet">初始化和加载Servlet</a></li>
+          </ul>
+        </li>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+    <li><a href="#tomcat和servlet处理http请求">Tomcat和Servlet处理HTTP请求</a>
+      <ul>
+        <li><a href="#pipeline-valve责任链">Pipeline-Valve责任链</a></li>
+        <li><a href="#tomcat-container容器处理http请求的终点">Tomcat Container容器处理HTTP请求的终点</a></li>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+    <li><a href="#写在最后">写在最后</a></li>
+    <li><a href="#reference">Reference</a></li>
   </ul>
 </nav>
         </div>

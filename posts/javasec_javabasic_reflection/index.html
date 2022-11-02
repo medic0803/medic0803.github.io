@@ -9,7 +9,7 @@
 <meta property='og:description' content='JavaSec - Java基础 - 反射（Reflection） 什么是反射？为什么要用使用反射？ &amp;ldquo;Reflection enables Java code to discover information about the fields, methods and constructors of loaded classes, and to use reflected fields, methods, and constructors to operate on their underlying counterparts, within'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_javabasic_reflection/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:published_time' content='2022-09-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-13T01:20:36&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:published_time' content='2022-09-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-10-25T17:49:24&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - Java基础 - 反射（Reflection）">
 <meta name="twitter:description" content="JavaSec - Java基础 - 反射（Reflection） 什么是反射？为什么要用使用反射？ &amp;ldquo;Reflection enables Java code to discover information about the fields, methods and constructors of loaded classes, and to use reflected fields, methods, and constructors to operate on their underlying counterparts, within">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -472,21 +472,22 @@ if (!doNotTrack) {
 <ol>
 <li>批量获取成员变量 <!-- raw HTML omitted -->
 <ul>
-<li>Field[] getFields(), public成员变量 <!-- raw HTML omitted --></li>
-<li>Field[] getDeclaredFields(), 获取所有成员变量（pubic, protected, private, default） <!-- raw HTML omitted --></li>
+<li>Field[] getFields(), public成员变量； <!-- raw HTML omitted --></li>
+<li>Field[] getDeclaredFields(), 获取所有成员变量（pubic, protected, private, default）； <!-- raw HTML omitted --></li>
 </ul>
 </li>
 <li>获取单个成员变量 <!-- raw HTML omitted -->
 <ul>
-<li>public Field getField(String fieldName), 获取单个public成员变量 <!-- raw HTML omitted --></li>
-<li>public Field getDeclaredField(String fieldName), 获取任意成员变量 <!-- raw HTML omitted --></li>
+<li>public Field getField(String fieldName), 获取单个public成员变量； <!-- raw HTML omitted --></li>
+<li>public Field getDeclaredField(String fieldName), 获取任意成员变量； <!-- raw HTML omitted --></li>
+<li>最后以field.get(obj)的形式获取变量具体的值； <!-- raw HTML omitted --></li>
 </ul>
 </li>
 <li>设置成员变量的值 <!-- raw HTML omitted -->
-Field &ndash;&gt; public void set(Object obj, Object value) <!-- raw HTML omitted -->
+Field &ndash;&gt; public void set(Object obj, Object value)： <!-- raw HTML omitted -->
 <ol>
 <li>obj, 设置成员变量所在的对象； <!-- raw HTML omitted --></li>
-<li>value, 设置的值 <!-- raw HTML omitted --></li>
+<li>value, 设置的值； <!-- raw HTML omitted --></li>
 </ol>
 </li>
 </ol>
@@ -531,7 +532,8 @@ Field &ndash;&gt; public void set(Object obj, Object value) <!-- raw HTML omitte
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// 设置private成员变量的值
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span> <span class="c1">// 暴力反射，解除私有限定
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">f</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="k">new</span> <span class="n">Date</span><span class="o">());</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;previous private field is set to: &#34;</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">obj</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="k">new</span> <span class="n">Date</span><span class="o">());</span>
 </span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;private field is set to :&#34;</span> <span class="o">+</span> <span class="o">(</span><span class="n">ReflectedObject</span><span class="o">)</span><span class="n">obj</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><h4 id="获取成员方法">获取成员方法</h4>
@@ -758,7 +760,7 @@ Method &ndash;&gt; public Object invoke(Object obj, Object&hellip; args) <!-- ra
 
 
         <span>
-            Last updated on Sep 13, 2022 01:20 CST
+            Last updated on Oct 25, 2022 17:49 CST
         </span>
     </section></footer>
 
@@ -797,6 +799,18 @@ Method &ndash;&gt; public Object invoke(Object obj, Object&hellip; args) <!-- ra
     <h2 class="section-title">Related contents</h2>
     <div class="related-contents">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/javasec_memshell_tomcat/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - 内存马 - Tomcat</h2>
+        </div>
+    </a>
+</article>
             
                 
 <article class="">
@@ -842,18 +856,6 @@ Method &ndash;&gt; public Object invoke(Object obj, Object&hellip; args) <!-- ra
 
         <div class="article-details">
             <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/javasec_javabasic_jvmandclassloader/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">JavaSec - Java 基础 - JVM与类的加载</h2>
         </div>
     </a>
 </article>

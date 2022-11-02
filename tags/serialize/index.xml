@@ -12,10 +12,9 @@
         <pubDate>Tue, 14 Jun 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/posts/php_serialize_unserialize/</guid>
-        <description>&lt;h2 id=&#34;php-序列化与反序列化&#34;&gt;PHP 序列化与反序列化&lt;/h2&gt;
-&lt;p&gt;PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的成员变量，不保留函数方法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+        <description>&lt;p&gt;PHP程序为了保护和转储对象 object，提供了序列化 serialize的方法，其将一个对象转换成字符串，但仅保留对象里的成员变量，不保留函数方法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;PHP序列化的函数为 &lt;code&gt;serialize&lt;/code&gt;, 反序列化的函数为 &lt;code&gt;unserialize&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h3 id=&#34;serialize-序列化&#34;&gt;Serialize 序列化&lt;/h3&gt;
+&lt;h2 id=&#34;serialize-序列化&#34;&gt;Serialize 序列化&lt;/h2&gt;
 &lt;p&gt;什么序列化呢，我们直接通过一个例子来看一下 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Test&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -38,7 +37,7 @@
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;serialize(mixed $value): string
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;序列化后的字节流详解&#34;&gt;序列化后的字节流详解&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;序列化后的字节流详解&#34;&gt;序列化后的字节流详解&lt;/h2&gt;
 &lt;p&gt;接着我们具体来分析一下这一串字节流代表什么内容 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;O&lt;/code&gt; 表示 object 对象， &lt;code&gt;:4&lt;/code&gt; 表示对象名的长度有4个字符 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -70,19 +69,19 @@
 &lt;li&gt;R - pointer reference &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;U - unicode string &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;null的序列化&#34;&gt;NULL的序列化&lt;/h4&gt;
+&lt;h3 id=&#34;null的序列化&#34;&gt;NULL的序列化&lt;/h3&gt;
 &lt;p&gt;N; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;boolean&#34;&gt;boolean&lt;/h4&gt;
+&lt;h3 id=&#34;boolean&#34;&gt;boolean&lt;/h3&gt;
 &lt;p&gt;b:&amp;lt;digit&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&amp;lt;digit&amp;gt; = [&amp;lsquo;0&amp;rsquo;, &amp;lsquo;1&amp;rsquo;], 当boolean型数据为false时，序列化后的成员值为0 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;integer&#34;&gt;integer&lt;/h4&gt;
+&lt;h3 id=&#34;integer&#34;&gt;integer&lt;/h3&gt;
 &lt;p&gt;i:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;
 &amp;lt;number&amp;gt;的取值范围为：-2147483648 到 2147483647，允许有符号，如果超过范围，就会被序列化为浮点数而不是整型，并且反序列化后也无法得到原来的数值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;double&#34;&gt;double&lt;/h4&gt;
+&lt;h3 id=&#34;double&#34;&gt;double&lt;/h3&gt;
 &lt;p&gt;d:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&amp;lt;number&amp;gt;为浮点数，其范围为PHP中浮点数的范围一样大,并且可以表示为整型、浮点数型以及科学计数法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;如果值为正/负无穷大，那么会被会被表示为INF/-INF，如果超过能表示的最小精度或者非数（NAN）的情况，就会返回0 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;string&#34;&gt;string&lt;/h4&gt;
+&lt;h3 id=&#34;string&#34;&gt;string&lt;/h3&gt;
 &lt;p&gt;s:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;value&amp;gt;&amp;quot;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;S:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;value&amp;gt;&amp;quot;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -100,7 +99,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;array&#34;&gt;array&lt;/h4&gt;
+&lt;h3 id=&#34;array&#34;&gt;array&lt;/h3&gt;
 &lt;p&gt;a:&amp;lt;n&amp;gt;:{&amp;lt;key_1&amp;gt;&amp;lt;value_1&amp;gt;&amp;lt;key_2&amp;gt;&amp;lt;value_2&amp;gt;&amp;hellip;&amp;lt;key_n&amp;gt;&amp;lt;value_n&amp;gt;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;lt;n&amp;gt;表示数组元素的个数 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -108,7 +107,7 @@
 &lt;li&gt;&amp;lt;value_1&amp;gt;就表示对应的数组元素的值 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&amp;lt;key_1&amp;gt;下标的类型只能是整型或者字符串类型 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;对象的序列化&#34;&gt;对象的序列化&lt;/h4&gt;
+&lt;h3 id=&#34;对象的序列化&#34;&gt;对象的序列化&lt;/h3&gt;
 &lt;p&gt;O:&amp;lt;length&amp;gt;:&amp;quot;&amp;lt;class_name&amp;gt;&amp;quot;:&amp;lt;n&amp;gt;:{&amp;lt;field_name_1&amp;gt;&amp;lt;field_value_1&amp;gt;&amp;lt;field_name_2&amp;gt;&amp;lt;field_value_2&amp;gt;&amp;hellip;&amp;lt;field_name_n&amp;gt;&amp;lt;field_value_n&amp;gt;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;lt;length&amp;gt;表示对象的类名&amp;lt;class_name&amp;gt;的字符串长度 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
@@ -116,7 +115,7 @@
 &lt;li&gt;&amp;lt;filed_name&amp;gt;表示每个属性的名字，用之前提到过的字符串类型进行表示，例如：s:1:&amp;ldquo;a&amp;rdquo;; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;li&gt;以及对应的&amp;lt;filed_value&amp;gt;值，可以是任何类型的，s:1:&amp;ldquo;a&amp;rdquo;;N;比如是一个NULL &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;访问控制修饰符&#34;&gt;访问控制修饰符&lt;/h4&gt;
+&lt;h3 id=&#34;访问控制修饰符&#34;&gt;访问控制修饰符&lt;/h3&gt;
 &lt;p&gt;我们可以观察到后面的变量名和变量值也是一一对应的，但是变量名的表示根据 &lt;code&gt;Access Modifiers, 访问控制修饰符&lt;/code&gt; 的不同而有不同的表示方法 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;公有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;protected&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;受保护&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;     &lt;span class=&#34;c1&#34;&gt;// %00*%00属性名
@@ -127,7 +126,7 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;p&gt;就如同我们这里的结果： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;s:4:&amp;#34;*b&amp;#34;; = s:4:&amp;#34;%00*%00b&amp;#34;;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;s:7:&amp;#34;Testc&amp;#34;; = s:7:&amp;#34;%00Test%00c&amp;#34;;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;对象引用和指针引用-r-r&#34;&gt;对象引用和指针引用 R:r&lt;/h4&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;对象引用和指针引用-r-r&#34;&gt;对象引用和指针引用 R:r&lt;/h3&gt;
 &lt;p&gt;我们根据一个例子来看看两种引用的区别 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;pre&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -169,10 +168,7 @@ private属性被序列化的时候属性值会变成 &lt;code&gt;%00类名%00属
 &lt;li&gt;而$b整一个对象直接变成了int(1) &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;原因就是‘&amp;amp;’进行指针引用后，使$b-&amp;gt;value 与$b本身进行绑定，其中一个的改变也会影响另一个 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;引用标识之后的数字&lt;/p&gt;
+&lt;h4 id=&#34;引用标识之后的数字&#34;&gt;引用标识之后的数字&lt;/h4&gt;
 &lt;p&gt;对象引用（r）和指针引用（R）的格式为： &lt;!-- raw HTML omitted --&gt;
 r:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;
 R:&amp;lt;number&amp;gt;; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -203,9 +199,7 @@ O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;l
 &lt;li&gt;$a-&amp;gt;pr序列化后的结果为 &lt;code&gt;&#39;R:3;&#39;&lt;/code&gt; 表示引用了第三个出现的成员 &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;那么在这个序列化字节流中，第一个成员是ClassA对象，第二个就是对象中的子成员 $a-&amp;gt;int，第三个就是 &lt;code&gt;$a-&amp;gt;str&lt;/code&gt; 也就是我们这里所进行引用的对象，也就会被标记为 &lt;code&gt;&#39;R:3;&#39;&lt;/code&gt;  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;unserialize-反序列化&#34;&gt;Unserialize 反序列化&lt;/h3&gt;
+&lt;h2 id=&#34;unserialize-反序列化&#34;&gt;Unserialize 反序列化&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Test&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;This A&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -229,7 +223,7 @@ O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;l
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;我们看反序列化后的内容就可以更好的理解为什么要进行序列化 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h3 id=&#34;magic-methods-魔术方法&#34;&gt;Magic Methods 魔术方法&lt;/h3&gt;
+&lt;h2 id=&#34;magic-methods-魔术方法&#34;&gt;Magic Methods 魔术方法&lt;/h2&gt;
 &lt;p&gt;很多教程都提到了魔术方法的概念，但没有进行定义和解释，官网的定义总结如下： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;魔术方法是定义在类内部的以 &lt;code&gt;__&lt;/code&gt; 开头的方法，通过对魔术方法的实现可以重写PHP对于对象的默认操作，例如序列化等 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;__construct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;#类似C++构造函数,当一个对象创建时被调用,但在unserialize()时是不会自动调用的
@@ -337,7 +331,7 @@ O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;l
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//程序结束，调用 __destruct()
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//会调用两次__destruct，因为中间有一次反序列化
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//第一次是因为反序列化后的对象$c没有被使用了，最后一次是因为$a没有再被使用了
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;property-oriented-programming--pop--面向属性编程&#34;&gt;Property Oriented Programming (POP) 面向属性编程&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;property-oriented-programming--pop--面向属性编程&#34;&gt;Property Oriented Programming (POP) 面向属性编程&lt;/h2&gt;
 &lt;p&gt;这个概念根据我的调查，应该不是类似于，面向对象编程（e.g., JAVA）,面向过程编程（C）这种传统意义上的编程，而是安全领域独有的一种形式。 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;这也导致了我一开始很难理解这个概念，因为不同的师傅用中英文写出来的理解总有一些差别 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;因此我们这里先不着急给POP Chain下定义，先来看一个很简单的例子，然后也许大家能够理解我对于POP的总结与定义 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -449,12 +443,9 @@ O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;l
 &lt;p&gt;&lt;code&gt;unserialize() -&amp;gt; __wakeup() -&amp;gt; evaluate() -&amp;gt; eval()&lt;/code&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;就是一条POP链，我们就是要找到这样一条函数调用链，最终执行输入的恶意代码 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;以上就是全部的基础知识的信息，之后我们就可以通过具体的题目来进行进一步的巩固和拓展（应该会新开一篇文章来记录） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h3 id=&#34;常用技巧&#34;&gt;常用技巧&lt;/h3&gt;
-&lt;h4 id=&#34;绕过魔术方法&#34;&gt;绕过魔术方法&lt;/h4&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;__wakeup()&lt;/p&gt;
+&lt;h2 id=&#34;常用技巧&#34;&gt;常用技巧&lt;/h2&gt;
+&lt;h3 id=&#34;绕过魔术方法&#34;&gt;绕过魔术方法&lt;/h3&gt;
+&lt;h4 id=&#34;wakeup&#34;&gt;__wakeup()&lt;/h4&gt;
 &lt;p&gt;在反序列化字符串时，如果一个对象申明的属性个数大于实际个数时，就会自动跳过 __wakeup() 的执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;（此方法只适用于PHP5 &amp;lt; 5.6.25, PHP7 &amp;lt; 7.0.10） &lt;!-- raw HTML omitted --&gt;
 例如 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
@@ -462,32 +453,20 @@ O:6:&amp;ldquo;ClassA&amp;rdquo;:5:{s:3:&amp;ldquo;int&amp;rdquo;;i:1;s:3:&amp;l
 &lt;p&gt;👇 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;O:4:&amp;ldquo;Name&amp;rdquo;:3:{s:14:&amp;ldquo;�Name�username&amp;rdquo;;s:5:&amp;ldquo;admin&amp;rdquo;;s:14:&amp;ldquo;�Name�password&amp;rdquo;;i:100;} &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;这个情况下就会绕过 __wakeup() 执行 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;配合php伪协议&#34;&gt;配合PHP伪协议&lt;/h4&gt;
+&lt;h3 id=&#34;配合php伪协议&#34;&gt;配合PHP伪协议&lt;/h3&gt;
 &lt;p&gt;使用 &lt;code&gt;glob://&lt;/code&gt; 伪协议来查找特定的文件路径（同时可以配合测信道攻击使用） &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;序列化成员绕过&#34;&gt;序列化成员绕过&lt;/h4&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;字符串绕过&lt;/p&gt;
+&lt;h3 id=&#34;序列化成员绕过&#34;&gt;序列化成员绕过&lt;/h3&gt;
+&lt;h4 id=&#34;字符串绕过&#34;&gt;字符串绕过&lt;/h4&gt;
 &lt;p&gt;通过将字符串标识符 &lt;code&gt;s&lt;/code&gt; 修改成 &lt;code&gt;S&lt;/code&gt; 便可以解释十六进制字符，进而将被过滤的字符串使用ASCII替换，从而进行绕过 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;引用绕过&lt;/p&gt;
+&lt;h4 id=&#34;引用绕过&#34;&gt;引用绕过&lt;/h4&gt;
 &lt;p&gt;例如不允许序列化字节流出现 &lt;code&gt;&#39;R:2&#39;&lt;/code&gt;: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;修改变量的申明的顺序，即可修改R:2后面的数字 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;修改为不同的引用方式，可以在R/r中切换 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;属性赋值覆盖绕过&#34;&gt;属性赋值覆盖绕过&lt;/h4&gt;
+&lt;h3 id=&#34;属性赋值覆盖绕过&#34;&gt;属性赋值覆盖绕过&lt;/h3&gt;
 &lt;p&gt;可以通过浅copy来为受限的属性赋值 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;例如以下代码，就将 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 作为引用传递给 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 从而保持两个值的一致，即使 &lt;code&gt;$a-&amp;gt;name&lt;/code&gt; 被修改或者过滤，但是通过 &lt;code&gt;$a-&amp;gt;user&lt;/code&gt; 依然可以对其进行修改 &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/en/function.serialize.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;serialize:php.net&lt;/a&gt; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.php.net/manual/en/language.oop5.magic.php#object.sleep&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
