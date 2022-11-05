@@ -9,7 +9,7 @@
 <meta property='og:description' content='写在前面 本文是Java内存马的第一篇内容，通过阅读本文，我们将一起了解： Tomcat中自定义的Filter, Listener, Servlet, Valve是如何被注册到服务'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_memshell_tomcat/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='memshell' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='tomcat' /><meta property='article:published_time' content='2022-10-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-02T18:13:03&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='memshell' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='tomcat' /><meta property='article:published_time' content='2022-10-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-02T18:41:59&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - 内存马 - Tomcat">
 <meta name="twitter:description" content="写在前面 本文是Java内存马的第一篇内容，通过阅读本文，我们将一起了解： Tomcat中自定义的Filter, Listener, Servlet, Valve是如何被注册到服务">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -1322,7 +1322,7 @@ if (!doNotTrack) {
  <!-- raw HTML omitted --></p>
 <h2 id="valve型">Valve型</h2>
 <p>终于来到本文要介绍的最终一种Tomcat内存马类型了，关于Valve型内存马的利用比较简单，我们就稍微回顾补充一点有关Tomcat的 <strong>Pipeline-Valve</strong> 责任链的内容，主要也是看到一些文章中出现了谬误想要再次纠正； <!-- raw HTML omitted --></p>
-<h4 id="pipeline-valve-管道-阀门责任链简介">Pipeline-Valve 管道-阀门责任链简介</h4>
+<h3 id="pipeline-valve-管道-阀门责任链简介">Pipeline-Valve 管道-阀门责任链简介</h3>
 <p>我们看图说话，下面的图例展示了Tomcat对于一次来自客户端的HTTP请求的处理，由Connector连接器封装成Request以及Response对象后交由Container的四种容器进行处理； <!-- raw HTML omitted --></p>
 <p>Container采用了 <code>Pipleline-Valve 责任链</code> 机制，即： <!-- raw HTML omitted --></p>
 <ol>
@@ -1386,7 +1386,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="valve内存马">Valve内存马</h4>
+</span></span></code></pre></div><h3 id="valve内存马">Valve内存马</h3>
 <p>我们已经了解了一个 Valve 的作用以及调用的方法，我们要动态地加载一个自定义的Valve的流程也呼之欲出： <!-- raw HTML omitted --></p>
 <ol>
 <li>创建一个自定义的Valve，继承 ValveBase类，重写invoke方法，写入我们想要执行的恶意代码； <!-- raw HTML omitted --></li>
@@ -1492,7 +1492,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Nov 02, 2022 18:13 CST
+            Last updated on Nov 02, 2022 18:41 CST
         </span>
     </section></footer>
 
@@ -1808,12 +1808,8 @@ if (!doNotTrack) {
     </li>
     <li><a href="#valve型">Valve型</a>
       <ul>
-        <li>
-          <ul>
-            <li><a href="#pipeline-valve-管道-阀门责任链简介">Pipeline-Valve 管道-阀门责任链简介</a></li>
-            <li><a href="#valve内存马">Valve内存马</a></li>
-          </ul>
-        </li>
+        <li><a href="#pipeline-valve-管道-阀门责任链简介">Pipeline-Valve 管道-阀门责任链简介</a></li>
+        <li><a href="#valve内存马">Valve内存马</a></li>
       </ul>
     </li>
     <li><a href="#写在最后">写在最后</a></li>

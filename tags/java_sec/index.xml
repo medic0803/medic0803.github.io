@@ -1059,7 +1059,7 @@
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h2 id=&#34;valve型&#34;&gt;Valve型&lt;/h2&gt;
 &lt;p&gt;终于来到本文要介绍的最终一种Tomcat内存马类型了，关于Valve型内存马的利用比较简单，我们就稍微回顾补充一点有关Tomcat的 &lt;strong&gt;Pipeline-Valve&lt;/strong&gt; 责任链的内容，主要也是看到一些文章中出现了谬误想要再次纠正； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;h4 id=&#34;pipeline-valve-管道-阀门责任链简介&#34;&gt;Pipeline-Valve 管道-阀门责任链简介&lt;/h4&gt;
+&lt;h3 id=&#34;pipeline-valve-管道-阀门责任链简介&#34;&gt;Pipeline-Valve 管道-阀门责任链简介&lt;/h3&gt;
 &lt;p&gt;我们看图说话，下面的图例展示了Tomcat对于一次来自客户端的HTTP请求的处理，由Connector连接器封装成Request以及Response对象后交由Container的四种容器进行处理； &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Container采用了 &lt;code&gt;Pipleline-Valve 责任链&lt;/code&gt; 机制，即： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -1123,7 +1123,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;valve内存马&#34;&gt;Valve内存马&lt;/h4&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;valve内存马&#34;&gt;Valve内存马&lt;/h3&gt;
 &lt;p&gt;我们已经了解了一个 Valve 的作用以及调用的方法，我们要动态地加载一个自定义的Valve的流程也呼之欲出： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;创建一个自定义的Valve，继承 ValveBase类，重写invoke方法，写入我们想要执行的恶意代码； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;

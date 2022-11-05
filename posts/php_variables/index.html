@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='写在前面 通过阅读本文，我们将一起了解通过了解中PHP中的两种内存管理的机制，进一步加深对于PHP中变量的理解，其中包括： PHP中两种垃圾收集'><title>PHP 变量与垃圾收集机制</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/php_variables/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='PHP 变量与垃圾收集机制'>
+<meta property='og:description' content='写在前面 通过阅读本文，我们将一起了解通过了解中PHP中的两种内存管理的机制，进一步加深对于PHP中变量的理解，其中包括： PHP中两种垃圾收集'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/php_variables/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:published_time' content='2022-11-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-04T21:39:06&#43;08:00'/>
+<meta name="twitter:title" content="PHP 变量与垃圾收集机制">
+<meta name="twitter:description" content="写在前面 通过阅读本文，我们将一起了解通过了解中PHP中的两种内存管理的机制，进一步加深对于PHP中变量的理解，其中包括： PHP中两种垃圾收集">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/programming/" >
+                programming
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/php_variables/">PHP 变量与垃圾收集机制</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 04, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="写在前面">写在前面</h2>
+<p>通过阅读本文，我们将一起了解通过了解中PHP中的两种内存管理的机制，进一步加深对于PHP中变量的理解，其中包括： <!-- raw HTML omitted --></p>
+<ul>
+<li>PHP中两种垃圾收集的机制： <!-- raw HTML omitted -->
+<ul>
+<li>reference counting; <!-- raw HTML omitted --></li>
+<li>copy-on-write; <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>变量的赋值; <!-- raw HTML omitted --></li>
+<li>变量的引用; <!-- raw HTML omitted --></li>
+<li>变量范围（Scope）; <!-- raw HTML omitted --></li>
+</ul>
+<h2 id="copy-on-write-机制">Copy-on-write 机制</h2>
+<p>我们先来看一下PHP中简单的变量赋值是怎么样的： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$what</span> <span class="o">=</span> <span class="s2">&#34;Fred&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$what</span> <span class="o">=</span> <span class="mi">35</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$what</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;35&#39;</span><span class="p">,</span> <span class="s1">&#39;Wilma&#39;</span><span class="p">);</span> 
+</span></span></code></pre></div><p>PHP是一种弱类型语言，变量的申明没有那么严格，因此可以随意改变值的类型，这一点相信很多读者都已经了解了； <!-- raw HTML omitted --></p>
+<p>而这个特性的具体表现就不得不提到这一节的主角： <strong>symbol table</strong>; <!-- raw HTML omitted --></p>
+<p>在PHP中，一个变量包含两部分内容： <!-- raw HTML omitted --></p>
+<ol>
+<li><strong>Variable name</strong>, 变量名（e.g., $name）； <!-- raw HTML omitted --></li>
+<li><strong>Variable value</strong>, 变量实际的值（e.g., &ldquo;Fred&rdquo;）； <!-- raw HTML omitted --></li>
+</ol>
+<p>而 <strong>symbol table</strong> 就是用来保存 <strong>变量名</strong> : <strong>变量值在内存中的地址</strong>, 这一对映射关系的变化，接着我们通过几个例子来具体看一下： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$worker</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;Fred&#34;</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&#34;Wilma&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$other</span> <span class="o">=</span> <span class="nv">$worker</span><span class="p">;</span>
+</span></span></code></pre></div><p>其中： <!-- raw HTML omitted --></p>
+<ol>
+<li><strong>$worker</strong> 在赋值成功之后, <strong>symbol table</strong> 中就有了 <strong>worker</strong> 以及 <strong>数组的内存地址</strong> 的映射关系; <!-- raw HTML omitted --></li>
+<li>接着第二行代码，将 <strong>symbol table</strong> 中 <strong>other</strong> 所对应的内存地址指向 <strong>worker</strong> 映射的地址，而并不会开辟新的内存空间给 <strong>$other</strong>; <!-- raw HTML omitted --></li>
+</ol>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>variable_name</th>
+<th>variable_content_addr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>worker</td>
+<td>array_addr</td>
+</tr>
+<tr>
+<td>other</td>
+<td>worker&rsquo;s address</td>
+</tr>
+</tbody>
+</table></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$other</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;Smith&#34;</span>
+</span></span></code></pre></div><p>但如果此时 <strong>$other</strong> 想要修改数组中的变量，PHP就会为 <strong>$other</strong> 分配新的地址空间来存储其指向的内容，即： <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>variable_name</th>
+<th>variable_content_addr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>worker</td>
+<td>array_addr</td>
+</tr>
+<tr>
+<td>other</td>
+<td>new_array_addr</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里的原因就是PHP采取了第一种垃圾收集机制: <strong>copy-on-write</strong>; <!-- raw HTML omitted --></p>
+<ul>
+<li>即碰到多个项目拥有重复的内容时，先不进行duplicate复制，而是等到有一方需要修改数据时，才进行复制； <!-- raw HTML omitted --></li>
+<li>如此便可节省内存空间； <!-- raw HTML omitted --></li>
+</ul>
+<h2 id="reference-counting">Reference counting</h2>
+<h3 id="php中的reference引用">PHP中的reference引用</h3>
+<p>我们先来回顾一下PHP中的 <strong>reference</strong>, PHP官网给的定义如下： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>&ldquo;A PHP reference is an alias, which allows two different variables to write to the same value.&rdquo; <!-- raw HTML omitted --></p>
+</blockquote>
+<p>官网说PHP中的reference是一种alias，即别名，就像一个人可以有很多称呼一样，一个内存中的值也可以有很多个变量名去表示： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$big_long_variable_name</span> <span class="o">=</span> <span class="s2">&#34;PHP&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$short</span> <span class="o">=&amp;</span> <span class="nv">$big_long_variable_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$big_long_variable_name</span> <span class="o">.=</span> <span class="s2">&#34; rocks!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="s2">&#34;</span><span class="se">\$</span><span class="s2">short is </span><span class="si">$short\n</span><span class="s2">&#34;</span><span class="p">;</span> <span class="c1"># $short is PHP rocks!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">print</span> <span class="s2">&#34;Long is </span><span class="si">$big_long_variable_name\n</span><span class="s2">&#34;</span><span class="p">;</span> <span class="c1"># Long is PHP rocks!
+</span></span></span></code></pre></div><p>PHP会用 <code>'==&amp;'</code> 表达式来将一个变量的引用赋值给另一个变量名，这样说还是不清晰，但我们前面已经了解了 <strong>symbol table</strong>, 那么我们就很容易来表示了: <!-- raw HTML omitted --></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>variable_name</th>
+<th>variable_content_addr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>big_long_variable_name</td>
+<td>variable_addr</td>
+</tr>
+<tr>
+<td>short</td>
+<td>variable_addr</td>
+</tr>
+</tbody>
+</table></div>
+<p>也就是说，在 <strong>symbol table</strong> 中，两个变量名 <strong>big_long_variable_name</strong> 以及 <strong>short</strong> 都与同一个地址绑定了，如果其中的内容发生了改变，那么它们都会发生改变。 <!-- raw HTML omitted --></p>
+<h3 id="variable-scope-变量范围">Variable Scope 变量范围</h3>
+<p>在我们介绍reference count之前，还需要一块拼图，就是变量的 <strong>Scope</strong>, 也就是变量能够作用的范围： <!-- raw HTML omitted --></p>
+<dl>
+<dt>Local scope</dt>
+<dd><ul>
+<li>PHP所定义的function中（包括嵌套的函数定义），所定义的变量，称为local variable，即本地变量； <!-- raw HTML omitted --></li>
+<li>这些变量只能在function本地被访问； <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Global scope</dt>
+<dd><ul>
+<li>Global 全局变量就是所有在function定义之外的变量，他们可以在PHP文件的任何地方被访问到； <!-- raw HTML omitted --></li>
+<li>在Function内部的Local scope中，可以使用global关键字来访问这些global变量： <strong>global $counter</strong>; <!-- raw HTML omitted --></li>
+<li>也可以使用超全局变量$GLOBALS来进行访问: <strong>$GLOBAL[counter]</strong>; <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Static variables</dt>
+<dd><ul>
+<li>方法中所定义的static 变量只在同一个function中可以被访问使用； <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+<dt>Function parameters</dt>
+<dd><ul>
+<li>function所传入的参数也只能在function内部被使用 <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<h3 id="reference-counting">Reference counting</h3>
+<p>现在我们就可以来说 <strong>Reference counting</strong> 到底是干什么的了，PHP会为每一个（为变量）开辟的内存地址都分配一个计数器，来统计这个地址有几个别名alias，即有几个 <strong>reference</strong>: 比如我们上面提到的 <strong>short</strong> 以及 <strong>big_long_variable_name</strong> 都可以根据 <strong>symbol table</strong> 映射到 <strong>variable_addr</strong>, 那么 <strong>variable_addr</strong> 的 <code>reference count</code> 就是2，而一旦这个数字变成0，那么这个内存空间就会被释放。 <!-- raw HTML omitted --></p>
+<p>我们还可以使用 <code>isset()</code> 来查看一个变量名所映射的地址是否有值；以及 <code>unset()</code> 来主动地解除这种映射，从而释放内存空间。 <!-- raw HTML omitted --></p>
+<p>那我们之前说的 <strong>Variable scope</strong> 变量范围如何在这个机制中体现呢？ <!-- raw HTML omitted --></p>
+<p>比如在下面的这个例子中: <!-- raw HTML omitted --></p>
+<ol>
+<li>$x = 2的申明，让存储整型值 <strong>2</strong> 的地址的 <code>reference count</code> 加一了； <!-- raw HTML omitted --></li>
+<li>f(%x)的调用，生成了一个 <strong>function parameters</strong> scope的变量，同时生成了一个 <strong>reference</strong> 引用，再使 <code>reference count</code> 加一； <!-- raw HTML omitted --></li>
+<li>而随着方法调用的结束， <code>$z</code> 被释放，而其所指向的内存却不会被释放，而只是 <code>reference count</code> 减一，还没有到零； <!-- raw HTML omitted --></li>
+<li>而在整个php文件执行结束之后， <code>reference count</code> 变为0，内存才会得到释放； <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">f</span><span class="p">(</span><span class="o">&amp;</span> <span class="nv">$z</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$y</span> <span class="o">=</span> <span class="nv">$z</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$z</span> <span class="o">=</span> <span class="nv">$z</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">f</span><span class="p">(</span><span class="nv">$x</span><span class="p">);</span>
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<blockquote>
+<p>[1] ‘PHP: Objects and references - Manual’. <a class="link" href="https://www.php.net/manual/en/language.oop5.references.php"  target="_blank" rel="noopener"
+    >https://www.php.net/manual/en/language.oop5.references.php</a>. <!-- raw HTML omitted --></p>
+<p>[2] axiac, ‘Answer to “References are not pointer in php?”’, Stack Overflow, Sep. 28, 2017. <a class="link" href="https://stackoverflow.com/a/46462286/17534765"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/a/46462286/17534765</a>. <!-- raw HTML omitted --></p>
+<p>[3] R. L. and K. Tatroe, ‘Programming PHP’, 1-56592-610-2. <a class="link" href="https://docstore.mik.ua/orelly/webprog/php/ch02_03.htm"  target="_blank" rel="noopener"
+    >https://docstore.mik.ua/orelly/webprog/php/ch02_03.htm</a>. <!-- raw HTML omitted --></p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/php/">php</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Nov 04, 2022 21:39 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/python_iterators/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Python - Iterators 与 Generators</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#写在前面">写在前面</a></li>
+    <li><a href="#copy-on-write-机制">Copy-on-write 机制</a></li>
+    <li><a href="#reference-counting">Reference counting</a>
+      <ul>
+        <li><a href="#php中的reference引用">PHP中的reference引用</a></li>
+        <li><a href="#variable-scope-变量范围">Variable Scope 变量范围</a></li>
+        <li><a href="#reference-counting">Reference counting</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

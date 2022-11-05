@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP'><title>PHP特性绕过技巧</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='弱类型 参考：php 弱类型总结 一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下： 强类型，弱类型 首先'><title>PHP特性绕过技巧</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/php_bypass_tricks/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='PHP特性绕过技巧'>
-<meta property='og:description' content='PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP'>
+<meta property='og:description' content='弱类型 参考：php 弱类型总结 一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下： 强类型，弱类型 首先'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/php_bypass_tricks/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:published_time' content='2022-06-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-26T23:56:11&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:published_time' content='2022-06-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-03T12:23:16&#43;08:00'/>
 <meta name="twitter:title" content="PHP特性绕过技巧">
-<meta name="twitter:description" content="PHP特性绕过技巧 create_function 绕过 参考： [代码审计]PHP代码审计之create_function()函数 适用范围： PHP 4&amp;gt; = 4.0.1，PHP 5，PHP">
+<meta name="twitter:description" content="弱类型 参考：php 弱类型总结 一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下： 强类型，弱类型 首先">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -275,8 +275,298 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="php特性绕过技巧">PHP特性绕过技巧</h2>
-<h3 id="create-function-绕过">create_function 绕过</h3>
+    <h2 id="弱类型">弱类型</h2>
+<p>参考：<a class="link" href="https://www.cnblogs.com/Mrsm1th/p/6745532.html"  target="_blank" rel="noopener"
+    >php 弱类型总结</a> <!-- raw HTML omitted --></p>
+<p>一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下： <!-- raw HTML omitted --></p>
+<h3 id="强类型-弱类型">强类型，弱类型</h3>
+<p>首先我们来区分一下强类型语言和弱类型语言的区别： <!-- raw HTML omitted --></p>
+<ul>
+<li><strong>强类型</strong> 语言，就是在定义一个变量的时候，就需要 <strong>指定变量的类型</strong>, 如果不经转换（手动或者自动）就使用就会报错，例如Java，C都是强类型的语言，我们都需要先定义类型才能进行赋值； <!-- raw HTML omitted --></li>
+<li><strong>弱类型</strong> 语言，就是在定义一个变量的时候, <strong>无需定义类型</strong>, 想怎么使用，用什么赋值都可以，语言的解析器回自动转换，例如php，python都是弱类型的语言，我们在使用的时候就能明显感受； <!-- raw HTML omitted --></li>
+</ul>
+<h3 id="php中的比较是否相等">PHP中的比较是否相等</h3>
+<p>参考： <a class="link" href="https://www.php.net/manual/en/language.operators.comparison.php"  target="_blank" rel="noopener"
+    >Comparison Operators:php.net</a> <!-- raw HTML omitted --></p>
+<p>php中比较两个变量是否相等有两种运算符： <!-- raw HTML omitted --></p>
+<p>$a <code>==</code> $b, Equal 相等，返回true只要 $a 在类型转换之后等于 $b 即可（因此会先转换成相同的类型，再比较值）; <!-- raw HTML omitted -->
+$a <code>===</code> $b, Identical 一致，返回true只有 $a 与 $b 完全相等，即 <strong>值一样</strong> ，同时 <strong>类型也相等</strong>, 因此会 <strong>先判断类型再比较值</strong>, <code>!==</code> 亦是如此； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="s2">&#34;a&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1&#34;</span> <span class="o">==</span> <span class="s2">&#34;01&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;10&#34;</span> <span class="o">==</span> <span class="s2">&#34;1e1&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="mi">100</span> <span class="o">==</span> <span class="s2">&#34;1e2&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// flase
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;0e123456&#34;</span><span class="o">==</span><span class="s2">&#34;0e4456789&#34;</span><span class="p">);</span> <span class="c1">// true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这是 <strong>PHP8.0.0前</strong> 的特性，即在比较字符串和数字的时候，string会先被转换成数字，然后再进行比较： <!-- raw HTML omitted --></p>
+<p>因此我们可以看到： <!-- raw HTML omitted --></p>
+<p>0 == &ldquo;a&rdquo;, var_dump(&ldquo;admin&rdquo;==0); 都会先将字符串先强制转换成数值，变成0，然后再进行比较，自然就相等了； <!-- raw HTML omitted --></p>
+<p>同时，当一个字符串被强制转换类型变成Int的时候，<a class="link" href="https://www.php.net/manual/en/language.types.integer.php#language.types.integer.casting"  target="_blank" rel="noopener"
+    >php文档</a>给出的规则是： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>If the string is numeric or leading numeric then it will resolve to the corresponding integer value, otherwise it is converted to zero (0). <!-- raw HTML omitted --></p>
+</blockquote>
+<p>即如果string能够被解析成为int，或者string的开头是数字，那么就会被转换成对应的整型值，否则都转换成0; <!-- raw HTML omitted --></p>
+<p>那么什么情况下string会被解析成int呢： <!-- raw HTML omitted --></p>
+<p>官网给出的正则表达式：<a class="link" href="https://www.php.net/manual/en/language.types.numeric-strings.php"  target="_blank" rel="noopener"
+    >https://www.php.net/manual/en/language.types.numeric-strings.php</a> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">WHITESPACES</span>      <span class="nx">\s</span><span class="o">*</span> <span class="c1">// 若干空格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">LNUM</span>             <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span> <span class="c1">// 普通的数字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">DNUM</span>             <span class="p">([</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)[</span><span class="nx">\</span><span class="o">.</span><span class="p">]{</span><span class="nx">LNUM</span><span class="p">})</span> <span class="o">|</span> <span class="p">({</span><span class="nx">LNUM</span><span class="p">}[</span><span class="nx">\</span><span class="o">.</span><span class="p">][</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)</span> <span class="c1">// float
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">EXPONENT_DNUM</span>    <span class="p">(({</span><span class="nx">LNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">DNUM</span><span class="p">})</span> <span class="p">[</span><span class="nx">eE</span><span class="p">][</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">})</span>  <span class="c1">//科学计数法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">INT_NUM_STRING</span>   <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">}</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">FLOAT_NUM_STRING</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">({</span><span class="nx">DNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">EXPONENT_DNUM</span><span class="p">})</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">NUM_STRING</span>       <span class="p">({</span><span class="nx">INT_NUM_STRING</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">FLOAT_NUM_STRING</span><span class="p">})</span>
+</span></span></code></pre></div><p>我们接着看下面的例子： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10.5&#34;</span><span class="p">;</span>                <span class="c1">// $foo is float (11.5)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;-1.3e3&#34;</span><span class="p">;</span>              <span class="c1">// $foo is float (-1299)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob-1.3e3&#34;</span><span class="p">;</span>           <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob3&#34;</span><span class="p">;</span>                <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10 Small Pigs&#34;</span><span class="p">;</span>       <span class="c1">// $foo is integer (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="s2">&#34;10.2 Little Piggies&#34;</span><span class="p">;</span> <span class="c1">// $foo is float (14.2) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>          <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">;</span>        <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>通过以上的知识我们也能明白为什么 &ldquo;admin1&rdquo;==1 =&gt;False 的原因，因为其会被转换成0而不是1， <!-- raw HTML omitted --></p>
+<p>而&quot;0e123456&quot;==&ldquo;0e4456789&quot;则是因为两边都是科学计数法，结果都为0 <!-- raw HTML omitted --></p>
+<h3 id="实例">实例</h3>
+<p>接下来我们跟着Mrsm1th师傅来看看几个实例加强一下印象： <!-- raw HTML omitted --></p>
+<h4 id="md5绕过--hash比较缺陷">md5绕过(Hash比较缺陷)</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$logined</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$Username</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ctype_alpha</span><span class="p">(</span><span class="nv">$Username</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span> <span class="c1">// 检查$Username中的所有字符是否都是字母
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$password</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$Username</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$password</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nv">$logined</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;successful&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="k">echo</span> <span class="s2">&#34;login failed!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>这里要求 <code>$Username</code> 为字母组成的字符串，要求 <code>$password</code> 为数字，同时要求他们的md5结果一致； <!-- raw HTML omitted --></p>
+<p>那么我们的目的，就是让两个md5后的值，用 != 比较，也就是在强制转换为数字之后再进行比较，最后得到结果一致； <!-- raw HTML omitted --></p>
+<p>这里给出一组md5加密之后结果为&quot;0e&quot;开头的字符串，0e开头意味着会被当作是科学计数法来使用，并且计算的结果都为0，自然也就都相等； <!-- raw HTML omitted --></p>
+<p>我们就可以利用 <strong>QNKCDZO</strong> 作为用户名，利用 <strong>240610708</strong> 作为密码，即可绕过前面两个检查，最后他们在md5加密之后，两个String被当作科学计数法，比较为相等，登陆成功； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">QNKCDZO
+</span></span><span class="line"><span class="cl">0e830400451993494058024219903391
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">240610708
+</span></span><span class="line"><span class="cl">0e462097431906509019562988736854
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s878926199a
+</span></span><span class="line"><span class="cl">0e545993274517709034328855841020
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s155964671a
+</span></span><span class="line"><span class="cl">0e342768416822451524974117254469
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s214587387a
+</span></span><span class="line"><span class="cl">0e848240448830537924465865611904
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s214587387a
+</span></span><span class="line"><span class="cl">0e848240448830537924465865611904
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s878926199a
+</span></span><span class="line"><span class="cl">0e545993274517709034328855841020
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1091221200a
+</span></span><span class="line"><span class="cl">0e940624217856561557816327384675
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1885207154a
+</span></span><span class="line"><span class="cl">0e509367213418206700842008763514
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1502113478a
+</span></span><span class="line"><span class="cl">0e861580163291561247404381396064
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1885207154a
+</span></span><span class="line"><span class="cl">0e509367213418206700842008763514
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1836677006a
+</span></span><span class="line"><span class="cl">0e481036490867661113260034900752
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s155964671a
+</span></span><span class="line"><span class="cl">0e342768416822451524974117254469
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1184209335a
+</span></span><span class="line"><span class="cl">0e072485820392773389523109082030
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1665632922a
+</span></span><span class="line"><span class="cl">0e731198061491163073197128363787
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1502113478a
+</span></span><span class="line"><span class="cl">0e861580163291561247404381396064
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1836677006a
+</span></span><span class="line"><span class="cl">0e481036490867661113260034900752
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1091221200a
+</span></span><span class="line"><span class="cl">0e940624217856561557816327384675
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s155964671a
+</span></span><span class="line"><span class="cl">0e342768416822451524974117254469
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1502113478a
+</span></span><span class="line"><span class="cl">0e861580163291561247404381396064
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s155964671a
+</span></span><span class="line"><span class="cl">0e342768416822451524974117254469
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1665632922a
+</span></span><span class="line"><span class="cl">0e731198061491163073197128363787
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s155964671a
+</span></span><span class="line"><span class="cl">0e342768416822451524974117254469
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1091221200a
+</span></span><span class="line"><span class="cl">0e940624217856561557816327384675
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1836677006a
+</span></span><span class="line"><span class="cl">0e481036490867661113260034900752
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1885207154a
+</span></span><span class="line"><span class="cl">0e509367213418206700842008763514
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s532378020a
+</span></span><span class="line"><span class="cl">0e220463095855511507588041205815
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s878926199a
+</span></span><span class="line"><span class="cl">0e545993274517709034328855841020
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1091221200a
+</span></span><span class="line"><span class="cl">0e940624217856561557816327384675
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s214587387a
+</span></span><span class="line"><span class="cl">0e848240448830537924465865611904
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1502113478a
+</span></span><span class="line"><span class="cl">0e861580163291561247404381396064
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1091221200a
+</span></span><span class="line"><span class="cl">0e940624217856561557816327384675
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1665632922a
+</span></span><span class="line"><span class="cl">0e731198061491163073197128363787
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1885207154a
+</span></span><span class="line"><span class="cl">0e509367213418206700842008763514
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1836677006a
+</span></span><span class="line"><span class="cl">0e481036490867661113260034900752
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s1665632922a
+</span></span><span class="line"><span class="cl">0e731198061491163073197128363787
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">s878926199a
+</span></span><span class="line"><span class="cl">0e545993274517709034328855841020
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">来源： https://www.jianshu.com/p/d3a9e7de0b12
+</span></span></code></pre></div><h4 id="json绕过">json绕过</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$message</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$key</span> <span class="o">=</span><span class="s2">&#34;*********&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">==</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="k">echo</span> <span class="s2">&#34;~~~~&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>在这个情况下 $key 的值我们不知道，无法给出准确的输入，但是却可以利用 0==&lsquo;admin&rsquo; 的形式来进行绕过，即我们输入0； <!-- raw HTML omitted --></p>
+<p>这样就会使在相等判断时的key的值被强制转换为0来进行比较，从而就可以绕过检查； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">payload: message={&#34;key&#34;:0}
+</span></span></code></pre></div><h4 id="array-search-is-array绕过">array_search(), is_array()绕过</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])){</span><span class="k">exit</span><span class="p">();}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$test</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">===</span><span class="s2">&#34;admin&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;error&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">=</span><span class="nx">intval</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$test</span><span class="p">)</span><span class="o">===</span><span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;false&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>脚本要求GET输入的值 <code>test</code> 是一个数组，并且数组中的每一个元素都不能等于 <code>admin</code> ，但是又要求在 <code>array_search</code> 的搜索中需要有 <code>admin</code>; <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">array_search</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$needle</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$haystack</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$strict</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span><span class="o">|</span><span class="nx">string</span><span class="o">|</span><span class="k">false</span>
+</span></span></code></pre></div><p>其中： <!-- raw HTML omitted --></p>
+<ul>
+<li>$needle代表查询的字符串; <!-- raw HTML omitted --></li>
+<li>$haystack是被查询的数组; <!-- raw HTML omitted --></li>
+</ul>
+<p>而 <strong>$strict</strong> 参数的设置也决定了是否能够进行绕过，即是否进行“===”比较： <!-- raw HTML omitted --></p>
+<ul>
+<li>如果没有设置，那么如果我们的字符串中有0，在进行比较的时候就会使 $needle 被转换成为0来进行比较； <!-- raw HTML omitted --></li>
+</ul>
+<p>因此我们可以使用payload: <strong>test[]=0</strong> 来进行绕过： <!-- raw HTML omitted --></p>
+<ol>
+<li>首先是一个数组，绕过 <code>is_array()</code>; <!-- raw HTML omitted --></li>
+<li>接着其中的0与&quot;admin&quot;使用 <strong><code>=</code></strong> 进行比较，绕过 <!-- raw HTML omitted --></li>
+<li>最后 <code>array_search()</code> 并未设置 <code>strict</code> 参数， <strong>admin</strong> 会先进行类型转换为0进行比较，成功绕过； <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span> <span class="c1">// int(0) =&gt; 返回键值0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_seach</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span>  <span class="c1">// int(1) ==&gt;返回键值1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><h4 id="strcmp漏洞绕过-php-v-5-dot-3">strcmp漏洞绕过 php -v &lt;5.3</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$password</span><span class="o">=</span><span class="s2">&#34;***************&#34;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">strcmp</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nv">$password</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Right!!!login success&#34;</span><span class="p">;</span><span class="nx">n</span>
+</span></span><span class="line"><span class="cl">            <span class="k">exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Wrong password..&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>我们在上面的strcmp函数的绕过中也有过讲解，strcmp是用来比较两个字符串的长度，既然这里出现了&rdquo;== 0&quot; 那我们就应该想办法往弱类型比较绕过上去靠，那么当strcmp所接受的是数组的时候，将发生错误，并返回0 <!-- raw HTML omitted --></p>
+<p>payload: password[]=xxx <!-- raw HTML omitted --></p>
+<h4 id="switch绕过">switch绕过</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="s2">&#34;4admin&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">switch</span> <span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail2&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail3&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;sucess&#34;</span><span class="p">;</span>  <span class="c1">//结果输出success;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;failall&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>switch本质上还是进行弱类型比较，我们可以用同样的方法进行绕过； <!-- raw HTML omitted --></p>
+<h2 id="create-function-绕过">create_function() 绕过</h2>
 <p>参考： <!-- raw HTML omitted -->
 <a class="link" href="https://blog.csdn.net/solitudi/article/details/107744427"  target="_blank" rel="noopener"
     >[代码审计]PHP代码审计之create_function()函数</a> <!-- raw HTML omitted --></p>
@@ -286,7 +576,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="nx">string</span> <span class="nv">$args</span> <span class="nx">声明的函数变量部分</span>
 </span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="nx">string</span> <span class="nv">$code</span> <span class="nx">执行的方法代码部分</span>
-</span></span></code></pre></div><h4 id="基本使用">基本使用</h4>
+</span></span></code></pre></div><h3 id="基本使用">基本使用</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$q</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$newfunc</span> <span class="o">=</span> <span class="nx">create_function</span><span class="p">(</span><span class="s1">&#39;$a&#39;</span><span class="p">,</span> <span class="s1">&#39;echo $a&#39;</span><span class="p">);</span>
@@ -306,7 +596,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></div><p>记住这个函数是真的需要构造的，然后我们来看看 create_function 注入的例子 <!-- raw HTML omitted --></p>
-<h4 id="注入实例">注入实例</h4>
+<h3 id="注入实例">注入实例</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//sorry , here is true last level
 </span></span></span><span class="line"><span class="cl"><span class="c1">//^_^
@@ -333,12 +623,12 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span></code></pre></div><p>这里只是创造了一个匿名函数，但是没有任何的赋值，因此是无法直接执行的，因此我们需要先用 <code>}</code> 来闭合匿名函数的定义，然后在外面执行我们想要注入的代码即可 <!-- raw HTML omitted --></p>
-<h3 id="is-numberic-绕过">is_numberic() 绕过</h3>
+<h2 id="is-numberic-绕过">is_numberic() 绕过</h2>
 <p>参考：<a class="link" href="https://article.itxueyuan.com/66WeeR"  target="_blank" rel="noopener"
     >[极客大挑战 2019]BuyFlag 1</a> <!-- raw HTML omitted -->
-对于空字符  <code>%00</code>, 无论放在前后都可以判断为非数值 <!-- raw HTML omitted -->
+对于空字符 <code>%00</code>, 无论放在前后都可以判断为非数值 <!-- raw HTML omitted -->
 <code>%20</code> 放在数值后面也可以判定为非数值 <!-- raw HTML omitted --></p>
-<h3 id="strcmp-绕过">strcmp 绕过</h3>
+<h2 id="strcmp-绕过">strcmp 绕过</h2>
 <p>参考： <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://article.itxueyuan.com/66WeeR"  target="_blank" rel="noopener"
     >[极客大挑战 2019]BuyFlag 1</a> <!-- raw HTML omitted --></p>
@@ -350,301 +640,6 @@ Return &gt; 0; string1的长度大于string2 <!-- raw HTML omitted -->
 Return = 0; string1的长度等于string2 <!-- raw HTML omitted --></p>
 <p>穿入非字符串类型的数据，函数发生错误在 <code>5.3</code> 版本之前，在显示了报错的警告信息之后，将return 0，作用与长度相等一致 <!-- raw HTML omitted --></p>
 <p>因此我们可以通过穿入数组类型来完成绕过 <!-- raw HTML omitted --></p>
-<h3 id="弱类型">弱类型</h3>
-<p>参考：<a class="link" href="https://www.cnblogs.com/Mrsm1th/p/6745532.html"  target="_blank" rel="noopener"
-    >php 弱类型总结</a> <!-- raw HTML omitted --></p>
-<p>一直到碰到弱类型比较的题目，但是总感觉很零碎，看到一片总结的文章，就想着跟着学一学，总结一下 <!-- raw HTML omitted --></p>
-<h4 id="强类型-弱类型">强类型，弱类型</h4>
-<p>首先我们来区分一下强类型语言和弱类型语言的区别 <!-- raw HTML omitted --></p>
-<p>强类型语言，就是在定义一个变量的时候，就需要指定变量的类型，如果不经转换（手动或者自动）就使用就会报错，例如Java，C都是强类型的语言，我们都需要先定义类型才能进行赋值 <!-- raw HTML omitted --></p>
-<p>弱类型语言，就是在定义一个变量的时候，无需定义类型，想怎么使用，用什么赋值都可以，语言的解析器回自动转换，例如php，python都是弱类型的语言，我们在使用的时候就能明显感受 <!-- raw HTML omitted --></p>
-<h4 id="php中的比较是否相等">PHP中的比较是否相等</h4>
-<p>参考： <a class="link" href="https://www.php.net/manual/en/language.operators.comparison.php"  target="_blank" rel="noopener"
-    >Comparison Operators:php.net</a> <!-- raw HTML omitted --></p>
-<p>php中比较两个变量是否相等有两种运算符 <!-- raw HTML omitted --></p>
-<p>$a <code>==</code> $b, Equal 相等，返回true只要 $a 在类型转换之后等于 $b 即可（因此会先转换成相同的类型，再比较值）; <!-- raw HTML omitted -->
-$a <code>===</code> $b, identical 一致，返回true只有 $a 与 $b 完全相等，即值一样，同时类型也相等（因此回显判断类型再比较值, <code>!==</code> 亦是如此） <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="s2">&#34;a&#34;</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1&#34;</span> <span class="o">==</span> <span class="s2">&#34;01&#34;</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;10&#34;</span> <span class="o">==</span> <span class="s2">&#34;1e1&#34;</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="mi">100</span> <span class="o">==</span> <span class="s2">&#34;1e2&#34;</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// flase
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;admin1&#34;</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="s2">&#34;0e123456&#34;</span><span class="o">==</span><span class="s2">&#34;0e4456789&#34;</span><span class="p">);</span> <span class="c1">// true
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>这是PHP8.0.0前的特性，即在比较字符串和数字的时候，string会先被转换成数字，然后再进行比较 <!-- raw HTML omitted --></p>
-<p>因此我们可以看到： <!-- raw HTML omitted --></p>
-<p>0 == &ldquo;a&rdquo;, var_dump(&ldquo;admin&rdquo;==0); 都会先将字符串先强制转换成数值，变成0，然后再进行比较，自然就相等了 <!-- raw HTML omitted --></p>
-<p>同时，当一个字符串被强制转换类型变成Int的时候，<a class="link" href="https://www.php.net/manual/en/language.types.integer.php#language.types.integer.casting"  target="_blank" rel="noopener"
-    >php文档</a>给出的规则是： <!-- raw HTML omitted --></p>
-<p>If the string is numeric or leading numeric then it will resolve to the corresponding integer value, otherwise it is converted to zero (0). <!-- raw HTML omitted --></p>
-<p>即如果string能够被解析成为int或者string的开头是数字，那么就会被转换成对应的整型值，否则都转换成0 <!-- raw HTML omitted --></p>
-<p>那么什么情况下string会被解析成int呢 <!-- raw HTML omitted --></p>
-<p>官网给出的正则表达<a class="link" href="https://www.php.net/manual/en/language.types.numeric-strings.php"  target="_blank" rel="noopener"
-    >https://www.php.net/manual/en/language.types.numeric-strings.php</a>式 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">WHITESPACES</span>      <span class="nx">\s</span><span class="o">*</span> <span class="c1">// 若干空格
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">LNUM</span>             <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span> <span class="c1">// 普通的数字
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">DNUM</span>             <span class="p">([</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)[</span><span class="nx">\</span><span class="o">.</span><span class="p">]{</span><span class="nx">LNUM</span><span class="p">})</span> <span class="o">|</span> <span class="p">({</span><span class="nx">LNUM</span><span class="p">}[</span><span class="nx">\</span><span class="o">.</span><span class="p">][</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span><span class="p">)</span> <span class="c1">// float
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">EXPONENT_DNUM</span>    <span class="p">(({</span><span class="nx">LNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">DNUM</span><span class="p">})</span> <span class="p">[</span><span class="nx">eE</span><span class="p">][</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">})</span>  <span class="c1">//科学计数法
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">INT_NUM_STRING</span>   <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">{</span><span class="nx">LNUM</span><span class="p">}</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">FLOAT_NUM_STRING</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span> <span class="p">[</span><span class="o">+-</span><span class="p">]</span><span class="o">?</span> <span class="p">({</span><span class="nx">DNUM</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">EXPONENT_DNUM</span><span class="p">})</span> <span class="p">{</span><span class="nx">WHITESPACES</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">NUM_STRING</span>       <span class="p">({</span><span class="nx">INT_NUM_STRING</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="nx">FLOAT_NUM_STRING</span><span class="p">})</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10.5&#34;</span><span class="p">;</span>                <span class="c1">// $foo is float (11.5)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;-1.3e3&#34;</span><span class="p">;</span>              <span class="c1">// $foo is float (-1299)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob-1.3e3&#34;</span><span class="p">;</span>           <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;bob3&#34;</span><span class="p">;</span>                <span class="c1">// TypeError as of PHP 8.0.0, $foo is integer (1) previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="s2">&#34;10 Small Pigs&#34;</span><span class="p">;</span>       <span class="c1">// $foo is integer (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="s2">&#34;10.2 Little Piggies&#34;</span><span class="p">;</span> <span class="c1">// $foo is float (14.2) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>          <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&#34;10.0 pigs &#34;</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">;</span>        <span class="c1">// $foo is float (11) and an E_WARNING is raised in PHP 8.0.0, E_NOTICE previously
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>通过以上的知识我们也能明白为什么 &ldquo;admin1&rdquo;==1 =&gt;False 的原因，因为其会被转换成0而不是1， <!-- raw HTML omitted --></p>
-<p>而&quot;0e123456&quot;==&ldquo;0e4456789&quot;则是因为两边都是科学计数法，结果都为0 <!-- raw HTML omitted --></p>
-<h4 id="实例">实例</h4>
-<p>接下来我们跟着Mrsm1th师傅来看看几个实例加强一下印象 <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>md5绕过(Hash比较缺陷)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$logined</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$Username</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;Username&#39;</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ctype_alpha</span><span class="p">(</span><span class="nv">$Username</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span> <span class="c1">// 检查$Username中的所有字符是否都是字母
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$password</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
-</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$Username</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$password</span><span class="p">))</span> <span class="p">{</span><span class="nv">$logined</span> <span class="o">=</span> <span class="k">false</span><span class="p">;}</span>
-</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="nv">$logined</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;successful&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">           <span class="k">echo</span> <span class="s2">&#34;login failed!&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>这里要求 <code>$Username</code> 为字母组成的字符串，要求 <code>$password</code> 为数字，同时要求他们的md5结果一致 <!-- raw HTML omitted --></p>
-<p>那么我们的目的，就是让两个md5后的值，用 != 比较，也就是在强制转换为数字之后再进行比较 <!-- raw HTML omitted --></p>
-<p>这里给出一组结果为&quot;0e&quot;开头的字符串，0e开头意味着会被当作是科学计数法来使用，并且结果都为0，自然也就都相等 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">QNKCDZO</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e830400451993494058024219903391</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="mi">240610708</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e462097431906509019562988736854</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1184209335a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e072485820392773389523109082030</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s155964671a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e342768416822451524974117254469</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s532378020a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e220463095855511507588041205815</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s214587387a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e848240448830537924465865611904</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1502113478a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e861580163291561247404381396064</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1091221200a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e940624217856561557816327384675</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1885207154a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e509367213418206700842008763514</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1836677006a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e481036490867661113260034900752</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s1665632922a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e731198061491163073197128363787</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">s878926199a</span>
-</span></span><span class="line"><span class="cl"><span class="mf">0e545993274517709034328855841020</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">来源：</span> <span class="nx">https</span><span class="o">://</span><span class="nx">www</span><span class="o">.</span><span class="nx">jianshu</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">p</span><span class="o">/</span><span class="nx">d3a9e7de0b12</span>
-</span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>json绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$message</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$key</span> <span class="o">=</span><span class="s2">&#34;*********&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">==</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"> <span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">     <span class="k">echo</span> <span class="s2">&#34;~~~~&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>在这个情况下 $key 的值我们不知道，无法给出准确的输入，但是却可以利用 0==&lsquo;admin&rsquo; 的形式来进行绕过，即我们输入0，使相等判断时的key的值被强制转换为0来进行绕过 <!-- raw HTML omitted --></p>
-<p>payload: message={&ldquo;key&rdquo;:0} <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>array_search is_array绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])){</span><span class="k">exit</span><span class="p">();}</span>
-</span></span><span class="line"><span class="cl"><span class="nv">$test</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">===</span><span class="s2">&#34;admin&#34;</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;error&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">exit</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">=</span><span class="nx">intval</span><span class="p">(</span><span class="nv">$test</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$test</span><span class="p">)</span><span class="o">===</span><span class="mi">0</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;flag&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;false&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>脚本要求GET输入的值 <code>test</code> 是一个数组，并且数组中的每一个元素都不能等于 <code>admin</code> ，但是又要求在 <code>array_search</code> 的搜索中需要有 <code>admin</code> <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">array_search</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$needle</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$haystack</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$strict</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span><span class="o">|</span><span class="nx">string</span><span class="o">|</span><span class="k">false</span>
-</span></span></code></pre></div><p>$needle代表查询的字符串，$haystack是被查询的数组，而 $strict 参数的设置也决定了是否能够进行绕过，即是否进行“===”比较，如果没有设置，那么如果我们的字符串中有0，在进行比较的时候就会使 $needle 被转换成为0来进行比较 <!-- raw HTML omitted --></p>
-<p>payload: test[]=0 进行绕过 <!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_search</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span> <span class="c1">// int(0) =&gt; 返回键值0
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="nx">array_seach</span><span class="p">(</span><span class="s2">&#34;1admin&#34;</span><span class="p">,</span><span class="nv">$a</span><span class="p">));</span>  <span class="c1">// int(1) ==&gt;返回键值1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>strcmp漏洞绕过 php -v &lt;5.3</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$password</span><span class="o">=</span><span class="s2">&#34;***************&#34;</span>
-</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])){</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">strcmp</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nv">$password</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Right!!!login success&#34;</span><span class="p">;</span><span class="nx">n</span>
-</span></span><span class="line"><span class="cl">            <span class="k">exit</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">echo</span> <span class="s2">&#34;Wrong password..&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>我们在上面的strcmp函数的绕过中也有过讲解，strcmp是用来比较两个字符串的长度，既然这里出现了&rdquo;== 0&quot; 那我们就应该想办法往弱类型比较绕过上去靠，那么当strcmp所接受的是数组的时候，将发生错误，并返回0 <!-- raw HTML omitted --></p>
-<p>payload: password[]=xxx <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>switch绕过</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
-</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="s2">&#34;4admin&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">switch</span> <span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail1&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail2&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;fail3&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;sucess&#34;</span><span class="p">;</span>  <span class="c1">//结果输出success;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">default</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;failall&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>switch本质上还是进行弱类型比较，我们可以用同样的方法进行绕过 <!-- raw HTML omitted --></p>
-</li>
-</ul>
 
 </section>
 
@@ -682,7 +677,7 @@ $a <code>===</code> $b, identical 一致，返回true只有 $a 与 $b 完全相�
 
 
         <span>
-            Last updated on Jun 26, 2022 23:56 &#43;0100
+            Last updated on Nov 03, 2022 12:23 CST
         </span>
     </section></footer>
 
@@ -957,25 +952,29 @@ $a <code>===</code> $b, identical 一致，返回true只有 $a 与 $b 完全相�
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#php特性绕过技巧">PHP特性绕过技巧</a>
+    <li><a href="#弱类型">弱类型</a>
       <ul>
-        <li><a href="#create-function-绕过">create_function 绕过</a>
+        <li><a href="#强类型-弱类型">强类型，弱类型</a></li>
+        <li><a href="#php中的比较是否相等">PHP中的比较是否相等</a></li>
+        <li><a href="#实例">实例</a>
           <ul>
-            <li><a href="#基本使用">基本使用</a></li>
-            <li><a href="#注入实例">注入实例</a></li>
-          </ul>
-        </li>
-        <li><a href="#is-numberic-绕过">is_numberic() 绕过</a></li>
-        <li><a href="#strcmp-绕过">strcmp 绕过</a></li>
-        <li><a href="#弱类型">弱类型</a>
-          <ul>
-            <li><a href="#强类型-弱类型">强类型，弱类型</a></li>
-            <li><a href="#php中的比较是否相等">PHP中的比较是否相等</a></li>
-            <li><a href="#实例">实例</a></li>
+            <li><a href="#md5绕过--hash比较缺陷">md5绕过(Hash比较缺陷)</a></li>
+            <li><a href="#json绕过">json绕过</a></li>
+            <li><a href="#array-search-is-array绕过">array_search(), is_array()绕过</a></li>
+            <li><a href="#strcmp漏洞绕过-php-v-5-dot-3">strcmp漏洞绕过 php -v &lt;5.3</a></li>
+            <li><a href="#switch绕过">switch绕过</a></li>
           </ul>
         </li>
       </ul>
     </li>
+    <li><a href="#create-function-绕过">create_function() 绕过</a>
+      <ul>
+        <li><a href="#基本使用">基本使用</a></li>
+        <li><a href="#注入实例">注入实例</a></li>
+      </ul>
+    </li>
+    <li><a href="#is-numberic-绕过">is_numberic() 绕过</a></li>
+    <li><a href="#strcmp-绕过">strcmp 绕过</a></li>
   </ul>
 </nav>
         </div>
