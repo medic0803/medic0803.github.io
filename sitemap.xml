@@ -3,67 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ginkgo.org.cn/categories/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/java_sec/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/categories/java_sec/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/javasec_rmi_basic/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/posts/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/rmi/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/tags/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/</loc>
+    <lastmod>2022-11-17T16:46:32+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/php/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/php_variables/</loc>
     <lastmod>2022-11-04T21:39:06+08:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/posts/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
-  </url><url>
     <loc>https://ginkgo.org.cn/categories/programming/</loc>
-    <lastmod>2022-11-04T21:39:06+08:00</lastmod>
+    <lastmod>2022-11-05T18:46:08+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/python/</loc>
-    <lastmod>2022-11-04T21:37:13+08:00</lastmod>
+    <lastmod>2022-11-05T18:46:08+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/python_iterators/</loc>
-    <lastmod>2022-11-04T21:37:13+08:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/tags/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/tags/java_sec/</loc>
-    <lastmod>2022-11-02T18:41:59+08:00</lastmod>
-  </url><url>
-    <loc>https://ginkgo.org.cn/categories/java_sec/</loc>
-    <lastmod>2022-11-02T18:41:59+08:00</lastmod>
+    <lastmod>2022-11-05T18:46:08+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/javasec_memshell_tomcat/</loc>
-    <lastmod>2022-11-02T18:41:59+08:00</lastmod>
+    <lastmod>2022-11-06T12:22:28+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/memshell/</loc>
-    <lastmod>2022-11-02T18:41:59+08:00</lastmod>
+    <lastmod>2022-11-06T12:22:28+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/tomcat/</loc>
-    <lastmod>2022-11-02T18:41:59+08:00</lastmod>
+    <lastmod>2022-11-07T08:34:24+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/javaee/</loc>
-    <lastmod>2022-11-02T18:20:47+08:00</lastmod>
+    <lastmod>2022-11-07T08:34:24+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/javasec_javaweb_tomcat/</loc>
-    <lastmod>2022-11-02T18:20:47+08:00</lastmod>
+    <lastmod>2022-11-07T08:34:24+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/servlet/</loc>
-    <lastmod>2022-11-02T18:20:47+08:00</lastmod>
+    <lastmod>2022-11-07T08:34:24+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/web/</loc>
-    <lastmod>2022-11-02T18:20:47+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/internal_pentest_vulnstack1/</loc>
-    <lastmod>2022-10-19T16:41:12+08:00</lastmod>
+    <lastmod>2022-11-10T08:29:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/internal_pentest/</loc>
-    <lastmod>2022-10-19T16:41:12+08:00</lastmod>
+    <lastmod>2022-11-10T08:29:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/pentest/</loc>
-    <lastmod>2022-10-19T16:41:12+08:00</lastmod>
+    <lastmod>2022-11-10T08:29:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/csapp_chapter11_learning_notes/</loc>
     <lastmod>2022-10-10T23:09:49+08:00</lastmod>
@@ -132,46 +138,49 @@
     <lastmod>2022-10-09T16:50:10+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/categories/ctf/</loc>
-    <lastmod>2022-11-05T18:02:34+08:00</lastmod>
+    <lastmod>2022-11-16T13:48:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/server_side/</loc>
-    <lastmod>2022-09-07T11:11:49+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/ssti/</loc>
-    <lastmod>2022-09-07T11:11:49+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/ssti_twig/</loc>
-    <lastmod>2022-09-07T11:11:49+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/template_engine/</loc>
-    <lastmod>2022-09-07T11:11:49+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/twig/</loc>
-    <lastmod>2022-09-07T11:11:49+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/web_security/</loc>
-    <lastmod>2022-11-03T12:23:16+08:00</lastmod>
+    <lastmod>2022-11-09T22:31:18+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/browser/</loc>
-    <lastmod>2022-10-17T09:43:30+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/firefox/</loc>
-    <lastmod>2022-10-17T09:43:30+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/render/</loc>
-    <lastmod>2022-10-17T09:43:30+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/web/</loc>
-    <lastmod>2022-10-17T09:43:30+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/how_browsers_work/</loc>
-    <lastmod>2022-10-17T09:43:30+08:00</lastmod>
+    <lastmod>2022-11-09T16:34:05+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/ssti_basic/</loc>
-    <lastmod>2022-07-02T12:58:32+01:00</lastmod>
+    <lastmod>2022-11-09T22:26:48+08:00</lastmod>
+  </url><url>
+    <loc>https://ginkgo.org.cn/categories/web_sec/</loc>
+    <lastmod>2022-11-09T22:26:48+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/ctf/</loc>
-    <lastmod>2022-09-29T15:15:42+08:00</lastmod>
+    <lastmod>2022-11-10T09:22:53+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/php_unserialize_examples/</loc>
     <lastmod>2022-07-10T22:41:06+01:00</lastmod>
@@ -263,9 +272,6 @@
     <loc>https://ginkgo.org.cn/tags/csrf/</loc>
     <lastmod>2022-11-03T11:13:02+08:00</lastmod>
   </url><url>
-    <loc>https://ginkgo.org.cn/categories/web_sec/</loc>
-    <lastmod>2022-11-03T11:13:02+08:00</lastmod>
-  </url><url>
     <loc>https://ginkgo.org.cn/tags/xss/</loc>
     <lastmod>2022-11-03T11:13:02+08:00</lastmod>
   </url><url>
@@ -348,16 +354,16 @@
     <lastmod>2022-05-30T22:13:00+01:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/sqli/</loc>
-    <lastmod>2022-10-11T17:14:06+08:00</lastmod>
+    <lastmod>2022-11-16T13:48:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sql_injection_basic/</loc>
-    <lastmod>2022-09-28T18:05:42+08:00</lastmod>
+    <lastmod>2022-11-16T13:48:56+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sql_injection_file_rw/</loc>
     <lastmod>2022-10-11T17:14:06+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/posts/sqli_blind_injection/</loc>
-    <lastmod>2022-09-29T15:15:42+08:00</lastmod>
+    <lastmod>2022-11-10T09:22:53+08:00</lastmod>
   </url><url>
     <loc>https://ginkgo.org.cn/tags/sqli_injection/</loc>
     <lastmod>2022-04-22T16:01:44+01:00</lastmod>

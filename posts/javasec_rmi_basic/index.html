@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en-uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='写在前面 本篇主要是在对Oracle有关RMI的教程学习后的总结笔记，原文请参考官方文档; 在本文的阅读中，我们将一起将一起了解： 什么是RMI？'><title>JavaSec - RMI 基础</title>
+
+<link rel='canonical' href='https://ginkgo.org.cn/posts/javasec_rmi_basic/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='JavaSec - RMI 基础'>
+<meta property='og:description' content='写在前面 本篇主要是在对Oracle有关RMI的教程学习后的总结笔记，原文请参考官方文档; 在本文的阅读中，我们将一起将一起了解： 什么是RMI？'>
+<meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_rmi_basic/'>
+<meta property='og:site_name' content='Under The Ginkgo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='rmi' /><meta property='article:published_time' content='2022-11-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-17T16:46:32&#43;08:00'/>
+<meta name="twitter:title" content="JavaSec - RMI 基础">
+<meta name="twitter:description" content="写在前面 本篇主要是在对Oracle有关RMI的教程学习后的总结笔记，原文请参考官方文档; 在本文的阅读中，我们将一起将一起了解： 什么是RMI？">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-ZKEXSTS2N4', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/Ginkgo_hu5438825b9b6d1014226d20d231e650c2_69187_300x0_resize_q75_box.JPG" width="300"
+                            height="237" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Under The Ginkgo</a></h1>
+            <h2 class="site-description">BOYS FIGHT FOR YOUR LIBERTY</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/medic0803'
+                        target="_blank"
+                        title="A_GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:medicwrf@gmail.com'
+                        target="_blank"
+                        title="B_E-mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1647773061437" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2742" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M937.593333 257.073333A148.353333 148.353333 0 0 0 832 213.333333H384v-42.666666h85.333333a85.333333 85.333333 0 0 0 0-170.666667H362.666667a21.333333 21.333333 0 0 0-21.333334 21.333333v192H212.26A53.426667 53.426667 0 0 0 160 170.666667h-64a53.393333 53.393333 0 0 0-53.333333 53.333333v533.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h64a53.426667 53.426667 0 0 0 52.26-42.666667H384v192a21.333333 21.333333 0 0 0 21.333333 21.333333h170.666667a21.333333 21.333333 0 0 0 21.333333-21.333333v-192h362.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V362.666667a148.353333 148.353333 0 0 0-43.74-105.593334zM512 85.333333a42.713333 42.713333 0 0 1-42.666667 42.666667H384V42.666667h85.333333a42.713333 42.713333 0 0 1 42.666667 42.666666zM170.666667 757.333333a10.666667 10.666667 0 0 1-10.666667 10.666667h-64a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h64a10.666667 10.666667 0 0 1 10.666667 10.666667z m384 181.333334H426.666667v-170.666667h128z m384-213.333334H213.333333V256h128v149.333333a21.333333 21.333333 0 0 0 21.333334 21.333334h85.333333a21.333333 21.333333 0 0 0 0-42.666667h-64V256h448c58.813333 0 106.666667 47.853333 106.666667 106.666667z" fill="#bababa" p-id="2743"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/java_sec/" >
+                java_sec
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/javasec_rmi_basic/">JavaSec - RMI 基础</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 12, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    12 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="写在前面">写在前面</h2>
+<p>本篇主要是在对Oracle有关RMI的教程学习后的总结笔记，原文请参考<a class="link" href="https://docs.oracle.com/javase/tutorial/rmi/index.html"  target="_blank" rel="noopener"
+    >官方文档</a>; <!-- raw HTML omitted --></p>
+<p>在本文的阅读中，我们将一起将一起了解： <!-- raw HTML omitted --></p>
+<ul>
+<li>什么是RMI？为什么要用RMI？ <!-- raw HTML omitted --></li>
+<li>RMI的实例讲解； <!-- raw HTML omitted --></li>
+<li>RMI的通信过程； <!-- raw HTML omitted --></li>
+</ul>
+<h2 id="什么是rmi-为什么要用rmi">什么是RMI？为什么要用RMI？</h2>
+<p>Java Remote Method Invocation, RMI系统，其目的是为两个不同的JVM之间提供桥梁，使得其中一个JVM可以操作（调用方法等）另一个JVM中的对象； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-12_11-23-22_screenshot.png"
+         alt="Figure 1: RMI Architecture" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->RMI Architecture</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>一个RMI应用，一般包含两个独立的角色（程序），一个 <strong>server</strong>, 一个 <strong>client</strong>: <!-- raw HTML omitted --></p>
+<ul>
+<li><strong>Server</strong> 是用来创建 <strong>remote objects</strong> 远程对象, 这些远程对象可以被外界访问，并调用其中的方法； <!-- raw HTML omitted --></li>
+<li><strong>Client</strong> 就是来获取 <strong>server</strong> 所创建的远程对象，并调用其中方法的程序； <!-- raw HTML omitted --></li>
+</ul>
+<p>就像之前提到的那样, <strong>RMI</strong> 的角色就是在 server 与 client 之间提供一座桥梁，使以上远程调用的功能得以实现，因此其也被称为 <strong>Distributed Object Application</strong>; <!-- raw HTML omitted --></p>
+<p>那么要实现这个应用，我们需要做三件事情： <!-- raw HTML omitted --></p>
+<ol>
+<li>Locate remote objects, 加载远程对象; <!-- raw HTML omitted -->
+<ul>
+<li>这里我们假设 remote object 指的是Server上的一个对象，而client需要去进行调用这个对象； <!-- raw HTML omitted --></li>
+<li>那么双方都需要知道对方想要调用的是哪一个对象，就需要一种方法来唯一确定； <!-- raw HTML omitted -->
+<ol>
+<li>RMI registry: 利用RMI注册表来将对象以及其简名唯一对应起来，让双发都可以了解这种唯一的对应关系； <!-- raw HTML omitted --></li>
+<li>或者直接在调用中传递（没有理解）； <!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Communicate with remote objects, 远程之间互相通信; <!-- raw HTML omitted -->
+<ul>
+<li>在server以及client双方看来（在写java代码的时候），他们都只是在调用一个本地对象； <!-- raw HTML omitted --></li>
+<li>而其中复杂的操作全都由RMI在背后完成； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Load class definitions for objects, 加载通信中用到的对象的类定义; <!-- raw HTML omitted -->
+<ul>
+<li>在RMI辅助对象进行远程通信的过程中时，会出现对象的交换，而这些对象的定义往往只处于一方的项目代码中； <!-- raw HTML omitted --></li>
+<li>RMI会直接将这些对象的定义直接传递（序列化）； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ol>
+<p>上面的介绍可能经过我的理解以及简化之后稍微好懂一点了，但大概率读者们还是一头雾水，说到底我们还是需要一个具体的例子来明白其中的原理以及所有抽象名词的定义： <!-- raw HTML omitted --></p>
+<p>接下来，我们就要实现一个RMI应用，Server代表一台学校实验室拥有的性能强大的计算机，可以用来解决各种任务；而Client则是我们的学生的PC，需要借助Server来进行复杂的计算； <!-- raw HTML omitted --></p>
+<h2 id="构造rmi-server">构造RMI server</h2>
+<p>之前我们说了，Server是学校实验室所配置的一台高性能服务器，现在我们需要通过RMI，将这台计算机开放给学生的PC来完成计算工作； <!-- raw HTML omitted --></p>
+<h3 id="设计一个remote接口">设计一个Remote接口</h3>
+<p>接下来，我们将Server称为 <strong>Compute Engine</strong> 来表示其是用来进行计算的引擎，而这个引擎的设计核心思想就是无论 <strong>client</strong> 发来任何的任务，它都能够顺利执行，并且能够将计算的结果顺利地返回给client，与client的通信如下图所示： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-13_15-38-18_screenshot.png"
+         alt="Figure 2: Server与Client之间的远程通信" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Server与Client之间的远程通信</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>根据我们之前的介绍，client可以远程调用这个engine远程对象来执行它们想要完成的任务，而RMI会将这个任务发送给Compute Engine本身来执行，因此要实现这样一个 <strong>remote object</strong> 远程对象，就需要定义一个继承了 <strong>Remote</strong> 接口的接口，并实现这个接口： <!-- raw HTML omitted --></p>
+<ul>
+<li>实现Remote接口可以让对象中的方法在其他JVM上被调用； <!-- raw HTML omitted --></li>
+<li>同时需要抛出 <strong>RemoteException</strong> 接口； <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">compute</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.Remote</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Compute</span> <span class="kd">extends</span> <span class="n">Remote</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// &lt;T&gt;表示这个方法是一个泛型方法，然后才能用T表示其返回类型为泛型；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">executeTask</span><span class="o">(</span><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">t</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">RemoteException</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>接着我们需要定义一个 <strong>Task</strong> 泛型接口，来表示 <strong>Compute Engine</strong> 会执行各种类型的任务； <!-- raw HTML omitted --></p>
+<p>这个接口的对象并不需要被远程调用方法，因此也不需要继承Remote接口； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">compute</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这里没有申明&lt;T&gt;是因为本身就是泛型接口中的方法；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">T</span> <span class="nf">execute</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>值得一提的是，在 <strong>Compute Engine</strong> 执行 <strong>Task</strong> 的过程中，难免需要用到一些只定义在的 <strong>client</strong> 端的对象，此时RMI一般就会用序列化的方式来传递这些对象的类定义； <!-- raw HTML omitted --></p>
+<h3 id="实现remote接口">实现Remote接口</h3>
+<p>实现Remote接口意味着这个类的实例对象是一个 <strong>remote object</strong> 可以被远程调用，这里就涉及到了在RMI中，Server-Client之间对象的传递，规则如下： <!-- raw HTML omitted --></p>
+<ul>
+<li>对于RMI所传递的 <strong>Remote objects</strong> 来说，传递的是引用： <!-- raw HTML omitted -->
+<ul>
+<li>在我们的例子中， <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<p>ComputeEngine类实现我们之前定义的，继承了Remote接口的Compute接口，它的实例对象就可以被称为 <strong>Remote object</strong>: <!-- raw HTML omitted --></p>
+<ul>
+<li>创建构造器； <!-- raw HTML omitted --></li>
+<li>实现接口中的方法； <!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">engine</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.registry.LocateRegistry</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.registry.Registry</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.server.UnicastRemoteObject</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">compute.Compute</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">compute.Task</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ComputeEngine</span> <span class="kd">implements</span> <span class="n">Compute</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">ComputeEngine</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">super</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">executeTask</span><span class="o">(</span><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>接着我们要将这个类变成一个通过RMI与client进行通信的Server，那就需要实现main方法，并完成以下三个步骤： <!-- raw HTML omitted --></p>
+<ol>
+<li>构建并注册一个 Security Manager; <!-- raw HTML omitted --></li>
+<li>构建并导出remote objects(作为本地的stubs); <!-- raw HTML omitted --></li>
+<li>在RMI registry（或者其他的 naming service）上注册remote object; <!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 1. Create and install a security manager
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getSecurityManager</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">setSecurityManager</span><span class="o">(</span><span class="k">new</span> <span class="n">SecurityManager</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Compute&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 2. Create and export one or more remote objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Compute</span> <span class="n">engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComputeEngine</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Compute</span> <span class="n">stub</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">            <span class="o">(</span><span class="n">Compute</span><span class="o">)</span> <span class="n">UnicastRemoteObject</span><span class="o">.</span><span class="na">exportObject</span><span class="o">(</span><span class="n">engine</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 3. Register at least one remote object with the RMI registry for bootstrapping purposes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Registry</span> <span class="n">registry</span> <span class="o">=</span> <span class="n">LocateRegistry</span><span class="o">.</span><span class="na">getRegistry</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">registry</span><span class="o">.</span><span class="na">rebind</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">stub</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;ComputeEngine bound&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;ComputeEngine exception:&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>接着，我们逐一来解释这些步骤的目的； <!-- raw HTML omitted --></p>
+<h4 id="security-manager">Security Manager</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 1. Create and install a security manager
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getSecurityManager</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">setSecurityManager</span><span class="o">(</span><span class="k">new</span> <span class="n">SecurityManager</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><blockquote>
+<p>SecurityManager是一个可以赋予应用其自定义安全策略的类。它允许一个应用在执行一些有风险的操作之前对操作进行审核，并做出是否执行的决定。Java库中已经定义了很多以 <strong>check</strong> 开头的方法来检查各种操作。 <!-- raw HTML omitted --></p>
+</blockquote>
+<p><figure><img src="/ox-hugo/2022-11-16_10-59-39_screenshot.png"
+         alt="Figure 3: SecurityManager#checkXXX(&amp;hellip;)" width="500px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->SecurityManager#checkXXX(&hellip;)</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>由于在Server-Client之间的通信中，不可以避免地会出现对象的类定义的下载，因此为了保护Server不会执行一些危险的操作，需要设置 <strong>Security manager</strong> 来进行保护。 <!-- raw HTML omitted --></p>
+<h4 id="rmi中对象的传递">RMI中对象的传递</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Compute&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 2. Create and export one or more remote objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Compute</span> <span class="n">engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComputeEngine</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">Compute</span> <span class="n">stub</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="o">(</span><span class="n">Compute</span><span class="o">)</span> <span class="n">UnicastRemoteObject</span><span class="o">.</span><span class="na">exportObject</span><span class="o">(</span><span class="n">engine</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+</span></span></code></pre></div><p>Server-Client之间通信的本质就是对象的交换，而对于不同类型的对象交换的方式有所不同： <!-- raw HTML omitted --></p>
+<ul>
+<li>Remote objects, 对于远程对象来说，传递的是 <strong>引用</strong>: <!-- raw HTML omitted -->
+<ul>
+<li>在我们的例子中，engine是真实的对象，而stub以及之后会提到client中的engine对象都是引用； <!-- raw HTML omitted --></li>
+<li>也就是说，任意一个发生改变，其他的都会发生改变 <!-- raw HTML omitted --></li>
+<li>同时，在传递的过程中，只有在remote接口中定义的抽象方法才会进行传递，也就是说，只有 <code>executeTask()</code> 才会传递，而本地的构造器则不会传递； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>Local objects, 对于本地对象来说，有时候会被包含在远程对象中进行传递，这里传的就是拷贝的对象； <!-- raw HTML omitted --></li>
+</ul>
+<p><strong>engine</strong> 对象通过 <code>UnicastRemoteObject.exportObject</code> 方法导出其引用 <strong>stub</strong> 对象，来接受来自远程的调用，其中，第二个参数表示的是监听远程调用的TCP端口（0表示由RMI或者操作系统选择的匿名端口）； <!-- raw HTML omitted --></p>
+<p>注意这里 <strong>stub</strong> 的类型是Compute，这就是我们之前说的，只有定义在 <strong>remote object</strong> 中的方法才能被调用。 <!-- raw HTML omitted --></p>
+<h4 id="rmi-registry注册remote-objects">RMI registry注册Remote objects</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 3. Register at least one remote object with the RMI registry for bootstrapping purposes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Registry</span> <span class="n">registry</span> <span class="o">=</span> <span class="n">LocateRegistry</span><span class="o">.</span><span class="na">getRegistry</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">registry</span><span class="o">.</span><span class="na">rebind</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">stub</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;ComputeEngine bound&#34;</span><span class="o">);</span>
+</span></span></code></pre></div><p>最后一步就是要将 <strong>stub</strong> 注册到RMI registry中去，既而Client就可以从RMI registry中获取到远程对象的引用来进行远程方法调用了； <!-- raw HTML omitted --></p>
+<blockquote>
+<p>public interface Registry <!-- raw HTML omitted -->
+extends Remote <!-- raw HTML omitted --></p>
+<p>Registry是一个继承了remote接口的接口，其目的是为了以 <strong>引用-名字</strong> 的形式存储以及获取远程对象； <!-- raw HTML omitted --></p>
+<p>LocateRegistry类提供了在本地JVM中构造以及获取一个Registry注册表的方法； <!-- raw HTML omitted --></p>
+</blockquote>
+<p>本地JVM中的Registry一般监听1099端口，如果更换了接口，就需要在 <code>LocateRegistry.getRegistry</code> 中添加 <strong>int</strong> 参数来获取本地 <strong>Registry</strong> 的引用； <!-- raw HTML omitted --></p>
+<h2 id="构造rmi-client">构造RMI client</h2>
+<p>在RMI client这一方，我们的目标就是能够调用在服务器上运行的 <strong>Computer Engine</strong>, 同时定义自己的Task用来传递给Server来运行； <!-- raw HTML omitted --></p>
+<p>那么实现的就是两个类： <!-- raw HTML omitted --></p>
+<ol>
+<li><strong>Pi</strong> 类, 实现 <strong>Task</strong> 接口，表示Server上的Engine需要运行的任务； <!-- raw HTML omitted -->
+<ul>
+<li>这里具体指的是计算特定位数的π值； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li><strong>ComputePi</strong> 类，用来调用远程的 <strong>Compute</strong> 对象来进行计算； <!-- raw HTML omitted --></li>
+</ol>
+<h3 id="computepi">ComputePi</h3>
+<p>我们先来看最相关的这个 <strong>ComputePi</strong> 类： <!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>第一步还是我们熟悉的 <strong>SecurityManager</strong> 的设置： <!-- raw HTML omitted --></p>
+<ul>
+<li>由于client端调用来自server的 <strong>remote objects</strong> 可能涉及到类定义的下载，而这个必须要在SecurityManager的保护下才能发生； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>接着我们就可以先获取Server上的 <strong>RMI Registry</strong>; <!-- raw HTML omitted --></p>
+<ul>
+<li>通常来说，client会去寻找目标主机的1099端口来获取registry, 也可以自己设置； <!-- raw HTML omitted --></li>
+<li>接着利用registry的 <code>lookup()</code> 方法来来根据注册远程对象的名字来获取远程对象的引用； <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p>最后就可以调用这个远程对象comp来完成我们所设定的任务了； <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">client</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.registry.LocateRegistry</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.rmi.registry.Registry</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.math.BigDecimal</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">compute.Compute</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ComputePi</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getSecurityManager</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 1. 设置SecurityManager；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">System</span><span class="o">.</span><span class="na">setSecurityManager</span><span class="o">(</span><span class="k">new</span> <span class="n">SecurityManager</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Compute&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 2. 获取registry的引用，args[0]为远程对象所位于的主机的名字；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Registry</span> <span class="n">registry</span> <span class="o">=</span> <span class="n">LocateRegistry</span><span class="o">.</span><span class="na">getRegistry</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">0</span><span class="o">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 3. 接着利用invoke
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Compute</span> <span class="n">comp</span> <span class="o">=</span> <span class="o">(</span><span class="n">Compute</span><span class="o">)</span> <span class="n">registry</span><span class="o">.</span><span class="na">lookup</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Pi</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pi</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">1</span><span class="o">]));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">BigDecimal</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">comp</span><span class="o">.</span><span class="na">executeTask</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">pi</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;ComputePi exception:&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>    
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h3 id="pi">Pi</h3>
+<p>Pi类实现了Task&lt;BigDecimal&gt;接口以及Serializable，这将使其具备被 <strong>Computer Engine</strong> 执行，并通过序列化的形式传递类定义的条件。 <!-- raw HTML omitted --></p>
+<p>Pi#execute(int digit)可以用来计算对应位数的π符号，这里就不做赘述具体的实现方法了； <!-- raw HTML omitted --></p>
+<p>不过值得一提的点在于，我们在Server端的 <strong>Compute</strong> 以及 <strong>Compute Engine</strong> 的定义中，从未考虑过Pi类，只有当 <strong>Pi</strong> 类的实例对象，随着 <code>executeTask()</code> 方法通过RMI传递到Server的JVM时，其类定义才会被下载，包括其中所定义的其他对象的类定义，这也就意味着 <strong>Compute Engine</strong> 可以执行任意类型的任务，因此也体现了 <strong>SecurityManager</strong> 的重要性，如果不加注意，可能会造成很严重的安全事故； <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">client</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">compute.Task</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.math.BigDecimal</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Pi</span> <span class="kd">implements</span> <span class="n">Task</span><span class="o">&lt;</span><span class="n">BigDecimal</span><span class="o">&gt;,</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="n">227L</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/** constants used in pi computation */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">BigDecimal</span> <span class="n">FOUR</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">4</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/** rounding mode to use during pi computation */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">roundingMode</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span><span class="o">.</span><span class="na">ROUND_HALF_EVEN</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/** digits of precision after the decimal point */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">digits</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Construct a task to calculate pi to the specified
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * precision.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Pi</span><span class="o">(</span><span class="kt">int</span> <span class="n">digits</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">digits</span> <span class="o">=</span> <span class="n">digits</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Calculate pi.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">BigDecimal</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">computePi</span><span class="o">(</span><span class="n">digits</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Compute the value of pi to the specified number of 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * digits after the decimal point.  The value is 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * computed using Machin&#39;s formula:
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *          pi/4 = 4*arctan(1/5) - arctan(1/239)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * and a power series expansion of arctan(x) to 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * sufficient precision.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="n">BigDecimal</span> <span class="nf">computePi</span><span class="o">(</span><span class="kt">int</span> <span class="n">digits</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">digits</span> <span class="o">+</span> <span class="n">5</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">arctan1_5</span> <span class="o">=</span> <span class="n">arctan</span><span class="o">(</span><span class="n">5</span><span class="o">,</span> <span class="n">scale</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">arctan1_239</span> <span class="o">=</span> <span class="n">arctan</span><span class="o">(</span><span class="n">239</span><span class="o">,</span> <span class="n">scale</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">arctan1_5</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="n">FOUR</span><span class="o">).</span><span class="na">subtract</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                                  <span class="n">arctan1_239</span><span class="o">).</span><span class="na">multiply</span><span class="o">(</span><span class="n">FOUR</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">pi</span><span class="o">.</span><span class="na">setScale</span><span class="o">(</span><span class="n">digits</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                           <span class="n">BigDecimal</span><span class="o">.</span><span class="na">ROUND_HALF_UP</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Compute the value, in radians, of the arctangent of 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * the inverse of the supplied integer to the specified
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * number of digits after the decimal point.  The value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * is computed using the power series expansion for the
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * arc tangent:
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * arctan(x) = x - (x^3)/3 + (x^5)/5 - (x^7)/7 + 
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *     (x^9)/9 ...
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>   
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="n">BigDecimal</span> <span class="nf">arctan</span><span class="o">(</span><span class="kt">int</span> <span class="n">inverseX</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                                    <span class="kt">int</span> <span class="n">scale</span><span class="o">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">result</span><span class="o">,</span> <span class="n">numer</span><span class="o">,</span> <span class="n">term</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">invX</span> <span class="o">=</span> <span class="n">BigDecimal</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">inverseX</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BigDecimal</span> <span class="n">invX2</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">BigDecimal</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">inverseX</span> <span class="o">*</span> <span class="n">inverseX</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">numer</span> <span class="o">=</span> <span class="n">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">.</span><span class="na">divide</span><span class="o">(</span><span class="n">invX</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                      <span class="n">scale</span><span class="o">,</span> <span class="n">roundingMode</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">numer</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">do</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">numer</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">numer</span><span class="o">.</span><span class="na">divide</span><span class="o">(</span><span class="n">invX2</span><span class="o">,</span> <span class="n">scale</span><span class="o">,</span> <span class="n">roundingMode</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">term</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">numer</span><span class="o">.</span><span class="na">divide</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">denom</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">                             <span class="n">scale</span><span class="o">,</span> <span class="n">roundingMode</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">((</span><span class="n">i</span> <span class="o">%</span> <span class="n">2</span><span class="o">)</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">subtract</span><span class="o">(</span><span class="n">term</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">term</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span><span class="o">++;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">term</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">ZERO</span><span class="o">)</span> <span class="o">!=</span> <span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h2 id="编译和运行实例">编译和运行实例</h2>
+<p>至此我们就已经完成了所有的开发工作，接下来就是编译以及运行我们的Server以及Client了，我们还是根据Oracle的教程来继续走，离开IDE来看看到底是如何一步步运作的。 <!-- raw HTML omitted --></p>
+<h3 id="编译">编译</h3>
+<p>在真实的工作场景中，Server与Client肯定是由不同的开发者来负责，所以可能的场景就是： <!-- raw HTML omitted --></p>
+<dl>
+<dt>Server端的开发者</dt>
+<dd><ol>
+<li>将 <strong>Compute</strong> 以及 <strong>Task</strong> 接口打包成JAR包以供Server以及Client来使用； <!-- raw HTML omitted --></li>
+<li>接着继续实现 <strong>Compute Engine</strong> 并将这个服务启动，以供Client来调用； <!-- raw HTML omitted --></li>
+</ol>
+</dd>
+<dt>Client端的开发者</dt>
+<dd><ul>
+<li>利用包含 <strong>Compute</strong> 以及 <strong>Task</strong> 接口的JAR包来开发其需要执行的 <strong>Task</strong> 类以及 <strong>Client</strong> 类; <!-- raw HTML omitted --></li>
+</ul>
+</dd>
+</dl>
+<p>接下来我们来看看具体的操作 <!-- raw HTML omitted --></p>
+<h4 id="打包jar包">打包Jar包</h4>
+<p>Microsoft Windows: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="o">[</span>src dir<span class="o">]</span>
+</span></span><span class="line"><span class="cl">javac compute<span class="se">\C</span>ompute.java compute<span class="se">\T</span>ask.java
+</span></span><span class="line"><span class="cl">jar cvf compute.jar compute<span class="se">\*</span>.class
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="o">[</span>src dir<span class="o">]</span>
+</span></span><span class="line"><span class="cl">javac compute/Compute.java compute/Task.java
+</span></span><span class="line"><span class="cl">jar cvf compute.jar compute/*.class
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output:
+</span></span><span class="line"><span class="cl">added manifest
+</span></span><span class="line"><span class="cl">adding: compute/Compute.class<span class="o">(</span><span class="nv">in</span> <span class="o">=</span> 319<span class="o">)</span> <span class="o">(</span><span class="nv">out</span><span class="o">=</span> 208<span class="o">)(</span>deflated 34%<span class="o">)</span>
+</span></span><span class="line"><span class="cl">adding: compute/Task.class<span class="o">(</span><span class="nv">in</span> <span class="o">=</span> 221<span class="o">)</span> <span class="o">(</span><span class="nv">out</span><span class="o">=</span> 152<span class="o">)(</span>deflated 31%<span class="o">)</span>
+</span></span></code></pre></div><p>其中jar的参数： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">-c  create new archive
+</span></span><span class="line"><span class="cl">-v  generate verbose output on standard output
+</span></span><span class="line"><span class="cl">-f  specify archive file name
+</span></span></code></pre></div><p>如此我们就得到了一个jar包，现在将这个jar包分别放在Server以及Client的应用中，以供他们调用； <!-- raw HTML omitted --></p>
+<h4 id="构建server">构建Server</h4>
+<p>Microsoft Windows: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="o">[</span>src_dir<span class="o">]</span>
+</span></span><span class="line"><span class="cl">javac -cp path<span class="se">\t</span>o<span class="se">\c</span>ompute.jar
+</span></span><span class="line"><span class="cl">    engine<span class="se">\C</span>omputeEngine.java
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="o">[</span>src_dir<span class="o">]</span>
+</span></span><span class="line"><span class="cl">javac -cp path/to/compute.jar
+</span></span><span class="line"><span class="cl">    engine/ComputeEngine.java
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">-cp &lt;path&gt;    Specify where to find user class files and annotation processors
+</span></span></code></pre></div><h4 id="构建client">构建Client</h4>
+<p>Microsoft Windows: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> c:<span class="se">\h</span>ome<span class="se">\j</span>ones<span class="se">\s</span>rc
+</span></span><span class="line"><span class="cl">javac -cp path<span class="se">\t</span>o<span class="se">\c</span>ompute.jar
+</span></span><span class="line"><span class="cl">    client<span class="se">\C</span>omputePi.java client<span class="se">\P</span>i.java
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="o">[</span>src_dir<span class="o">]</span>
+</span></span><span class="line"><span class="cl">javac -cp path/to/compute.jar
+</span></span><span class="line"><span class="cl">    client/ComputePi.java client/Pi.java
+</span></span></code></pre></div><h4 id="编译后的class文件的存放">编译后的class文件的存放</h4>
+<p>Oracle的建议是经过编译之后的这些class文件，都需要放在 <strong>network accessible location</strong>, 即网络可以访问的位置，以便在远程通信的时候，方便下载实例对象的对应的类定义； <!-- raw HTML omitted --></p>
+<h3 id="运行">运行</h3>
+<h4 id="安全策略">安全策略</h4>
+<p>我们之前提到了，因为涉及到类定义的下载交换，我们在 Server 以及 Client 端都设置了 <strong>SecurityManager</strong>, 那我们就需要为其设置安全策略，分别放置在 <strong>server.policy</strong> 以及 <strong>client.policy</strong> 文件下： <!-- raw HTML omitted --></p>
+<p>server端的安全策略： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">grant</span> <span class="n">codeBase</span> <span class="s">&#34;file:/path/to/src/&#34;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">permission</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">AllPermission</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">};</span>
+</span></span></code></pre></div><p>client端的安全策略： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">grant</span> <span class="n">codeBase</span> <span class="s">&#34;file:/path/to/src/&#34;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">permission</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">AllPermission</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">};</span>
+</span></span></code></pre></div><h4 id="启动server">启动Server</h4>
+<p>在启动我们构建的 <strong>Compute Engine</strong> 之前，我们需要先在Server端启动 <strong>RMI registry</strong> 用来存储以及供应 <strong>remote object:name</strong> 的信息，RMI registry默认的端口是1099，我们当然也可以指定其监听其他端口； <!-- raw HTML omitted --></p>
+<p>Microsoft Windows (use javaw if start is not available): <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">start rmiregistry <span class="c1"># default port is 1099</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or</span>
+</span></span><span class="line"><span class="cl">start rmiregistry <span class="m">2001</span>
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">rmiregistry <span class="p">&amp;</span> <span class="c1"># default port is 1099</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or</span>
+</span></span><span class="line"><span class="cl">rmiregistry <span class="m">2001</span> <span class="p">&amp;</span>
+</span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-11-17_13-22-54_screenshot.png"
+         alt="Figure 4: RMI registry默认监听1099端口" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->RMI registry默认监听1099端口</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>接着我们执行computeEngine，注意这里需要将我们的 ComputeEngine.class 以及 compute.jar 给添加到 <strong>$CLASSPATH</strong> 上去，不然java就找不到这两个类来执行，后面在client执行的时候同理； <!-- raw HTML omitted --></p>
+<p>Microsoft Windows: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp c:<span class="se">\h</span>ome<span class="se">\a</span>nn<span class="se">\s</span>rc<span class="p">;</span>c:<span class="se">\h</span>ome<span class="se">\a</span>nn<span class="se">\p</span>ublic_html<span class="se">\c</span>lasses<span class="se">\c</span>ompute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.codebase<span class="o">=</span>file:/c:/home/ann/public_html/classes/compute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.hostname<span class="o">=</span>mycomputer.example.com
+</span></span><span class="line"><span class="cl">     -Djava.security.policy<span class="o">=</span>server.policy
+</span></span><span class="line"><span class="cl">        engine.ComputeEngine
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp /home/ann/src:path/to/compute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.codebase<span class="o">=</span>http://path/to/compute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.hostname<span class="o">=</span>mycomputer.example.com
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.useCodebaseOnly<span class="o">=</span><span class="nb">false</span>
+</span></span><span class="line"><span class="cl">     -Djava.security.policy<span class="o">=</span>server.policy
+</span></span><span class="line"><span class="cl">        engine.ComputeEngine
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp ./:./compute.jar -Djava.rmi.server.codebase<span class="o">=</span>http://localhost/compute.jar -Djava.rmi.server.hostname<span class="o">=</span>localhost -Djava.rmi.server.useCodebaseOnly<span class="o">=</span><span class="nb">false</span> -Djava.security.policy<span class="o">=</span>server.policy engine.ComputeEngine
+</span></span></code></pre></div><ul>
+<li>codebase, computer.jar可以被下载的URL（记得我们刚才说的，network accessible location）; <!-- raw HTML omitted --></li>
+<li>hostname, hostname定义了会被放到 stubs(remote objects)中的IP地址或者域名，方便client来调用； <!-- raw HTML omitted --></li>
+<li>policy, server端的安全策略 <!-- raw HTML omitted --></li>
+</ul>
+<p>这里我的增加了 <strong>-Djava.rmi.server.useCodebaseOnly=false</strong> 这个option，根据参考的文章，oracle的教程中命令有点早了，如果在执行Client命令时出现 <strong>Pi.class</strong> 找不到的情况，可以加上这个选项重新尝试，目的是让Server端可以在本地的CLASSPATH上找到类定义，远程的我没有尝试就不做猜测了； <!-- raw HTML omitted --></p>
+<h4 id="启动client">启动Client</h4>
+<p>启动Client之前也要记得将要执行的 <strong>computePi.class</strong> 添加到 <strong>$CLASSPATH</strong> 中去； <!-- raw HTML omitted --></p>
+<p>接着需要将codeBase设置为Pi.class所在的目录（记得最后要加&rsquo;/&rsquo;），方便传递类定义； <!-- raw HTML omitted --></p>
+<p>同时要加上参数，表示寻找 <strong>stub</strong> 的hostname，以及要计算的Pi的位数（digit）； <!-- raw HTML omitted --></p>
+<p>Microsoft Windows: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp <span class="o">[</span>src_dir<span class="o">]</span><span class="p">;</span><span class="se">\p</span>ath<span class="se">\t</span>o<span class="se">\c</span>ompute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.codebase<span class="o">=</span>file:/path/to/Pi.class/
+</span></span><span class="line"><span class="cl">     -Djava.security.policy<span class="o">=</span>client.policy
+</span></span><span class="line"><span class="cl">        client.ComputePi <span class="o">[</span>host_name<span class="o">]</span> <span class="o">[</span>digit<span class="o">]</span>
+</span></span></code></pre></div><p>Solaris OS or Linux: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp <span class="o">[</span>src_dir<span class="o">]</span><span class="p">;</span>/path/to/compute.jar
+</span></span><span class="line"><span class="cl">     -Djava.rmi.server.codebase<span class="o">=</span>/path/to/Pi.class/
+</span></span><span class="line"><span class="cl">     -Djava.security.policy<span class="o">=</span>client.policy
+</span></span><span class="line"><span class="cl">        client.ComputePi <span class="o">[</span>host_name<span class="o">]</span> <span class="o">[</span>digit<span class="o">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -cp ./:./compute.jar -Djava.rmi.server.codebase<span class="o">=</span>file:///Users/runfeng/IdeaProjects/JavaSec/src/RMI_Client/ -Djava.security.policy<span class="o">=</span>client.policy client.ComputePi localhost <span class="m">45</span>
+</span></span></code></pre></div><p>结果： <!-- raw HTML omitted -->
+3.141592653589793238462643383279502884197169399 <!-- raw HTML omitted --></p>
+<p>当 <strong>ComputeEngine</strong> 在 <strong>RMI Registry</strong> 上注册 remote object时, RMI registry会根据 <strong>codebase</strong> 去对应的URL或者文件系统中加载 <strong>Compute</strong> 以及 <strong>Task</strong> 的定义； <!-- raw HTML omitted --></p>
+<p>而 <strong>Compute Engine</strong> 在执行 <strong>ComputePi</strong> 任务的过程中，其也会去由Client提供的 <strong>codebase</strong> 下载对应的类定义； <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-17_16-27-55_screenshot.png"
+         alt="Figure 5: RMI通信框架" width="400px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->RMI通信框架</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="rmi的通信过程">RMI的通信过程</h2>
+<p>我们先后在Server启动以及Client启动之后观察Wireshark中的抓包情况，其实就能更好的理解整一个框架，即Server(50074)-RMI Registry(1099)-client(50089)三者之间的通信关系： <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-17_16-24-29_screenshot.png"
+         alt="Figure 6: Server启动" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 6: <!-- raw HTML omitted -->Server启动</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-17_16-24-38_screenshot.png"
+         alt="Figure 7: Client启动" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 7: <!-- raw HTML omitted -->Client启动</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="拓展阅读">拓展阅读</h2>
+<p><a class="link" href="https://www.oracle.com/java/technologies/javase/remote-method-invocation-distributed-computing.html"  target="_blank" rel="noopener"
+    >Java Remote Method Invocation Distributed Computing for Java</a> <!-- raw HTML omitted --></p>
+<p><figure><img src="/ox-hugo/2022-11-17_13-04-11_screenshot.png"
+         alt="Figure 8: ORACLE RMI Paper Overview" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 8: <!-- raw HTML omitted -->ORACLE RMI Paper Overview</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="写在后面">写在后面</h2>
+<p>本篇主要是跟着Oracle的文档一起学习，文档的内容其实不多，但是讲解的很细致，不过有时候太细致就会让人有点摸不着头脑（越来越多的没见过的名词），好在都会重复出现； <!-- raw HTML omitted --></p>
+<p>通过整一个例子的复现，我们了解了RMI的基础使用，一些在真实开发过程中要遵循的原则以及标准，相信在之后的学习中能够更好的帮助我们了解RMI以及序列化的内容。 <!-- raw HTML omitted --></p>
+<h2 id="reference">Reference</h2>
+<blockquote>
+<p>[1] ‘Trail: RMI (The Java™ Tutorials)’. <a class="link" href="https://docs.oracle.com/javase/tutorial/rmi/index.html"  target="_blank" rel="noopener"
+    >https://docs.oracle.com/javase/tutorial/rmi/index.html</a> . <!-- raw HTML omitted -->
+[2] ‘The Security Manager (The Java™ Tutorials &gt; Essential Java Classes &gt; The Platform Environment)’. <a class="link" href="https://docs.oracle.com/javase/tutorial/essential/environment/security.html"  target="_blank" rel="noopener"
+    >https://docs.oracle.com/javase/tutorial/essential/environment/security.html</a>. <!-- raw HTML omitted -->
+[3] ‘Trail: RMI (The Java™ Tutorials)’. <a class="link" href="https://docs.oracle.com/javase/tutorial/rmi/index.html"  target="_blank" rel="noopener"
+    >https://docs.oracle.com/javase/tutorial/rmi/index.html</a> . <!-- raw HTML omitted -->
+[4] ‘Java Remote Method Invocation Distributed Computing for Java’. <a class="link" href="https://www.oracle.com/java/technologies/javase/remote-method-invocation-distributed-computing.html"  target="_blank" rel="noopener"
+    >https://www.oracle.com/java/technologies/javase/remote-method-invocation-distributed-computing.html</a> . <!-- raw HTML omitted -->
+[5] ‘java - 执行客户端RMI时出错 - Thinbug’. <a class="link" href="https://www.thinbug.com/q/30516039"  target="_blank" rel="noopener"
+    >https://www.thinbug.com/q/30516039</a>. <!-- raw HTML omitted --></p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/java_sec/">java_sec</a>
+        
+            <a href="/tags/rmi/">rmi</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Nov 17, 2022 16:46 CST
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/javasec_memshell_tomcat/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - 内存马 - Tomcat</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_runtimecommandexecution/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Java本地命令执行</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_listener_and_filter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Listener &amp; Filter</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_jsp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - JavaWeb - JSP基础</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/javasec_javaweb_servlet/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "medicwrf" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy;
+        
+        2022 Under The Ginkgo
+    </section>
+
+    <section class="powerby">
+        
+            Cogito, ergo sum <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <section class="powerby">
+      <span id="busuanzi_container_site_pv" style='display:none'>
+        Viwe <span id="busuanzi_value_site_pv"></span> times
+      </span>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#写在前面">写在前面</a></li>
+    <li><a href="#什么是rmi-为什么要用rmi">什么是RMI？为什么要用RMI？</a></li>
+    <li><a href="#构造rmi-server">构造RMI server</a>
+      <ul>
+        <li><a href="#设计一个remote接口">设计一个Remote接口</a></li>
+        <li><a href="#实现remote接口">实现Remote接口</a>
+          <ul>
+            <li><a href="#security-manager">Security Manager</a></li>
+            <li><a href="#rmi中对象的传递">RMI中对象的传递</a></li>
+            <li><a href="#rmi-registry注册remote-objects">RMI registry注册Remote objects</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#构造rmi-client">构造RMI client</a>
+      <ul>
+        <li><a href="#computepi">ComputePi</a></li>
+        <li><a href="#pi">Pi</a></li>
+      </ul>
+    </li>
+    <li><a href="#编译和运行实例">编译和运行实例</a>
+      <ul>
+        <li><a href="#编译">编译</a>
+          <ul>
+            <li><a href="#打包jar包">打包Jar包</a></li>
+            <li><a href="#构建server">构建Server</a></li>
+            <li><a href="#构建client">构建Client</a></li>
+            <li><a href="#编译后的class文件的存放">编译后的class文件的存放</a></li>
+          </ul>
+        </li>
+        <li><a href="#运行">运行</a>
+          <ul>
+            <li><a href="#安全策略">安全策略</a></li>
+            <li><a href="#启动server">启动Server</a></li>
+            <li><a href="#启动client">启动Client</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#rmi的通信过程">RMI的通信过程</a></li>
+    <li><a href="#拓展阅读">拓展阅读</a></li>
+    <li><a href="#写在后面">写在后面</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

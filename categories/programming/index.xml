@@ -224,11 +224,15 @@
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;现在我们可以总结一下： &lt;!-- raw HTML omitted --&gt;
 Iterator，迭代器，就是一种实现了 &lt;strong&gt;iterator protocol&lt;/strong&gt; 的object，实现了 &lt;code&gt;__iter__()&lt;/code&gt; 以及 &lt;code&gt;__next__()&lt;/code&gt; 两个方法; &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;Iterable的object，就是可以被 &lt;code&gt;iter()&lt;/code&gt; 方法调用其 &lt;code&gt;__iter__()&lt;/code&gt; 方法，将其转换为一个Iterator object的ojbect： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Iterable的object，就是可以被 &lt;code&gt;iter()&lt;/code&gt; 方法调用其 &lt;code&gt;__iter__()&lt;/code&gt; 方法，将其转换为一个Iterator object的object： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;内置的lists, dictionaries, tuples, sets以及files； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;自定义的，实现了 &lt;code&gt;__iter__()&lt;/code&gt; 的classes; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Sequences, 例如内置的lists, dictionaries, tuples, sets以及files； &lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Sequences的特点就是可以用 &lt;strong&gt;integer index&lt;/strong&gt; 来访问，例如array[0], 而generators就不可以； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Generators, 生成器； &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;任意自定义的，实现了 &lt;code&gt;__iter__()&lt;/code&gt; 的classes; &lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;而python中的for循环, &lt;strong&gt;for item in [iterable]&lt;/strong&gt; 就是: &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;ol&gt;

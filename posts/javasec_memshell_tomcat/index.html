@@ -9,7 +9,7 @@
 <meta property='og:description' content='写在前面 本文是Java内存马的第一篇内容，通过阅读本文，我们将一起了解： Tomcat中自定义的Filter, Listener, Servlet, Valve是如何被注册到服务'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/javasec_memshell_tomcat/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='memshell' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='tomcat' /><meta property='article:published_time' content='2022-10-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-02T18:41:59&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='memshell' /><meta property='article:tag' content='java_sec' /><meta property='article:tag' content='tomcat' /><meta property='article:published_time' content='2022-10-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-06T12:22:28&#43;08:00'/>
 <meta name="twitter:title" content="JavaSec - 内存马 - Tomcat">
 <meta name="twitter:description" content="写在前面 本文是Java内存马的第一篇内容，通过阅读本文，我们将一起了解： Tomcat中自定义的Filter, Listener, Servlet, Valve是如何被注册到服务">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -1352,7 +1352,7 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>而我们的目的就是动态地注册一个Valve对象，使Tomcat的容器们对请求进行处理的时候，可以在调用默认的Basic Valve之前先执行我们所注册的自定义中的Valve中的恶意代码； <!-- raw HTML omitted --></p>
-<p>这里再补充一些默认情况下的Pipeline-Valve 责任链的实现，Tomcat的四种容器（Engine到Wrapper）在初始化时都会调用 <code>this.pipeline.setBasic([new Valve])</code> 来设置其维护的Pipeline中的默认 <strong>Valve</strong>, 该Vavle会被放在整个 Pipeline 的最后来执行。 <!-- raw HTML omitted --></p>
+<p>这里再补充一些默认情况下的Pipeline-Valve 责任链的实现，Tomcat的四种容器（Engine到Wrapper）在初始化时都会调用 <code>this.pipeline.setBasic([new Valve])</code> 来设置其维护的Pipeline中的默认 <strong>Valve</strong>, 该Valve会被放在整个 Pipeline 的最后来执行。 <!-- raw HTML omitted --></p>
 <p>而我们所添加的所有 Valve 阀门都会在默认的前面被执行。 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="nf">StandardEngine</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">.</span><span class="na">pipeline</span><span class="o">.</span><span class="na">setBasic</span><span class="o">(</span><span class="k">new</span> <span class="n">StandardEngineValve</span><span class="o">());</span>
@@ -1365,7 +1365,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">.</span><span class="na">backgroundProcessorDelay</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>接着每一个 Valve都会重写 <code>invoke()</code> 方法来执行请求处理，在默认的Vavle（Pipeline中的最后一个Vavle）中，就会调用子容器的Pipeline中的第一个 Valve： <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>接着每一个 Valve都会重写 <code>invoke()</code> 方法来执行请求处理，在默认的Valve（Pipeline中的最后一个Valve）中，就会调用子容器的Pipeline中的第一个 Valve： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="kd">class</span> <span class="nc">StandardEngineValve</span> <span class="kd">extends</span> <span class="n">ValveBase</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">StringManager</span> <span class="n">sm</span> <span class="o">=</span> <span class="n">StringManager</span><span class="o">.</span><span class="na">getManager</span><span class="o">(</span><span class="s">&#34;org.apache.catalina.core&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">
@@ -1492,7 +1492,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Nov 02, 2022 18:41 CST
+            Last updated on Nov 06, 2022 12:22 CST
         </span>
     </section></footer>
 
@@ -1531,6 +1531,18 @@ if (!doNotTrack) {
     <h2 class="section-title">Related contents</h2>
     <div class="related-contents">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/javasec_rmi_basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">JavaSec - RMI 基础</h2>
+        </div>
+    </a>
+</article>
             
                 
 <article class="">
@@ -1576,18 +1588,6 @@ if (!doNotTrack) {
 
         <div class="article-details">
             <h2 class="article-title">JavaSec - Java Web - 三大核心组件 - Servlet</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/javasec_javabasic_reflection/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">JavaSec - Java基础 - 反射（Reflection）</h2>
         </div>
     </a>
 </article>

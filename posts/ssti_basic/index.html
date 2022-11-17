@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给'><title>Server Side Template Injection (SSTI) 模板注入：基础知识</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，Wikipedia给的定义是一个将数据和模板组合'><title>Server Side Template Injection (SSTI) 模板注入：基础知识</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/ssti_basic/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Server Side Template Injection (SSTI) 模板注入：基础知识'>
-<meta property='og:description' content='Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给'>
+<meta property='og:description' content='模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，Wikipedia给的定义是一个将数据和模板组合'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/ssti_basic/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-06-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-02T12:58:32&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='ssti' /><meta property='article:tag' content='web_security' /><meta property='article:tag' content='template_engine' /><meta property='article:tag' content='server_side' /><meta property='article:published_time' content='2022-06-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-09T22:26:48&#43;08:00'/>
 <meta name="twitter:title" content="Server Side Template Injection (SSTI) 模板注入：基础知识">
-<meta name="twitter:description" content="Server Side Template Injection (SSTI) 模板注入：基础知识 模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给">
+<meta name="twitter:description" content="模板引擎是什么？我们为什么要用到它？ Template processor (template engine or template parser)，模板处理器或者叫做模板引擎，Wikipedia给的定义是一个将数据和模板组合">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -218,8 +218,8 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/ctf/" >
-                ctf
+            <a href="/categories/web_sec/" >
+                web_sec
             </a>
         
     </header>
@@ -261,7 +261,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    4 minute read
+                    5 minute read
                 </time>
             </div>
         
@@ -275,18 +275,17 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="server-side-template-injection--ssti--模板注入-基础知识">Server Side Template Injection (SSTI) 模板注入：基础知识</h2>
-<h3 id="模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</h3>
+    <h2 id="模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</h2>
 <p><a class="link" href="https://en.wikipedia.org/wiki/Template_processor"  target="_blank" rel="noopener"
-    >Template processor</a> (template engine or template parser)，模板处理器或者叫做模板引擎，wikipedia给的定义是一个将数据和模板组合形成文档的软件。 <!-- raw HTML omitted --></p>
-<p>模板引擎的输入一般是用template language 模板语言写的模板，以及需要替换模板中占位内容的真实数据，经过模板引擎的解析之后，最后的输出就是数据与模板结合的文档，网页或者源代码。 <!-- raw HTML omitted --></p>
+    >Template processor</a> (template engine or template parser)，模板处理器或者叫做模板引擎，Wikipedia给的定义是一个将数据和模板组合形成文档的软件。 <!-- raw HTML omitted --></p>
+<p>模板引擎的输入一般是用template language 模板语言写的 <strong>模板</strong>, 以及需要替换模板中占位内容的 <strong>真实数据</strong>, 经过模板引擎的解析之后，最后的输出就是数据与模板结合的文档，网页或者源代码。 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_10-50-05_screenshot.png"
          alt="Figure 1: Template processor" width="200px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Template processor</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>我们可以拿Powerpoint的Design Ideas功能来做一个例子，我认为这本质上也是一种模版引擎，我们只需要输入文字和每一张slide的内容，Powerpoint自动会生成排版来呈现这些数据 <!-- raw HTML omitted --></p>
+<p>我们可以拿Powerpoint的Design Ideas功能来做一个例子，我认为这本质上也是一种模版引擎，我们只需要输入文字和每一张slide的内容，Powerpoint自动会生成排版来呈现这些数据； <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_08-46-59_screenshot.png"
          alt="Figure 2: Powerpoint: Design Ideas" width="700px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->Powerpoint: Design Ideas</p>
@@ -294,15 +293,15 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>我们在Web开发中所用到的模板应该具体到 <a class="link" href="https://en.wikipedia.org/wiki/Web_template_system"  target="_blank" rel="noopener"
-    >Web template system</a> 网页模板系统，这是运用在网页开发中的模板引擎，网页开发者可以利用其将 <code>数据与页面分开</code> ，通过将静态的页面与动态获取的数据进行结合生成新的HTML文件（根据浏览器发出的请求参数，例如一次搜索），提高了开发效率，也使代码重用变得更加容易 <!-- raw HTML omitted --></p>
+    >Web template system</a> 网页模板系统，这是运用在网页开发中的模板引擎，网页开发者可以利用其将 <code>数据与页面分开</code>, 通过将静态的页面与动态获取的数据进行结合生成新的HTML文件（根据浏览器发出的请求参数，例如一次搜索），提高了开发效率，也使代码重用变得更加容易 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-06-26_22-47-02_screenshot.png"
          alt="Figure 3: Web template system" width="200px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->Web template system</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<p>模板引擎的主要思想就是要将  <code>用户界面</code> 与 <code>业务数据</code> 的内容分离，比如在我们提到的Powerpoint的例子中，用户只需要思考每个页面上需要展示什么数据即可，排版布局就交给了软件本身。 <!-- raw HTML omitted --></p>
-<p>同样的，在网页模板系统中，我们可以说将前后端的工作进一步分离开来，前端可以可以更专注于页面布局，业务逻辑的设计上，而后端可以专注于数据的处理 <!-- raw HTML omitted --></p>
+<p>模板引擎的主要思想就是要将 <code>用户界面</code> 与 <code>业务数据</code> 的内容分离，比如在我们提到的Powerpoint的例子中，用户只需要思考每个页面上需要展示什么数据即可，排版布局就交给了软件本身。 <!-- raw HTML omitted --></p>
+<p>同样的，在网页模板系统中，我们可以说将前后端的工作进一步分离开来，前端可以可以更专注于页面布局，业务逻辑的设计上，而后端可以专注于数据的处理； <!-- raw HTML omitted --></p>
 <p>在传统的网页开发中，为了展示数据，需要如下将JS代码与HTML拼接在一起，存在的问题就是拼接很容易出错，同时一旦出错或者需要修改，那么就需要前后端一起进行修改，代码不易维护。 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">html</span> <span class="o">+=</span> <span class="s1">&#39;&lt;!DOCTYPE html&gt;\
@@ -319,7 +318,7 @@ if (!doNotTrack) {
 </span></span></span><span class="line"><span class="cl"><span class="s1">            &lt;/body&gt;\
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &lt;/html&gt;&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>使用模板引擎就可以很好的解决这个问题，前端开发者可以专注于开发模版，即网页的布局与框架，同时留下数据部分，等待填充 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>使用模板引擎就可以很好的解决这个问题，前端开发者可以专注于开发模版，即网页的布局与框架，同时留下数据部分，等待填充： <!-- raw HTML omitted --></p>
 <p>template.html <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -340,7 +339,7 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;template.html&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div><p>接着访问twig_render.php即可 <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>接着访问twig_render.php即可： <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_10-14-22_screenshot.png"
          alt="Figure 4: 访问 twig_render.php" width="300px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 4: <!-- raw HTML omitted -->访问 twig_render.php</p>
@@ -348,7 +347,7 @@ if (!doNotTrack) {
 </figure>
  <!-- raw HTML omitted --></p>
 <p>包括现在比较成熟的框架例如VUE等，我觉得也是利用了模板引擎的思想，尽量使前后端的工作分离，同时又方便了协作 <!-- raw HTML omitted --></p>
-<h3 id="ssti-模板注入">SSTI 模板注入</h3>
+<h2 id="ssti-模板注入">SSTI 模板注入</h2>
 <p>SSTI 模板注入是一种Web注入漏洞，其产生的原因本质上是对于用户的输入没有做全面的审核，导致了 <code>模板</code> 拼接了用户输入的 <code>模板语言</code> 代码，进而被模板引擎所执行，从而引发敏感信息泄露，远程代码执行等问题 <!-- raw HTML omitted --></p>
 <p>Web应用可以使用模板系统来动态的显示一些信息，比如下面的例子就是可以动态的显示用户的姓 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$output</span> <span class="o">=</span> <span class="nv">$twig</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s2">&#34;Dear {first_name},&#34;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;first_name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">.</span><span class="nx">first_name</span><span class="p">)</span> <span class="p">);</span> 
@@ -361,20 +360,21 @@ if (!doNotTrack) {
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">custom_email</span><span class="o">=</span><span class="p">{{</span><span class="nx">self</span><span class="p">}}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">Object</span> <span class="nx">of</span> <span class="k">class</span> <span class="nc">__TwigTemplate_7ae62e582f8a35e5ea6cc639800ecf15b96c0d6f78db3538221c1145580ca4a5</span> <span class="nx">could</span> <span class="k">not</span> <span class="nx">be</span> <span class="nx">converted</span> <span class="nx">to</span> <span class="nx">string</span>
-</span></span></code></pre></div><p>如果是在黑盒的条件下，我们很容易测试出来XSS，但是这往往就会让我们忽略了模板引擎的存在，并且与XSS不同的是，模板注入可以直接对服务器造成危害 <!-- raw HTML omitted --></p>
-<h3 id="模板注入的方法">模板注入的方法</h3>
-<p>我们根据 <code>James Kettle</code> 所提供的模板注入流程来进行介绍 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>如果是在黑盒的条件下，我们很容易测试出来XSS，但是这往往就会让我们忽略了模板引擎的存在，并且与XSS不同的是，模板注入可以直接对服务器造成危害； <!-- raw HTML omitted --></p>
+<h2 id="模板注入的方法">模板注入的方法</h2>
+<p>我们根据 <code>James Kettle</code> 所提供的模板注入流程来进行介绍： <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_11-18-43_screenshot.png"
          alt="Figure 5: Template Injection methodology" width="300px"/><figcaption>
             <p><!-- raw HTML omitted -->Figure 5: <!-- raw HTML omitted -->Template Injection methodology</p>
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<h4 id="detect">Detect</h4>
+<h3 id="detect-检测">Detect 检测</h3>
+<p>第一步自然就是检测该页面是否存在模版注入，我们可以通过两种不同的用户输入来进行判断： <!-- raw HTML omitted --></p>
 <ol>
-<li>Plaintext context 纯文本的上下文 <!-- raw HTML omitted --></li>
+<li>Plaintext context 纯文本的上下文： <!-- raw HTML omitted --></li>
 </ol>
-<p>大部分模板语言都提供纯文本的输入，可以直接看到反馈的结果 <!-- raw HTML omitted --></p>
+<p>大部分模板语言都提供纯文本的输入，可以直接看到反馈的结果； <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">smarty=Hello {user.name}
 </span></span><span class="line"><span class="cl">Hello user1 
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">freemarker=Hello ${username}
@@ -384,7 +384,7 @@ if (!doNotTrack) {
 </span></span></code></pre></div><ol>
 <li>Code context 代码上下文 <!-- raw HTML omitted --></li>
 </ol>
-<p>我们通过输入一些代码片段来观察返回的内容是否显示了我们想要得到的拼接结果 <!-- raw HTML omitted --></p>
+<p>我们通过输入一些代码片段来观察返回的内容是否显示了我们想要得到的拼接结果： <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">personal_greeting=username
 </span></span><span class="line"><span class="cl">Hello user01
 </span></span><span class="line"><span class="cl">
@@ -393,9 +393,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">personal_greeting=username}}&lt;tag&gt;
 </span></span><span class="line"><span class="cl">Hello user01 &lt;tag&gt; 
-</span></span></code></pre></div><h4 id="identify">Identify</h4>
-<p>在成功检测到了模板引擎的存在之后，下一步就是要确定哪一种引擎被使用了，我们可以根据不同的语法来进行输入并观察返回的结果 <!-- raw HTML omitted --></p>
-<p>James Kettle 为我们提供了这张决策树，绿色表示成功识别，红色代表失败需要进一步尝试 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><h3 id="identify">Identify</h3>
+<p>在成功检测到了模板引擎的存在之后，下一步就是要确定哪一种引擎被使用了，我们可以根据不同的语法来进行输入并观察返回的结果： <!-- raw HTML omitted --></p>
+<p>James Kettle 为我们提供了这张决策树，绿色表示成功识别，红色代表失败需要进一步尝试： <!-- raw HTML omitted --></p>
 <p>例如当我们在尝试 <code>{{7 * 7'}}</code> 时，如果返回49那么就是Twig,如果是 7777777 就是 Jinja2 <!-- raw HTML omitted --></p>
 <p><figure><img src="/ox-hugo/2022-07-02_11-22-28_screenshot.png"
          alt="Figure 6: 模板识别" width="700px"/><figcaption>
@@ -403,12 +403,9 @@ if (!doNotTrack) {
         </figcaption>
 </figure>
  <!-- raw HTML omitted --></p>
-<h4 id="exploit">Exploit</h4>
-<p>接着我们就要尝试利用这些模板引擎 <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>Read</p>
+<h3 id="exploit">Exploit</h3>
+<p>接着我们就要尝试利用这些模板引擎所存在的漏洞： <!-- raw HTML omitted --></p>
+<h4 id="read">Read</h4>
 <p>在我们识别成功之后，下一步就是非常关键的阅读文档阶段，只有了解了模板语言之后我们才能找到利用的方法: <!-- raw HTML omitted --></p>
 <ul>
 <li>基础的语法 <!-- raw HTML omitted --></li>
@@ -416,25 +413,14 @@ if (!doNotTrack) {
 <li>内置的方法，函数，过滤器以及变量，比如查看内置的函数的源码，是否有出现危险函数的使用，从而进一步引发远程代码执行？ <!-- raw HTML omitted --></li>
 <li>查看插件或者扩展，特别是那些默认开启的内容 <!-- raw HTML omitted --></li>
 </ul>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>Explore</p>
-<p>下一步就是关注模板引擎运行环境，通常这些模板引擎会提供一些全局变量或者实例对象，这些实例中往往就存在一些敏感信息或者危险的函数可以被调用 <!-- raw HTML omitted --></p>
+<h4 id="explore">Explore</h4>
+<p>下一步就是关注模板引擎运行环境，通常这些模板引擎会提供一些全局变量或者实例对象，这些实例中往往就存在一些敏感信息或者危险的函数可以被调用： <!-- raw HTML omitted --></p>
 <p>如果没有这样的内置对象可以为我们所用，也可以通过fuzz寻找可能的变量名，比如<a class="link" href="https://github.com/danielmiessler/SecLists/blob/25d4ac447efb9e50b640649f1a09023e280e5c9c/Discovery/Web-Content/burp-parameter-names.txt"  target="_blank" rel="noopener"
     >SecLists</a> <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>Attack</p>
-<p>在经过以上两步的信息获取之后，最后就是要用所有可以利用的资源来组合进行攻击，尝试造成一些常见的攻击，比如非法对象创建，敏感信息泄露，远程文件包含，webshell，提权等 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h3 id="reference">Reference</h3>
+<h4 id="attack">Attack</h4>
+<p>在经过以上两步的信息获取之后，最后就是要用所有可以利用的资源来组合进行攻击，尝试造成一些常见的攻击，比如非法对象创建，敏感信息泄露，远程文件包含，webshell，提权等； <!-- raw HTML omitted --></p>
+<h2 id="reference">Reference</h2>
+<blockquote>
 <p><a class="link" href="https://en.wikipedia.org/wiki/Template_processor"  target="_blank" rel="noopener"
     >Template processor</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://gosecure.github.io/template-injection-workshop"  target="_blank" rel="noopener"
@@ -447,6 +433,7 @@ if (!doNotTrack) {
     >一、模板引擎有什么用？</a> <!-- raw HTML omitted --></p>
 <p><a class="link" href="https://portswigger.net/research/server-side-template-injection"  target="_blank" rel="noopener"
     >Server-Side Template Injection</a> <!-- raw HTML omitted --></p>
+</blockquote>
 
 </section>
 
@@ -488,7 +475,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Jul 02, 2022 12:58 &#43;0100
+            Last updated on Nov 09, 2022 22:26 CST
         </span>
     </section></footer>
 
@@ -542,48 +529,12 @@ if (!doNotTrack) {
             
                 
 <article class="">
-    <a href="/posts/php_bypass_query_string_parser/">
+    <a href="/posts/client_side_attacks/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/php_bypass_tricks/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">PHP特性绕过技巧</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/php_serialize_unserialize/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">PHP 序列化与反序列化</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/posts/lrfi_basic/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Local/Remote File Inclusion 文件包含漏洞</h2>
+            <h2 class="article-title">Client-side Attacks 针对客户端的Web攻击</h2>
         </div>
     </a>
 </article>
@@ -763,20 +714,22 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#server-side-template-injection--ssti--模板注入-基础知识">Server Side Template Injection (SSTI) 模板注入：基础知识</a>
+    <li><a href="#模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</a></li>
+    <li><a href="#ssti-模板注入">SSTI 模板注入</a></li>
+    <li><a href="#模板注入的方法">模板注入的方法</a>
       <ul>
-        <li><a href="#模板引擎是什么-我们为什么要用到它">模板引擎是什么？我们为什么要用到它？</a></li>
-        <li><a href="#ssti-模板注入">SSTI 模板注入</a></li>
-        <li><a href="#模板注入的方法">模板注入的方法</a>
+        <li><a href="#detect-检测">Detect 检测</a></li>
+        <li><a href="#identify">Identify</a></li>
+        <li><a href="#exploit">Exploit</a>
           <ul>
-            <li><a href="#detect">Detect</a></li>
-            <li><a href="#identify">Identify</a></li>
-            <li><a href="#exploit">Exploit</a></li>
+            <li><a href="#read">Read</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href="#attack">Attack</a></li>
           </ul>
         </li>
-        <li><a href="#reference">Reference</a></li>
       </ul>
     </li>
+    <li><a href="#reference">Reference</a></li>
   </ul>
 </nav>
         </div>

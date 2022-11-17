@@ -1130,7 +1130,7 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
 &lt;p&gt;得到 &lt;code&gt;security1&lt;/code&gt; (之前不是说了随机，这里我为什么说就是security1呢，因为实际测试结果就是，第一个生成的数字一定就是1，我认为可能和伪随机机制有关系)&lt;/p&gt;
 &lt;p&gt;我们当然知道之后users表里不会有security1这样的字段，同样数据库也找不到&lt;/p&gt;
 &lt;p&gt;此时没有发现重复的主键，因此会把主键的值直接插入临时表中，并将count(*)的值增加为1&lt;/p&gt;
-&lt;p&gt;此时为了得到需要插入的主键的值，会进行第二次 flood(rand())计算:&lt;/p&gt;
+&lt;p&gt;此时为了得到需要插入的主键的值，会进行第二次 floor(rand())计算:&lt;/p&gt;
 &lt;p&gt;得到的结果为security0（必然发生，理由同上）&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -1175,7 +1175,7 @@ O%3A4%3A%22Name%2 &lt;code&gt;3&lt;/code&gt; %3A2%3A%7Bs%3A14%3A%22%00Name%00use
     &lt;/figure&gt;
 
 &lt;p&gt;大家有看出什么不同的地方吗？&lt;/p&gt;
-&lt;p&gt;我们使用users表中的来多次计算flood(rand())的值，来模拟主键重复中多次计算的场景：&lt;/p&gt;
+&lt;p&gt;我们使用users表中的来多次计算floor(rand())的值，来模拟主键重复中多次计算的场景：&lt;/p&gt;
 &lt;p&gt;我们发现，在seed为0的时候，伪随机给出的计算结果其顺序为：&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;

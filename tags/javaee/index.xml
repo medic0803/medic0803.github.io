@@ -219,8 +219,8 @@
 &lt;/blockquote&gt;
 &lt;p&gt;下面的这些Web应用都可以直接使用localhost:8080/xxx进行访问： &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://ginkgo.org.cn/ox-hugo/2022-10-21_11-20-02_screenshot.png&#34;
-         alt=&#34;Figure 4: webpas目录下的Context Web应用&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
-            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;webpas目录下的Context Web应用&lt;/p&gt;
+         alt=&#34;Figure 4: webapps目录下的Context Web应用&#34; width=&#34;700px&#34;/&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Figure 4: &lt;!-- raw HTML omitted --&gt;webapps目录下的Context Web应用&lt;/p&gt;
         &lt;/figcaption&gt;
 &lt;/figure&gt;
  &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;

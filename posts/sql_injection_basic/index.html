@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-uk" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于'><title>SQL注入：基础</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于基础概念的归纳总'><title>SQL注入：基础</title>
 
 <link rel='canonical' href='https://ginkgo.org.cn/posts/sql_injection_basic/'>
 
 <link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='SQL注入：基础'>
-<meta property='og:description' content='SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于'>
+<meta property='og:description' content='简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于基础概念的归纳总'>
 <meta property='og:url' content='https://ginkgo.org.cn/posts/sql_injection_basic/'>
 <meta property='og:site_name' content='Under The Ginkgo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='sqli' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-28T18:05:42&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='sqli' /><meta property='article:published_time' content='2022-04-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-11-16T13:48:56&#43;08:00'/>
 <meta name="twitter:title" content="SQL注入：基础">
-<meta name="twitter:description" content="SQL注入：基础 简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于">
+<meta name="twitter:description" content="简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 （本篇用于基础概念的归纳总">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKEXSTS2N4"></script>
@@ -275,16 +275,15 @@ if (!doNotTrack) {
     <section class="article-content">
     
     
-    <h2 id="sql注入-基础">SQL注入：基础</h2>
-<p>简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 <!-- raw HTML omitted --></p>
+    <p>简单来说，SQL注入就是attackers通过对客户端发出的HTTP请求的修改，在服务端执行他们想要的SQL操作。 <!-- raw HTML omitted --></p>
 <p>（本篇用于基础概念的归纳总结，可能不太适合新手学习） <!-- raw HTML omitted --></p>
-<h3 id="1-dot-sql注入产生的原因">1. SQL注入产生的原因</h3>
+<h2 id="sql注入产生的原因">SQL注入产生的原因</h2>
 <ol>
 <li>Missing or improper input validation (用户输入检查的缺乏或者不够完善) <!-- raw HTML omitted --></li>
 <li>Application-generated queries containing user-fed input (应用进行SQL查询，其结果能够反馈用户之前的不恰当输入) <!-- raw HTML omitted --></li>
 </ol>
-<h3 id="2-dot-sql注入的注入点--sinks--和目标--targets">2. SQL注入的注入点(Sinks)和目标(targets)</h3>
-<h4 id="2-dot-1-sinks">2.1 Sinks</h4>
+<h2 id="sql注入的注入点--sinks--和目标--targets">SQL注入的注入点(Sinks)和目标(targets)</h2>
+<h3 id="2-dot-1-sinks">2.1 Sinks</h3>
 <p>SQLi sinks 表示可能存在的注入点 <!-- raw HTML omitted --></p>
 <ul>
 <li><code>GET/POST parameters</code> <!-- raw HTML omitted --></li>
@@ -293,7 +292,7 @@ if (!doNotTrack) {
 <li><code>Database itself</code> <!-- raw HTML omitted --></li>
 </ul>
 <p>以上所有的这些内容，都可以轻松的被用户所修改，他们也都有可能被用于服务端的数据库查询操作中，因此都需要严肃对待 <!-- raw HTML omitted --></p>
-<h4 id="2-dot-2-targets">2.2 Targets</h4>
+<h3 id="2-dot-2-targets">2.2 Targets</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -336,7 +335,7 @@ if (!doNotTrack) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="3-dot-注入的技巧">3. 注入的技巧</h3>
+<h2 id="注入的技巧">注入的技巧</h2>
 <ol>
 <li>
 <p>判断注入点
@@ -370,7 +369,7 @@ if (!doNotTrack) {
 <li>是否可以重新闭合注入点的语句错误，使其可以被重新正常解析 <!-- raw HTML omitted --></li>
 <li>语句是否可以被恶意修改 <!-- raw HTML omitted --></li>
 </ol>
-<h3 id="4-dot-sql注入对于安全的影响--cia">4. SQL注入对于安全的影响(CIA)</h3>
+<h2 id="sql注入对于安全的影响--cia">SQL注入对于安全的影响(CIA)</h2>
 <dl>
 <dt>Confidentiality</dt>
 <dd><ul>
@@ -388,29 +387,29 @@ if (!doNotTrack) {
 </ul>
 </dd>
 </dl>
-<h3 id="5-dot-如何防御sql注入">5. 如何防御SQL注入</h3>
+<h2 id="如何防御sql注入">如何防御SQL注入</h2>
 <dl>
 <dt>i. 使用预编译语句 Prepared statement</dt>
-<dd>顾名思义，就是将SQL语句提前编译，即其最终要执行的操作已经定了，唯一缺少的就是参数，其  <code>语义</code> 不会再受影响，这也是防御SQL注入的最佳手段 <!-- raw HTML omitted --></dd>
+<dd>顾名思义，就是将SQL语句提前编译，即其最终要执行的操作已经定了，唯一缺少的就是参数，其 <code>语义</code> 不会再受影响，这也是防御SQL注入的最佳手段； <!-- raw HTML omitted --></dd>
 <dt>ii. 检查数据类型</dt>
-<dd>对于需要获取的 <code>参数</code> 进行严格的  <code>类型/格式检查</code> ，可以从很大程度上防御SQL注入 (数据类型，邮箱格式，日期格式等) <!-- raw HTML omitted --></dd>
+<dd>对于需要获取的 <code>参数</code> 进行严格的 <code>类型/格式检查</code>, 可以从很大程度上防御SQL注入 (数据类型，邮箱格式，日期格式等)； <!-- raw HTML omitted --></dd>
 <dt>iii. 使用安全函数</dt>
-<dd>随着安全得到越来越多的重视，编程语言也在不断更新更为安全的函数和机制用于抵御一些常见的攻击 <!-- raw HTML omitted --></dd>
+<dd>随着安全得到越来越多的重视，编程语言也在不断更新更为安全的函数和机制用于抵御一些常见的攻击； <!-- raw HTML omitted --></dd>
 </dl>
-<h3 id="6-dot-常见的注入类型">6. 常见的注入类型</h3>
-<h4 id="string-sqli">String SQLi</h4>
+<h2 id="常见的注入类型">常见的注入类型</h2>
+<h3 id="string-sqli">String SQLi</h3>
 <p>注入点原本需要的是字符串 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">SELECT</span> <span class="o">*</span> 
 </span></span><span class="line"><span class="cl"><span class="nx">FROM</span> <span class="nx">user_data</span>
 </span></span><span class="line"><span class="cl"><span class="nx">WHERE</span> <span class="nx">first_name</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="k">AND</span> <span class="nx">last_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">OR</span> <span class="s1">&#39;1&#39;</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
-</span></span></code></pre></div><h4 id="numberic-sqli">Numberic SQLi</h4>
+</span></span></code></pre></div><h3 id="numberic-sqli">Numberic SQLi</h3>
 <p>注入点原本需要的是数字 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">SELECT</span> <span class="o">*</span> 
 </span></span><span class="line"><span class="cl"><span class="nx">FROM</span> <span class="nx">user_data</span>
 </span></span><span class="line"><span class="cl"><span class="nx">WHERE</span> <span class="nx">Login_Count</span> <span class="o">=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="k">AND</span> <span class="nx">userid</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">OR</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span>
-</span></span></code></pre></div><h4 id="union-query-sqli">Union query SQLi</h4>
+</span></span></code></pre></div><h3 id="union-query-sqli">Union query SQLi</h3>
 <p>利用SQL <code>Union</code> 关键词来实现额外的语义拼接 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$q</span> <span class="o">=</span> <span class="s2">&#34;SELECT id, name, price, description&#34;</span><span class="o">.</span>
@@ -430,7 +429,7 @@ if (!doNotTrack) {
 </span></span></span></code></pre></div><p>要注意的是，拼接的查询语句，所查询的column数量必须与原本的相同，比如原本需要查询usname, passwd两列，那么拼接的查询语句也需要包含两列内容 <!-- raw HTML omitted --></p>
 <p>可以利用 <code>order by</code> 关键词来实现对于列数的测试，同时使用二分法的技巧，直到不再报错为止 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">category</span><span class="o">=</span><span class="mi">1</span> <span class="nx">order</span> <span class="nx">by</span> <span class="mi">100</span>
-</span></span></code></pre></div><h4 id="second-order-injection-二次注入">Second-order injection 二次注入</h4>
+</span></span></code></pre></div><h3 id="second-order-injection-二次注入">Second-order injection 二次注入</h3>
 <p>Second-order injection就像名字所指示的那样，注入的语句会在服务端的SQL代码中，出现两次，因此称为二次注入。 <!-- raw HTML omitted --></p>
 <p>与先前我们提到的注入方法相比，二次注入并不是直接发起注入，而是先将注入的语句存入数据库，再调用该数据的查询，从而完成拼接，实现注入 <!-- raw HTML omitted --></p>
 <p>比如我们想要修改admin用户的密码： <!-- raw HTML omitted --></p>
@@ -446,7 +445,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">UPDATE</span><span class="w"> </span><span class="n">users</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="n">pass</span><span class="o">=</span><span class="s1">&#39;我们想要的值&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="o">=</span><span class="k">admin</span><span class="s1">&#39;--&#39;</span><span class="w">
-</span></span></span></code></pre></div><h4 id="piggy-backed-chained-堆叠注入">Piggy-backed/Chained 堆叠注入</h4>
+</span></span></span></code></pre></div><h3 id="piggy-backed-chained-堆叠注入">Piggy-backed/Chained 堆叠注入</h3>
 <p>与 <code>UNION</code> 类似， <code>Piggy-backed/Chained</code> 也是为了执行额外的语句 <!-- raw HTML omitted --></p>
 <p>利用 <code>;</code> 来增加额外的语句实现 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
@@ -461,56 +460,31 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="nx">FROM</span> <span class="nx">utente</span> 
 </span></span><span class="line"><span class="cl"><span class="nx">WHERE</span> <span class="nx">user</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span> 
 </span></span><span class="line"><span class="cl"><span class="nx">DROP</span> <span class="nx">TABLE</span> <span class="nx">users</span> <span class="o">--</span><span class="s2">&#34;&#39; AND pass=&#39;&#39;
-</span></span></span></code></pre></div><h4 id="blind-injection">Blind injection</h4>
+</span></span></span></code></pre></div><h3 id="blind-injection">Blind injection</h3>
 <p>详见 <a class="link" href="https://ginkgo.org.cn/posts/sqli_blind_injection/"  target="_blank" rel="noopener"
     >SQL注入：盲注</a> <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>布尔盲注</p>
+<h4 id="布尔盲注">布尔盲注</h4>
 <p>布尔Bool，意味着我们在将注入一些布尔逻辑判断，根据逻辑判断的结构来触发页面发生变化，进而判断语句是否成功执行； <!-- raw HTML omitted --></p>
 <p>例如：如果成功，则页面正常显示；否则就什么都不显示 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>报错注入</p>
+<h4 id="报错注入">报错注入</h4>
 <p>报错注入是将有价值的信息通过报错的方式显示输出。 <!-- raw HTML omitted --></p>
 <p>这里需要与普通的注入区分一下： <!-- raw HTML omitted --></p>
 <ul>
 <li>普通的注入是将查询到的信息正常得输出到页面上来 <!-- raw HTML omitted --></li>
 <li>报错注入则是构造特定的MYSQL函数语法错误，同时将所需要的信息拼接到错误返回信息中，然后再返回到页面上来 <!-- raw HTML omitted --></li>
 </ul>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>延时注入</p>
+<h4 id="延时注入">延时注入</h4>
 <p>时间盲注是一种边信道攻击(Side-channel attack SCA)，这原本是密码学的一个概念，这种攻击用于加密算法的破解，它基于密码系统的物理实现而不是加密算法其本身，比如加密所需要的时间，所消耗的电子设备的一切资源，甚至电磁泄露或者声音这些信息来反过来分析算法本身。 <!-- raw HTML omitted --></p>
 <p>个人认为SCA的一个特点，就是要刻意放大一个正常的操作的影响，以此制造明显的特征。 <!-- raw HTML omitted --></p>
 <p>那么在时间盲注中，我们无法像普通注入那样，得到查询的数据，也无法通过布尔盲注或者报错盲注在页面上显示的获得任何信息，而是通过通过判断语句，同时增加成功注入所使用的时间，最后通过判断响应时间的变化来判断是否成功执行。 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="文件读写注入">文件读写注入</h4>
+<h3 id="文件读写注入">文件读写注入</h3>
 <p>详见 <a class="link" href="https://ginkgo.org.cn/posts/sql_injection_file_rw/"  target="_blank" rel="noopener"
     >SQL注入：文件读写</a> <!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>读</p>
+<h4 id="读">读</h4>
 <p>利用Mysql内置的用于读取文件的函数来读取文件内容 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<!-- raw HTML omitted -->
-<ul>
-<li>
-<p>写</p>
+<h4 id="写">写</h4>
 <p>一般的利用就是将一句话木马注入到服务端，然后再用蚁剑等工具连接 <!-- raw HTML omitted --></p>
-</li>
-</ul>
-<h4 id="其他一些绕过姿势">其他一些绕过姿势</h4>
+<h3 id="其他一些绕过姿势">其他一些绕过姿势</h3>
 <p><a class="link" href="https://xz.aliyun.com/t/7169#toc-33"  target="_blank" rel="noopener"
     >对MYSQL注入相关内容及部分Trick的归类小结</a> <!-- raw HTML omitted --></p>
 
@@ -548,7 +522,7 @@ if (!doNotTrack) {
 
 
         <span>
-            Last updated on Sep 28, 2022 18:05 CST
+            Last updated on Nov 16, 2022 13:48 CST
         </span>
     </section></footer>
 
@@ -614,18 +588,6 @@ if (!doNotTrack) {
             
                 
 <article class="">
-    <a href="/posts/ssti_basic/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Server Side Template Injection (SSTI) 模板注入：基础知识</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
     <a href="/posts/php_serialize_unserialize/">
         
         
@@ -644,6 +606,18 @@ if (!doNotTrack) {
 
         <div class="article-details">
             <h2 class="article-title">如何利用PHP查询字符串解释器来绕过IDPS以及WAF</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/posts/php_bypass_tricks/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PHP特性绕过技巧</h2>
         </div>
     </a>
 </article>
@@ -823,30 +797,37 @@ if (!doNotTrack) {
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#sql注入-基础">SQL注入：基础</a>
+    <li><a href="#sql注入产生的原因">SQL注入产生的原因</a></li>
+    <li><a href="#sql注入的注入点--sinks--和目标--targets">SQL注入的注入点(Sinks)和目标(targets)</a>
       <ul>
-        <li><a href="#1-dot-sql注入产生的原因">1. SQL注入产生的原因</a></li>
-        <li><a href="#2-dot-sql注入的注入点--sinks--和目标--targets">2. SQL注入的注入点(Sinks)和目标(targets)</a>
+        <li><a href="#2-dot-1-sinks">2.1 Sinks</a></li>
+        <li><a href="#2-dot-2-targets">2.2 Targets</a></li>
+      </ul>
+    </li>
+    <li><a href="#注入的技巧">注入的技巧</a></li>
+    <li><a href="#sql注入对于安全的影响--cia">SQL注入对于安全的影响(CIA)</a></li>
+    <li><a href="#如何防御sql注入">如何防御SQL注入</a></li>
+    <li><a href="#常见的注入类型">常见的注入类型</a>
+      <ul>
+        <li><a href="#string-sqli">String SQLi</a></li>
+        <li><a href="#numberic-sqli">Numberic SQLi</a></li>
+        <li><a href="#union-query-sqli">Union query SQLi</a></li>
+        <li><a href="#second-order-injection-二次注入">Second-order injection 二次注入</a></li>
+        <li><a href="#piggy-backed-chained-堆叠注入">Piggy-backed/Chained 堆叠注入</a></li>
+        <li><a href="#blind-injection">Blind injection</a>
           <ul>
-            <li><a href="#2-dot-1-sinks">2.1 Sinks</a></li>
-            <li><a href="#2-dot-2-targets">2.2 Targets</a></li>
+            <li><a href="#布尔盲注">布尔盲注</a></li>
+            <li><a href="#报错注入">报错注入</a></li>
+            <li><a href="#延时注入">延时注入</a></li>
           </ul>
         </li>
-        <li><a href="#3-dot-注入的技巧">3. 注入的技巧</a></li>
-        <li><a href="#4-dot-sql注入对于安全的影响--cia">4. SQL注入对于安全的影响(CIA)</a></li>
-        <li><a href="#5-dot-如何防御sql注入">5. 如何防御SQL注入</a></li>
-        <li><a href="#6-dot-常见的注入类型">6. 常见的注入类型</a>
+        <li><a href="#文件读写注入">文件读写注入</a>
           <ul>
-            <li><a href="#string-sqli">String SQLi</a></li>
-            <li><a href="#numberic-sqli">Numberic SQLi</a></li>
-            <li><a href="#union-query-sqli">Union query SQLi</a></li>
-            <li><a href="#second-order-injection-二次注入">Second-order injection 二次注入</a></li>
-            <li><a href="#piggy-backed-chained-堆叠注入">Piggy-backed/Chained 堆叠注入</a></li>
-            <li><a href="#blind-injection">Blind injection</a></li>
-            <li><a href="#文件读写注入">文件读写注入</a></li>
-            <li><a href="#其他一些绕过姿势">其他一些绕过姿势</a></li>
+            <li><a href="#读">读</a></li>
+            <li><a href="#写">写</a></li>
           </ul>
         </li>
+        <li><a href="#其他一些绕过姿势">其他一些绕过姿势</a></li>
       </ul>
     </li>
   </ul>
